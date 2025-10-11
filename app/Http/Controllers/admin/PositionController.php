@@ -67,7 +67,7 @@ class PositionController extends Controller
             $position->title = $request->title;
             $position->update();
 
-            return redirect(route('positions.index'))->with('flash_message', 'با موفقیت ویرایش شد');
+            return redirect(route('admin.positions.index'))->with('flash_message', 'با موفقیت ویرایش شد');
         } catch (Exception $exception) {
             return redirect()->back()->with('err_message', $exception->getMessage());
         }
@@ -80,7 +80,7 @@ class PositionController extends Controller
     {
         try {
             $position->delete();
-            return redirect(route('positions.index'))->with('flash_message', ' موفقیت حذف شد');
+            return redirect(route('admin.positions.index'))->with('flash_message', ' موفقیت حذف شد');
         } catch (Exception $exception) {
             return redirect()->back()->with('err_message', 'خطایی رخ داد مجددا تلاش کنید');
         }
