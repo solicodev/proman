@@ -1347,7 +1347,7 @@
         <div class="container">
             <div class="row align-items-center flex-row-reverse">
                 <div class="col-md-12 col-sm-12 text-center">
-                    Copyright © 2022. Designed by <a href="https://30uweb.com/"> 30uweb </a> .All rights reserved
+
                 </div>
             </div>
         </div>
