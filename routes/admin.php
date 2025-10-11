@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('panel')->name('admin.')->group(function () {
     Route::get('admin', [adminController::class , 'index'])->name('index');
 
-    Route::prefix('position')->name('positions.')->group(function () {
+    Route::prefix('position')->name('position.')->group(function () {
         Route::get('/', [PositionController::class , 'index'])->name('index');
         Route::get('/create', [PositionController::class , 'create'])->name('create');
         Route::post('/store', [PositionController::class , 'store'])->name('store');

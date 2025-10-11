@@ -14,8 +14,8 @@ class PositionController extends Controller
      */
     public function index()
     {
-        $positions = Position::all();
-        return view('admin.positions.index',compact($positions));
+        $position = Position::all();
+        return view('admin.position.index',compact($position));
     }
 
     /**
@@ -36,7 +36,7 @@ class PositionController extends Controller
             $position->title = $request->title;
             $position->save();
 
-            return redirect(route('admin.positions.index'))->with('flash_message', 'با موفقیت ایجاد شد');
+            return redirect(route('admin.position.index'))->with('flash_message', 'با موفقیت ایجاد شد');
         } catch (Exception $exception) {
             return redirect()->back()->with('err_message', $exception->getMessage());
         }
@@ -55,7 +55,7 @@ class PositionController extends Controller
      */
     public function edit(Position $position)
     {
-        return view('admin.positions.edit',compact($position));
+        return view('admin.position.edit',compact($position));
     }
 
     /**
@@ -67,7 +67,7 @@ class PositionController extends Controller
             $position->title = $request->title;
             $position->update();
 
-            return redirect(route('admin.positions.index'))->with('flash_message', 'با موفقیت ویرایش شد');
+            return redirect(route('admin.position.index'))->with('flash_message', 'با موفقیت ویرایش شد');
         } catch (Exception $exception) {
             return redirect()->back()->with('err_message', $exception->getMessage());
         }
@@ -80,7 +80,7 @@ class PositionController extends Controller
     {
         try {
             $position->delete();
-            return redirect(route('admin.positions.index'))->with('flash_message', ' موفقیت حذف شد');
+            return redirect(route('admin.position.index'))->with('flash_message', ' موفقیت حذف شد');
         } catch (Exception $exception) {
             return redirect()->back()->with('err_message', 'خطایی رخ داد مجددا تلاش کنید');
         }
