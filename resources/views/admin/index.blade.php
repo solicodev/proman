@@ -1,10 +1,7 @@
 @extends('layout.admin')
-
 @section('content')
     <!-- CONTAINER -->
     <div class="main-container container-fluid">
-
-
         <!-- PAGE-HEADER -->
         <div class="page-header">
             <div>
