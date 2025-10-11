@@ -36,7 +36,7 @@ class PositionController extends Controller
             $position->title = $request->title;
             $position->save();
 
-            return redirect(route('positions.index'))->with('flash_message', 'با موفقیت ایجاد شد');
+            return redirect(route('admin.positions.index'))->with('flash_message', 'با موفقیت ایجاد شد');
         } catch (Exception $exception) {
             return redirect()->back()->with('err_message', $exception->getMessage());
         }
