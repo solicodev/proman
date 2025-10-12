@@ -1470,12 +1470,9 @@
     </a>
 
     <footer class="page-footer">
-        <p class="mb-0">کپی رایت © 1402 . کلیه حقوق محفوظ است.</p>
+        <p class="mb-0">کپی رایت  <span id="year"> </span>© . کلیه حقوق محفوظ است.</p>
     </footer>
 </div>
-
-
-
 
 @include('admin.layout.script')
 

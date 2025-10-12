@@ -14,11 +14,18 @@ return new class extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->timestamps('start_date');
-            $table->timestamps('end_date');
+            $table->timestamp('start_date');
+            $table->timestamp('end_date');
             $table->enum('status',[0,1,2,3])->default(0);
+
+
             $table->unsignedBigInteger('manager_id')->comment('مدیر ایجاد کننده پروژه');
-            $table->unsignedBigInteger('category_id')->comment('مدیر ایجاد کننده پروژه');
+            $table->foreign('manager_id')->references('id')->on('users');
+
+            $table->unsignedBigInteger('category_id')->comment('دسته بندی مربوط به پروژه');
+            $table->foreign('category_id')->references('id')->on('users');
+
+
 
             $table->softDeletes();
             $table->timestamps();

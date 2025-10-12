@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Departman;
+use App\Models\Department;
 use Illuminate\Http\Request;
 
-class DepartmanController extends Controller
+class DepartmentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -35,7 +35,7 @@ class DepartmanController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Departman $departman)
+    public function show(Department $department)
     {
         //
     }
@@ -43,7 +43,7 @@ class DepartmanController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Departman $departman)
+    public function edit(Department $department)
     {
         //
     }
@@ -51,7 +51,7 @@ class DepartmanController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Departman $departman)
+    public function update(Request $request, Department $department)
     {
         //
     }
@@ -59,7 +59,7 @@ class DepartmanController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Departman $departman)
+    public function destroy(Department $department)
     {
         //
     }

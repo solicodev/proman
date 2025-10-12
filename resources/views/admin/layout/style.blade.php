@@ -28,6 +28,9 @@
     <link href="{{url('assets/admin/css/icons.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="{{url('assets/admin/fonts/Vazirmatn-FD-font-face.css')}}">
     <link rel="stylesheet" href="{{url('assets/admin/css/app.css')}}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    @stack('style')
+
     <title>پنل مدیریت</title>
 
     <style></style>

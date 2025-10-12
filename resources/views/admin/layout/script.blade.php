@@ -16,6 +16,7 @@
 </script>
 <script src="{{url('assets/admin/plugins/datatable/js/dataTables.bootstrap5.min.js')}}">
 </script>
+<script src="https://unpkg.com/boxicons@2.1.3/dist/boxicons.js"></script>
 <script>
     $(document).ready(function () {
         $('#Transaction-History').DataTable({
@@ -279,6 +280,12 @@
     new PerfectScrollbar('.product-list');
     new PerfectScrollbar('.customers-list');
 </script>
+<script>
+    var date = new Date().getFullYear();
+
+    document.getElementById("year").innerHTML = date;
+</script>
+@stack('script')
 </body>
 
 
