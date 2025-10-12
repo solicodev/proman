@@ -42,6 +42,7 @@ class ComposerStaticInitc514d8f7b9fc5970bdd94287905ef584
         'a1cfe24d14977df6878b9bf804af2d1c' => __DIR__ . '/..' . '/nunomaduro/collision/src/Adapters/Phpunit/Autoload.php',
         'ec07570ca5a812141189b1fa81503674' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Assert/Functions.php',
         '377b22b161c09ed6e5152de788ca020a' => __DIR__ . '/..' . '/spatie/laravel-permission/src/helpers.php',
+        '8fde5feda9697fe0ee53a3938c839fb0' => __DIR__ . '/../..' . '/app/Helpers/Helper.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -135,6 +136,7 @@ class ComposerStaticInitc514d8f7b9fc5970bdd94287905ef584
             'Laravel\\Sail\\' => 13,
             'Laravel\\Prompts\\' => 16,
             'Laravel\\Pail\\' => 13,
+            'Laravel\\Breeze\\' => 15,
         ),
         'I' => 
         array (
@@ -443,6 +445,10 @@ class ComposerStaticInitc514d8f7b9fc5970bdd94287905ef584
         array (
             0 => __DIR__ . '/..' . '/laravel/pail/src',
         ),
+        'Laravel\\Breeze\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/laravel/breeze/src',
+        ),
         'Illuminate\\Support\\' => 
         array (
             0 => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Macroable',
@@ -540,8 +546,17 @@ class ComposerStaticInitc514d8f7b9fc5970bdd94287905ef584
 
     public static $classMap = array (
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
-        'App\\Http\\Controllers\\PanelController' => __DIR__ . '/../..' . '/app/Http/Controllers/PanelController.php',
+        'App\\Http\\Controllers\\admin\\CategoryController' => __DIR__ . '/../..' . '/app/Http/Controllers/admin/CategoryController.php',
+        'App\\Http\\Controllers\\admin\\DepartmentController' => __DIR__ . '/../..' . '/app/Http/Controllers/admin/DepartmentController.php',
+        'App\\Http\\Controllers\\admin\\PhotoController' => __DIR__ . '/../..' . '/app/Http/Controllers/admin/PhotoController.php',
+        'App\\Http\\Controllers\\admin\\PositionController' => __DIR__ . '/../..' . '/app/Http/Controllers/admin/PositionController.php',
         'App\\Http\\Controllers\\admin\\adminController' => __DIR__ . '/../..' . '/app/Http/Controllers/admin/adminController.php',
+        'App\\Http\\Controllers\\panel\\PanelController' => __DIR__ . '/../..' . '/app/Http/Controllers/panel/PanelController.php',
+        'App\\Models\\Category' => __DIR__ . '/../..' . '/app/Models/Category.php',
+        'App\\Models\\Department' => __DIR__ . '/../..' . '/app/Models/Department.php',
+        'App\\Models\\Photo' => __DIR__ . '/../..' . '/app/Models/Photo.php',
+        'App\\Models\\Position' => __DIR__ . '/../..' . '/app/Models/Position.php',
+        'App\\Models\\Project' => __DIR__ . '/../..' . '/app/Models/Project.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
@@ -2951,6 +2966,12 @@ class ComposerStaticInitc514d8f7b9fc5970bdd94287905ef584
         'Illuminate\\View\\ViewFinderInterface' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/View/ViewFinderInterface.php',
         'Illuminate\\View\\ViewName' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/View/ViewName.php',
         'Illuminate\\View\\ViewServiceProvider' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/View/ViewServiceProvider.php',
+        'Laravel\\Breeze\\BreezeServiceProvider' => __DIR__ . '/..' . '/laravel/breeze/src/BreezeServiceProvider.php',
+        'Laravel\\Breeze\\Console\\InstallCommand' => __DIR__ . '/..' . '/laravel/breeze/src/Console/InstallCommand.php',
+        'Laravel\\Breeze\\Console\\InstallsApiStack' => __DIR__ . '/..' . '/laravel/breeze/src/Console/InstallsApiStack.php',
+        'Laravel\\Breeze\\Console\\InstallsBladeStack' => __DIR__ . '/..' . '/laravel/breeze/src/Console/InstallsBladeStack.php',
+        'Laravel\\Breeze\\Console\\InstallsInertiaStacks' => __DIR__ . '/..' . '/laravel/breeze/src/Console/InstallsInertiaStacks.php',
+        'Laravel\\Breeze\\Console\\InstallsLivewireStack' => __DIR__ . '/..' . '/laravel/breeze/src/Console/InstallsLivewireStack.php',
         'Laravel\\Pail\\Console\\Commands\\PailCommand' => __DIR__ . '/..' . '/laravel/pail/src/Console/Commands/PailCommand.php',
         'Laravel\\Pail\\Contracts\\Printer' => __DIR__ . '/..' . '/laravel/pail/src/Contracts/Printer.php',
         'Laravel\\Pail\\File' => __DIR__ . '/..' . '/laravel/pail/src/File.php',

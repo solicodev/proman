@@ -13,7 +13,8 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        //
+        $departments = Department::get();
+        return view('admin::departments.index',get_defined_vars());
     }
 
     /**
@@ -29,7 +30,7 @@ class DepartmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**
