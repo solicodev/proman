@@ -1,119 +1,1481 @@
-@extends('layout.admin')
-@section('content')
-    <!-- CONTAINER -->
-    <div class="main-container container-fluid">
-        <!-- PAGE-HEADER -->
-        <div class="page-header">
-            <div>
-                <h1 class="page-title">داشبورد</h1>
-            </div>
-            <div class="ms-auto pageheader-btn">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="javascript:void(0);">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
-                </ol>
-            </div>
-        </div>
-        <!-- PAGE-HEADER END -->
-{{--        @if(auth()->user()->hasrole('Super Admin'))--}}
-        <div class="row">
+@include('admin.layout.style')
+<body class="bg-theme bg-theme9">
 
-            <div class="col-lg-6 col-sm-12 col-md-6 col-xl-3">
-                <div class="card overflow-hidden">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col">
-                                <h3 class="mb-2 fw-semibold">123</h3>
-                                <p class="text-muted fs-13 mb-0">لورم ایپسوم</p>
-                                <p class="text-muted mb-0 mt-2 fs-12">
-                                                        <span class="icn-box text-danger fw-semibold fs-13 me-1">
-{{--                                                            <i class="fa fa-long-arrow-down"></i>--}}
-{{--                                                            12%--}}
-                                                        </span>
-                                </p>
-                            </div>
-                            <div class="col col-auto top-icn dash">
-                                <div class="counter-icon bg-secondary dash ms-auto box-shadow-secondary">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="fill-white" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><path d="M19.5,7H16V5.9169922c0-2.2091064-1.7908325-4-4-4s-4,1.7908936-4,4V7H4.5C4.4998169,7,4.4996338,7,4.4993896,7C4.2234497,7.0001831,3.9998169,7.223999,4,7.5V19c0.0018311,1.6561279,1.3438721,2.9981689,3,3h10c1.6561279-0.0018311,2.9981689-1.3438721,3-3V7.5c0-0.0001831,0-0.0003662,0-0.0006104C19.9998169,7.2234497,19.776001,6.9998169,19.5,7z M9,5.9169922c0-1.6568604,1.3431396-3,3-3s3,1.3431396,3,3V7H9V5.9169922z M19,19c-0.0014038,1.1040039-0.8959961,1.9985962-2,2H7c-1.1040039-0.0014038-1.9985962-0.8959961-2-2V8h3v2.5C8,10.776123,8.223877,11,8.5,11S9,10.776123,9,10.5V8h6v2.5c0,0.0001831,0,0.0003662,0,0.0005493C15.0001831,10.7765503,15.223999,11.0001831,15.5,11c0.0001831,0,0.0003662,0,0.0006104,0C15.7765503,10.9998169,16.0001831,10.776001,16,10.5V8h3V19z"></path></svg>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<div class="wrapper">
+
+    <div class="sidebar-wrapper" data-simplebar="true">
+        <div class="sidebar-header">
+            <div>
+                <img src="{{url('assets/admin/images/logo-icon.png')}}" class="logo-icon" alt="توضیح تصویر">
             </div>
-            <div class="col-lg-6 col-sm-12 col-md-6 col-xl-3">
-                <div class="card overflow-hidden">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col">
-                                <h3 class="mb-2 fw-semibold"></h3>
-                                <p class="text-muted fs-13 mb-0">لورم ایپسوم</p>
-                                <p class="text-muted mb-0 mt-2 fs-12">
-                                                        <span class="icn-box text-success fw-semibold fs-13 me-1">
-{{--                                                            <i class="fa fa-long-arrow-up"></i>--}}
-{{--                                                            27%--}}
-                                                        </span>
-                                    پذیرندگان کلان
-                                </p>
-                            </div>
-                            <div class="col col-auto top-icn dash">
-                                <div class="counter-icon bg-info dash ms-auto box-shadow-info">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="fill-white" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><path d="M7.5,12C7.223877,12,7,12.223877,7,12.5v5.0005493C7.0001831,17.7765503,7.223999,18.0001831,7.5,18h0.0006104C7.7765503,17.9998169,8.0001831,17.776001,8,17.5v-5C8,12.223877,7.776123,12,7.5,12z M19,2H5C3.3438721,2.0018311,2.0018311,3.3438721,2,5v14c0.0018311,1.6561279,1.3438721,2.9981689,3,3h14c1.6561279-0.0018311,2.9981689-1.3438721,3-3V5C21.9981689,3.3438721,20.6561279,2.0018311,19,2z M21,19c-0.0014038,1.1040039-0.8959961,1.9985962-2,2H5c-1.1040039-0.0014038-1.9985962-0.8959961-2-2V5c0.0014038-1.1040039,0.8959961-1.9985962,2-2h14c1.1040039,0.0014038,1.9985962,0.8959961,2,2V19z M12,6c-0.276123,0-0.5,0.223877-0.5,0.5v11.0005493C11.5001831,17.7765503,11.723999,18.0001831,12,18h0.0006104c0.2759399-0.0001831,0.4995728-0.223999,0.4993896-0.5v-11C12.5,6.223877,12.276123,6,12,6z M16.5,10c-0.276123,0-0.5,0.223877-0.5,0.5v7.0005493C16.0001831,17.7765503,16.223999,18.0001831,16.5,18h0.0006104C16.7765503,17.9998169,17.0001831,17.776001,17,17.5v-7C17,10.223877,16.776123,10,16.5,10z"></path></svg>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div>
+                <h4 class="logo-text">پنل مدیریت
+
+                </h4>
             </div>
-            <div class="col-lg-6 col-sm-12 col-md-6 col-xl-3">
-                <div class="card overflow-hidden">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col">
-                                <h3 class="mb-2 fw-semibold">123</h3>
-                                <p class="text-muted fs-13 mb-0">لورم ایپسوم</p>
-                                <p class="text-muted mb-0 mt-2 fs-12">
-                                                        <span class="icn-box text-success fw-semibold fs-13 me-1">
-{{--                                                            <i class="fa fa-long-arrow-up"></i>--}}
-{{--                                                            9%--}}
-                                                        </span>
-لورم ایپسوم                                </p>
-                            </div>
-                            <div class="col col-auto top-icn dash">
-                                <div class="counter-icon bg-warning dash ms-auto box-shadow-warning">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="fill-white" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><path d="M9,10h2.5c0.276123,0,0.5-0.223877,0.5-0.5S11.776123,9,11.5,9H10V8c0-0.276123-0.223877-0.5-0.5-0.5S9,7.723877,9,8v1c-1.1045532,0-2,0.8954468-2,2s0.8954468,2,2,2h1c0.5523071,0,1,0.4476929,1,1s-0.4476929,1-1,1H7.5C7.223877,15,7,15.223877,7,15.5S7.223877,16,7.5,16H9v1.0005493C9.0001831,17.2765503,9.223999,17.5001831,9.5,17.5h0.0006104C9.7765503,17.4998169,10.0001831,17.276001,10,17v-1c1.1045532,0,2-0.8954468,2-2s-0.8954468-2-2-2H9c-0.5523071,0-1-0.4476929-1-1S8.4476929,10,9,10z M21.5,12H17V2.5c0.000061-0.0875244-0.0228882-0.1735229-0.0665283-0.2493896c-0.1375732-0.2393188-0.4431152-0.3217773-0.6824951-0.1842041l-3.2460327,1.8603516L9.7481079,2.0654297c-0.1536865-0.0878906-0.3424072-0.0878906-0.4960938,0l-3.256897,1.8613281L2.7490234,2.0664062C2.6731567,2.0227661,2.5871582,1.9998779,2.4996338,1.9998779C2.2235718,2.000061,1.9998779,2.223938,2,2.5v17c0.0012817,1.380188,1.119812,2.4987183,2.5,2.5H19c1.6561279-0.0018311,2.9981689-1.3438721,3-3v-6.5006104C21.9998169,12.2234497,21.776001,11.9998169,21.5,12z M4.5,21c-0.828064-0.0009155-1.4990845-0.671936-1.5-1.5V3.3623047l2.7412109,1.5712891c0.1575928,0.0872192,0.348877,0.0875854,0.5068359,0.0009766L9.5,3.0761719l3.2519531,1.8583984c0.157959,0.0866089,0.3492432,0.0862427,0.5068359-0.0009766L16,3.3623047V19c0.0008545,0.7719116,0.3010864,1.4684448,0.7803345,2H4.5z M21,19c0,1.1045532-0.8954468,2-2,2s-2-0.8954468-2-2v-6h4V19z"></path></svg>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 col-sm-12 col-md-6 col-xl-3">
-                <div class="card overflow-hidden">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col">
-                                <h3 class="mb-2 fw-semibold">123 </h3>
-                                <p class="text-muted fs-13 mb-0">لورم ایپسوم</p>
-                                <p class="text-muted mb-0 mt-2 fs-12">
-                                                        <span class="icn-box text-success fw-semibold fs-13 me-1">
-{{--                                                            <i class="fa fa-long-arrow-up"></i>--}}
-                                                            {{--                                                            42%--}}
-                                                        </span>
-                                    پرسنل سازمان ها/موسسات/شرکت ها
-                                </p>
-                            </div>
-                            <div class="col col-auto top-icn dash">
-                                <div class="counter-icon bg-primary dash ms-auto box-shadow-primary">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="fill-white" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><path d="M12,8c-2.2091675,0-4,1.7908325-4,4s1.7908325,4,4,4c2.208252-0.0021973,3.9978027-1.791748,4-4C16,9.7908325,14.2091675,8,12,8z M12,15c-1.6568604,0-3-1.3431396-3-3s1.3431396-3,3-3c1.6561279,0.0018311,2.9981689,1.3438721,3,3C15,13.6568604,13.6568604,15,12,15z M21.960022,11.8046875C19.9189453,6.9902344,16.1025391,4,12,4s-7.9189453,2.9902344-9.960022,7.8046875c-0.0537109,0.1246948-0.0537109,0.2659302,0,0.390625C4.0810547,17.0097656,7.8974609,20,12,20s7.9190063-2.9902344,9.960022-7.8046875C22.0137329,12.0706177,22.0137329,11.9293823,21.960022,11.8046875z M12,19c-3.6396484,0-7.0556641-2.6767578-8.9550781-7C4.9443359,7.6767578,8.3603516,5,12,5s7.0556641,2.6767578,8.9550781,7C19.0556641,16.3232422,15.6396484,19,12,19z"></path></svg>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="toggle-icon ms-auto">
+
+                <i  class='bx bx-arrow-back'>
+                </i>
             </div>
         </div>
-{{--        @endif--}}
+
+        <ul class="metismenu" id="menu">
+            <li>
+                <a href="javascript:;" class="has-arrow">
+                    <div class="parent-icon">
+
+                        <i  class='bx bx-home-alt'>
+                        </i>
+                    </div>
+                    <div class="menu-title">داشبورد</div>
+                </a>
+                <ul>
+                    <li> <a href="index.html">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>فروشگاهی</a>
+                    </li>
+                    <li> <a href="index2.html">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>تحلیل</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="javascript:;" class="has-arrow">
+                    <div class="parent-icon">
+
+                        <i  class="bx bx-category">
+                        </i>
+                    </div>
+                    <div class="menu-title">اپلیکیشن</div>
+                </a>
+                <ul>
+                    <li> <a href="app-emailbox.html">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>ایمیل</a>
+                    </li>
+                    <li> <a href="app-chat-box.html">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>اپلیکیشن چت</a>
+                    </li>
+                    <li> <a href="app-file-manager.html">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>مدیریت فایلها</a>
+                    </li>
+                    <li> <a href="app-contact-list.html">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>مخاطبین</a>
+                    </li>
+                    <li> <a href="app-to-do.html">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>لیست انجام</a>
+                    </li>
+                    <li> <a href="app-invoice.html">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>فاکتور</a>
+                    </li>
+                    <li> <a href="app-fullcalender.html">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>تقویم</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="menu-label">المان های یوآی</li>
+            <li>
+                <a href="widgets.html">
+                    <div class="parent-icon">
+
+                        <i  class='bx bx-cookie'>
+                        </i>
+                    </div>
+                    <div class="menu-title">ویجت ها</div>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;" class="has-arrow">
+                    <div class="parent-icon">
+
+                        <i  class='bx bx-cart'>
+                        </i>
+                    </div>
+                    <div class="menu-title">فروشگاهی</div>
+                </a>
+                <ul>
+                    <li> <a href="ecommerce-products.html">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>محصولات</a>
+                    </li>
+                    <li> <a href="ecommerce-products-details.html">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>جزئیات
+                            محصول</a>
+                    </li>
+                    <li> <a href="ecommerce-add-new-products.html">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>افزودن محصول
+                            جدید</a>
+                    </li>
+                    <li> <a href="ecommerce-orders.html">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>سفارشات</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a class="has-arrow" href="javascript:;">
+                    <div class="parent-icon">
+
+                        <i  class='bx bx-bookmark-heart'>
+                        </i>
+                    </div>
+                    <div class="menu-title">کامپوننت ها</div>
+                </a>
+                <ul>
+                    <li> <a href="component-alerts.html">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>هشدارها</a>
+                    </li>
+                    <li> <a href="component-accordions.html">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>آکاردیون</a>
+                    </li>
+                    <li> <a href="component-badges.html">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>بج ها</a>
+                    </li>
+                    <li> <a href="component-buttons.html">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>دکمه ها</a>
+                    </li>
+                    <li> <a href="component-cards.html">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>کارت ها</a>
+                    </li>
+                    <li> <a href="component-carousels.html">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>اسلایدرها</a>
+                    </li>
+                    <li> <a href="component-list-groups.html">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>لیست ها</a>
+                    </li>
+                    <li> <a href="component-media-object.html">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>آبجکت های رسانه</a>
+                    </li>
+                    <li> <a href="component-modals.html">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>مودالها</a>
+                    </li>
+                    <li> <a href="component-navs-tabs.html">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>تب و نو ها</a>
+                    </li>
+                    <li> <a href="component-navbar.html">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>نوبار</a>
+                    </li>
+                    <li> <a href="component-paginations.html">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>صفحه شماری</a>
+                    </li>
+                    <li> <a href="component-popovers-tooltips.html">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>پاپ آپ و
+                            تولتیپ ها</a>
+                    </li>
+                    <li> <a href="component-progress-bars.html">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>میله پیشرفت</a>
+                    </li>
+                    <li> <a href="component-spinners.html">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>اسپینرها</a>
+                    </li>
+                    <li> <a href="component-notifications.html">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>اعلانها</a>
+                    </li>
+                    <li> <a href="component-avtars-chips.html">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>آواتار</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a class="has-arrow" href="javascript:;">
+                    <div class="parent-icon">
+
+                        <i  class="bx bx-repeat">
+                        </i>
+                    </div>
+                    <div class="menu-title">محتوا</div>
+                </a>
+                <ul>
+                    <li> <a href="content-grid-system.html">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>سیستم شبکه ای</a>
+                    </li>
+                    <li> <a href="content-typography.html">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>تایپوگرافی</a>
+                    </li>
+                    <li> <a href="content-text-utilities.html">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>ابزارهای متن</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a class="has-arrow" href="javascript:;">
+                    <div class="parent-icon">
+                        <i class="bx bx-donate-blood">
+                        </i>
+                    </div>
+                    <div class="menu-title">آیکن ها</div>
+                </a>
+                <ul>
+                    <li> <a href="icons-line-icons.html">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>آیکن خطی</a>
+                    </li>
+                    <li> <a href="icons-boxicons.html">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>باکس آیکن</a>
+                    </li>
+                    <li> <a href="icons-feather-icons.html">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>فیدر آیکن</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="menu-label">فرم ها و جداول</li>
+            <li>
+                <a class="has-arrow" href="javascript:;">
+                    <div class="parent-icon">
+
+                        <i  class='bx bx-message-square-edit'>
+                        </i>
+                    </div>
+                    <div class="menu-title">فرمها</div>
+                </a>
+                <ul>
+                    <li> <a href="form-elements.html">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>المان های فرم</a>
+                    </li>
+                    <li> <a href="form-input-group.html">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>گروه های ورودی</a>
+                    </li>
+
+                    <li> <a href="form-layouts.html">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>لایه های فرم</a>
+                    </li>
+                    <li> <a href="form-validations.html">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>اعتبارسنجی فرم</a>
+                    </li>
+                    <li> <a href="form-wizard.html">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>فرم مرحله ایی</a>
+                    </li>
+                    <li> <a href="form-text-editor.html">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>ویرایشگر متن</a>
+                    </li>
+                    <li> <a href="form-file-upload.html">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>آپلود فایل</a>
+                    </li>
+                    <li> <a href="form-date-time-pickes.html">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>انتخابگر تاریخ</a>
+                    </li>
+                    <li> <a href="form-select2.html">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>پلاگین Select2</a>
+                    </li>
+                    <li> <a href="form-repeater.html">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>تکرار کننده فرم</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a class="has-arrow" href="javascript:;">
+                    <div class="parent-icon">
+
+                        <i  class="bx bx-grid-alt">
+                        </i>
+                    </div>
+                    <div class="menu-title">جداول</div>
+                </a>
+                <ul>
+                    <li> <a href="table-basic-table.html">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>جدول ساده</a>
+                    </li>
+                    <li> <a href="table-datatable.html">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>جدول داده </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="menu-label">صفحات</li>
+            <li>
+                <a class="has-arrow" href="javascript:;">
+                    <div class="parent-icon">
+
+                        <i  class="bx bx-lock">
+                        </i>
+                    </div>
+                    <div class="menu-title">احراز هویت</div>
+                </a>
+                <ul>
+                    <li>
+                        <a class="has-arrow" href="javascript:;">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>ساده</a>
+                        <ul>
+                            <li>
+                                <a href="auth-basic-signin.html" target="_blank">
+                                    <i class='bx bx-radio-circle'>
+                                    </i>ورود</a>
+                            </li>
+                            <li>
+                                <a href="auth-basic-signup.html" target="_blank">
+                                    <i class='bx bx-radio-circle'>
+                                    </i>ثبت نام</a>
+                            </li>
+                            <li>
+                                <a href="auth-basic-forgot-password.html" target="_blank">
+                                    <i class='bx bx-radio-circle'>
+                                    </i>فراموشی رمز ورود</a>
+                            </li>
+                            <li>
+                                <a href="auth-basic-reset-password.html" target="_blank">
+                                    <i class='bx bx-radio-circle'>
+                                    </i>بازنشانی رمز</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="has-arrow" href="javascript:;">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>کاور</a>
+                        <ul>
+                            <li>
+                                <a href="auth-cover-signin.html" target="_blank">
+                                    <i class='bx bx-radio-circle'>
+                                    </i>ورود</a>
+                            </li>
+                            <li>
+                                <a href="auth-cover-signup.html" target="_blank">
+                                    <i class='bx bx-radio-circle'>
+                                    </i>ثبت نام</a>
+                            </li>
+                            <li>
+                                <a href="auth-cover-forgot-password.html" target="_blank">
+                                    <i class='bx bx-radio-circle'>
+                                    </i>فراموشی رمز ورود</a>
+                            </li>
+                            <li>
+                                <a href="auth-cover-reset-password.html" target="_blank">
+                                    <i class='bx bx-radio-circle'>
+                                    </i>بازنشانی رمز</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="has-arrow" href="javascript:;">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>با سرصفحه و
+                            پاصفحه</a>
+                        <ul>
+                            <li>
+                                <a href="auth-header-footer-signin.html" target="_blank">
+                                    <i class='bx bx-radio-circle'>
+                                    </i>ورود</a>
+                            </li>
+                            <li>
+                                <a href="auth-header-footer-signup.html" target="_blank">
+                                    <i class='bx bx-radio-circle'>
+                                    </i>ثبت نام</a>
+                            </li>
+                            <li>
+                                <a href="auth-header-footer-forgot-password.html" target="_blank">
+                                    <i class='bx bx-radio-circle'>
+                                    </i>فراموشی رمز ورود</a>
+                            </li>
+                            <li>
+                                <a href="auth-header-footer-reset-password.html" target="_blank">
+                                    <i class='bx bx-radio-circle'>
+                                    </i>بازنشانی رمز</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="user-profile.html">
+                    <div class="parent-icon">
+
+                        <i  class="bx bx-user-circle">
+                        </i>
+                    </div>
+                    <div class="menu-title">پروفایل کاربر</div>
+                </a>
+            </li>
+            <li>
+                <a href="timeline.html">
+                    <div class="parent-icon">
+                        <i class="bx bx-video-recording">
+                        </i>
+                    </div>
+                    <div class="menu-title">تایم لاین</div>
+                </a>
+            </li>
+            <li>
+                <a class="has-arrow" href="javascript:;">
+                    <div class="parent-icon">
+
+                        <i  class="bx bx-error">
+                        </i>
+                    </div>
+                    <div class="menu-title">خطاها</div>
+                </a>
+                <ul>
+                    <li> <a href="errors-404-error.html" target="_blank">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>
+                            خطای 404</a>
+                    </li>
+                    <li> <a href="errors-500-error.html" target="_blank">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>خطای
+                            500</a>
+                    </li>
+                    <li> <a href="errors-coming-soon.html" target="_blank">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>صفحه
+                            بزودی</a>
+                    </li>
+                    <li> <a href="error-blank-page.html" target="_blank">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>صفحه
+                            خالی</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="faq.html">
+                    <div class="parent-icon">
+
+                        <i  class="bx bx-help-circle">
+                        </i>
+                    </div>
+                    <div class="menu-title">سوالات متداول</div>
+                </a>
+            </li>
+            <li>
+                <a href="pricing-table.html">
+                    <div class="parent-icon">
+
+                        <i  class="bx bx-diamond">
+                        </i>
+                    </div>
+                    <div class="menu-title">قیمت ها</div>
+                </a>
+            </li>
+            <li class="menu-label">چارت و نقشه</li>
+            <li>
+                <a class="has-arrow" href="javascript:;">
+                    <div class="parent-icon">
+
+                        <i  class="bx bx-line-chart">
+                        </i>
+                    </div>
+                    <div class="menu-title">چارت ها</div>
+                </a>
+                <ul>
+                    <li> <a href="charts-apex-chart.html">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>اپکس</a>
+                    </li>
+                    <li> <a href="charts-chartjs.html">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>چارت جی اس</a>
+                    </li>
+                    <li> <a href="charts-highcharts.html">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>هایچارتز</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a class="has-arrow" href="javascript:;">
+                    <div class="parent-icon">
+
+                        <i  class="bx bx-map-alt">
+                        </i>
+                    </div>
+                    <div class="menu-title">نقشه ها</div>
+                </a>
+                <ul>
+                    <li> <a href="map-google-maps.html">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>نقشه گوگل</a>
+                    </li>
+                    <li> <a href="map-vector-maps.html">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>نقشه های وکتور</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="menu-label">سایر</li>
+            <li>
+                <a class="has-arrow" href="javascript:;">
+                    <div class="parent-icon">
+
+                        <i  class="bx bx-menu">
+                        </i>
+                    </div>
+                    <div class="menu-title">منوی چندسطحی</div>
+                </a>
+                <ul>
+                    <li> <a class="has-arrow" href="javascript:;">
+
+                            <i  class='bx bx-radio-circle'>
+                            </i>سطح یک</a>
+                        <ul>
+                            <li> <a class="has-arrow" href="javascript:;">
+
+                                    <i  class='bx bx-radio-circle'>
+                                    </i>سطح
+                                    2</a>
+                                <ul>
+                                    <li> <a href="javascript:;">
+
+                                            <i  class='bx bx-radio-circle'>
+                                            </i>سطح 3</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <div class="parent-icon">
+
+                        <i  class="bx bx-folder">
+                        </i>
+                    </div>
+                    <div class="menu-title">مستندات</div>
+                </a>
+            </li>
+            <li>
+                <a href="#" target="_blank">
+                    <div class="parent-icon">
+
+                        <i  class="bx bx-support">
+                        </i>
+                    </div>
+                    <div class="menu-title">پشتیبانی</div>
+                </a>
+            </li>
+        </ul>
 
     </div>
-@endsection
+
+
+    <header>
+        <div class="topbar d-flex align-items-center">
+            <nav class="navbar navbar-expand gap-3">
+                <div class="mobile-toggle-menu">
+
+                    <i  class='bx bx-menu'>
+                    </i>
+                </div>
+                <div class="search-bar flex-grow-1">
+                    <div class="position-relative search-bar-box">
+
+                        <input type="text" class="form-control search-control" placeholder="جستجو کنید...">
+                        <span class="position-absolute top-50 search-show translate-middle-y">
+								<i  class='bx bx-search'>
+								</i>
+								</span>
+                        <span class="position-absolute top-50 search-close translate-middle-y">
+								<i  class='bx bx-x'>
+								</i>
+								</span>
+                    </div>
+                </div>
+                <div class="top-menu ms-auto">
+                    <ul class="navbar-nav align-items-center gap-1">
+                        <li class="nav-item mobile-search-icon d-flex d-lg-none" data-bs-toggle="modal"
+                            data-bs-target="#SearchModal">
+                            <a class="nav-link" href="javascript:;">
+
+                                <i  class='bx bx-search'>
+                                </i>
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown dropdown-laungauge d-none d-sm-flex">
+                            <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="javascript:;"
+                               data-bs-toggle="dropdown">
+                                <img src="{{url('assets/admin/images/county/02.png')}}" width="22"
+                                     alt="توضیح تصویر">
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center py-2" href="javascript:;">
+                                        <img
+                                            src="{{url('assets/admin/images/county/01.png')}}" width="20" alt="توضیح تصویر">
+                                        <span
+                                            class="ms-2">انگلیسی</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center py-2" href="javascript:;">
+                                        <img
+                                            src="{{url('assets/admin/images/county/02.png')}}" width="20" alt="توضیح تصویر">
+                                        <span
+                                            class="ms-2">فارسی</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center py-2" href="javascript:;">
+                                        <img
+                                            src="{{url('assets/admin/images/county/03.png')}}" width="20" alt="توضیح تصویر">
+                                        <span
+                                            class="ms-2">فرانسوی</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center py-2" href="javascript:;">
+                                        <img
+                                            src="{{url('assets/admin/images/county/04.png')}}" width="20" alt="توضیح تصویر">
+                                        <span
+                                            class="ms-2">ایتالیایی</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center py-2" href="javascript:;">
+                                        <img
+                                            src="{{url('assets/admin/images/county/05.png')}}" width="20" alt="توضیح تصویر">
+                                        <span
+                                            class="ms-2">کلمبیا</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center py-2" href="javascript:;">
+                                        <img
+                                            src="{{url('assets/admin/images/county/06.png')}}" width="20" alt="توضیح تصویر">
+                                        <span
+                                            class="ms-2">اسپانیایی</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center py-2" href="javascript:;">
+                                        <img
+                                            src="{{url('assets/admin/images/county/07.png')}}" width="20" alt="توضیح تصویر">
+                                        <span
+                                            class="ms-2">گرجی</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center py-2" href="javascript:;">
+                                        <img
+                                            src="{{url('assets/admin/images/county/08.png')}}" width="20" alt="توضیح تصویر">
+                                        <span
+                                            class="ms-2">هندی</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item dropdown dropdown-app">
+                            <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" data-bs-toggle="dropdown"
+                               href="javascript:;">
+
+                                <i  class='bx bx-grid-alt'>
+                                </i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end p-0">
+                                <div class="app-container p-2 my-2">
+                                    <div class="row gx-0 gy-2 row-cols-3 justify-content-center p-2">
+                                        <div class="col">
+                                            <a href="javascript:;">
+                                                <div class="app-box text-center">
+                                                    <div class="app-icon">
+                                                        <img src="{{url('assets/admin/images/app/slack.png')}}" width="30"
+                                                             alt="توضیح تصویر">
+                                                    </div>
+                                                    <div class="app-name">
+                                                        <p class="mb-0 mt-1">اسلک</p>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col">
+                                            <a href="javascript:;">
+                                                <div class="app-box text-center">
+                                                    <div class="app-icon">
+                                                        <img src="{{url('assets/admin/images/app/behance.png')}}" width="30"
+                                                             alt="توضیح تصویر">
+                                                    </div>
+                                                    <div class="app-name">
+                                                        <p class="mb-0 mt-1">بیهنس</p>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col">
+                                            <a href="javascript:;">
+                                                <div class="app-box text-center">
+                                                    <div class="app-icon">
+                                                        <img src="{{url('assets/admin/images/app/google-drive.png')}}" width="30"
+                                                             alt="توضیح تصویر">
+                                                    </div>
+                                                    <div class="app-name">
+                                                        <p class="mb-0 mt-1">دریبل</p>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col">
+                                            <a href="javascript:;">
+                                                <div class="app-box text-center">
+                                                    <div class="app-icon">
+                                                        <img src="{{url('assets/admin/images/app/outlook.png')}}" width="30"
+                                                             alt="توضیح تصویر">
+                                                    </div>
+                                                    <div class="app-name">
+                                                        <p class="mb-0 mt-1">اوتلوک</p>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col">
+                                            <a href="javascript:;">
+                                                <div class="app-box text-center">
+                                                    <div class="app-icon">
+                                                        <img src="{{url('assets/admin/images/app/github.png')}}" width="30"
+                                                             alt="توضیح تصویر">
+                                                    </div>
+                                                    <div class="app-name">
+                                                        <p class="mb-0 mt-1">گیت هاب</p>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col">
+                                            <a href="javascript:;">
+                                                <div class="app-box text-center">
+                                                    <div class="app-icon">
+                                                        <img src="{{url('assets/admin/images/app/stack-overflow.png')}}" width="30"
+                                                             alt="توضیح تصویر">
+                                                    </div>
+                                                    <div class="app-name">
+                                                        <p class="mb-0 mt-1">استک</p>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col">
+                                            <a href="javascript:;">
+                                                <div class="app-box text-center">
+                                                    <div class="app-icon">
+                                                        <img src="{{url('assets/admin/images/app/figma.png')}}" width="30"
+                                                             alt="توضیح تصویر">
+                                                    </div>
+                                                    <div class="app-name">
+                                                        <p class="mb-0 mt-1">استک</p>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col">
+                                            <a href="javascript:;">
+                                                <div class="app-box text-center">
+                                                    <div class="app-icon">
+                                                        <img src="{{url('assets/admin/images/app/twitter.png')}}" width="30"
+                                                             alt="توضیح تصویر">
+                                                    </div>
+                                                    <div class="app-name">
+                                                        <p class="mb-0 mt-1">توییتر</p>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col">
+                                            <a href="javascript:;">
+                                                <div class="app-box text-center">
+                                                    <div class="app-icon">
+                                                        <img src="{{url('assets/admin/images/app/google-calendar.png')}}" width="30"
+                                                             alt="توضیح تصویر">
+                                                    </div>
+                                                    <div class="app-name">
+                                                        <p class="mb-0 mt-1">تقویم</p>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col">
+                                            <a href="javascript:;">
+                                                <div class="app-box text-center">
+                                                    <div class="app-icon">
+                                                        <img src="{{url('assets/admin/images/app/spotify.png')}}" width="30"
+                                                             alt="توضیح تصویر">
+                                                    </div>
+                                                    <div class="app-name">
+                                                        <p class="mb-0 mt-1">اسپاتیفای</p>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col">
+                                            <a href="javascript:;">
+                                                <div class="app-box text-center">
+                                                    <div class="app-icon">
+                                                        <img src="{{url('assets/admin/images/app/google-photos.png')}}" width="30"
+                                                             alt="توضیح تصویر">
+                                                    </div>
+                                                    <div class="app-name">
+                                                        <p class="mb-0 mt-1">تصاویر</p>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col">
+                                            <a href="javascript:;">
+                                                <div class="app-box text-center">
+                                                    <div class="app-icon">
+                                                        <img src="{{url('assets/admin/images/app/pinterest.png')}}" width="30"
+                                                             alt="توضیح تصویر">
+                                                    </div>
+                                                    <div class="app-name">
+                                                        <p class="mb-0 mt-1">تصاویر</p>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col">
+                                            <a href="javascript:;">
+                                                <div class="app-box text-center">
+                                                    <div class="app-icon">
+                                                        <img src="{{url('assets/admin/images/app/linkedin.png')}}" width="30"
+                                                             alt="توضیح تصویر">
+                                                    </div>
+                                                    <div class="app-name">
+                                                        <p class="mb-0 mt-1">لینکدین</p>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col">
+                                            <a href="javascript:;">
+                                                <div class="app-box text-center">
+                                                    <div class="app-icon">
+                                                        <img src="{{url('assets/admin/images/app/dribble.png')}}" width="30"
+                                                             alt="توضیح تصویر">
+                                                    </div>
+                                                    <div class="app-name">
+                                                        <p class="mb-0 mt-1">دریبل</p>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col">
+                                            <a href="javascript:;">
+                                                <div class="app-box text-center">
+                                                    <div class="app-icon">
+                                                        <img src="{{url('assets/admin/images/app/youtube.png')}}" width="30"
+                                                             alt="توضیح تصویر">
+                                                    </div>
+                                                    <div class="app-name">
+                                                        <p class="mb-0 mt-1">یوتیوب</p>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col">
+                                            <a href="javascript:;">
+                                                <div class="app-box text-center">
+                                                    <div class="app-icon">
+                                                        <img src="{{url('assets/admin/images/app/google.png')}}" width="30"
+                                                             alt="توضیح تصویر">
+                                                    </div>
+                                                    <div class="app-name">
+                                                        <p class="mb-0 mt-1">اخبار</p>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col">
+                                            <a href="javascript:;">
+                                                <div class="app-box text-center">
+                                                    <div class="app-icon">
+                                                        <img src="{{url('assets/admin/images/app/envato.png')}}" width="30"
+                                                             alt="توضیح تصویر">
+                                                    </div>
+                                                    <div class="app-name">
+                                                        <p class="mb-0 mt-1">انواتو</p>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col">
+                                            <a href="javascript:;">
+                                                <div class="app-box text-center">
+                                                    <div class="app-icon">
+                                                        <img src="{{url('assets/admin/images/app/safari.png')}}" width="30"
+                                                             alt="توضیح تصویر">
+                                                    </div>
+                                                    <div class="app-name">
+                                                        <p class="mb-0 mt-1">سافاری</p>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="nav-item dropdown dropdown-large">
+                            <a class="nav-link dropdown-toggle dropdown-toggle-nocaret position-relative" href="#"
+                               data-bs-toggle="dropdown">
+                                <span class="alert-count">7</span>
+                                <i class='bx bx-bell'>
+                                </i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                <a href="javascript:;">
+                                    <div class="msg-header">
+                                        <p class="msg-header-title">اعلانها</p>
+                                        <p class="msg-header-badge">8 جدید</p>
+                                    </div>
+                                </a>
+                                <div class="header-notifications-list">
+                                    <a class="dropdown-item" href="javascript:;">
+                                        <div class="d-flex align-items-center">
+                                            <div class="user-online">
+                                                <img src="{{url('assets/admin/images/avatars/avatar-1.png')}}" class="msg-avatar"
+                                                     alt="توضیح تصویر">
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <h6 class="msg-name">دنیا اوحدی<span class="msg-time float-end">5
+															ثانیه قبل</span>
+                                                </h6>
+                                                <p class="msg-info">لورم ایپسوم متن ساختگی</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a class="dropdown-item" href="javascript:;">
+                                        <div class="d-flex align-items-center">
+                                            <div class="notify bg-light-danger text-danger">د س</div>
+                                            <div class="flex-grow-1">
+                                                <h6 class="msg-name">سفارشات جدید <span class="msg-time float-end">2
+															دقیقه قبل</span>
+                                                </h6>
+                                                <p class="msg-info">سفارشات جدیدی ثبت شده است</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a class="dropdown-item" href="javascript:;">
+                                        <div class="d-flex align-items-center">
+                                            <div class="user-online">
+                                                <img src="{{url('assets/admin/images/avatars/avatar-2.png')}}" class="msg-avatar"
+                                                     alt="توضیح تصویر">
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <h6 class="msg-name">عطا کریمی <span class="msg-time float-end">14
+															ثانیه قبل</span>
+                                                </h6>
+                                                <p class="msg-info">با تولید سادگی نامفهوم از صنعت چاپ </p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a class="dropdown-item" href="javascript:;">
+                                        <div class="d-flex align-items-center">
+                                            <div class="notify bg-light-success text-success">
+                                                <img src="{{url('assets/admin/images/app/outlook.png')}}" width="25"
+                                                     alt="توضیح تصویر">
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <h6 class="msg-name">حساب ایجاد شد<span
+                                                        class="msg-time float-end">28 دقیقه قبل</span>
+                                                </h6>
+                                                <p class="msg-info"> با استفاده از طراحان گرافیک است</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a class="dropdown-item" href="javascript:;">
+                                        <div class="d-flex align-items-center">
+                                            <div class="notify bg-light-info text-info">س س</div>
+                                            <div class="flex-grow-1">
+                                                <h6 class="msg-name">محصول جدید تایید شد <span
+                                                        class="msg-time float-end">2 ساعت قبل</span>
+                                                </h6>
+                                                <p class="msg-info">محصول جدید شما تایید شد</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a class="dropdown-item" href="javascript:;">
+                                        <div class="d-flex align-items-center">
+                                            <div class="user-online">
+                                                <img src="{{url('assets/admin/images/avatars/avatar-4.png')}}" class="msg-avatar"
+                                                     alt="توضیح تصویر">
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <h6 class="msg-name">کوثر پرهام <span class="msg-time float-end">15
+															دقیقه قبل</span>
+                                                </h6>
+                                                <p class="msg-info">چاپگرها و متون بلکه روزنامه و مجله </p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a class="dropdown-item" href="javascript:;">
+                                        <div class="d-flex align-items-center">
+                                            <div class="notify bg-light-success text-success">
+                                                <i
+                                                    class='bx bx-check-square'>
+                                                </i>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <h6 class="msg-name">سفارش ارسال شد <span
+                                                        class="msg-time float-end">5 ساعت قبل</span>
+                                                </h6>
+                                                <p class="msg-info">سفارش شما با موفقیت ارسال شد</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a class="dropdown-item" href="javascript:;">
+                                        <div class="d-flex align-items-center">
+                                            <div class="notify bg-light-primary">
+                                                <img src="{{url('assets/admin/images/app/github.png')}}" width="25"
+                                                     alt="توضیح تصویر">
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <h6 class="msg-name">24 ناشر جدید<span class="msg-time float-end">1
+															روز قبل</span>
+                                                </h6>
+                                                <p class="msg-info">24 ناشر جدید هفته گذشته ثبت نام کرده اند</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a class="dropdown-item" href="javascript:;">
+                                        <div class="d-flex align-items-center">
+                                            <div class="user-online">
+                                                <img src="{{url('assets/admin/images/avatars/avatar-8.png')}}" class="msg-avatar"
+                                                     alt="توضیح تصویر">
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <h6 class="msg-name">پدرام کوکبی <span class="msg-time float-end">6
+															ساعت قبل</span>
+                                                </h6>
+                                                <p class="msg-info"> در ستون و سطرآنچنان که لازم است</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <a href="javascript:;">
+                                    <div class="text-center msg-footer">
+                                        <button class="btn btn-light w-100">نمایش همه اعلان ها</button>
+                                    </div>
+                                </a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown dropdown-large">
+                            <a class="nav-link dropdown-toggle dropdown-toggle-nocaret position-relative" href="#"
+                               role="button" data-bs-toggle="dropdown" aria-expanded="false"> <span
+                                    class="alert-count">8</span>
+                                <i class='bx bx-shopping-bag'>
+                                </i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                <a href="javascript:;">
+                                    <div class="msg-header">
+                                        <p class="msg-header-title">سبد خرید</p>
+                                        <p class="msg-header-badge">10 مورد</p>
+                                    </div>
+                                </a>
+                                <div class="header-message-list">
+                                    <a class="dropdown-item" href="javascript:;">
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div class="position-relative">
+                                                <div class="cart-product rounded-circle bg-light">
+                                                    <img src="{{url('assets/admin/images/products/11.png')}}" class=""
+                                                         alt="توضیح تصویر">
+                                                </div>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <h6 class="cart-product-title mb-0">تیشرت سفید مردانه</h6>
+                                                <p class="cart-product-price mb-0">1 * 290000</p>
+                                            </div>
+                                            <div class="">
+                                                <p class="cart-price mb-0">250000</p>
+                                            </div>
+                                            <div class="cart-product-cancel">
+
+                                                <i  class="bx bx-x">
+                                                </i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a class="dropdown-item" href="javascript:;">
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div class="position-relative">
+                                                <div class="cart-product rounded-circle bg-light">
+                                                    <img src="{{url('assets/admin/images/products/02.png')}}" class=""
+                                                         alt="توضیح تصویر">
+                                                </div>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <h6 class="cart-product-title mb-0">تیشرت سفید مردانه</h6>
+                                                <p class="cart-product-price mb-0">1 * 290000</p>
+                                            </div>
+                                            <div class="">
+                                                <p class="cart-price mb-0">250000</p>
+                                            </div>
+                                            <div class="cart-product-cancel">
+
+                                                <i  class="bx bx-x">
+                                                </i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a class="dropdown-item" href="javascript:;">
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div class="position-relative">
+                                                <div class="cart-product rounded-circle bg-light">
+                                                    <img src="{{url('assets/admin/images/products/03.png')}}" class=""
+                                                         alt="توضیح تصویر">
+                                                </div>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <h6 class="cart-product-title mb-0">تیشرت سفید مردانه</h6>
+                                                <p class="cart-product-price mb-0">1 * 290000</p>
+                                            </div>
+                                            <div class="">
+                                                <p class="cart-price mb-0">250000</p>
+                                            </div>
+                                            <div class="cart-product-cancel">
+
+                                                <i  class="bx bx-x">
+                                                </i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a class="dropdown-item" href="javascript:;">
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div class="position-relative">
+                                                <div class="cart-product rounded-circle bg-light">
+                                                    <img src="{{url('assets/admin/images/products/04.png')}}" class=""
+                                                         alt="توضیح تصویر">
+                                                </div>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <h6 class="cart-product-title mb-0">تیشرت سفید مردانه</h6>
+                                                <p class="cart-product-price mb-0">1 * 290000</p>
+                                            </div>
+                                            <div class="">
+                                                <p class="cart-price mb-0">250000</p>
+                                            </div>
+                                            <div class="cart-product-cancel">
+
+                                                <i  class="bx bx-x">
+                                                </i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a class="dropdown-item" href="javascript:;">
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div class="position-relative">
+                                                <div class="cart-product rounded-circle bg-light">
+                                                    <img src="{{url('assets/admin/images/products/05.png')}}" class=""
+                                                         alt="توضیح تصویر">
+                                                </div>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <h6 class="cart-product-title mb-0">تیشرت سفید مردانه</h6>
+                                                <p class="cart-product-price mb-0">1 * 290000</p>
+                                            </div>
+                                            <div class="">
+                                                <p class="cart-price mb-0">250000</p>
+                                            </div>
+                                            <div class="cart-product-cancel">
+
+                                                <i  class="bx bx-x">
+                                                </i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a class="dropdown-item" href="javascript:;">
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div class="position-relative">
+                                                <div class="cart-product rounded-circle bg-light">
+                                                    <img src="{{url('assets/admin/images/products/06.png')}}" class=""
+                                                         alt="توضیح تصویر">
+                                                </div>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <h6 class="cart-product-title mb-0">تیشرت سفید مردانه</h6>
+                                                <p class="cart-product-price mb-0">1 * 290000</p>
+                                            </div>
+                                            <div class="">
+                                                <p class="cart-price mb-0">250000</p>
+                                            </div>
+                                            <div class="cart-product-cancel">
+
+                                                <i  class="bx bx-x">
+                                                </i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a class="dropdown-item" href="javascript:;">
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div class="position-relative">
+                                                <div class="cart-product rounded-circle bg-light">
+                                                    <img src="{{url('assets/admin/images/products/07.png')}}" class=""
+                                                         alt="توضیح تصویر">
+                                                </div>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <h6 class="cart-product-title mb-0">تیشرت سفید مردانه</h6>
+                                                <p class="cart-product-price mb-0">1 * 290000</p>
+                                            </div>
+                                            <div class="">
+                                                <p class="cart-price mb-0">250000</p>
+                                            </div>
+                                            <div class="cart-product-cancel">
+
+                                                <i  class="bx bx-x">
+                                                </i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a class="dropdown-item" href="javascript:;">
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div class="position-relative">
+                                                <div class="cart-product rounded-circle bg-light">
+                                                    <img src="{{url('assets/admin/images/products/08.png')}}" class=""
+                                                         alt="توضیح تصویر">
+                                                </div>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <h6 class="cart-product-title mb-0">تیشرت سفید مردانه</h6>
+                                                <p class="cart-product-price mb-0">1 * 290000</p>
+                                            </div>
+                                            <div class="">
+                                                <p class="cart-price mb-0">250000</p>
+                                            </div>
+                                            <div class="cart-product-cancel">
+
+                                                <i  class="bx bx-x">
+                                                </i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a class="dropdown-item" href="javascript:;">
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div class="position-relative">
+                                                <div class="cart-product rounded-circle bg-light">
+                                                    <img src="{{url('assets/admin/images/products/09.png')}}" class=""
+                                                         alt="توضیح تصویر">
+                                                </div>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <h6 class="cart-product-title mb-0">تیشرت سفید مردانه</h6>
+                                                <p class="cart-product-price mb-0">1 * 290000</p>
+                                            </div>
+                                            <div class="">
+                                                <p class="cart-price mb-0">250000</p>
+                                            </div>
+                                            <div class="cart-product-cancel">
+
+                                                <i  class="bx bx-x">
+                                                </i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <a href="javascript:;">
+                                    <div class="text-center msg-footer">
+                                        <div class="d-flex align-items-center justify-content-between mb-3">
+                                            <h5 class="mb-0">قیمت کل</h5>
+                                            <h5 class="mb-0 ms-auto">4890000</h5>
+                                        </div>
+                                        <button class="btn btn-light w-100">تسویه حساب</button>
+                                    </div>
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="user-box dropdown px-3">
+                    <a class="d-flex align-items-center nav-link dropdown-toggle gap-3 dropdown-toggle-nocaret"
+                       href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+
+                        <img src="{{url('assets/admin/images/avatars/avatar-2.png')}}" class="user-img" alt="توضیح تصویر">
+                        <div class="user-info">
+                            <p class="user-name mb-0">پریا سلطانی</p>
+                            <p class="designattion mb-0">طراح وب</p>
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="javascript:;">
+                                <i
+                                    class="bx bx-user fs-5">
+                                </i>
+                                <span>پروفایل</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="javascript:;">
+                                <i
+                                    class="bx bx-cog fs-5">
+                                </i>
+                                <span>تنظیمات</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="javascript:;">
+                                <i
+                                    class="bx bx-home-circle fs-5">
+                                </i>
+                                <span>داشبورد</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="javascript:;">
+                                <i
+                                    class="bx bx-dollar-circle fs-5">
+                                </i>
+                                <span>درآمدها</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="javascript:;">
+                                <i
+                                    class="bx bx-download fs-5">
+                                </i>
+                                <span>دانلودها</span>
+                            </a>
+                        </li>
+                        <li>
+                            <div class="dropdown-divider mb-0">
+                            </div>
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="javascript:;">
+                                <i
+                                    class="bx bx-log-out-circle">
+                                </i>
+                                <span>خروج</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+
+    <div class="page-wrapper">
+        <div class="page-content">
+            @yield('content')
+        </div>
+    </div>
+
+
+    <div class="overlay toggle-icon">
+    </div>
+
+    <a href="javaScript:;" class="back-to-top">
+        <i
+            class='bx bxs-up-arrow-alt'>
+        </i>
+    </a>
+
+    <footer class="page-footer">
+        <p class="mb-0">کپی رایت © 1402 . کلیه حقوق محفوظ است.</p>
+    </footer>
+</div>
+
+
+
+
+@include('admin.layout.script')
+
