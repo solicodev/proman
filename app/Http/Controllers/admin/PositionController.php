@@ -81,7 +81,7 @@ class PositionController extends Controller
     {
         try {
             $position->delete();
-            return redirect(route('admin.position.index'))->with('flash_message', ' موفقیت حذف شد');
+            return redirect(route('admin.position.index'))->with('flash_message', ' با موفقیت حذف شد');
         } catch (Exception $exception) {
             return redirect()->back()->with('err_message', 'خطایی رخ داد مجددا تلاش کنید');
         }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Department;
+use Exception;
 use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
@@ -30,7 +31,16 @@ class DepartmentController extends Controller
      */
     public function store(Request $request)
     {
+        try {
+            $department = new Department();
+            $department->name = $request->name;
+            $department->parent_id = $request->parent_id ?? null;
+            $department->save();
 
+            return redirect(route('admin.department.index'))->with('flash_message', 'با موفقیت ایجاد شد');
+        } catch (Exception $exception) {
+            return redirect()->back()->with('err_message', $exception->getMessage());
+        }
     }
 
     /**
@@ -54,7 +64,15 @@ class DepartmentController extends Controller
      */
     public function update(Request $request, Department $department)
     {
-        //
+        try {
+            $department->name = $request->name;
+            $department->parent_id = $request->parent_id ?? null;
+            $department->update();
+
+            return redirect(route('admin.department.index'))->with('flash_message', 'با موفقیت ویرایش شد');
+        } catch (Exception $exception) {
+            return redirect()->back()->with('err_message', $exception->getMessage());
+        }
     }
 
     /**
@@ -62,6 +80,11 @@ class DepartmentController extends Controller
      */
     public function destroy(Department $department)
     {
-        //
+        try {
+            $department->delete();
+            return redirect(route('admin.department.index'))->with('flash_message', 'با موفقیت حذف شد');
+        } catch (Exception $exception) {
+            return redirect()->back()->with('err_message', 'خطایی رخ داد مجددا تلاش کنید');
+        }
     }
 }

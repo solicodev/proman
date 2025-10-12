@@ -2,6 +2,7 @@
 @section('content')
     <h6 class="mb-0 text-uppercase">لیست پوزیشن کاری</h6>
     <hr />
+    @include('admin.layout.message')
     <div class="card">
         <div class="card-body">
             <div class="d-flex align-items-center justify-content-end">
