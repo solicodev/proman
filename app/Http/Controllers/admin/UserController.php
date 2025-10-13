@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Position;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -23,7 +24,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('admin.users.create');
+        $positions = Position::get();
+        return view('admin.users.create',get_defined_vars());
     }
 
     /**
