@@ -293,6 +293,23 @@
 
     document.getElementById("year").innerHTML = date;
 </script>
+<script>
+    $("#fancy-file-upload").FancyFileUpload({
+        params: {
+            action: "fileuploader",
+        },
+        maxfilesize: 1000000,
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $("#image-uploadify").imageuploadify();
+        $.FancyFileUpload.defaults.langmap = {
+            Preview: "پیش نمایش",
+            "Remove from list": "حذف از لیست",
+        };
+    });
+</script>
 @stack('script')
 </body>
 
