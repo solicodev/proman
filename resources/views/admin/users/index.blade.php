@@ -16,6 +16,7 @@
                         <th>کد پرسنلی</th>
                         <th>شماره موبایل</th>
                         <th>ایمیل</th>
+                        <th>نقش کاربر</th>
                         <th>وضعیت</th>
                         <th style='width:50px;'>عملیات</th>
                     </tr>
@@ -27,6 +28,7 @@
                             <td> {{ $user->personal_id }}</td>
                             <td> {{ $user->mobile }}</td>
                             <td> {{ $user->email }}</td>
+                            <td> {{ $user->getRoleNames()->first() }}</td>
                             <td> {!! $user->UserStatus !!}</td>
                             <td>
                                 <div class="d-flex">

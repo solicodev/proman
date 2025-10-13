@@ -78,7 +78,6 @@
                                     <option value="{{$role->name}}">{{role_name($role->name)}} </option>
                                 @endforeach
                             </select>
-{{--                            <input type="text" name="role_id" class="form-control" id="role_id" value="{{old('role_id')}}" required>--}}
                             <div class="invalid-feedback">نقش کاربرالزامی است</div>
                         </div>
                         <div class="col-md-6">
@@ -86,10 +85,9 @@
                             <select class="form-select" name="permission_id" id="inputProductType" required>
                                 <option> </option>
                                 @foreach($permissions as $permission)
-                                    <option value="{{$permission->id}}">{{permission_name($per->name)}} </option>
+                                    <option value="{{$permission->id}}">{{permission_name($permission->name)}} </option>
                                 @endforeach
                             </select>
-{{--                            <input type="text" name="permission_id" class="form-control" id="permission_id" value="{{old('permission_id')}}" required>--}}
                             <div class="invalid-feedback">دسترسی های کاربرالزامی است</div>
                         </div>
                         <div class="col-12 mt-5">

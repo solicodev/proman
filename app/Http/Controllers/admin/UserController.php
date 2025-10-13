@@ -50,10 +50,10 @@ class UserController extends Controller
      */
     public function store(UserStoreRequest $request)
     {
-        $this->userService->store($request->all());
-
-        return redirect(route('admin.users.index'))->with('flash_message', 'با موفقیت ایجاد شد');
         try {
+        $this->userService->store($request->all());
+        return redirect(route('admin.users.index'))->with('flash_message', 'با موفقیت ایجاد شد');
+
         } catch (Exception $exception) {
             return redirect()->back()->with('err_message', $exception->getMessage());
         }
@@ -80,7 +80,13 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        try {
+            $this->userService->update($request->all(),$user);
+            return redirect(route('admin.users.index'))->with('flash_message', 'با موفقیت ایجاد شد');
+
+        } catch (Exception $exception) {
+            return redirect()->back()->with('err_message', $exception->getMessage());
+        }
     }
 
     /**
@@ -88,6 +94,11 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        try {
+            $user->delete();
+            return redirect(route('admin.users.index'))->with('flash_message', ' با موفقیت حذف شد');
+        } catch (Exception $exception) {
+            return redirect()->back()->with('err_message', 'خطایی رخ داد مجددا تلاش کنید');
+        }
     }
 }
