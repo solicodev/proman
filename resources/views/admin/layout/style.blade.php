@@ -21,6 +21,9 @@
     <script src="{{url('assets/admin/js/pace.min.js')}}">
     </script>
 
+    <link href="{{url('assets/admin/plugins/fancy-file-uploader/fancy_fileupload.css')}}" rel="stylesheet"/>
+    <link href="{{url('assets/admin/plugins/Drag-And-Drop/dist/imageuploadify.min.css')}}" rel="stylesheet"/>
+
     <link href="{{url('assets/admin/css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{url('assets/admin/css/bootstrap-extended.css')}}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&amp;display=swap" rel="stylesheet">

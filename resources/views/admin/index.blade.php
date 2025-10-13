@@ -76,6 +76,17 @@
                     <div class="menu-title">لیست پرسنل</div>
                 </a>
             </li>
+            <li class="menu-label">مدیریت رسانه ها</li>
+            <li>
+                <a href="{{route('admin.photo.index')}}">
+                    <div class="parent-icon">
+
+                        <i  class='bx bx-cookie'>
+                        </i>
+                    </div>
+                    <div class="menu-title">لیست رسانه ها</div>
+                </a>
+            </li>
 {{--            <li>--}}
 {{--                <a href="javascript:;" class="has-arrow">--}}
 {{--                    <div class="parent-icon">--}}

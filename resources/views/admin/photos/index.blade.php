@@ -1,11 +1,11 @@
 @extends('admin.index')
 @section('content')
-    <h6 class="mb-0 text-uppercase">لیست خدمات</h6>
+    <h6 class="mb-0 text-uppercase">لیست رسانه ها</h6>
     <hr />
     <div class="card">
         <div class="card-body">
             <div class="d-flex align-items-center justify-content-end">
-                <a href="{{ route('admin.user.create') }}" class="btn btn-primary btn-sm">افزودن کاربر(پرسنل)</a>
+                <a href="{{ route('admin.photo.create') }}" class="btn btn-primary btn-sm">افزودن فایل</a>
             </div>
             <hr>
             <div class="table-responsive">
@@ -13,31 +13,29 @@
                     <thead>
                     <tr>
                         <th></th>
-                        <th>نام و نام خانوادگی</th>
-                        <th>کد پرسنلی</th>
-                        <th>شماره موبایل</th>
-                        <th>ایمیل</th>
-                        <th>نقش کاربر</th>
-                        <th>وضعیت</th>
+                        <th>فایل</th>
+                        <th>مسیر فایل</th>
+                        <th>نام فایل</th>
+                        <th> کاربر</th>
                         <th style='width:50px;'>عملیات</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach ($users as $user)
+                    @foreach ($photos as $photo)
                         <tr>
-                            <td>{{$loop->iteration}}</td>
-                            <td> {{ $user->Name }}</td>
-                            <td> {{ $user->personal_id }}</td>
-                            <td> {{ $user->mobile }}</td>
-                            <td> {{ $user->email }}</td>
-                            <td> {{ $user->getRoleNames()->first() }}</td>
-                            <td> {!! $user->UserStatus !!}</td>
+                            <td> {{$loop->iteration}}</td>
+                            <td> {{ $photo->Name }}</td>
+                            <td> {{ $photo->personal_id }}</td>
+                            <td> {{ $photo->mobile }}</td>
+                            <td> {{ $photo->email }}</td>
+                            <td> {{ $photo->getRoleNames()->first() }}</td>
+                            <td> {!! $photo->UserStatus !!}</td>
                             <td>
                                 <div class="d-flex">
-                                    <a href="{{ route('admin.user.edit',$user->id) }}" class='text-warning'>
+                                    <a href="{{ route('admin.photo.edit',$photo->id) }}" class='text-warning'>
                                         <i class="bx bxs-edit"></i>
                                     </a>
-                                    <a href="#" onclick="openDeleteModal('{{ route('admin.user.destroy',$user->id) }}')"
+                                    <a href="#" onclick="openDeleteModal('{{ route('admin.photo.destroy',$photo->id) }}')"
                                        class="text-danger ms-3">
                                         <i class="bx bxs-trash"></i>
                                     </a>
@@ -57,13 +55,13 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="deleteServiceModalLabel">
-                        حذف سرویس
+                        حذف
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form action="" id='deleteForm'>
                     <div class="modal-body">
-                        آیا از حذف سرویس مطمئن هستید؟
+                        آیا از حذف مطمئن هستید؟
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">

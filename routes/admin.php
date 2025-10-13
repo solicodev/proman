@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\admin\adminController;
 use App\Http\Controllers\admin\DepartmentController;
+use App\Http\Controllers\admin\PhotoController;
 use App\Http\Controllers\admin\PositionController;
 use App\Http\Controllers\admin\UserController;
 use Illuminate\Support\Facades\Route;
@@ -16,6 +17,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/edit/{user}', [UserController::class , 'edit'])->name('edit');
         Route::put('/update/{user}', [UserController::class , 'update'])->name('update');
         Route::get('/delete/{user}', [UserController::class , 'destroy'])->name('destroy');
+    });
+
+    Route::prefix('photo')->name('photo.')->group(function () {
+        Route::get('/', [PhotoController::class , 'index'])->name('index');
+        Route::get('/create', [PhotoController::class , 'create'])->name('create');
+        Route::post('/store', [PhotoController::class , 'store'])->name('store');
+        Route::get('/edit/{photo}', [PhotoController::class , 'edit'])->name('edit');
+        Route::put('/update/{photo}', [PhotoController::class , 'update'])->name('update');
+        Route::get('/delete/{photo}', [PhotoController::class , 'destroy'])->name('destroy');
     });
 
     Route::prefix('position')->name('position.')->group(function () {

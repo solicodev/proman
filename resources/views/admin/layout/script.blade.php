@@ -16,6 +16,14 @@
 </script>
 <script src="{{url('assets/admin/plugins/datatable/js/dataTables.bootstrap5.min.js')}}">
 </script>
+
+<script src="{{url('assets/admin/plugins/fancy-file-uploader/jquery.ui.widget.js')}}"></script>
+<script src="{{url('assets/admin/plugins/fancy-file-uploader/jquery.fileupload.js')}}"></script>
+<script src="{{url('assets/admin/plugins/fancy-file-uploader/jquery.iframe-transport.js')}}"></script>
+<script src="{{url('assets/admin/plugins/fancy-file-uploader/jquery.fancy-fileupload.js')}}"></script>
+<script src="{{url('assets/admin/plugins/fancy-file-uploader/lang/fa.js')}}"></script>
+<script src="{{url('assets/admin/plugins/Drag-And-Drop/dist/imageuploadify.min.js')}}"></script>
+
 <script src="https://unpkg.com/boxicons@2.1.3/dist/boxicons.js"></script>
 <script>
     $(document).ready(function () {

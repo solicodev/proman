@@ -13,7 +13,8 @@ class PhotoController extends Controller
      */
     public function index()
     {
-        //
+        $photos = Photo::all();
+        return view('admin.photos.index', get_defined_vars());
     }
 
     /**
@@ -21,7 +22,7 @@ class PhotoController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.photos.create');
     }
 
     /**
@@ -29,7 +30,8 @@ class PhotoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        file_store($request->logo, 'assets/uploads/photos/logo/', '');
     }
 
     /**
