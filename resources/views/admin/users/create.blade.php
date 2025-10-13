@@ -64,14 +64,33 @@
                             <input type="text" name="email" class="form-control" id="email" value="{{old('email')}}" required>
                             <div class="invalid-feedback">آدرس ایمیل الزامی است</div>
                         </div>
-
                         <div class="col-md-3">
                             <label for="password" class="form-label">رمز عبور کاربر</label>
-                            <input type="text" name="password" class="form-control" id="password" value="{{old('password')}}" required>
+                            <input type="password" name="password" class="form-control" id="password" value="{{old('password')}}" required>
                             <div class="invalid-feedback">رمز عبور کاربرالزامی است</div>
                         </div>
-
-
+                        <div class="col-md-6">
+                            <label for="role_id" class="form-label">نقض کاربر</label>
+                            <select class="form-select" name="role_id" id="inputProductType" required>
+                                <option> انتخاب کنید </option>
+                                @foreach($roles as $role)
+                                    <option value="{{$role->id}}">{{role_name($role->name)}} </option>
+                                @endforeach
+                            </select>
+{{--                            <input type="text" name="role_id" class="form-control" id="role_id" value="{{old('role_id')}}" required>--}}
+                            <div class="invalid-feedback">نقش کاربرالزامی است</div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="permission_id" class="form-label">دسترسی های کاربر</label>
+                            <select class="form-select" name="permission_id" id="inputProductType" required>
+                                <option> انتخاب کنید </option>
+                                @foreach($permissions as $permission)
+                                    <option value="{{$permission->id}}">{{permission_name($per->name)}} </option>
+                                @endforeach
+                            </select>
+{{--                            <input type="text" name="permission_id" class="form-control" id="permission_id" value="{{old('permission_id')}}" required>--}}
+                            <div class="invalid-feedback">دسترسی های کاربرالزامی است</div>
+                        </div>
                         <div class="col-12 mt-5">
                             <div class="d-flex align-items-center justify-content-end">
                                 <button type="submit" class="btn btn-success">

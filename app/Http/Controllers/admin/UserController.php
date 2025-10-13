@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\UserStoreRequest;
 use App\Models\Position;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -25,21 +28,30 @@ class UserController extends Controller
     public function create()
     {
         $positions = Position::get();
+        $roles = Role::whereNot('name' , 'Super Admin')->get();
+        $permissions = Permission::get();
         return view('admin.users.create',get_defined_vars());
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(UserStoreRequest $request)
     {
-        try {
+        dd($request);
 
             $user = new User();
-            $user->name = $request->name;
+            $user->first_name = $request->first_name;
+            $user->last_name = $request->last_name;
+            $user->mobile = $request->mobile;
+            $user->personal_id = $request->personal_id;
+            $user->position_id = $request->position_id ;
+            $user->email= $request->email;
+            $user->password= $request->password;
             $user->save();
 
             return redirect(route('admin.users.index'))->with('flash_message', 'با موفقیت ایجاد شد');
+        try {
         } catch (Exception $exception) {
             return redirect()->back()->with('err_message', $exception->getMessage());
         }
