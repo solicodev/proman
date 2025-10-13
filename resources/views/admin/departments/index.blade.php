@@ -1,13 +1,14 @@
 @extends('admin.index')
 @section('content')
     <h6 class="mb-0 text-uppercase">لیست دپارتمان</h6>
-    <hr />
-    @include('admin.layout.message')
+    <hr/>
+    @include('layout.message')
     <div class="card">
         <div class="card-body">
             <div class="d-flex align-items-center justify-content-end">
                 <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                        data-bs-target="#createCategoryModal">افزودن دپارتمان</button>
+                        data-bs-target="#createCategoryModal">افزودن دپارتمان
+                </button>
             </div>
             <hr>
             <div class="table-responsive">
@@ -31,7 +32,8 @@
                                        class='text-warning'>
                                         <i class="bx bxs-edit"></i>
                                     </a>
-                                    <a href="#" onclick="openDeleteModal('{{ route('admin.department.destroy', $department->id) }}')"
+                                    <a href="#"
+                                       onclick="openDeleteModal('{{ route('admin.department.destroy', $department->id) }}')"
                                        class="text-danger ms-3">
                                         <i class="bx bxs-trash"></i>
                                     </a>
@@ -69,10 +71,11 @@
                         <div class="row g-3">
                             <div class="col-12">
                                 <label for="parent_id" class="form-label">دپارتمان مادر</label>
-                                <select class="form-select" id="parent_id" name="parent_id" aria-label="Default select example">
-                                    <option> انتخاب کنید </option>
-                                   @foreach($parents as $parent)
-                                    <option selected="" value="{{$parent->id}}">{{$parent->name}}</option>
+                                <select class="form-select" id="parent_id" name="parent_id"
+                                        aria-label="Default select example">
+                                    <option> انتخاب کنید</option>
+                                    @foreach($parents as $parent)
+                                        <option selected="" value="{{$parent->id}}">{{$parent->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -111,10 +114,11 @@
                         <div class="row g-3">
                             <div class="col-12">
                                 <label for="parent_id" class="form-label">دپارتمان مادر</label>
-                                <select class="form-select" id="parent_id" name="parent_id" aria-label="Default select example">
-                                    <option> انتخاب کنید </option>
+                                <select class="form-select" id="parent_id" name="parent_id"
+                                        aria-label="Default select example">
+                                    <option> انتخاب کنید</option>
                                     @foreach($parents as $parent)
-                                        <option  value="{{$parent->id}}">{{$parent->name}}</option>
+                                        <option value="{{$parent->id}}">{{$parent->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -160,7 +164,7 @@
 
 @push('script')
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('#table').DataTable({
                 language: {
                     "url": dataTableLangUrl

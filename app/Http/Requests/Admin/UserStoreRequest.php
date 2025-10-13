@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Admin;
 
+use App\Models\User;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -24,13 +25,15 @@ class UserStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'mobile' => 'required|string|max:255|unique:users',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
-            'personal_id' => 'required|string|max:255|unique:users',
-            'position_id' => 'required|string|max:255',
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
+            'mobile' => ['required', 'string', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'email', 'string', 'max:255'],
+            'password' => ['required', 'string'],
+            'personal_id' =>['required', 'max:255', 'unique:'.User::class],
+            'position_id' => ['required', 'integer', 'max:255'],
+            'role_id' => 'nullable',
+            'permission_id' => 'nullable',
         ];
     }
 
@@ -48,14 +51,17 @@ class UserStoreRequest extends FormRequest
             'position_id.required' => 'پوزیشن شغلی را وارد کنید',
         ];
     }
-    public function all($keys = null):array
-    {
-        dd(request()->validate($this->rules(),$this->messages()));
-        return request()->validate($this->rules(),$this->messages());
-    }
-//    public function failedValidation(Validator $validator)
+//    public function all($keys = null):array
 //    {
-//        return redirect()->back()->withErrors($validator)->withInput();
-////        throw new HttpResponseException(redirect()->back()->withErrors($validator)->withInput());
+//        dd(request()->validate($this->rules(),$this->messages()));
+//        return request()->validate($this->rules(),$this->messages());
 //    }
+    public function failedValidation(Validator $validator)
+    {
+//        if ($validator->fails()) {
+//            return redirect()->back()->withInput()->withErrors($validator->messages());
+//        }
+//        return redirect()->back()->withErrors($validator)->withInput();
+        throw new HttpResponseException(redirect()->back()->withErrors($validator->messages())->withInput());
+    }
 }

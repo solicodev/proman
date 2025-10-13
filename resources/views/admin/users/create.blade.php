@@ -1,6 +1,7 @@
 @extends('admin.index')
 
 @section('content')
+    @include('layout.message ')
     <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0 p-0">
@@ -72,9 +73,9 @@
                         <div class="col-md-6">
                             <label for="role_id" class="form-label">نقض کاربر</label>
                             <select class="form-select" name="role_id" id="inputProductType" required>
-                                <option> انتخاب کنید </option>
+                                <option>  </option>
                                 @foreach($roles as $role)
-                                    <option value="{{$role->id}}">{{role_name($role->name)}} </option>
+                                    <option value="{{$role->name}}">{{role_name($role->name)}} </option>
                                 @endforeach
                             </select>
 {{--                            <input type="text" name="role_id" class="form-control" id="role_id" value="{{old('role_id')}}" required>--}}
@@ -83,7 +84,7 @@
                         <div class="col-md-6">
                             <label for="permission_id" class="form-label">دسترسی های کاربر</label>
                             <select class="form-select" name="permission_id" id="inputProductType" required>
-                                <option> انتخاب کنید </option>
+                                <option> </option>
                                 @foreach($permissions as $permission)
                                     <option value="{{$permission->id}}">{{permission_name($per->name)}} </option>
                                 @endforeach

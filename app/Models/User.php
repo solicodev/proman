@@ -6,11 +6,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable , HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -57,8 +58,8 @@ class User extends Authenticatable
     }
 
     public $statuses = [
-        '0' => '<span class="badge bg-default text-black">غیرفعال</span>',
-        '1' => '<span class="badge bg-primary text-black">فعال</span>',
+        '0' => '<span class="badge bg-warning text-black">غیرفعال</span>',
+        '1' => '<span class="badge bg-success text-black">فعال</span>',
         '2' => '<span class="badge bg-danger text-black">تعلیق</span>',
     ];
 

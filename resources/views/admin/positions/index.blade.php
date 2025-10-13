@@ -1,13 +1,14 @@
 @extends('admin.index')
 @section('content')
     <h6 class="mb-0 text-uppercase">لیست پوزیشن کاری</h6>
-    <hr />
-    @include('admin.layout.message')
+    <hr/>
+    @include('layout.message')
     <div class="card">
         <div class="card-body">
             <div class="d-flex align-items-center justify-content-end">
                 <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                        data-bs-target="#createCategoryModal">افزودن پوزیشن کاری</button>
+                        data-bs-target="#createCategoryModal">افزودن پوزیشن کاری
+                </button>
             </div>
             <hr>
             <div class="table-responsive">
@@ -31,7 +32,8 @@
                                        class='text-warning'>
                                         <i class="bx bxs-edit"></i>
                                     </a>
-                                    <a href="#" onclick="openDeleteModal('{{ route('admin.position.destroy', $position->id) }}')"
+                                    <a href="#"
+                                       onclick="openDeleteModal('{{ route('admin.position.destroy', $position->id) }}')"
                                        class="text-danger ms-3">
                                         <i class="bx bxs-trash"></i>
                                     </a>
@@ -137,7 +139,7 @@
 
 @push('script')
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('#table').DataTable({
                 language: {
                     "url": dataTableLangUrl

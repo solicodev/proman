@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UserStoreRequest;
 use App\Models\Position;
 use App\Models\User;
+use App\Services\UserService;
 use Exception;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
@@ -13,12 +14,23 @@ use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
+    public UserService $userService;
+    public function __construct(UserService $userService)
+    {
+        $this->userService = $userService;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $users = User::get();
+        $excludedRoles = ['Super Admin', 'manager', 'member', 'assignee', 'User'];
+
+        $users = User::whereDoesntHave('roles', function ($query) use ($excludedRoles) {
+            $query->whereIn('name', $excludedRoles);
+        })->latest()->get();
+
+//        $users = User::get();
         return view('admin.users.index',get_defined_vars());
     }
 
@@ -38,19 +50,9 @@ class UserController extends Controller
      */
     public function store(UserStoreRequest $request)
     {
-        dd($request);
+        $this->userService->store($request->all());
 
-            $user = new User();
-            $user->first_name = $request->first_name;
-            $user->last_name = $request->last_name;
-            $user->mobile = $request->mobile;
-            $user->personal_id = $request->personal_id;
-            $user->position_id = $request->position_id ;
-            $user->email= $request->email;
-            $user->password= $request->password;
-            $user->save();
-
-            return redirect(route('admin.users.index'))->with('flash_message', 'با موفقیت ایجاد شد');
+        return redirect(route('admin.users.index'))->with('flash_message', 'با موفقیت ایجاد شد');
         try {
         } catch (Exception $exception) {
             return redirect()->back()->with('err_message', $exception->getMessage());
