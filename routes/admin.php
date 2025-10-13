@@ -3,10 +3,20 @@
 use App\Http\Controllers\admin\adminController;
 use App\Http\Controllers\admin\DepartmentController;
 use App\Http\Controllers\admin\PositionController;
+use App\Http\Controllers\admin\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [adminController::class , 'index'])->name('index');
+
+    Route::prefix('user')->name('user.')->group(function () {
+        Route::get('/', [UserController::class , 'index'])->name('index');
+        Route::get('/create', [UserController::class , 'create'])->name('create');
+        Route::post('/store', [UserController::class , 'store'])->name('store');
+        Route::get('/edit/{user}', [UserController::class , 'edit'])->name('edit');
+        Route::put('/update/{user}', [UserController::class , 'update'])->name('update');
+        Route::get('/delete/{user}', [UserController::class , 'destroy'])->name('destroy');
+    });
 
     Route::prefix('position')->name('position.')->group(function () {
         Route::get('/', [PositionController::class , 'index'])->name('index');

@@ -15,7 +15,8 @@ class DepartmentController extends Controller
     public function index()
     {
         $departments = Department::get();
-        return view('admin::departments.index',get_defined_vars());
+        $parents = Department::whereNull('parent_id')->get();
+        return view('admin.departments.index',get_defined_vars());
     }
 
     /**
@@ -32,6 +33,7 @@ class DepartmentController extends Controller
     public function store(Request $request)
     {
         try {
+
             $department = new Department();
             $department->name = $request->name;
             $department->parent_id = $request->parent_id ?? null;

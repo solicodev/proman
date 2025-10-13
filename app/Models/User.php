@@ -50,4 +50,20 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function getNameAttribute()
+    {
+        return $this->first_name . ' ' . $this->last_name;
+    }
+
+    public $statuses = [
+        '0' => '<span class="badge bg-default text-black">غیرفعال</span>',
+        '1' => '<span class="badge bg-primary text-black">فعال</span>',
+        '2' => '<span class="badge bg-danger text-black">تعلیق</span>',
+    ];
+
+    public function getUserStatusAttribute()
+    {
+        return $this->statuses[$this->status] ?? '';
+    }
 }

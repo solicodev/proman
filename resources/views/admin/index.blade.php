@@ -34,621 +34,596 @@
                     <li> <a href="index.html">
 
                             <i  class='bx bx-radio-circle'>
-                            </i>فروشگاهی</a>
+                            </i>Super Admin</a>
                     </li>
                     <li> <a href="index2.html">
 
                             <i  class='bx bx-radio-circle'>
-                            </i>تحلیل</a>
+                            </i>مدیریت پروژه</a>
                     </li>
                 </ul>
             </li>
+
+            <li class="menu-label">مدیریت دپارتمان ها</li>
             <li>
-                <a href="javascript:;" class="has-arrow">
-                    <div class="parent-icon">
-
-                        <i  class="bx bx-category">
-                        </i>
-                    </div>
-                    <div class="menu-title">اپلیکیشن</div>
-                </a>
-                <ul>
-                    <li> <a href="app-emailbox.html">
-
-                            <i  class='bx bx-radio-circle'>
-                            </i>ایمیل</a>
-                    </li>
-                    <li> <a href="app-chat-box.html">
-
-                            <i  class='bx bx-radio-circle'>
-                            </i>اپلیکیشن چت</a>
-                    </li>
-                    <li> <a href="app-file-manager.html">
-
-                            <i  class='bx bx-radio-circle'>
-                            </i>مدیریت فایلها</a>
-                    </li>
-                    <li> <a href="app-contact-list.html">
-
-                            <i  class='bx bx-radio-circle'>
-                            </i>مخاطبین</a>
-                    </li>
-                    <li> <a href="app-to-do.html">
-
-                            <i  class='bx bx-radio-circle'>
-                            </i>لیست انجام</a>
-                    </li>
-                    <li> <a href="app-invoice.html">
-
-                            <i  class='bx bx-radio-circle'>
-                            </i>فاکتور</a>
-                    </li>
-                    <li> <a href="app-fullcalender.html">
-
-                            <i  class='bx bx-radio-circle'>
-                            </i>تقویم</a>
-                    </li>
-                </ul>
-            </li>
-            <li class="menu-label">المان های یوآی</li>
-            <li>
-                <a href="widgets.html">
+                <a href="{{route('admin.department.index')}}">
                     <div class="parent-icon">
 
                         <i  class='bx bx-cookie'>
                         </i>
                     </div>
-                    <div class="menu-title">ویجت ها</div>
+                    <div class="menu-title">لیست دپارتمان ها</div>
+                </a>
+            </li>
+            <li class="menu-label">مدیریت پوزیشن های شغلی</li>
+            <li>
+                <a href="{{route('admin.position.index')}}">
+                    <div class="parent-icon">
+
+                        <i  class='bx bx-cookie'>
+                        </i>
+                    </div>
+                    <div class="menu-title">لیست پوزیشن ها</div>
                 </a>
             </li>
             <li>
-                <a href="javascript:;" class="has-arrow">
+                <a href="{{route('admin.user.index')}}">
                     <div class="parent-icon">
 
-                        <i  class='bx bx-cart'>
+                        <i  class='bx bx-cookie'>
                         </i>
                     </div>
-                    <div class="menu-title">فروشگاهی</div>
-                </a>
-                <ul>
-                    <li> <a href="ecommerce-products.html">
-
-                            <i  class='bx bx-radio-circle'>
-                            </i>محصولات</a>
-                    </li>
-                    <li> <a href="ecommerce-products-details.html">
-
-                            <i  class='bx bx-radio-circle'>
-                            </i>جزئیات
-                            محصول</a>
-                    </li>
-                    <li> <a href="ecommerce-add-new-products.html">
-
-                            <i  class='bx bx-radio-circle'>
-                            </i>افزودن محصول
-                            جدید</a>
-                    </li>
-                    <li> <a href="ecommerce-orders.html">
-
-                            <i  class='bx bx-radio-circle'>
-                            </i>سفارشات</a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a class="has-arrow" href="javascript:;">
-                    <div class="parent-icon">
-
-                        <i  class='bx bx-bookmark-heart'>
-                        </i>
-                    </div>
-                    <div class="menu-title">کامپوننت ها</div>
-                </a>
-                <ul>
-                    <li> <a href="component-alerts.html">
-
-                            <i  class='bx bx-radio-circle'>
-                            </i>هشدارها</a>
-                    </li>
-                    <li> <a href="component-accordions.html">
-
-                            <i  class='bx bx-radio-circle'>
-                            </i>آکاردیون</a>
-                    </li>
-                    <li> <a href="component-badges.html">
-
-                            <i  class='bx bx-radio-circle'>
-                            </i>بج ها</a>
-                    </li>
-                    <li> <a href="component-buttons.html">
-
-                            <i  class='bx bx-radio-circle'>
-                            </i>دکمه ها</a>
-                    </li>
-                    <li> <a href="component-cards.html">
-
-                            <i  class='bx bx-radio-circle'>
-                            </i>کارت ها</a>
-                    </li>
-                    <li> <a href="component-carousels.html">
-
-                            <i  class='bx bx-radio-circle'>
-                            </i>اسلایدرها</a>
-                    </li>
-                    <li> <a href="component-list-groups.html">
-
-                            <i  class='bx bx-radio-circle'>
-                            </i>لیست ها</a>
-                    </li>
-                    <li> <a href="component-media-object.html">
-
-                            <i  class='bx bx-radio-circle'>
-                            </i>آبجکت های رسانه</a>
-                    </li>
-                    <li> <a href="component-modals.html">
-
-                            <i  class='bx bx-radio-circle'>
-                            </i>مودالها</a>
-                    </li>
-                    <li> <a href="component-navs-tabs.html">
-
-                            <i  class='bx bx-radio-circle'>
-                            </i>تب و نو ها</a>
-                    </li>
-                    <li> <a href="component-navbar.html">
-
-                            <i  class='bx bx-radio-circle'>
-                            </i>نوبار</a>
-                    </li>
-                    <li> <a href="component-paginations.html">
-
-                            <i  class='bx bx-radio-circle'>
-                            </i>صفحه شماری</a>
-                    </li>
-                    <li> <a href="component-popovers-tooltips.html">
-
-                            <i  class='bx bx-radio-circle'>
-                            </i>پاپ آپ و
-                            تولتیپ ها</a>
-                    </li>
-                    <li> <a href="component-progress-bars.html">
-
-                            <i  class='bx bx-radio-circle'>
-                            </i>میله پیشرفت</a>
-                    </li>
-                    <li> <a href="component-spinners.html">
-
-                            <i  class='bx bx-radio-circle'>
-                            </i>اسپینرها</a>
-                    </li>
-                    <li> <a href="component-notifications.html">
-
-                            <i  class='bx bx-radio-circle'>
-                            </i>اعلانها</a>
-                    </li>
-                    <li> <a href="component-avtars-chips.html">
-
-                            <i  class='bx bx-radio-circle'>
-                            </i>آواتار</a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a class="has-arrow" href="javascript:;">
-                    <div class="parent-icon">
-
-                        <i  class="bx bx-repeat">
-                        </i>
-                    </div>
-                    <div class="menu-title">محتوا</div>
-                </a>
-                <ul>
-                    <li> <a href="content-grid-system.html">
-
-                            <i  class='bx bx-radio-circle'>
-                            </i>سیستم شبکه ای</a>
-                    </li>
-                    <li> <a href="content-typography.html">
-
-                            <i  class='bx bx-radio-circle'>
-                            </i>تایپوگرافی</a>
-                    </li>
-                    <li> <a href="content-text-utilities.html">
-
-                            <i  class='bx bx-radio-circle'>
-                            </i>ابزارهای متن</a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a class="has-arrow" href="javascript:;">
-                    <div class="parent-icon">
-                        <i class="bx bx-donate-blood">
-                        </i>
-                    </div>
-                    <div class="menu-title">آیکن ها</div>
-                </a>
-                <ul>
-                    <li> <a href="icons-line-icons.html">
-
-                            <i  class='bx bx-radio-circle'>
-                            </i>آیکن خطی</a>
-                    </li>
-                    <li> <a href="icons-boxicons.html">
-
-                            <i  class='bx bx-radio-circle'>
-                            </i>باکس آیکن</a>
-                    </li>
-                    <li> <a href="icons-feather-icons.html">
-
-                            <i  class='bx bx-radio-circle'>
-                            </i>فیدر آیکن</a>
-                    </li>
-                </ul>
-            </li>
-
-            <li class="menu-label">فرم ها و جداول</li>
-            <li>
-                <a class="has-arrow" href="javascript:;">
-                    <div class="parent-icon">
-
-                        <i  class='bx bx-message-square-edit'>
-                        </i>
-                    </div>
-                    <div class="menu-title">فرمها</div>
-                </a>
-                <ul>
-                    <li> <a href="form-elements.html">
-
-                            <i  class='bx bx-radio-circle'>
-                            </i>المان های فرم</a>
-                    </li>
-                    <li> <a href="form-input-group.html">
-
-                            <i  class='bx bx-radio-circle'>
-                            </i>گروه های ورودی</a>
-                    </li>
-
-                    <li> <a href="form-layouts.html">
-
-                            <i  class='bx bx-radio-circle'>
-                            </i>لایه های فرم</a>
-                    </li>
-                    <li> <a href="form-validations.html">
-
-                            <i  class='bx bx-radio-circle'>
-                            </i>اعتبارسنجی فرم</a>
-                    </li>
-                    <li> <a href="form-wizard.html">
-
-                            <i  class='bx bx-radio-circle'>
-                            </i>فرم مرحله ایی</a>
-                    </li>
-                    <li> <a href="form-text-editor.html">
-
-                            <i  class='bx bx-radio-circle'>
-                            </i>ویرایشگر متن</a>
-                    </li>
-                    <li> <a href="form-file-upload.html">
-
-                            <i  class='bx bx-radio-circle'>
-                            </i>آپلود فایل</a>
-                    </li>
-                    <li> <a href="form-date-time-pickes.html">
-
-                            <i  class='bx bx-radio-circle'>
-                            </i>انتخابگر تاریخ</a>
-                    </li>
-                    <li> <a href="form-select2.html">
-
-                            <i  class='bx bx-radio-circle'>
-                            </i>پلاگین Select2</a>
-                    </li>
-                    <li> <a href="form-repeater.html">
-
-                            <i  class='bx bx-radio-circle'>
-                            </i>تکرار کننده فرم</a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a class="has-arrow" href="javascript:;">
-                    <div class="parent-icon">
-
-                        <i  class="bx bx-grid-alt">
-                        </i>
-                    </div>
-                    <div class="menu-title">جداول</div>
-                </a>
-                <ul>
-                    <li> <a href="table-basic-table.html">
-
-                            <i  class='bx bx-radio-circle'>
-                            </i>جدول ساده</a>
-                    </li>
-                    <li> <a href="table-datatable.html">
-
-                            <i  class='bx bx-radio-circle'>
-                            </i>جدول داده </a>
-                    </li>
-                </ul>
-            </li>
-            <li class="menu-label">صفحات</li>
-            <li>
-                <a class="has-arrow" href="javascript:;">
-                    <div class="parent-icon">
-
-                        <i  class="bx bx-lock">
-                        </i>
-                    </div>
-                    <div class="menu-title">احراز هویت</div>
-                </a>
-                <ul>
-                    <li>
-                        <a class="has-arrow" href="javascript:;">
-
-                            <i  class='bx bx-radio-circle'>
-                            </i>ساده</a>
-                        <ul>
-                            <li>
-                                <a href="auth-basic-signin.html" target="_blank">
-                                    <i class='bx bx-radio-circle'>
-                                    </i>ورود</a>
-                            </li>
-                            <li>
-                                <a href="auth-basic-signup.html" target="_blank">
-                                    <i class='bx bx-radio-circle'>
-                                    </i>ثبت نام</a>
-                            </li>
-                            <li>
-                                <a href="auth-basic-forgot-password.html" target="_blank">
-                                    <i class='bx bx-radio-circle'>
-                                    </i>فراموشی رمز ورود</a>
-                            </li>
-                            <li>
-                                <a href="auth-basic-reset-password.html" target="_blank">
-                                    <i class='bx bx-radio-circle'>
-                                    </i>بازنشانی رمز</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="has-arrow" href="javascript:;">
-
-                            <i  class='bx bx-radio-circle'>
-                            </i>کاور</a>
-                        <ul>
-                            <li>
-                                <a href="auth-cover-signin.html" target="_blank">
-                                    <i class='bx bx-radio-circle'>
-                                    </i>ورود</a>
-                            </li>
-                            <li>
-                                <a href="auth-cover-signup.html" target="_blank">
-                                    <i class='bx bx-radio-circle'>
-                                    </i>ثبت نام</a>
-                            </li>
-                            <li>
-                                <a href="auth-cover-forgot-password.html" target="_blank">
-                                    <i class='bx bx-radio-circle'>
-                                    </i>فراموشی رمز ورود</a>
-                            </li>
-                            <li>
-                                <a href="auth-cover-reset-password.html" target="_blank">
-                                    <i class='bx bx-radio-circle'>
-                                    </i>بازنشانی رمز</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="has-arrow" href="javascript:;">
-
-                            <i  class='bx bx-radio-circle'>
-                            </i>با سرصفحه و
-                            پاصفحه</a>
-                        <ul>
-                            <li>
-                                <a href="auth-header-footer-signin.html" target="_blank">
-                                    <i class='bx bx-radio-circle'>
-                                    </i>ورود</a>
-                            </li>
-                            <li>
-                                <a href="auth-header-footer-signup.html" target="_blank">
-                                    <i class='bx bx-radio-circle'>
-                                    </i>ثبت نام</a>
-                            </li>
-                            <li>
-                                <a href="auth-header-footer-forgot-password.html" target="_blank">
-                                    <i class='bx bx-radio-circle'>
-                                    </i>فراموشی رمز ورود</a>
-                            </li>
-                            <li>
-                                <a href="auth-header-footer-reset-password.html" target="_blank">
-                                    <i class='bx bx-radio-circle'>
-                                    </i>بازنشانی رمز</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a href="user-profile.html">
-                    <div class="parent-icon">
-
-                        <i  class="bx bx-user-circle">
-                        </i>
-                    </div>
-                    <div class="menu-title">پروفایل کاربر</div>
+                    <div class="menu-title">لیست پرسنل</div>
                 </a>
             </li>
-            <li>
-                <a href="timeline.html">
-                    <div class="parent-icon">
-                        <i class="bx bx-video-recording">
-                        </i>
-                    </div>
-                    <div class="menu-title">تایم لاین</div>
-                </a>
-            </li>
-            <li>
-                <a class="has-arrow" href="javascript:;">
-                    <div class="parent-icon">
+{{--            <li>--}}
+{{--                <a href="javascript:;" class="has-arrow">--}}
+{{--                    <div class="parent-icon">--}}
 
-                        <i  class="bx bx-error">
-                        </i>
-                    </div>
-                    <div class="menu-title">خطاها</div>
-                </a>
-                <ul>
-                    <li> <a href="errors-404-error.html" target="_blank">
+{{--                        <i  class='bx bx-cart'>--}}
+{{--                        </i>--}}
+{{--                    </div>--}}
+{{--                    <div class="menu-title">فروشگاهی</div>--}}
+{{--                </a>--}}
+{{--                <ul>--}}
+{{--                    <li> <a href="ecommerce-products.html">--}}
 
-                            <i  class='bx bx-radio-circle'>
-                            </i>
-                            خطای 404</a>
-                    </li>
-                    <li> <a href="errors-500-error.html" target="_blank">
+{{--                            <i  class='bx bx-radio-circle'>--}}
+{{--                            </i>محصولات</a>--}}
+{{--                    </li>--}}
+{{--                    <li> <a href="ecommerce-products-details.html">--}}
 
-                            <i  class='bx bx-radio-circle'>
-                            </i>خطای
-                            500</a>
-                    </li>
-                    <li> <a href="errors-coming-soon.html" target="_blank">
+{{--                            <i  class='bx bx-radio-circle'>--}}
+{{--                            </i>جزئیات--}}
+{{--                            محصول</a>--}}
+{{--                    </li>--}}
+{{--                    <li> <a href="ecommerce-add-new-products.html">--}}
 
-                            <i  class='bx bx-radio-circle'>
-                            </i>صفحه
-                            بزودی</a>
-                    </li>
-                    <li> <a href="error-blank-page.html" target="_blank">
+{{--                            <i  class='bx bx-radio-circle'>--}}
+{{--                            </i>افزودن محصول--}}
+{{--                            جدید</a>--}}
+{{--                    </li>--}}
+{{--                    <li> <a href="ecommerce-orders.html">--}}
 
-                            <i  class='bx bx-radio-circle'>
-                            </i>صفحه
-                            خالی</a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a href="faq.html">
-                    <div class="parent-icon">
+{{--                            <i  class='bx bx-radio-circle'>--}}
+{{--                            </i>سفارشات</a>--}}
+{{--                    </li>--}}
+{{--                </ul>--}}
+{{--            </li>--}}
+{{--            <li>--}}
+{{--                <a class="has-arrow" href="javascript:;">--}}
+{{--                    <div class="parent-icon">--}}
 
-                        <i  class="bx bx-help-circle">
-                        </i>
-                    </div>
-                    <div class="menu-title">سوالات متداول</div>
-                </a>
-            </li>
-            <li>
-                <a href="pricing-table.html">
-                    <div class="parent-icon">
+{{--                        <i  class='bx bx-bookmark-heart'>--}}
+{{--                        </i>--}}
+{{--                    </div>--}}
+{{--                    <div class="menu-title">کامپوننت ها</div>--}}
+{{--                </a>--}}
+{{--                <ul>--}}
+{{--                    <li> <a href="component-alerts.html">--}}
 
-                        <i  class="bx bx-diamond">
-                        </i>
-                    </div>
-                    <div class="menu-title">قیمت ها</div>
-                </a>
-            </li>
-            <li class="menu-label">چارت و نقشه</li>
-            <li>
-                <a class="has-arrow" href="javascript:;">
-                    <div class="parent-icon">
+{{--                            <i  class='bx bx-radio-circle'>--}}
+{{--                            </i>هشدارها</a>--}}
+{{--                    </li>--}}
+{{--                    <li> <a href="component-accordions.html">--}}
 
-                        <i  class="bx bx-line-chart">
-                        </i>
-                    </div>
-                    <div class="menu-title">چارت ها</div>
-                </a>
-                <ul>
-                    <li> <a href="charts-apex-chart.html">
+{{--                            <i  class='bx bx-radio-circle'>--}}
+{{--                            </i>آکاردیون</a>--}}
+{{--                    </li>--}}
+{{--                    <li> <a href="component-badges.html">--}}
 
-                            <i  class='bx bx-radio-circle'>
-                            </i>اپکس</a>
-                    </li>
-                    <li> <a href="charts-chartjs.html">
+{{--                            <i  class='bx bx-radio-circle'>--}}
+{{--                            </i>بج ها</a>--}}
+{{--                    </li>--}}
+{{--                    <li> <a href="component-buttons.html">--}}
 
-                            <i  class='bx bx-radio-circle'>
-                            </i>چارت جی اس</a>
-                    </li>
-                    <li> <a href="charts-highcharts.html">
+{{--                            <i  class='bx bx-radio-circle'>--}}
+{{--                            </i>دکمه ها</a>--}}
+{{--                    </li>--}}
+{{--                    <li> <a href="component-cards.html">--}}
 
-                            <i  class='bx bx-radio-circle'>
-                            </i>هایچارتز</a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a class="has-arrow" href="javascript:;">
-                    <div class="parent-icon">
+{{--                            <i  class='bx bx-radio-circle'>--}}
+{{--                            </i>کارت ها</a>--}}
+{{--                    </li>--}}
+{{--                    <li> <a href="component-carousels.html">--}}
 
-                        <i  class="bx bx-map-alt">
-                        </i>
-                    </div>
-                    <div class="menu-title">نقشه ها</div>
-                </a>
-                <ul>
-                    <li> <a href="map-google-maps.html">
+{{--                            <i  class='bx bx-radio-circle'>--}}
+{{--                            </i>اسلایدرها</a>--}}
+{{--                    </li>--}}
+{{--                    <li> <a href="component-list-groups.html">--}}
 
-                            <i  class='bx bx-radio-circle'>
-                            </i>نقشه گوگل</a>
-                    </li>
-                    <li> <a href="map-vector-maps.html">
+{{--                            <i  class='bx bx-radio-circle'>--}}
+{{--                            </i>لیست ها</a>--}}
+{{--                    </li>--}}
+{{--                    <li> <a href="component-media-object.html">--}}
 
-                            <i  class='bx bx-radio-circle'>
-                            </i>نقشه های وکتور</a>
-                    </li>
-                </ul>
-            </li>
-            <li class="menu-label">سایر</li>
-            <li>
-                <a class="has-arrow" href="javascript:;">
-                    <div class="parent-icon">
+{{--                            <i  class='bx bx-radio-circle'>--}}
+{{--                            </i>آبجکت های رسانه</a>--}}
+{{--                    </li>--}}
+{{--                    <li> <a href="component-modals.html">--}}
 
-                        <i  class="bx bx-menu">
-                        </i>
-                    </div>
-                    <div class="menu-title">منوی چندسطحی</div>
-                </a>
-                <ul>
-                    <li> <a class="has-arrow" href="javascript:;">
+{{--                            <i  class='bx bx-radio-circle'>--}}
+{{--                            </i>مودالها</a>--}}
+{{--                    </li>--}}
+{{--                    <li> <a href="component-navs-tabs.html">--}}
 
-                            <i  class='bx bx-radio-circle'>
-                            </i>سطح یک</a>
-                        <ul>
-                            <li> <a class="has-arrow" href="javascript:;">
+{{--                            <i  class='bx bx-radio-circle'>--}}
+{{--                            </i>تب و نو ها</a>--}}
+{{--                    </li>--}}
+{{--                    <li> <a href="component-navbar.html">--}}
 
-                                    <i  class='bx bx-radio-circle'>
-                                    </i>سطح
-                                    2</a>
-                                <ul>
-                                    <li> <a href="javascript:;">
+{{--                            <i  class='bx bx-radio-circle'>--}}
+{{--                            </i>نوبار</a>--}}
+{{--                    </li>--}}
+{{--                    <li> <a href="component-paginations.html">--}}
 
-                                            <i  class='bx bx-radio-circle'>
-                                            </i>سطح 3</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a href="javascript:;">
-                    <div class="parent-icon">
+{{--                            <i  class='bx bx-radio-circle'>--}}
+{{--                            </i>صفحه شماری</a>--}}
+{{--                    </li>--}}
+{{--                    <li> <a href="component-popovers-tooltips.html">--}}
 
-                        <i  class="bx bx-folder">
-                        </i>
-                    </div>
-                    <div class="menu-title">مستندات</div>
-                </a>
-            </li>
-            <li>
-                <a href="#" target="_blank">
-                    <div class="parent-icon">
+{{--                            <i  class='bx bx-radio-circle'>--}}
+{{--                            </i>پاپ آپ و--}}
+{{--                            تولتیپ ها</a>--}}
+{{--                    </li>--}}
+{{--                    <li> <a href="component-progress-bars.html">--}}
 
-                        <i  class="bx bx-support">
-                        </i>
-                    </div>
-                    <div class="menu-title">پشتیبانی</div>
-                </a>
-            </li>
+{{--                            <i  class='bx bx-radio-circle'>--}}
+{{--                            </i>میله پیشرفت</a>--}}
+{{--                    </li>--}}
+{{--                    <li> <a href="component-spinners.html">--}}
+
+{{--                            <i  class='bx bx-radio-circle'>--}}
+{{--                            </i>اسپینرها</a>--}}
+{{--                    </li>--}}
+{{--                    <li> <a href="component-notifications.html">--}}
+
+{{--                            <i  class='bx bx-radio-circle'>--}}
+{{--                            </i>اعلانها</a>--}}
+{{--                    </li>--}}
+{{--                    <li> <a href="component-avtars-chips.html">--}}
+
+{{--                            <i  class='bx bx-radio-circle'>--}}
+{{--                            </i>آواتار</a>--}}
+{{--                    </li>--}}
+{{--                </ul>--}}
+{{--            </li>--}}
+{{--            <li>--}}
+{{--                <a class="has-arrow" href="javascript:;">--}}
+{{--                    <div class="parent-icon">--}}
+
+{{--                        <i  class="bx bx-repeat">--}}
+{{--                        </i>--}}
+{{--                    </div>--}}
+{{--                    <div class="menu-title">محتوا</div>--}}
+{{--                </a>--}}
+{{--                <ul>--}}
+{{--                    <li> <a href="content-grid-system.html">--}}
+
+{{--                            <i  class='bx bx-radio-circle'>--}}
+{{--                            </i>سیستم شبکه ای</a>--}}
+{{--                    </li>--}}
+{{--                    <li> <a href="content-typography.html">--}}
+
+{{--                            <i  class='bx bx-radio-circle'>--}}
+{{--                            </i>تایپوگرافی</a>--}}
+{{--                    </li>--}}
+{{--                    <li> <a href="content-text-utilities.html">--}}
+
+{{--                            <i  class='bx bx-radio-circle'>--}}
+{{--                            </i>ابزارهای متن</a>--}}
+{{--                    </li>--}}
+{{--                </ul>--}}
+{{--            </li>--}}
+{{--            <li>--}}
+{{--                <a class="has-arrow" href="javascript:;">--}}
+{{--                    <div class="parent-icon">--}}
+{{--                        <i class="bx bx-donate-blood">--}}
+{{--                        </i>--}}
+{{--                    </div>--}}
+{{--                    <div class="menu-title">آیکن ها</div>--}}
+{{--                </a>--}}
+{{--                <ul>--}}
+{{--                    <li> <a href="icons-line-icons.html">--}}
+
+{{--                            <i  class='bx bx-radio-circle'>--}}
+{{--                            </i>آیکن خطی</a>--}}
+{{--                    </li>--}}
+{{--                    <li> <a href="icons-boxicons.html">--}}
+
+{{--                            <i  class='bx bx-radio-circle'>--}}
+{{--                            </i>باکس آیکن</a>--}}
+{{--                    </li>--}}
+{{--                    <li> <a href="icons-feather-icons.html">--}}
+
+{{--                            <i  class='bx bx-radio-circle'>--}}
+{{--                            </i>فیدر آیکن</a>--}}
+{{--                    </li>--}}
+{{--                </ul>--}}
+{{--            </li>--}}
+
+{{--            <li class="menu-label">فرم ها و جداول</li>--}}
+{{--            <li>--}}
+{{--                <a class="has-arrow" href="javascript:;">--}}
+{{--                    <div class="parent-icon">--}}
+
+{{--                        <i  class='bx bx-message-square-edit'>--}}
+{{--                        </i>--}}
+{{--                    </div>--}}
+{{--                    <div class="menu-title">فرمها</div>--}}
+{{--                </a>--}}
+{{--                <ul>--}}
+{{--                    <li> <a href="form-elements.html">--}}
+
+{{--                            <i  class='bx bx-radio-circle'>--}}
+{{--                            </i>المان های فرم</a>--}}
+{{--                    </li>--}}
+{{--                    <li> <a href="form-input-group.html">--}}
+
+{{--                            <i  class='bx bx-radio-circle'>--}}
+{{--                            </i>گروه های ورودی</a>--}}
+{{--                    </li>--}}
+
+{{--                    <li> <a href="form-layouts.html">--}}
+
+{{--                            <i  class='bx bx-radio-circle'>--}}
+{{--                            </i>لایه های فرم</a>--}}
+{{--                    </li>--}}
+{{--                    <li> <a href="form-validations.html">--}}
+
+{{--                            <i  class='bx bx-radio-circle'>--}}
+{{--                            </i>اعتبارسنجی فرم</a>--}}
+{{--                    </li>--}}
+{{--                    <li> <a href="form-wizard.html">--}}
+
+{{--                            <i  class='bx bx-radio-circle'>--}}
+{{--                            </i>فرم مرحله ایی</a>--}}
+{{--                    </li>--}}
+{{--                    <li> <a href="form-text-editor.html">--}}
+
+{{--                            <i  class='bx bx-radio-circle'>--}}
+{{--                            </i>ویرایشگر متن</a>--}}
+{{--                    </li>--}}
+{{--                    <li> <a href="form-file-upload.html">--}}
+
+{{--                            <i  class='bx bx-radio-circle'>--}}
+{{--                            </i>آپلود فایل</a>--}}
+{{--                    </li>--}}
+{{--                    <li> <a href="form-date-time-pickes.html">--}}
+
+{{--                            <i  class='bx bx-radio-circle'>--}}
+{{--                            </i>انتخابگر تاریخ</a>--}}
+{{--                    </li>--}}
+{{--                    <li> <a href="form-select2.html">--}}
+
+{{--                            <i  class='bx bx-radio-circle'>--}}
+{{--                            </i>پلاگین Select2</a>--}}
+{{--                    </li>--}}
+{{--                    <li> <a href="form-repeater.html">--}}
+
+{{--                            <i  class='bx bx-radio-circle'>--}}
+{{--                            </i>تکرار کننده فرم</a>--}}
+{{--                    </li>--}}
+{{--                </ul>--}}
+{{--            </li>--}}
+{{--            <li>--}}
+{{--                <a class="has-arrow" href="javascript:;">--}}
+{{--                    <div class="parent-icon">--}}
+
+{{--                        <i  class="bx bx-grid-alt">--}}
+{{--                        </i>--}}
+{{--                    </div>--}}
+{{--                    <div class="menu-title">جداول</div>--}}
+{{--                </a>--}}
+{{--                <ul>--}}
+{{--                    <li> <a href="table-basic-table.html">--}}
+
+{{--                            <i  class='bx bx-radio-circle'>--}}
+{{--                            </i>جدول ساده</a>--}}
+{{--                    </li>--}}
+{{--                    <li> <a href="table-datatable.html">--}}
+
+{{--                            <i  class='bx bx-radio-circle'>--}}
+{{--                            </i>جدول داده </a>--}}
+{{--                    </li>--}}
+{{--                </ul>--}}
+{{--            </li>--}}
+{{--            <li class="menu-label">صفحات</li>--}}
+{{--            <li>--}}
+{{--                <a class="has-arrow" href="javascript:;">--}}
+{{--                    <div class="parent-icon">--}}
+
+{{--                        <i  class="bx bx-lock">--}}
+{{--                        </i>--}}
+{{--                    </div>--}}
+{{--                    <div class="menu-title">احراز هویت</div>--}}
+{{--                </a>--}}
+{{--                <ul>--}}
+{{--                    <li>--}}
+{{--                        <a class="has-arrow" href="javascript:;">--}}
+
+{{--                            <i  class='bx bx-radio-circle'>--}}
+{{--                            </i>ساده</a>--}}
+{{--                        <ul>--}}
+{{--                            <li>--}}
+{{--                                <a href="auth-basic-signin.html" target="_blank">--}}
+{{--                                    <i class='bx bx-radio-circle'>--}}
+{{--                                    </i>ورود</a>--}}
+{{--                            </li>--}}
+{{--                            <li>--}}
+{{--                                <a href="auth-basic-signup.html" target="_blank">--}}
+{{--                                    <i class='bx bx-radio-circle'>--}}
+{{--                                    </i>ثبت نام</a>--}}
+{{--                            </li>--}}
+{{--                            <li>--}}
+{{--                                <a href="auth-basic-forgot-password.html" target="_blank">--}}
+{{--                                    <i class='bx bx-radio-circle'>--}}
+{{--                                    </i>فراموشی رمز ورود</a>--}}
+{{--                            </li>--}}
+{{--                            <li>--}}
+{{--                                <a href="auth-basic-reset-password.html" target="_blank">--}}
+{{--                                    <i class='bx bx-radio-circle'>--}}
+{{--                                    </i>بازنشانی رمز</a>--}}
+{{--                            </li>--}}
+{{--                        </ul>--}}
+{{--                    </li>--}}
+{{--                    <li>--}}
+{{--                        <a class="has-arrow" href="javascript:;">--}}
+
+{{--                            <i  class='bx bx-radio-circle'>--}}
+{{--                            </i>کاور</a>--}}
+{{--                        <ul>--}}
+{{--                            <li>--}}
+{{--                                <a href="auth-cover-signin.html" target="_blank">--}}
+{{--                                    <i class='bx bx-radio-circle'>--}}
+{{--                                    </i>ورود</a>--}}
+{{--                            </li>--}}
+{{--                            <li>--}}
+{{--                                <a href="auth-cover-signup.html" target="_blank">--}}
+{{--                                    <i class='bx bx-radio-circle'>--}}
+{{--                                    </i>ثبت نام</a>--}}
+{{--                            </li>--}}
+{{--                            <li>--}}
+{{--                                <a href="auth-cover-forgot-password.html" target="_blank">--}}
+{{--                                    <i class='bx bx-radio-circle'>--}}
+{{--                                    </i>فراموشی رمز ورود</a>--}}
+{{--                            </li>--}}
+{{--                            <li>--}}
+{{--                                <a href="auth-cover-reset-password.html" target="_blank">--}}
+{{--                                    <i class='bx bx-radio-circle'>--}}
+{{--                                    </i>بازنشانی رمز</a>--}}
+{{--                            </li>--}}
+{{--                        </ul>--}}
+{{--                    </li>--}}
+{{--                    <li>--}}
+{{--                        <a class="has-arrow" href="javascript:;">--}}
+
+{{--                            <i  class='bx bx-radio-circle'>--}}
+{{--                            </i>با سرصفحه و--}}
+{{--                            پاصفحه</a>--}}
+{{--                        <ul>--}}
+{{--                            <li>--}}
+{{--                                <a href="auth-header-footer-signin.html" target="_blank">--}}
+{{--                                    <i class='bx bx-radio-circle'>--}}
+{{--                                    </i>ورود</a>--}}
+{{--                            </li>--}}
+{{--                            <li>--}}
+{{--                                <a href="auth-header-footer-signup.html" target="_blank">--}}
+{{--                                    <i class='bx bx-radio-circle'>--}}
+{{--                                    </i>ثبت نام</a>--}}
+{{--                            </li>--}}
+{{--                            <li>--}}
+{{--                                <a href="auth-header-footer-forgot-password.html" target="_blank">--}}
+{{--                                    <i class='bx bx-radio-circle'>--}}
+{{--                                    </i>فراموشی رمز ورود</a>--}}
+{{--                            </li>--}}
+{{--                            <li>--}}
+{{--                                <a href="auth-header-footer-reset-password.html" target="_blank">--}}
+{{--                                    <i class='bx bx-radio-circle'>--}}
+{{--                                    </i>بازنشانی رمز</a>--}}
+{{--                            </li>--}}
+{{--                        </ul>--}}
+{{--                    </li>--}}
+{{--                </ul>--}}
+{{--            </li>--}}
+{{--            <li>--}}
+{{--                <a href="user-profile.html">--}}
+{{--                    <div class="parent-icon">--}}
+
+{{--                        <i  class="bx bx-user-circle">--}}
+{{--                        </i>--}}
+{{--                    </div>--}}
+{{--                    <div class="menu-title">پروفایل کاربر</div>--}}
+{{--                </a>--}}
+{{--            </li>--}}
+{{--            <li>--}}
+{{--                <a href="timeline.html">--}}
+{{--                    <div class="parent-icon">--}}
+{{--                        <i class="bx bx-video-recording">--}}
+{{--                        </i>--}}
+{{--                    </div>--}}
+{{--                    <div class="menu-title">تایم لاین</div>--}}
+{{--                </a>--}}
+{{--            </li>--}}
+{{--            <li>--}}
+{{--                <a class="has-arrow" href="javascript:;">--}}
+{{--                    <div class="parent-icon">--}}
+
+{{--                        <i  class="bx bx-error">--}}
+{{--                        </i>--}}
+{{--                    </div>--}}
+{{--                    <div class="menu-title">خطاها</div>--}}
+{{--                </a>--}}
+{{--                <ul>--}}
+{{--                    <li> <a href="errors-404-error.html" target="_blank">--}}
+
+{{--                            <i  class='bx bx-radio-circle'>--}}
+{{--                            </i>--}}
+{{--                            خطای 404</a>--}}
+{{--                    </li>--}}
+{{--                    <li> <a href="errors-500-error.html" target="_blank">--}}
+
+{{--                            <i  class='bx bx-radio-circle'>--}}
+{{--                            </i>خطای--}}
+{{--                            500</a>--}}
+{{--                    </li>--}}
+{{--                    <li> <a href="errors-coming-soon.html" target="_blank">--}}
+
+{{--                            <i  class='bx bx-radio-circle'>--}}
+{{--                            </i>صفحه--}}
+{{--                            بزودی</a>--}}
+{{--                    </li>--}}
+{{--                    <li> <a href="error-blank-page.html" target="_blank">--}}
+
+{{--                            <i  class='bx bx-radio-circle'>--}}
+{{--                            </i>صفحه--}}
+{{--                            خالی</a>--}}
+{{--                    </li>--}}
+{{--                </ul>--}}
+{{--            </li>--}}
+{{--            <li>--}}
+{{--                <a href="faq.html">--}}
+{{--                    <div class="parent-icon">--}}
+
+{{--                        <i  class="bx bx-help-circle">--}}
+{{--                        </i>--}}
+{{--                    </div>--}}
+{{--                    <div class="menu-title">سوالات متداول</div>--}}
+{{--                </a>--}}
+{{--            </li>--}}
+{{--            <li>--}}
+{{--                <a href="pricing-table.html">--}}
+{{--                    <div class="parent-icon">--}}
+
+{{--                        <i  class="bx bx-diamond">--}}
+{{--                        </i>--}}
+{{--                    </div>--}}
+{{--                    <div class="menu-title">قیمت ها</div>--}}
+{{--                </a>--}}
+{{--            </li>--}}
+{{--            <li class="menu-label">چارت و نقشه</li>--}}
+{{--            <li>--}}
+{{--                <a class="has-arrow" href="javascript:;">--}}
+{{--                    <div class="parent-icon">--}}
+
+{{--                        <i  class="bx bx-line-chart">--}}
+{{--                        </i>--}}
+{{--                    </div>--}}
+{{--                    <div class="menu-title">چارت ها</div>--}}
+{{--                </a>--}}
+{{--                <ul>--}}
+{{--                    <li> <a href="charts-apex-chart.html">--}}
+
+{{--                            <i  class='bx bx-radio-circle'>--}}
+{{--                            </i>اپکس</a>--}}
+{{--                    </li>--}}
+{{--                    <li> <a href="charts-chartjs.html">--}}
+
+{{--                            <i  class='bx bx-radio-circle'>--}}
+{{--                            </i>چارت جی اس</a>--}}
+{{--                    </li>--}}
+{{--                    <li> <a href="charts-highcharts.html">--}}
+
+{{--                            <i  class='bx bx-radio-circle'>--}}
+{{--                            </i>هایچارتز</a>--}}
+{{--                    </li>--}}
+{{--                </ul>--}}
+{{--            </li>--}}
+{{--            <li>--}}
+{{--                <a class="has-arrow" href="javascript:;">--}}
+{{--                    <div class="parent-icon">--}}
+
+{{--                        <i  class="bx bx-map-alt">--}}
+{{--                        </i>--}}
+{{--                    </div>--}}
+{{--                    <div class="menu-title">نقشه ها</div>--}}
+{{--                </a>--}}
+{{--                <ul>--}}
+{{--                    <li> <a href="map-google-maps.html">--}}
+
+{{--                            <i  class='bx bx-radio-circle'>--}}
+{{--                            </i>نقشه گوگل</a>--}}
+{{--                    </li>--}}
+{{--                    <li> <a href="map-vector-maps.html">--}}
+
+{{--                            <i  class='bx bx-radio-circle'>--}}
+{{--                            </i>نقشه های وکتور</a>--}}
+{{--                    </li>--}}
+{{--                </ul>--}}
+{{--            </li>--}}
+{{--            <li class="menu-label">سایر</li>--}}
+{{--            <li>--}}
+{{--                <a class="has-arrow" href="javascript:;">--}}
+{{--                    <div class="parent-icon">--}}
+
+{{--                        <i  class="bx bx-menu">--}}
+{{--                        </i>--}}
+{{--                    </div>--}}
+{{--                    <div class="menu-title">منوی چندسطحی</div>--}}
+{{--                </a>--}}
+{{--                <ul>--}}
+{{--                    <li> <a class="has-arrow" href="javascript:;">--}}
+
+{{--                            <i  class='bx bx-radio-circle'>--}}
+{{--                            </i>سطح یک</a>--}}
+{{--                        <ul>--}}
+{{--                            <li> <a class="has-arrow" href="javascript:;">--}}
+
+{{--                                    <i  class='bx bx-radio-circle'>--}}
+{{--                                    </i>سطح--}}
+{{--                                    2</a>--}}
+{{--                                <ul>--}}
+{{--                                    <li> <a href="javascript:;">--}}
+
+{{--                                            <i  class='bx bx-radio-circle'>--}}
+{{--                                            </i>سطح 3</a>--}}
+{{--                                    </li>--}}
+{{--                                </ul>--}}
+{{--                            </li>--}}
+{{--                        </ul>--}}
+{{--                    </li>--}}
+{{--                </ul>--}}
+{{--            </li>--}}
+{{--            <li>--}}
+{{--                <a href="javascript:;">--}}
+{{--                    <div class="parent-icon">--}}
+
+{{--                        <i  class="bx bx-folder">--}}
+{{--                        </i>--}}
+{{--                    </div>--}}
+{{--                    <div class="menu-title">مستندات</div>--}}
+{{--                </a>--}}
+{{--            </li>--}}
+{{--            <li>--}}
+{{--                <a href="#" target="_blank">--}}
+{{--                    <div class="parent-icon">--}}
+
+{{--                        <i  class="bx bx-support">--}}
+{{--                        </i>--}}
+{{--                    </div>--}}
+{{--                    <div class="menu-title">پشتیبانی</div>--}}
+{{--                </a>--}}
+{{--            </li>--}}
         </ul>
 
     </div>
