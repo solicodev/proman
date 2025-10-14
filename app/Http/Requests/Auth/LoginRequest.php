@@ -29,15 +29,15 @@ class LoginRequest extends FormRequest
         return [
 //            'email' => ['required', 'string', 'email'],
             'mobile' => ['required','regex:/[0-9]{11}/','digits:11'],
-//            'password' => ['required', 'string'],
+            'password' => ['nullable'],
         ];
     }
 
     public function authenticate(): string
     {
         $this->ensureIsNotRateLimited();
-//        $credentials = $this->only('mobile', 'password');
         $credentials = $this->only('mobile');
+//        $credentials = $this->only('mobile', 'password');
 
         if (! $token = auth()->attempt($credentials)) {
             RateLimiter::hit($this->throttleKey());

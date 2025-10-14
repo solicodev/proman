@@ -160,7 +160,7 @@ License: For each use you must have a valid license purchased only from above li
             <!--begin::Content-->
             <div class="d-flex flex-column flex-center py-7 py-lg-15 px-5 px-md-15 w-100">
                 <!--begin::Logo-->
-                <a href="../../../index.html" class="mb-0 mb-lg-12">
+                <a href="" class="mb-0 mb-lg-12">
                     <img alt="Logo" src="{{my_asset('panel/assets/media/logos/custom-1.png')}}" class="h-60px h-lg-75px"/>
                 </a>
                 <!--end::Logo-->
@@ -196,17 +196,14 @@ License: For each use you must have a valid license purchased only from above li
                         <span class="ti-close"></span>
                     </button>
                 </div>
-
                 <div class="modal-body p-5">
                     <div class="text-center mb-4">
                         <h4 class="m-0 ft-medium">وارد کردن کد یکبار مصرف</h4>
                     </div>
-
                     <div id="alert" role="alert"></div>
-
                     <form id="confirmForm" class="row g-3 needs-validation" novalidate>
                         @csrf
-                        <input class="d-none" type="text" name="mobile" id="confirmMobile">
+                        <input class="d-none" type="text" name="mobile" id="confirmMobile" oninput="updateMobile(this)">
                         <div class="text-center">شماره شما: <span id="currentMobile"></span> <button
                                 class="btn btn-sm btn-link p-0" data-bs-dismiss="modal"><i
                                     class="fa fa-edit"></i></button></div>
@@ -219,13 +216,12 @@ License: For each use you must have a valid license purchased only from above li
                                 وارد کردن کد یکبار مصرف الزامی است
                             </div>
                         </div>
-
                         <div class="w-100 d-flex justify-content-center">
                             <span class="register-timeout"></span>
-                            <button type="button" class="resend-btn" style="display:none;" id="resend">ارسال مجدد
+                            <button type="button" class="btn btn-sm btn-primary full-width rounded ft-medium" style="display:none;" id="resend">ارسال مجدد
                             </button>
                         </div>
-                        <button type="submit" class="btn btn-sm full-width bg-sky text-light rounded ft-medium">
+                        <button type="submit" class="btn btn-sm btn-success full-width rounded ft-medium">
                             ثبت رمز
                         </button>
                     </form>
@@ -362,6 +358,7 @@ License: For each use you must have a valid license purchased only from above li
                 data: $(this).serialize(),
                 dataType: "json",
                 success: function(response) {
+                    console.log(response);
                     if (response.status) {
                         $('#alert').removeAttr('class').addClass('alert alert-success text-center')
                             .text(response.message);

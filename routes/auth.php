@@ -58,6 +58,8 @@ Route::middleware('auth')->group(function () {
         ->name('logout');
 
 
-    Route::get('/mobileVerify',[AuthenticatedSessionController::class,'mobileVerify'])->name('mobileVerify');
-    Route::post('/mobileVerify-checked',[AuthenticatedSessionController::class,'MobileCheck'])->name('MobileCheck');
+//    Route::get('/mobileVerify',[AuthenticatedSessionController::class,'mobileVerify'])->name('mobileVerify');
+
 });
+
+Route::post('/mobileVerify-checked',[AuthenticatedSessionController::class,'MobileCheck'])->name('MobileCheck');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -14,6 +15,7 @@ use Illuminate\View\View;
 
 class AuthenticatedSessionController extends Controller
 {
+
     /**
      * Display the login view.
      */
@@ -25,9 +27,8 @@ class AuthenticatedSessionController extends Controller
     /**
      * Handle an incoming authentication request.
      */
-    public function store(LoginRequest $request): JsonResponse
+    public function store(Request $request)
     {
-
         $random = rand(111111, 999999);
         $otp = 'کد تایید شما :'. $random;
 
@@ -37,17 +38,11 @@ class AuthenticatedSessionController extends Controller
         //ToDO
         // sendSms($request->mobile, $otp);
 
-        $request->authenticate();
-
-        $request->session()->regenerate();
-
         return response()->json([
             'status' => true,
             'confirm_code'    => $user->confirm_code,
-            'message' => 'ورود با موفقیت انجام شد توکن صادر شد.',
+            'message' => 'کد تایید برای شما ارسال شد',
         ],200);
-
-//        return redirect()->intended(route('dashboard', absolute: false));
     }
 
     /**
@@ -62,5 +57,41 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
+    }
+
+    public function MobileCheck(Request $request) : JsonResponse
+    {
+        return response()->json([
+            'status' => false,
+            'message' => $request->all(),
+        ],201);
+
+        $user_mobile = User::where('mobile',$request->mobile)->first();
+        $user = User::where('confirm_code',$request->confirm_code)->first();
+        if (!$user_mobile)
+        {
+            return response()->json([
+                'status' => false,
+                'message' => 'دقت کنید! شماره موبایل وارد شده در سیستم ثبت نشده است!',
+            ],403);
+        }
+        if (!$user)
+        {
+            return response()->json([
+                'status' => false,
+                'message' => 'دقت کنید! کد وارد شده معتبر نیست!',
+            ],503);
+        }
+
+        $user->mobile_verified_at = Carbon::now();
+        $user->update();
+        Auth::login($user);
+        $request->session()->regenerate();
+
+        return response()->json([
+            'status' => true,
+            'confirm_code'    => $user->confirm_code,
+            'message' => 'اعتبار سنجی انجام شد',
+        ],200);
     }
 }
