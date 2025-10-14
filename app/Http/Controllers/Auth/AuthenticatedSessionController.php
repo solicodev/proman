@@ -27,15 +27,8 @@ class AuthenticatedSessionController extends Controller
     {
         //ToDO
         $random = rand(111111, 999999);
-        new_sms($request->mobile, array("mobile_code" => $random));
-
-        $response = Http::post('https://sms.soit.ir/api.php');
-
-        try {
-            $response = Http::acceptJson()->post('https://sms.soit.ir/api.php' . $request->mobile, $random);
-        } catch (\Exception $e) {
-            abort(503);
-        }
+        $otp = 'کد تایید شما :'. $random;
+        sendSms($request->mobile, $otp);
 
         $request->authenticate();
 
