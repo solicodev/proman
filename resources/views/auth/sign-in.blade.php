@@ -93,6 +93,7 @@ License: For each use you must have a valid license purchased only from above li
             <!--begin::Form-->
             <div class="d-flex flex-center flex-column flex-lg-row-fluid">
                 <div class="w-lg-500px p-10">
+                    <!-- ======================= Login start ======================== -->
 
                     <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" data-kt-redirect-url="/metronic8/demo23/rtl/index.html" action="#"
                           class="needs-validation" novalidate>
@@ -135,27 +136,20 @@ License: For each use you must have a valid license purchased only from above li
 {{--                            </a>--}}
 {{--                        </div>--}}
 
-                        <!--begin::Submit button-->
                         <div class="d-grid mb-10">
                             <button type="submit" id="kt_sign_in_submit" class="btn btn-primary">
                                 <span class="indicator-label">دریافت کد یکبار مصرف</span>
                                 <span class="indicator-progress">
                                     <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
                                 </span>
-                                <!--end::Indicator progress-->
                             </button>
                         </div>
-                        <!--end::Submit button-->
                     </form>
-                    <!--end::Form-->
-                </div>
-                <!--end::Wrapper-->
-            </div>
-            <!--end::Form-->
-        </div>
-        <!--end::Body-->
+                    <!-- ======================= Login End ======================== -->
 
-        <!--begin::Aside-->
+                </div>
+            </div>
+        </div>
         <div class="d-flex flex-lg-row-fluid w-lg-50 bgi-size-cover bgi-position-center order-1 order-lg-2" style="background-image: url(../../../../assets/media/misc/auth-bg.png)">
             <!--begin::Content-->
             <div class="d-flex flex-column flex-center py-7 py-lg-15 px-5 px-md-15 w-100">
@@ -184,9 +178,55 @@ License: For each use you must have a valid license purchased only from above li
             </div>
             <!--end::Content-->
         </div>
-        <!--end::Aside-->
     </div>
-    <!--end::Authentication - Sign-in-->
+
+
+    <div class="modal fade" id="codeModal" tabindex="-1" aria-labelledby="codeModal" style="display: none;"
+         aria-hidden="true">
+        <div class="modal-dialog login-pop-form" role="document">
+            <div class="modal-content">
+                <div class="modal-headers">
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span class="ti-close"></span>
+                    </button>
+                </div>
+
+                <div class="modal-body p-5">
+                    <div class="text-center mb-4">
+                        <h4 class="m-0 ft-medium">وارد کردن کد یکبار مصرف</h4>
+                    </div>
+
+                    <div id="alert" role="alert"></div>
+
+                    <form id="confirmForm" class="row g-3 needs-validation" novalidate>
+                        @csrf
+                        <input class="d-none" type="text" name="mobile" id="confirmMobile">
+                        <div class="text-center">شماره شما: <span id="currentMobile"></span> <button
+                                class="btn btn-sm btn-link p-0" data-bs-dismiss="modal"><i
+                                    class="fa fa-edit"></i></button></div>
+                        <div class="col-12">
+                            <small class="text-danger">*در حین وارد
+                                کردن کد تایید کیبورد خود را انگلیسی کنید</small>
+                            <input type="number" id="code" name="confirm_code"
+                                   class="form-control rounded" placeholder="کد یکبار مصرف" required>
+                            <div class="invalid-feedback" id="code_feedback">
+                                وارد کردن کد یکبار مصرف الزامی است
+                            </div>
+                        </div>
+
+                        <div class="w-100 d-flex justify-content-center">
+                            <span class="register-timeout"></span>
+                            <button type="button" class="resend-btn" style="display:none;" id="resend">ارسال مجدد
+                            </button>
+                        </div>
+                        <button type="submit" class="btn btn-sm full-width bg-sky text-light rounded ft-medium">
+                            ثبت رمز
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <!--end::Root-->
 
@@ -199,7 +239,158 @@ License: For each use you must have a valid license purchased only from above li
 <script src="{{my_asset('panel/assets/plugins/global/plugins.bundle.js')}}"></script>
 <script src="{{my_asset('panel/assets/js/scripts.bundle.js')}}"></script>
 <!--end::Global Javascript Bundle-->
+<script>
+    function updateMobile(e) {
+        $('#confirmMobile').val($(e).val());
+        $('#currentMobile').text($(e).val());
+    }
+</script>
 
+<script>
+    $('#code').on('input', function() {
+        $('#code_feedback').text('وارد کردن کد یکبار مصرف الزامی است');
+        document.getElementById('code').setCustomValidity('');
+    })
+
+    // Countdown timer functionality START
+    var registerInterval;
+
+    function countdownRegister() {
+        clearInterval(registerInterval);
+        $('.resend-btn').hide();
+        $('.register-timeout').text("2:00");
+        $('.register-timeout').show();
+        registerInterval = setInterval(function() {
+            var timer = $('.register-timeout').html();
+            timer = timer.split(':');
+            var minutes = timer[0];
+            var seconds = timer[1];
+            seconds -= 1;
+            if (minutes < 0) return;
+            else if (seconds < 0 && minutes != 0) {
+                minutes -= 1;
+                seconds = 59;
+            } else if (seconds < 10 && length.seconds != 2) seconds = '0' + seconds;
+
+            $('.register-timeout').html(minutes + ':' + seconds);
+
+            if (minutes == 0 && seconds == 0) {
+                clearInterval(registerInterval);
+                $('.register-timeout').hide();
+                $('.resend-btn').show();
+            }
+        }, 1000);
+    }
+
+    // Countdown timer functionality END
+
+    // Resend confirmation code btn START
+    $('#resend').click(function(e) {
+        e.preventDefault();
+        countdownRegister();
+    });
+    // Resend confirmation code btn END
+
+    // Login form submit functionality START
+    $('#loginForm').submit(function(e) {
+        e.preventDefault();
+        if (!$(this).hasClass('invalid-form')) {
+            // Run the login functionality and show the submit code modal
+            const formData = new FormData(e.target);
+            $.ajax({
+                method: "POST",
+                url: "{{ route('login') }}",
+                data: $(this).serialize(),
+                dataType: "json",
+                success: function(response) {
+                    if (response.status) {
+                        $('#alert').removeAttr('class').addClass('alert alert-success text-center')
+                            .text(response.message);
+                    } else {
+                        $('#alert').removeAttr('class').addClass('alert alert-danger text-center')
+                            .text(response.message);
+                    }
+                },
+                fail: function(response) {
+                    $('#alert').removeAttr('class').addClass('alert alert-danger text-center').text(
+                        response.message);
+                }
+            })
+            $('#codeModal').modal('show');
+            countdownRegister();
+        }
+    });
+    // Login form submit functionality END
+
+    // Register form submit functionality START
+    $('#registerForm').submit(function(e) {
+        e.preventDefault();
+        if (!$(this).hasClass('invalid-form')) {
+            // Run the register functionality and show the submit code modal
+            const formData = new FormData(e.target);
+            $.ajax({
+                method: "POST",
+                url: "{{ route('register') }}",
+                data: $(this).serialize(),
+                dataType: "json",
+                success: function(response) {
+                    console.log(response);
+                }
+            })
+            $('#codeModal').modal('show');
+            countdownRegister();
+        }
+    });
+    // Register form submit functionality END
+
+    // Confirm code form submit functionality START
+    $('#confirmForm').submit(function(e) {
+        e.preventDefault();
+        if (!$(this).hasClass('invalid-form')) {
+            // Run the confirm code functionality
+            const formData = new FormData(e.target);
+            $.ajax({
+                method: "POST",
+                url: "{{ route('MobileCheck') }}",
+                data: $(this).serialize(),
+                dataType: "json",
+                success: function(response) {
+                    if (response.status) {
+                        $('#alert').removeAttr('class').addClass('alert alert-success text-center')
+                            .text(response.message);
+                        switch (response.user_type) {
+                            case 'Super Admin':
+                                window.location.replace('{{ route('admin.index') }}');
+                                return;
+                            case 'Manager':
+                                window.location.replace('{{ route('dashboard.index') }}');
+                                return;
+                            default:
+                                return false;
+                        }
+                    } else {
+                        $('#alert').removeAttr('class').addClass('alert alert-danger text-center')
+                            .text(response.message);
+                        document.getElementById('code').setCustomValidity('invalid');
+                        $('#code_feedback').text(response.message);
+                    }
+                },
+                error: function(response) {
+                    document.getElementById('code').setCustomValidity('invalid');
+                    $('#code_feedback').text(response.message);
+                }
+            })
+        }
+    });
+    // Confirm code form submit functionality END
+
+    // Stop countdown timer START
+    document.getElementById('codeModal').addEventListener('hidden.bs.modal', event => {
+        $('.register-timeout').text("2:00");
+        clearInterval(registerInterval);
+    })
+    // Stop countdown timer END
+</script>
 
 <!--begin::Custom Javascript(used for this page only)-->
 <script src="{{my_asset('panel/assets/js/custom/authentication/sign-in/general.js')}}"></script>
