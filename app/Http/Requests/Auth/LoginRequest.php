@@ -28,7 +28,7 @@ class LoginRequest extends FormRequest
     {
         return [
 //            'email' => ['required', 'string', 'email'],
-            'mobile' => ['required'],
+            'mobile' => ['required','regex:/[0-9]{11}/','digits:11'],
 //            'password' => ['required', 'string'],
         ];
     }
@@ -36,7 +36,6 @@ class LoginRequest extends FormRequest
     public function authenticate(): string
     {
         $this->ensureIsNotRateLimited();
-
 //        $credentials = $this->only('mobile', 'password');
         $credentials = $this->only('mobile');
 

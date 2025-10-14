@@ -111,31 +111,6 @@ License: For each use you must have a valid license purchased only from above li
                         </div>
                         <!--begin::Heading-->
 
-                        <!--begin::Login options-->
-                        <div class="row g-3 mb-9">
-                            <!--begin::Col-->
-                            <div class="col-md-6">
-                                <!--begin::Google link--->
-                                <a href="#" class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
-                                    <img alt="Logo" src="https://preview.keenthemes.com/metronic8/demo23/assets/media/svg/brand-logos/google-icon.svg" class="h-15px me-3"/>
-                                    Sign in with Google
-                                </a>
-                                <!--end::Google link--->
-                            </div>
-                            <!--end::Col-->
-
-                            <!--begin::Col-->
-                            <div class="col-md-6">
-                                <!--begin::Google link--->
-                                <a href="#" class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
-                                    <img alt="Logo" src="https://preview.keenthemes.com/metronic8/demo23/assets/media/svg/brand-logos/apple-black.svg" class="theme-light-show h-15px me-3"/>
-                                    <img alt="Logo" src="https://preview.keenthemes.com/metronic8/demo23/assets/media/svg/brand-logos/apple-black-dark.svg" class="theme-dark-show h-15px me-3"/>
-                                    ورود با اکانت اپل
-                                </a>
-                                <!--end::Google link--->
-                            </div>
-                        </div>
-
                         <div class="separator separator-content my-14">
                             <span class="w-125px text-gray-500 fw-semibold fs-7">یا با ایمیل</span>
                         </div>
@@ -334,6 +309,7 @@ License: For each use you must have a valid license purchased only from above li
                 data: $(this).serialize(),
                 dataType: "json",
                 success: function(response) {
+                    console.log(response);
                     if (response.status) {
                         $('#alert').removeAttr('class').addClass('alert alert-success text-center')
                             .text(response.message);

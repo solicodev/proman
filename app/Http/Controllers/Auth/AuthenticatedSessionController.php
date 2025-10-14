@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,18 +25,29 @@ class AuthenticatedSessionController extends Controller
     /**
      * Handle an incoming authentication request.
      */
-    public function store(LoginRequest $request): RedirectResponse
+    public function store(LoginRequest $request): JsonResponse
     {
-        //ToDO
+
         $random = rand(111111, 999999);
         $otp = 'کد تایید شما :'. $random;
-        sendSms($request->mobile, $otp);
+
+        $user = User::where('mobile',$request->mobile)->first();
+        $user->confirm_code = $random;
+        $user->update();
+        //ToDO
+        // sendSms($request->mobile, $otp);
 
         $request->authenticate();
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        return response()->json([
+            'status' => true,
+            'confirm_code'    => $user->confirm_code,
+            'message' => 'ورود با موفقیت انجام شد توکن صادر شد.',
+        ],200);
+
+//        return redirect()->intended(route('dashboard', absolute: false));
     }
 
     /**
