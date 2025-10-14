@@ -17,26 +17,17 @@ License: For each use you must have a valid license purchased only from above li
 <!-- Mirrored from preview.keenthemes.com/metronic8/demo23/rtl/authentication/layouts/corporate/sign-in.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 17 Sep 2024 08:39:16 GMT -->
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
 <head>
-    <title>Metronic - The World's #1 Selling Tailwind CSS & Bootstrap Admin Template by KeenThemes</title>
+    <title>ورود به داشبورد مدیریت پروژه ها</title>
     <meta charset="utf-8"/>
-    <meta name="description" content="
-            The most advanced Tailwind CSS & Bootstrap 5 Admin Theme with 40 unique prebuilt layouts on Themeforest trusted by 100,000 beginners and professionals. Multi-demo,
-            Dark Mode, RTL support and complete React, Angular, Vue, Asp.Net Core, Rails, Spring, Blazor, Django, Express.js, Node.js, Flask, Symfony & Laravel versions.
-            Grab your copy now and get life-time updates for free.
-        "/>
-    <meta name="keywords" content="
-            tailwind, tailwindcss, metronic, bootstrap, bootstrap 5, angular, VueJs, React, Asp.Net Core, Rails, Spring, Blazor, Django, Express.js,
-            Node.js, Flask, Symfony & Laravel starter kits, admin themes, web design, figma, web development, free templates,
-            free admin themes, bootstrap theme, bootstrap template, bootstrap dashboard, bootstrap dak mode, bootstrap button,
-            bootstrap datepicker, bootstrap timepicker, fullcalendar, datatables, flaticon
-        "/>
+    <meta name="description" content=""/>
+    <meta name="keywords" content=""/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="Metronic - The World's #1 Selling Tailwind CSS & Bootstrap Admin Template by KeenThemes" />
     <meta property="og:url" content="https://keenthemes.com/metronic"/>
     <meta property="og:site_name" content="Metronic by Keenthemes" />
-    <link rel="canonical" href="sign-in.html"/>
+    <link rel="canonical" href=""/>
     <link rel="shortcut icon" href="https://preview.keenthemes.com/metronic8/demo23/assets/media/logos/favicon.ico"/>
 
     <!--begin::Fonts(mandatory for all pages)-->
@@ -108,11 +99,12 @@ License: For each use you must have a valid license purchased only from above li
 
                     <!--begin::Form-->
                     <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" data-kt-redirect-url="/metronic8/demo23/rtl/index.html" action="#">
+                        @csrf
                         <!--begin::Heading-->
                         <div class="text-center mb-11">
                             <!--begin::Title-->
                             <h1 class="text-gray-900 fw-bolder mb-3">
-                                Sign In
+                                ورود
                             </h1>
                             <!--end::Title-->
 
@@ -143,7 +135,7 @@ License: For each use you must have a valid license purchased only from above li
                                 <a href="#" class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
                                     <img alt="Logo" src="https://preview.keenthemes.com/metronic8/demo23/assets/media/svg/brand-logos/apple-black.svg" class="theme-light-show h-15px me-3"/>
                                     <img alt="Logo" src="https://preview.keenthemes.com/metronic8/demo23/assets/media/svg/brand-logos/apple-black-dark.svg" class="theme-dark-show h-15px me-3"/>
-                                    Sign in with Apple
+                                    ورود با اکانت اپل
                                 </a>
                                 <!--end::Google link--->
                             </div>
@@ -153,7 +145,7 @@ License: For each use you must have a valid license purchased only from above li
 
                         <!--begin::Separator-->
                         <div class="separator separator-content my-14">
-                            <span class="w-125px text-gray-500 fw-semibold fs-7">Or with email</span>
+                            <span class="w-125px text-gray-500 fw-semibold fs-7">یا با ایمیل</span>
                         </div>
                         <!--end::Separator-->
 
@@ -202,13 +194,7 @@ License: For each use you must have a valid license purchased only from above li
                         <!--end::Submit button-->
 
                         <!--begin::Sign up-->
-                        <div class="text-gray-500 text-center fw-semibold fs-6">
-                            Not a Member yet?
 
-                            <a href="sign-up.html" class="link-primary">
-                                Sign up
-                            </a>
-                        </div>
                         <!--end::Sign up-->
                     </form>
                     <!--end::Form-->
