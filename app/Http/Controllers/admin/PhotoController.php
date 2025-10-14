@@ -30,8 +30,7 @@ class PhotoController extends Controller
      */
     public function store(Request $request)
     {
-
-        file_store($request->logo, 'assets/uploads/photos/logo/', '');
+//        file_store($request->logo, 'assets/uploads/photos/logo/', '');
     }
 
     /**

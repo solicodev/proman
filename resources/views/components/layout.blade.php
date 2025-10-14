@@ -1,4 +1,4 @@
-@extends('layout.panel')
+@extends('layouts.panel')
 
 @section('content')
     {{ $slot }}

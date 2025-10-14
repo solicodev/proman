@@ -2,7 +2,7 @@
 @section('content')
     <h6 class="mb-0 text-uppercase">لیست دپارتمان</h6>
     <hr/>
-    @include('layout.message')
+    @include('layouts.message')
     <div class="card">
         <div class="card-body">
             <div class="d-flex align-items-center justify-content-end">

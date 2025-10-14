@@ -10,7 +10,7 @@
                         <h1 class="breadcrumbs-title">{{ $title }}</h1>
                         <ul class="breadcrumbs-link">
                             <li>
-                                <a href="{{ route('home') }}">خانه</a>
+                                <a href="">خانه</a>
                             </li>
                             @foreach ($items as $item)
                                 @if ($item['title'])

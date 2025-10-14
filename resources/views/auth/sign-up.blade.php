@@ -13,8 +13,8 @@ License: For each use you must have a valid license purchased only from above li
 -->
 <html lang="en"  dir="rtl" direction="rtl" style="direction:rtl;" >
     <!--begin::Head-->
-
-<!-- Mirrored from preview.keenthemes.com/metronic8/demo23/rtl/authentication/layouts/fancy/sign-up.blade.php by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 17 Sep 2024 08:39:21 GMT -->
+    
+<!-- Mirrored from preview.keenthemes.com/metronic8/demo23/rtl/authentication/layouts/corporate/sign-up.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 17 Sep 2024 08:39:17 GMT -->
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
 <head>
         <title>Metronic - The World's #1 Selling Tailwind CSS & Bootstrap Admin Template by KeenThemes</title>
@@ -42,13 +42,13 @@ License: For each use you must have a valid license purchased only from above li
         <!--begin::Fonts(mandatory for all pages)-->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700"/>        <!--end::Fonts-->
 
-
-
+        
+        
                     <!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
                             <link href="../../../../assets/plugins/global/plugins.bundle.rtl.css" rel="stylesheet" type="text/css"/>
                             <link href="../../../../assets/css/style.bundle.rtl.css" rel="stylesheet" type="text/css"/>
                         <!--end::Global Stylesheets Bundle-->
-
+        
                     <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-52YZ3XGZJ6"></script>
 <script>
@@ -57,7 +57,7 @@ License: For each use you must have a valid license purchased only from above li
   gtag('js', new Date());
 
   gtag('config', 'G-52YZ3XGZJ6');
-</script>
+</script>        
         <script>
             // Frame-busting to prevent site from being loaded within a frame without permission (click-jacking)
             if (window.top != window.self) {
@@ -82,7 +82,7 @@ License: For each use you must have a valid license purchased only from above li
 				themeMode = localStorage.getItem("data-bs-theme");
 			} else {
 				themeMode = defaultThemeMode;
-			}
+			}			
 		}
 
 		if (themeMode === "system") {
@@ -90,105 +90,85 @@ License: For each use you must have a valid license purchased only from above li
 		}
 
 		document.documentElement.setAttribute("data-bs-theme", themeMode);
-	}
+	}            
 </script>
 <!--end::Theme mode setup on page load-->
-
+                            
         <!--begin::Root-->
 <div class="d-flex flex-column flex-root" id="kt_app_root">
-
+    
 <!--begin::Authentication - Sign-up -->
-<div class="d-flex flex-column flex-lg-row flex-column-fluid">
-    <!--begin::Logo-->
-    <a href="../../../index.html" class="d-block d-lg-none mx-auto py-20">
-        <img alt="Logo" src="https://preview.keenthemes.com/metronic8/demo23/assets/media/logos/default.svg" class="theme-light-show h-25px"/>
-        <img alt="Logo" src="https://preview.keenthemes.com/metronic8/demo23/assets/media/logos/default-dark.svg" class="theme-dark-show h-25px"/>
-    </a>
-    <!--end::Logo-->
-
-    <!--begin::Aside-->
-    <div class="d-flex flex-column flex-column-fluid flex-center w-lg-50 p-10">
-        <!--begin::Wrapper-->
-        <div class="d-flex justify-content-between flex-column-fluid flex-column w-100 mw-450px">
-            <!--begin::Header-->
-            <div class="d-flex flex-stack py-2">
-                <!--begin::Back link-->
-                <div class="me-2">
-                                            <a href="sign-in.html" class="btn btn-icon bg-light rounded-circle">
-                            <i class="ki-outline ki-black-left fs-2 text-gray-800"></i>                        </a>
-
-                </div>
-                <!--end::Back link-->
-
-
-                                    <!--begin::Sign Up link-->
-                    <div class="m-0">
-                        <span class="text-gray-500 fw-bold fs-5 me-2" data-kt-translate="sign-up-head-desc">
-                            Already a member ?
-                        </span>
-
-                        <a href="sign-in.html" class="link-primary fw-bold fs-5" data-kt-translate="sign-up-head-link">
-                            Sign In
-                        </a>
-                    </div>
-                    <!--end::Sign Up link--->
-
-
-
-
-            </div>
-            <!--end::Header-->
-
-            <!--begin::Body-->
-            <div class="py-20">
-
+<div class="d-flex flex-column flex-lg-row flex-column-fluid">    
+    <!--begin::Body-->
+    <div class="d-flex flex-column flex-lg-row-fluid w-lg-50 p-10 order-2 order-lg-1">
+        <!--begin::Form-->
+        <div class="d-flex flex-center flex-column flex-lg-row-fluid">
+            <!--begin::Wrapper-->
+            <div class="w-lg-500px p-10">
+                
 <!--begin::Form-->
-<form class="form w-100" novalidate="novalidate" id="kt_sign_up_form" data-kt-redirect-url="/metronic8/demo23/rtl/authentication/layouts/fancy/sign-in.html" action="#">
+<form class="form w-100" novalidate="novalidate" id="kt_sign_up_form" data-kt-redirect-url="/metronic8/demo23/rtl/authentication/layouts/corporate/sign-in.html" action="#">
     <!--begin::Heading-->
-    <div class="text-start mb-10">
+    <div class="text-center mb-11">
         <!--begin::Title-->
-        <h1 class="text-gray-900 mb-3 fs-3x" data-kt-translate="sign-up-title">
-            Create an Account
+        <h1 class="text-gray-900 fw-bolder mb-3">
+            Sign Up
         </h1>
         <!--end::Title-->
 
-        <!--begin::Text-->
-        <div class="text-gray-500 fw-semibold fs-6" data-kt-translate="general-desc">
-            Get unlimited access & earn money
+        <!--begin::Subtitle-->
+        <div class="text-gray-500 fw-semibold fs-6">
+            Your Social Campaigns
         </div>
-        <!--end::Link-->
+        <!--end::Subtitle--->
     </div>
-    <!--end::Heading-->
+    <!--begin::Heading-->
 
-    <!--begin::Input group-->
-    <div class="row fv-row mb-7">
+    <!--begin::Login options-->
+    <div class="row g-3 mb-9">
         <!--begin::Col-->
-        <div class="col-xl-6">
-            <input class="form-control form-control-lg form-control-solid" type="text" placeholder="First Name" name="first-name" autocomplete="off" data-kt-translate="sign-up-input-first-name"/>
+        <div class="col-md-6">
+            <!--begin::Google link--->
+            <a href="#" class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
+                <img alt="Logo" src="https://preview.keenthemes.com/metronic8/demo23/assets/media/svg/brand-logos/google-icon.svg" class="h-15px me-3"/>   
+                Sign in with Google
+            </a>
+            <!--end::Google link--->
         </div>
         <!--end::Col-->
 
         <!--begin::Col-->
-        <div class="col-xl-6">
-            <input class="form-control form-control-lg form-control-solid" type="text" placeholder="Last Name" name="last-name" autocomplete="off" data-kt-translate="sign-up-input-last-name"/>
+        <div class="col-md-6">
+            <!--begin::Google link--->
+            <a href="#" class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
+                <img alt="Logo" src="https://preview.keenthemes.com/metronic8/demo23/assets/media/svg/brand-logos/apple-black.svg" class="theme-light-show h-15px me-3"/>  
+                <img alt="Logo" src="https://preview.keenthemes.com/metronic8/demo23/assets/media/svg/brand-logos/apple-black-dark.svg" class="theme-dark-show h-15px me-3"/>     
+                Sign in with Apple
+            </a>
+            <!--end::Google link--->
         </div>
         <!--end::Col-->
     </div>
-    <!--end::Input group-->
+    <!--end::Login options-->
 
-    <!--begin::Input group-->
-    <div class="fv-row mb-10">
-        <input class="form-control form-control-lg form-control-solid" type="email" placeholder="Email" name="email" autocomplete="off" data-kt-translate="sign-up-input-email"/>
+    <!--begin::Separator-->
+    <div class="separator separator-content my-14"><span class="w-125px text-gray-500 fw-semibold fs-7">Or with email</span></div>
+    <!--end::Separator-->
+
+    <!--begin::Input group--->
+    <div class="fv-row mb-8">
+        <!--begin::Email-->
+        <input type="text" placeholder="Email" name="email" autocomplete="off" class="form-control bg-transparent"/> 
+        <!--end::Email-->
     </div>
-    <!--end::Input group-->
 
     <!--begin::Input group-->
-    <div class="fv-row mb-10" data-kt-password-meter="true">
+    <div class="fv-row mb-8" data-kt-password-meter="true">
         <!--begin::Wrapper-->
         <div class="mb-1">
             <!--begin::Input wrapper-->
-            <div class="position-relative mb-3">
-                <input class="form-control form-control-lg form-control-solid" type="password" placeholder="Password" name="password" autocomplete="off" data-kt-translate="sign-up-input-password"/>
+            <div class="position-relative mb-3">    
+                <input class="form-control bg-transparent" type="password" placeholder="Password" name="password" autocomplete="off"/>
 
                 <span class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2" data-kt-password-meter-control="visibility">
                     <i class="ki-outline ki-eye-slash fs-2"></i>                    <i class="ki-outline ki-eye fs-2 d-none"></i>                </span>
@@ -207,27 +187,39 @@ License: For each use you must have a valid license purchased only from above li
         <!--end::Wrapper-->
 
         <!--begin::Hint-->
-        <div class="text-muted" data-kt-translate="sign-up-hint">
+        <div class="text-muted">
             Use 8 or more characters with a mix of letters, numbers & symbols.
         </div>
         <!--end::Hint-->
     </div>
     <!--end::Input group--->
 
-    <!--begin::Input group-->
-    <div class="fv-row mb-10">
-        <input class="form-control form-control-lg form-control-solid" type="password" placeholder="Confirm Password" name="confirm-password" autocomplete="off" data-kt-translate="sign-up-input-confirm-password" />
+    <!--end::Input group--->
+    <div class="fv-row mb-8">    
+        <!--begin::Repeat Password-->
+        <input type="text" placeholder="Repeat Password" name="confirm-password" type="password" autocomplete="off" class="form-control bg-transparent"/>
+        <!--end::Repeat Password-->
     </div>
-    <!--end::Input group-->
+    <!--end::Input group--->
 
-   <!--begin::Actions-->
-   <div class="d-flex flex-stack">
-        <!--begin::Submit-->
-        <button id="kt_sign_up_submit" class="btn btn-primary" data-kt-translate="sign-up-submit">
+    <!--begin::Accept-->
+    <div class="fv-row mb-8">
+        <label class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" name="toc" value="1"/>
+            <span class="form-check-label fw-semibold text-gray-700 fs-base ms-1">
+                I Accept the <a href="#" class="ms-1 link-primary">Terms</a>
+            </span>
+        </label>
+    </div>
+    <!--end::Accept-->
 
+    <!--begin::Submit button-->
+    <div class="d-grid mb-10">
+        <button type="submit" id="kt_sign_up_submit" class="btn btn-primary">
+            
 <!--begin::Indicator label-->
 <span class="indicator-label">
-    Submit</span>
+    Sign up</span>
 <!--end::Indicator label-->
 
 <!--begin::Indicator progress-->
@@ -235,52 +227,43 @@ License: For each use you must have a valid license purchased only from above li
     Please wait...    <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
 </span>
 <!--end::Indicator progress-->        </button>
-        <!--end::Submit-->
-
-        <!--begin::Social-->
-        <div class="d-flex align-items-center">
-            <div class="text-gray-500 fw-semibold fs-6 me-6">Or</div>
-
-            <!--begin::Symbol-->
-            <a href="#" class="symbol symbol-circle symbol-45px w-45px bg-light me-3">
-                <img alt="Logo" src="https://preview.keenthemes.com/metronic8/demo23/assets/media/svg/brand-logos/google-icon.svg" class="p-4"/>
-            </a>
-            <!--end::Symbol-->
-
-            <!--begin::Symbol-->
-            <a href="#" class="symbol symbol-circle symbol-45px w-45px bg-light me-3">
-                <img alt="Logo" src="https://preview.keenthemes.com/metronic8/demo23/assets/media/svg/brand-logos/facebook-3.svg" class="p-4"/>
-            </a>
-            <!--end::Symbol-->
-
-            <!--begin::Symbol-->
-            <a href="#" class="symbol symbol-circle symbol-45px w-45px bg-light">
-                <img alt="Logo" src="https://preview.keenthemes.com/metronic8/demo23/assets/media/svg/brand-logos/apple-black.svg" class="theme-light-show p-4"/>
-                <img alt="Logo" src="https://preview.keenthemes.com/metronic8/demo23/assets/media/svg/brand-logos/apple-black-dark.svg" class="theme-dark-show p-4"/>
-            </a>
-            <!--end::Symbol-->
-        </div>
-        <!--end::Social-->
     </div>
-    <!--end::Actions-->
+    <!--end::Submit button-->
+   
+    <!--begin::Sign up-->
+    <div class="text-gray-500 text-center fw-semibold fs-6">
+        Already have an Account?
+
+        <a href="sign-in.html" class="link-primary fw-semibold">
+            Sign in
+        </a>
+    </div>
+    <!--end::Sign up-->
 </form>
-<!--end::Form-->
+<!--end::Form--> 
+
             </div>
-            <!--end::Body-->
+            <!--end::Wrapper-->
+        </div>
+        <!--end::Form-->       
 
-            <!--begin::Footer-->
-            <div class="m-0">
+        <!--begin::Footer-->  
+        <div class="w-lg-500px d-flex flex-stack px-10 mx-auto">
+            <!--begin::Languages-->
+            <div class="me-10">             
                 <!--begin::Toggle-->
-                <button class="btn btn-flex btn-link rotate" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start" data-kt-menu-offset="0px, 0px">
-                    <img  data-kt-element="current-lang-flag" class="w-25px h-25px rounded-circle me-3" src="https://preview.keenthemes.com/metronic8/demo23/assets/media/flags/united-states.svg" alt=""/>
+                <button class="btn btn-flex btn-link btn-color-gray-700 btn-active-color-primary rotate fs-base" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start" data-kt-menu-offset="0px, 0px">
+                    <img  data-kt-element="current-lang-flag" class="w-20px h-20px rounded me-3" src="https://preview.keenthemes.com/metronic8/demo23/assets/media/flags/united-states.svg" alt=""/>
+                    
+                    <span data-kt-element="current-lang-name" class="me-1">English</span>
 
-                    <span data-kt-element="current-lang-name" class="me-2">English</span>
-
-                    <i class="ki-outline ki-down fs-2 text-muted rotate-180 m-0"></i>                </button>
+                    <span class="d-flex flex-center rotate-180">
+                        <i class="ki-outline ki-down fs-5 text-muted m-0"></i>                    </span>
+                </button>
                 <!--end::Toggle-->
 
                 <!--begin::Menu-->
-                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px py-4" data-kt-menu="true" id="kt_auth_lang_menu">
+                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px py-4 fs-7" data-kt-menu="true" id="kt_auth_lang_menu">
                                             <!--begin::Menu item-->
                         <div class="menu-item px-3">
                             <a href="#" class="menu-link d-flex px-5" data-kt-lang="English">
@@ -332,24 +315,66 @@ License: For each use you must have a valid license purchased only from above li
                         </div>
                         <!--end::Menu item-->
                                     </div>
-                <!--end::Menu-->
+                <!--end::Menu-->           
             </div>
-            <!--end::Footer-->
+            <!--end::Languages--> 
+
+            <!--begin::Links-->
+            <div class="d-flex fw-semibold text-primary fs-base gap-5">
+                <a href="../../../pages/team.html" target="_blank">Terms</a>
+
+                <a href="../../../pages/pricing/column.html" target="_blank">Plans</a>
+                
+                <a href="../../../pages/contact.html" target="_blank">Contact Us</a>
+            </div>
+            <!--end::Links-->
         </div>
-        <!--end::Wrapper-->
+        <!--end::Footer-->
+    </div>
+    <!--end::Body-->
+    
+    <!--begin::Aside-->
+    <div class="d-flex flex-lg-row-fluid w-lg-50 bgi-size-cover bgi-position-center order-1 order-lg-2" style="background-image: url(../../../../assets/media/misc/auth-bg.png)">
+        <!--begin::Content-->
+        <div class="d-flex flex-column flex-center py-7 py-lg-15 px-5 px-md-15 w-100">          
+            <!--begin::Logo-->
+            <a href="../../../index.html" class="mb-0 mb-lg-12">
+                <img alt="Logo" src="../../../../assets/media/logos/custom-1.png" class="h-60px h-lg-75px"/>
+            </a>    
+            <!--end::Logo-->
+
+            <!--begin::Image-->                
+            <img class="d-none d-lg-block mx-auto w-275px w-md-50 w-xl-500px mb-10 mb-lg-20" src="../../../../assets/media/misc/auth-screens.png" alt=""/>                 
+            <!--end::Image-->
+
+            <!--begin::Title-->
+            <h1 class="d-none d-lg-block text-white fs-2qx fw-bolder text-center mb-7"> 
+                Fast, Efficient and Productive
+            </h1>  
+            <!--end::Title-->
+
+            <!--begin::Text-->
+            <div class="d-none d-lg-block text-white fs-base text-center">
+                In this kind of post, <a href="#" class="opacity-75-hover text-warning fw-bold me-1">the blogger</a> 
+
+                introduces a person they’ve interviewed <br/> and provides some background information about 
+                
+                <a href="#" class="opacity-75-hover text-warning fw-bold me-1">the interviewee</a> 
+                and their <br/> work following this is a transcript of the interview.  
+            </div>
+            <!--end::Text-->
+        </div>
+        <!--end::Content-->
     </div>
     <!--end::Aside-->
-
-    <!--begin::Body-->
-    <div class="d-none d-lg-flex flex-lg-row-fluid w-50 bgi-size-cover bgi-position-y-center bgi-position-x-start bgi-no-repeat"
-        style="background-image: url(../../../../assets/media/auth/bg11.png)">
-    </div>
-    <!--begin::Body-->
 </div>
 <!--end::Authentication - Sign-up-->
-</div>
-<!--end::Root-->
+                         
 
+
+                         </div>
+<!--end::Root-->
+        
         <!--begin::Javascript-->
         <script>
             var hostUrl = "https://preview.keenthemes.com/metronic8/demo23/assets/";        </script>
@@ -358,15 +383,14 @@ License: For each use you must have a valid license purchased only from above li
                             <script src="../../../../assets/plugins/global/plugins.bundle.js"></script>
                             <script src="../../../../assets/js/scripts.bundle.js"></script>
                         <!--end::Global Javascript Bundle-->
-
-
+        
+        
                     <!--begin::Custom Javascript(used for this page only)-->
                             <script src="../../../../assets/js/custom/authentication/sign-up/general.js"></script>
-                            <script src="../../../../assets/js/custom/authentication/sign-in/i18n.js"></script>
                         <!--end::Custom Javascript-->
                 <!--end::Javascript-->
     </body>
     <!--end::Body-->
 
-<!-- Mirrored from preview.keenthemes.com/metronic8/demo23/rtl/authentication/layouts/fancy/sign-up.blade.php by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 17 Sep 2024 08:39:21 GMT -->
+<!-- Mirrored from preview.keenthemes.com/metronic8/demo23/rtl/authentication/layouts/corporate/sign-up.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 17 Sep 2024 08:39:17 GMT -->
 </html>
