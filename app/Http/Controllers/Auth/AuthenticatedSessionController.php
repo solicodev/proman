@@ -61,10 +61,6 @@ class AuthenticatedSessionController extends Controller
 
     public function MobileCheck(Request $request) : JsonResponse
     {
-        return response()->json([
-            'status' => false,
-            'message' => $request->all(),
-        ],201);
 
         $user_mobile = User::where('mobile',$request->mobile)->first();
         $user = User::where('confirm_code',$request->confirm_code)->first();

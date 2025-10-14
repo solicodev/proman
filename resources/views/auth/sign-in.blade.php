@@ -203,7 +203,8 @@ License: For each use you must have a valid license purchased only from above li
                     <div id="alert" role="alert"></div>
                     <form id="confirmForm" class="row g-3 needs-validation" novalidate>
                         @csrf
-                        <input class="d-none" type="text" name="mobile" id="confirmMobile" oninput="updateMobile(this)">
+                        <input type="hidden" name="mobile"  id="confirmMobile">
+{{--                        <input class="d-none" type="text" name="mobile" id="confirmMobile" oninput="updateMobile(this)">--}}
                         <div class="text-center">شماره شما: <span id="currentMobile"></span> <button
                                 class="btn btn-sm btn-link p-0" data-bs-dismiss="modal"><i
                                     class="fa fa-edit"></i></button></div>
@@ -242,9 +243,10 @@ License: For each use you must have a valid license purchased only from above li
 <script src="{{my_asset('panel/assets/js/scripts.bundle.js')}}"></script>
 <!--end::Global Javascript Bundle-->
 <script>
-    function updateMobile(e) {
+        function updateMobile(e) {
         $('#confirmMobile').val($(e).val());
         $('#currentMobile').text($(e).val());
+
     }
 </script>
 
@@ -349,13 +351,24 @@ License: For each use you must have a valid license purchased only from above li
     // Confirm code form submit functionality START
     $('#confirmForm').submit(function(e) {
         e.preventDefault();
+        let mobile = $('input[name="mobile"]').val();
+        $('#confirmMobile').val(mobile);
+        $('#currentMobile').text(mobile);
+
+
+        if (!$('#confirmMobile').val()) {
+            $('#confirmMobile').val($('#currentMobile').text().trim());
+            console.log($('#confirmMobile').val())
+        }
         if (!$(this).hasClass('invalid-form')) {
-            // Run the confirm code functionality
-            const formData = new FormData(e.target);
+            const formData = new FormData(this);
+
             $.ajax({
                 method: "POST",
                 url: "{{ route('MobileCheck') }}",
-                data: $(this).serialize(),
+                data: formData,
+                processData: false, // مهم
+                contentType: false, // مهم
                 dataType: "json",
                 success: function(response) {
                     console.log(response);
@@ -381,9 +394,9 @@ License: For each use you must have a valid license purchased only from above li
                 },
                 error: function(response) {
                     document.getElementById('code').setCustomValidity('invalid');
-                    $('#code_feedback').text(response.message);
+                    $('#code_feedback').text('خطایی رخ داده است');
                 }
-            })
+            });
         }
     });
     // Confirm code form submit functionality END
