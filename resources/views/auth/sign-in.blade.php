@@ -36,6 +36,7 @@ License: For each use you must have a valid license purchased only from above li
     <!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
     <link href="{{my_asset('panel/assets/plugins/global/plugins.bundle.rtl.css')}}" rel="stylesheet" type="text/css"/>
     <link href="{{my_asset('panel/assets/css/style.bundle.rtl.css')}}" rel="stylesheet" type="text/css"/>
+    <link href="{{my_asset('panel/assets/css/main.css')}}" rel="stylesheet" type="text/css"/>
     <!--end::Global Stylesheets Bundle-->
 
     <!-- Google tag (gtag.js) -->
@@ -96,7 +97,7 @@ License: For each use you must have a valid license purchased only from above li
                     <!-- ======================= Login start ======================== -->
 
                     <!--begin::Form-->
-                    <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" data-kt-redirect-url="/metronic8/demo23/rtl/index.html" action="#">
+                    <form class="form w-100" novalidate="novalidate" id="loginForm" data-kt-redirect-url="/metronic8/demo23/rtl/index.html" action="#">
                         @csrf
                         <!--begin::Heading-->
                         <div class="text-center mb-11">

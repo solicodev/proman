@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Http;
+
 if (!function_exists('permission_name')) {
     /**
      * Generate an asset path for the application.
@@ -264,6 +266,58 @@ if (!function_exists('isImage')) {
             return true;
         }
         return false;
+    }
+}
+
+
+if (!function_exists('new_sms')) {
+    function sendSms($phone, $otp)
+    {
+        $url = env('SMS_URL');
+        $username = env('SMS_USERNAME');
+        $password = env('SMS_PASSWORD');
+
+        $payload = [
+            'phone_number' => $phone,
+            'message' => 'کد ورود :' . $otp,
+        ];
+        $response = Http::withHeaders([
+            'Content-Type' => 'text/plain',
+            'Authorization' => 'Basic ' . base64_encode("{$username}:{$password}"),
+        ])->post($url, $payload);
+
+        if ($response->successful()) {
+            return $response->body();
+        } else {
+            \Log::error('SMS ارسال نشد', [
+                'status' => $response->status(),
+                'body' => $response->body(),
+            ]);
+            return false;
+        }
+    }
+    function send_sms($phone, $otp)
+    {
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://sms.soit.ir/api.php',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => json_encode(array('phonenumber' => $phone, 'message' => 'کد ورود:' . $otp)),
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: text/plain',
+                'Authorization: Basic ' . base64_encode("solico:V`@wL2)Yt9?hv6{E")
+            ),
+        ));
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        //echo $response;
     }
 }
 

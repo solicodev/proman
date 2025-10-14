@@ -54818,7 +54818,7 @@ router-outlet {
 
 .app-blank {
     background-color: var(--bs-app-blank-bg-color);
-    background-image : url('../media/auth/bg4.jpg');
+    /*background-image : url('../media/auth/bg4.jpg');*/
 }
 
 [data-kt-app-reset-transition=true] * {
