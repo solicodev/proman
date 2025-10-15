@@ -1,3 +1,4 @@
+<script src="{{url('assets/admin/js/bootstrap.bundle.min.js')}}">
 <script src="{{url('assets/admin/js/jquery.min.js')}}" type="text/javascript">
 </script>
 <script src="{{url('assets/admin/js/main.js')}}" type="text/javascript">
@@ -8,8 +9,8 @@
 </script>
 <script src="{{url('assets/admin/plugins/perfect-scrollbar/js/perfect-scrollbar.js')}}">
 </script>
-{{--<script src="{{url('assets/admin/plugins/apexcharts-bundle/js/apexcharts.min.js')}}">--}}
-{{--</script>--}}
+<script src="{{url('assets/admin/plugins/apexcharts-bundle/js/apexcharts.min.js')}}">
+</script>
 <script src="{{url('assets/admin/plugins/datatable/js/jquery.dataTables.min.js')}}">
 </script>
 <script src="{{url('assets/admin/plugins/datatable/js/dataTables.bootstrap5.min.js')}}">
@@ -23,12 +24,12 @@
 <script src="{{url('assets/admin/plugins/Drag-And-Drop/dist/imageuploadify.min.js')}}"></script>
 
 <script src="https://unpkg.com/boxicons@2.1.3/dist/boxicons.js"></script>
-{{--<script src="{{url('assets/admin/js/index.js')}}">--}}
-{{--</script>--}}
+<script src="{{url('assets/admin/js/index.js')}}">
+</script>
 
 <script src="{{url('assets/admin/js/app.js')}}">
 </script>
-
+@stack('script')
 <script>
     // $("#fancy-file-upload").FancyFileUpload({
     //     params: {
@@ -46,8 +47,7 @@
     //     };
     // });
 </script>
-@stack('script')
+
+
 </body>
-
-
 </html>
