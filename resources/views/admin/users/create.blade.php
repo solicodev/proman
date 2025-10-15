@@ -112,26 +112,8 @@
 @endsection
 
 @push('script')
-    <script>
-        console.log('fartash')
-        // Example starter JavaScript for disabling form submissions if there are invalid fields
-        (() => {
-            'use strict'
-            console.log('fartash')
-            // Fetch all the forms we want to apply custom Bootstrap validation styles to
-            const forms = document.querySelectorAll('.needs-validation')
+    <script type="text/javascript">
 
-            // Loop over them and prevent submission
-            Array.from(forms).forEach(form => {
-                form.addEventListener('submit', event => {
-                    if (!form.checkValidity()) {
-                        event.preventDefault()
-                        event.stopPropagation()
-                    }
-                    form.classList.add('was-validated')
-                }, false)
-            })
-        })()
         function addStep() {
             $('.steps').append(`
                 <div class="step card">
@@ -200,8 +182,8 @@
         }
 
         $(function () {
-            $('#textOne').summernote();
-            $('#textTwo').summernote();
+            //$('#textOne').summernote();
+            //$('#textTwo').summernote();
         });
     </script>
 @endpush
