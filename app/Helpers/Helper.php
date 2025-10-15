@@ -90,9 +90,9 @@ if (!function_exists('role_name')) {
     {
         $roles = [
             'Super Admin' => 'مدیر کل',
-            'manager' => 'مدیر پروژه',
-            'member' => 'اعضای پروژه',
-            'assignee' => 'مسئول انجام تسک',
+            'Manager' => 'مدیر پروژه',
+            'Member' => 'اعضای پروژه',
+            'Assignee' => 'مسئول انجام تسک',
             'User' => 'کاربر',
         ];
         return $roles[$role];
