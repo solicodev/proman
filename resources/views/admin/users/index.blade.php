@@ -24,14 +24,28 @@
                     </thead>
                     <tbody>
                     @foreach ($users as $user)
+                        @php
+                            $role = $user->getRoleNames()->first();
+                        @endphp
                         <tr>
                             <td>{{$loop->iteration}}</td>
                             <td> {{ $user->Name }}</td>
                             <td> {{ $user->personal_id }}</td>
                             <td> {{ $user->mobile }}</td>
                             <td> {{ $user->email }}</td>
-                            <td> {{ $user->getRoleNames()->first() }}</td>
-                            <td> {!! $user->UserStatus !!}</td>
+                            <td> {{ role_name($role) }}</td>
+                            <td> {!! $user->UserStatus !!}
+
+                                <form action="{{ route('admin.user.status', $user->id) }}" method="post">
+                                    <select name="status" class="form-control" onchange="this.form.submit();">
+                                        <option value="0" @if($user->status == 0) selected @endif>غیر فعال</option>
+                                        <option value="1" @if($user->status == 1) selected @endif>فعال</option>
+                                        <option value="2" @if($user->status == 2) selected @endif>تعلیق</option>
+                                    </select>
+                                    @csrf
+                                </form>
+
+                            </td>
                             <td>
                                 <div class="d-flex">
                                     <a href="{{ route('admin.user.edit',$user->id) }}" class='text-warning'>
@@ -88,6 +102,7 @@
                 }
             });
         });
+
 
         function openDeleteModal(url) {
             $('#deleteForm').attr('action', url);

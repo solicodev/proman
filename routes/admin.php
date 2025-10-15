@@ -16,6 +16,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth','SuperAdminCheck'])->
         Route::post('/store', [UserController::class , 'store'])->name('store');
         Route::get('/edit/{user}', [UserController::class , 'edit'])->name('edit');
         Route::put('/update/{user}', [UserController::class , 'update'])->name('update');
+        Route::post('/status/{user}', [UserController::class , 'status'])->name('status');
         Route::get('/delete/{user}', [UserController::class , 'destroy'])->name('destroy');
     });
 

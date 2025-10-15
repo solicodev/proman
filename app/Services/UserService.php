@@ -13,6 +13,7 @@ class UserService
 {
     public function store(array $param)
     {
+
         $user = new User();
         $user->first_name = $param['first_name'];
         $user->last_name = $param['last_name'];
@@ -24,10 +25,27 @@ class UserService
         $user->save();
 
         //TODO
-        $permission_lists = Permission::where('name', 'LIKE', 'dep_%')->pluck('id')->toArray();
+        $role_item = $param['role_id'];
         $user->assignRole($param['role_id']);
-        $user->permissions()->attach($permission_lists);
+        switch ($role_item) {
+            case 'Manager':
+                $permission_lists = Permission::where('name', 'LIKE', 'manager_%')->pluck('id')->toArray();
+                break;
+            case 'Member':
+                $permission_lists = Permission::where('name', 'LIKE', 'member_%')->pluck('id')->toArray();
+                break;
+            case 'Assignee':
+                $permission_lists = Permission::where('name', 'LIKE', 'assign_%')->pluck('id')->toArray();
+                break;
+//            case 'User':
+//                $permission_lists = Permission::where('name', 'LIKE', 'manager_%')->pluck('id')->toArray();
+//                break;
+            default:
+                $permission_lists = Permission::where('name', 'LIKE', 'User_%')->pluck('id')->toArray();
+                break;
+        }
 
+        $user->permissions()->attach($permission_lists);
         return $user;
     }
 

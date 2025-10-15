@@ -49,13 +49,26 @@
                                    value="{{old('personal_id')}}" required>
                             <div class="invalid-feedback">کد پرسنلی الزامی است</div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <label for="mobile" class="form-label">شماره موبایل</label>
                             <input type="text" name="mobile" class="form-control" id="mobile" placeholder="شماره موبایل" value="{{old('mobile')}}"
                                    required>
                             <div class="invalid-feedback">شماره موبایل الزامی است</div>
                         </div>
-                        <div class="col-md-3">
+
+                        <div class="col-md-4">
+                            <label for="email" class="form-label">آدرس ایمیل</label>
+                            <input type="text" name="email" class="form-control" id="email" placeholder="آدرس ایمیل" value="{{old('email')}}"
+                                   required>
+                            <div class="invalid-feedback">آدرس ایمیل الزامی است</div>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="password" class="form-label">رمز عبور کاربر</label>
+                            <input type="password" name="password" class="form-control" placeholder="رمز عبور" id="password"
+                                   value="{{old('password')}}" required>
+                            <div class="invalid-feedback">رمز عبور کاربرالزامی است</div>
+                        </div>
+                        <div class="col-md-6">
                             <label for="position_id" class="form-label">پوزیشن شغلی کاربر</label>
                             <select class="form-select" name="position_id" id="inputProductType" required>
                                 <option>پوزیشن کاربر را انتخاب کنید</option>
@@ -65,20 +78,8 @@
                             </select>
                             <div class="invalid-feedback">پوزیشن کاری کاربر الزامی است</div>
                         </div>
-                        <div class="col-md-3">
-                            <label for="email" class="form-label">آدرس ایمیل</label>
-                            <input type="text" name="email" class="form-control" id="email" placeholder="آدرس ایمیل" value="{{old('email')}}"
-                                   required>
-                            <div class="invalid-feedback">آدرس ایمیل الزامی است</div>
-                        </div>
-                        <div class="col-md-3">
-                            <label for="password" class="form-label">رمز عبور کاربر</label>
-                            <input type="password" name="password" class="form-control" placeholder="رمز عبور" id="password"
-                                   value="{{old('password')}}" required>
-                            <div class="invalid-feedback">رمز عبور کاربرالزامی است</div>
-                        </div>
                         <div class="col-md-6">
-                            <label for="role_id" class="form-label">نقض کاربر</label>
+                            <label for="role_id" class="form-label">نقش کاربر</label>
                             <select class="form-select" name="role_id" id="inputProductType"  required>
                                 <option>نقش کاربر را انتخاب کنید</option>
                                 @foreach($roles as $role)
@@ -87,25 +88,14 @@
                             </select>
                             <div class="invalid-feedback">نقش کاربرالزامی است</div>
                         </div>
-                        <div class="col-md-6">
-                            <label for="techStacks" class="form-label">دسترسی های کاربر</label>
-                            <select class="form-select" id="techStacks" name="permission_id[]" data-placeholder="انتخاب کنید" multiple required>
-                                @foreach($permissions as $permission)
-                                    <option value="{{$permission->id}}">{{permission_name($permission->name)}} </option>
-                                @endforeach
-                            </select>
-                            <div class="invalid-feedback">دسترسی های کاربر الزامی است</div>
-                        </div>
-{{--                        <div class="col-md-6">--}}
-{{--                            <label for="permission_id" class="form-label">دسترسی های کاربر</label>--}}
-{{--                            --}}
-{{--                            <select class="form-select" name="permission_id[]" id="inputProductType" required >--}}
-{{--                                <option>دسترسی ها را انتخاب کنید</option>--}}
+{{--                        <div class="col-md-12">--}}
+{{--                            <label for="techStacks" class="form-label">دسترسی های کاربر</label>--}}
+{{--                            <select class="form-select" id="techStacks" name="permission_id[]" data-placeholder="انتخاب کنید" multiple required>--}}
 {{--                                @foreach($permissions as $permission)--}}
 {{--                                    <option value="{{$permission->id}}">{{permission_name($permission->name)}} </option>--}}
 {{--                                @endforeach--}}
 {{--                            </select>--}}
-{{--                            <div class="invalid-feedback">دسترسی های کاربرالزامی است</div>--}}
+{{--                            <div class="invalid-feedback">دسترسی های کاربر الزامی است</div>--}}
 {{--                        </div>--}}
                         <div class="col-12 mt-5">
                             <div class="d-flex align-items-center justify-content-end">
@@ -131,5 +121,6 @@
                 theme: "bootstrap-5"
             });
         });
+
     </script>
 @endpush
