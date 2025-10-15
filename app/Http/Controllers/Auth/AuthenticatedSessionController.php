@@ -87,7 +87,7 @@ class AuthenticatedSessionController extends Controller
 
         return response()->json([
             'status' => true,
-            'confirm_code'    => $user->confirm_code,
+            'confirm_code' => $user->confirm_code,
             'user_type' => $roles,
             'message' => 'اعتبار سنجی انجام شد',
         ],200);
