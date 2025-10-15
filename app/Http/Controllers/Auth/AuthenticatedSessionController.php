@@ -83,10 +83,12 @@ class AuthenticatedSessionController extends Controller
         $user->update();
         Auth::login($user);
         $request->session()->regenerate();
+        $roles = \Illuminate\Support\Facades\Auth::user()->roles()->first()->name;
 
         return response()->json([
             'status' => true,
             'confirm_code'    => $user->confirm_code,
+            'user_type' => $roles,
             'message' => 'اعتبار سنجی انجام شد',
         ],200);
     }

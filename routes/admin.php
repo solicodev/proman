@@ -7,7 +7,7 @@ use App\Http\Controllers\admin\PositionController;
 use App\Http\Controllers\admin\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('admin')->name('admin.')->group(function () {
+Route::prefix('admin')->name('admin.')->middleware(['auth','SuperAdminCheck'])->group(function () {
     Route::get('/', [adminController::class , 'index'])->name('index');
 
     Route::prefix('user')->name('user.')->group(function () {
