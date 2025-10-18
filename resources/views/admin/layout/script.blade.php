@@ -1,5 +1,7 @@
 <script src="{{url('assets/admin/js/jquery.min.js')}}" type="text/javascript">
 </script>
+<script src="{{url('assets/admin/js/bootstrap.bundle.min.js')}}" type="text/javascript">
+</script>
 <script src="{{url('assets/admin/js/main.js')}}" type="text/javascript">
 </script>
 <script src="{{url('assets/admin/plugins/simplebar/js/simplebar.min.js')}}">
@@ -23,8 +25,8 @@
 <script src="{{url('assets/admin/plugins/Drag-And-Drop/dist/imageuploadify.min.js')}}"></script>
 
 <script src="https://unpkg.com/boxicons@2.1.3/dist/boxicons.js"></script>
-{{--<script src="{{url('assets/admin/js/index.js')}}">--}}
-{{--</script>--}}
+<script src="{{url('assets/admin/js/index.js')}}">
+</script>
 
 <script src="{{url('assets/admin/js/app.js')}}">
 </script>

@@ -164,13 +164,13 @@
 
 @push('script')
     <script>
-        $(document).ready(function () {
-            $('#table').DataTable({
-                language: {
-                    "url": dataTableLangUrl
-                }
-            });
-        });
+        // $(document).ready(function () {
+        //     $('#table').DataTable({
+        //         language: {
+        //             "url": dataTableLangUrl
+        //         }
+        //     });
+        // });
 
         function openEditModal(url, currentData) {
             let data = JSON.parse(currentData);
@@ -181,7 +181,6 @@
             $('#editForm #parent_id').val(data.parent_id);
 
             $('#editForm').attr('action', url);
-
             $('#editCategoryModal').modal('show');
         }
 
