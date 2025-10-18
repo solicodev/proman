@@ -34,7 +34,7 @@ class AuthenticatedSessionController extends Controller
 
         $user = User::where('mobile',$request->mobile)->first();
         $user->confirm_code = $random;
-        $user->save();
+        $user->update();
 
         //ToDO
         // sendSms($request->mobile, $otp);

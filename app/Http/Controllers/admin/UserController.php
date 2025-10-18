@@ -24,12 +24,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        $excludedRoles = ['Super Admin', 'manager', 'member', 'assignee', 'User'];
+        $excludedRoles = ['Super Admin'];
 
         $users = User::whereDoesntHave('roles', function ($query) use ($excludedRoles) {
             $query->whereIn('name', $excludedRoles);
         })->latest()->get();
-
 //        $users = User::get();
         return view('admin.users.index',get_defined_vars());
     }
@@ -51,8 +50,8 @@ class UserController extends Controller
     public function store(UserStoreRequest $request)
     {
         try {
-        $this->userService->store($request->all());
-        return redirect(route('admin.users.index'))->with('flash_message', 'با موفقیت ایجاد شد');
+            $this->userService->store($request->all());
+            return redirect(route('admin.user.index'))->with('flash_message', 'با موفقیت ایجاد شد');
 
         } catch (Exception $exception) {
             return redirect()->back()->with('err_message', $exception->getMessage());
@@ -72,6 +71,9 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        $positions = Position::get();
+        $roles = Role::whereNot('name' , 'Super Admin')->get();
+        $permissions = Permission::get();
         return view('admin.users.edit',get_defined_vars());
     }
 
@@ -82,7 +84,7 @@ class UserController extends Controller
     {
         try {
             $this->userService->update($request->all(),$user);
-            return redirect(route('admin.users.index'))->with('flash_message', 'با موفقیت ایجاد شد');
+            return redirect(route('admin.user.index'))->with('flash_message', 'با موفقیت ایجاد شد');
 
         } catch (Exception $exception) {
             return redirect()->back()->with('err_message', $exception->getMessage());
@@ -96,8 +98,20 @@ class UserController extends Controller
     {
         try {
             $user->delete();
-            return redirect(route('admin.users.index'))->with('flash_message', ' با موفقیت حذف شد');
+            return redirect(route('admin.user.index'))->with('flash_message', ' با موفقیت حذف شد');
         } catch (Exception $exception) {
+            return redirect()->back()->with('err_message', 'خطایی رخ داد مجددا تلاش کنید');
+        }
+    }
+
+    public function status(User $user , Request $request)
+    {
+
+            $user->status = $request->status;
+            $user->update();
+            return redirect(route('admin.user.index'))->with('flash_message', ' تغییرات اعمال شد');
+        try {
+    } catch (Exception $exception) {
             return redirect()->back()->with('err_message', 'خطایی رخ داد مجددا تلاش کنید');
         }
     }

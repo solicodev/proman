@@ -33,7 +33,7 @@ class UserStoreRequest extends FormRequest
             'personal_id' =>['required', 'max:255', 'unique:'.User::class],
             'position_id' => ['required', 'integer', 'max:255'],
             'role_id' => 'nullable',
-            'permission_id' => 'nullable',
+//            'permission_id' => 'nullable',
         ];
     }
 
