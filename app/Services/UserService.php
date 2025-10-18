@@ -61,9 +61,31 @@ class UserService
         $user->update();
 
         //TODO
-        $permission_lists = Permission::where('name', 'LIKE', 'dep_%')->pluck('id')->toArray();
-        $user->assignRole($param['role_id']);
-        $user->permissions()->attach($permission_lists);
+        if ($param['role_id'])
+        {
+            $role_item = $param['role_id'];
+            $user->assignRole($role_item);
+            switch ($role_item) {
+                case 'Manager':
+                    $permission_lists = Permission::where('name', 'LIKE', 'manager_%')->pluck('id')->toArray();
+                    break;
+                case 'Member':
+                    $permission_lists = Permission::where('name', 'LIKE', 'member_%')->pluck('id')->toArray();
+                    break;
+                case 'Assignee':
+                    $permission_lists = Permission::where('name', 'LIKE', 'assign_%')->pluck('id')->toArray();
+                    break;
+//            case 'User':
+//                $permission_lists = Permission::where('name', 'LIKE', 'manager_%')->pluck('id')->toArray();
+//                break;
+                default:
+                    $permission_lists = Permission::where('name', 'LIKE', 'User_%')->pluck('id')->toArray();
+                    break;
+            }
+
+            $user->permissions()->sync($permission_lists);
+        }
+
 
         return $user;
     }

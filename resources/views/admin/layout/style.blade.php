@@ -29,11 +29,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&amp;display=swap" rel="stylesheet">
 
     <link href="{{url('assets/admin/css/icons.css')}}" rel="stylesheet">
-    <link rel="stylesheet" href="{{url('assets/admin/fonts/Vazirmatn-FD-font-face.css')}}">
-    <link rel="stylesheet" href="{{url('assets/admin/css/app.css')}}">
-    <link rel="stylesheet" href="{{url('assets/admin/plugins/select2/select2.min.css')}}">
-    <link rel="stylesheet" href="{{url('assets/admin/plugins/select2/select2-bootstrap-5-theme.rtl.min.css')}}">
+    <link href="{{url('assets/admin/fonts/Vazirmatn-FD-font-face.css')}}" rel="stylesheet">
+    <link href="{{url('assets/admin/css/app.css')}}" rel="stylesheet">
+    <link href="{{url('assets/admin/plugins/select2/select2.min.css')}}" rel="stylesheet">
+    <link href="{{url('assets/admin/plugins/select2/select2-bootstrap-5-theme.rtl.min.css')}}" rel="stylesheet">
+    <link href="{{url('assets/admin/plugins/JalaliDatePicker/jalalidatepicker.min.css')}}" rel="stylesheet" />
+    <link href="{{url('assets/admin/plugins/datetimepicker/css/classic.css')}}" rel="stylesheet"/>
+    <link href="{{url('assets/admin/plugins/datetimepicker/css/classic.time.css')}}" rel="stylesheet" />
+    <link href="{{url('assets/admin/plugins/datetimepicker/css/classic.date.css')}}" rel="stylesheet" />
+    <link href="{{url('assets/admin/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.min.css')}}" rel="stylesheet"/>
 
+
+    <link href="{{ url('assets/admin/css/jgrowl.min.css') }}" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
     @stack('style')
 

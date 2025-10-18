@@ -1,18 +1,29 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\admin;
 
+use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Project;
+use App\Models\User;
+use App\Services\ProjectService;
+use Exception;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
+    public ProjectService $projectService;
+    public function __construct(ProjectService $projectService)
+    {
+        $this->projectService = new ProjectService();
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $projects = Project::get();
+        return view('admin.projects.index',get_defined_vars());
     }
 
     /**
@@ -20,7 +31,15 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        //
+        $excludedRoles = ['Manager'];
+
+        $managers = User::whereHas('roles', function ($query) use ($excludedRoles) {
+            $query->whereIn('name', $excludedRoles);
+        })->latest()->get();
+
+        $categories = Category::get();
+
+        return view('admin.projects.create',get_defined_vars());
     }
 
     /**
@@ -28,7 +47,15 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request);
+
+            $this->projectService->store($request->all());
+            return redirect(route('admin.project.index'))->with('flash_message', 'با موفقیت ایجاد شد');
+        try {
+
+        } catch (Exception $exception) {
+            return redirect()->back()->with('err_message', $exception->getMessage());
+        }
     }
 
     /**
@@ -44,7 +71,7 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        //
+        return view('admin.projects.edit',get_defined_vars());
     }
 
     /**
@@ -60,6 +87,11 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        //
+        try {
+            $project->delete();
+            return redirect(route('admin.project.index'))->with('flash_message', ' با موفقیت حذف شد');
+        } catch (Exception $exception) {
+            return redirect()->back()->with('err_message', 'خطایی رخ داد مجددا تلاش کنید');
+        }
     }
 }

@@ -29,6 +29,11 @@ class UserController extends Controller
         $users = User::whereDoesntHave('roles', function ($query) use ($excludedRoles) {
             $query->whereIn('name', $excludedRoles);
         })->latest()->get();
+
+        $permission_lists = Permission::whereNot('name','Like','dep_%')->get();
+        $groupedPermissions = collect($permission_lists)->groupBy(function($permission) {
+            return explode('_', $permission->name)[0];
+        });
 //        $users = User::get();
         return view('admin.users.index',get_defined_vars());
     }
@@ -52,7 +57,6 @@ class UserController extends Controller
         try {
             $this->userService->store($request->all());
             return redirect(route('admin.user.index'))->with('flash_message', 'با موفقیت ایجاد شد');
-
         } catch (Exception $exception) {
             return redirect()->back()->with('err_message', $exception->getMessage());
         }
@@ -85,7 +89,6 @@ class UserController extends Controller
         try {
             $this->userService->update($request->all(),$user);
             return redirect(route('admin.user.index'))->with('flash_message', 'با موفقیت ایجاد شد');
-
         } catch (Exception $exception) {
             return redirect()->back()->with('err_message', $exception->getMessage());
         }
@@ -106,12 +109,21 @@ class UserController extends Controller
 
     public function status(User $user , Request $request)
     {
-
+        try {
             $user->status = $request->status;
             $user->update();
             return redirect(route('admin.user.index'))->with('flash_message', ' تغییرات اعمال شد');
+        } catch (Exception $exception) {
+            return redirect()->back()->with('err_message', 'خطایی رخ داد مجددا تلاش کنید');
+        }
+    }
+
+    public function permission(User $user , Request $request)
+    {
         try {
-    } catch (Exception $exception) {
+            $user->permissions()->sync($request->permissions);
+            return redirect(route('admin.user.index'))->with('flash_message', ' تغییرات اعمال شد');
+        } catch (Exception $exception) {
             return redirect()->back()->with('err_message', 'خطایی رخ داد مجددا تلاش کنید');
         }
     }

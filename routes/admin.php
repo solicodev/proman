@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\admin\adminController;
 use App\Http\Controllers\admin\DepartmentController;
+use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\admin\PhotoController;
 use App\Http\Controllers\admin\PositionController;
+use App\Http\Controllers\admin\ProjectController;
 use App\Http\Controllers\admin\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,7 +19,18 @@ Route::prefix('admin')->name('admin.')->middleware(['auth','SuperAdminCheck'])->
         Route::get('/edit/{user}', [UserController::class , 'edit'])->name('edit');
         Route::put('/update/{user}', [UserController::class , 'update'])->name('update');
         Route::post('/status/{user}', [UserController::class , 'status'])->name('status');
+        Route::put('/permission/{user}', [UserController::class , 'permission'])->name('permission');
         Route::get('/delete/{user}', [UserController::class , 'destroy'])->name('destroy');
+    });
+
+    Route::prefix('permission')->name('permission.')->group(function () {
+        Route::get('/', [PermissionController::class , 'index'])->name('index');
+        Route::get('/create', [PermissionController::class , 'create'])->name('create');
+        Route::post('/store', [PermissionController::class , 'store'])->name('store');
+        Route::get('/edit/{user}', [PermissionController::class , 'edit'])->name('edit');
+        Route::put('/update/{user}', [PermissionController::class , 'update'])->name('update');
+        Route::post('/status/{user}', [PermissionController::class , 'status'])->name('status');
+        Route::get('/delete/{user}', [PermissionController::class , 'destroy'])->name('destroy');
     });
 
     Route::prefix('photo')->name('photo.')->group(function () {
@@ -43,5 +56,14 @@ Route::prefix('admin')->name('admin.')->middleware(['auth','SuperAdminCheck'])->
         Route::post('/store', [DepartmentController::class , 'store'])->name('store');
         Route::put('/update/{department}', [DepartmentController::class , 'update'])->name('update');
         Route::get('/delete/{department}', [DepartmentController::class , 'destroy'])->name('destroy');
+    });
+
+    Route::prefix('project')->name('project.')->group(function () {
+        Route::get('/', [ProjectController::class , 'index'])->name('index');
+        Route::get('/create', [ProjectController::class , 'create'])->name('create');
+        Route::post('/store', [ProjectController::class , 'store'])->name('store');
+        Route::get('/edit/{project}', [ProjectController::class , 'edit'])->name('edit');
+        Route::put('/update/{project}', [ProjectController::class , 'update'])->name('update');
+        Route::get('/delete/{project}', [ProjectController::class , 'destroy'])->name('destroy');
     });
 });

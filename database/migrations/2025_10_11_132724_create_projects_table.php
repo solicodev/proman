@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->timestamp('start_date');
             $table->timestamp('end_date');
-            $table->enum('status',[0,1,2,3])->default(0);
+            $table->enum('status',[0,1,2,3,4])->default(0);
 
 
             $table->unsignedBigInteger('manager_id')->comment('مدیر ایجاد کننده پروژه');

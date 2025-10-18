@@ -31,12 +31,12 @@
                     <div class="menu-title">داشبورد</div>
                 </a>
                 <ul>
-                    <li> <a href="index.html">
+                    <li> <a href="{{route('admin.index')}}">
 
                             <i  class='bx bx-radio-circle'>
                             </i>Super Admin</a>
                     </li>
-                    <li> <a href="index2.html">
+                    <li> <a href="{{route('dashboard.index')}}">
 
                             <i  class='bx bx-radio-circle'>
                             </i>مدیریت پروژه</a>
@@ -49,13 +49,13 @@
                 <a href="{{route('admin.department.index')}}">
                     <div class="parent-icon">
 
-                        <i  class='bx bx-cookie'>
+                        <i  class='bx bx-home-circle'>
                         </i>
                     </div>
                     <div class="menu-title">لیست دپارتمان ها</div>
                 </a>
             </li>
-            <li class="menu-label">مدیریت پوزیشن های شغلی</li>
+            <li class="menu-label">مدیریت پرسنل</li>
             <li>
                 <a href="{{route('admin.position.index')}}">
                     <div class="parent-icon">
@@ -76,6 +76,27 @@
                     <div class="menu-title">لیست پرسنل</div>
                 </a>
             </li>
+            <li class="menu-label">مدیریت پروژه ها</li>
+            <li>
+                <a href="{{route('admin.project.index')}}">
+                    <div class="parent-icon">
+
+                        <i  class='bx bx-cookie'>
+                        </i>
+                    </div>
+                    <div class="menu-title">لیست پروژه ها</div>
+                </a>
+            </li>
+            <li>
+                <a href="{{route('admin.user.index')}}">
+                    <div class="parent-icon">
+
+                        <i  class='bx bx-cookie'>
+                        </i>
+                    </div>
+                    <div class="menu-title">لیست تسک ها</div>
+                </a>
+            </li>
             <li class="menu-label">مدیریت رسانه ها</li>
             <li>
                 <a href="{{route('admin.photo.index')}}">
@@ -85,6 +106,17 @@
                         </i>
                     </div>
                     <div class="menu-title">لیست رسانه ها</div>
+                </a>
+            </li>
+            <li class="menu-label">مدیریت دسترسی ها</li>
+            <li>
+                <a href="{{route('admin.permission.index')}}">
+                    <div class="parent-icon">
+
+                        <i  class='bx bx-cookie'>
+                        </i>
+                    </div>
+                    <div class="menu-title">لیست دسترسی ها</div>
                 </a>
             </li>
 {{--            <li>--}}

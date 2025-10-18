@@ -16,6 +16,16 @@
 <script src="{{ asset('assets/admin/plugins/datepicker/persian-date.min.js') }}"></script>
 <script src="{{ asset('assets/admin/plugins/datepicker/persian-datepicker.min.js') }}"></script>
 <script src="{{ asset('assets/admin/js/main.js') }}"></script>
+<script src="{{ asset('assets/admin/js/jgrowl.min.js') }}"></script>
+<script src="{{ asset('assets/admin/plugins/notify/js/jquery.growl.js') }}"></script>
+<script src="{{url('assets/admin/plugins/perfect-scrollbar/js/perfect-scrollbar.js')}}"></script>
+<script src="{{url('assets/admin/plugins/datetimepicker/js/legacy.js')}}"></script>
+<script src="{{url('assets/admin/plugins/datetimepicker/js/picker.js')}}"></script>
+<script src="{{url('assets/admin/plugins/datetimepicker/js/picker.time.js')}}"></script>
+<script src="{{url('assets/admin/plugins/datetimepicker/js/picker.date.js')}}"></script>
+<script src="{{url('assets/admin/plugins/bootstrap-material-datetimepicker/js/moment.min.js')}}"></script>
+<script src="{{url('assets/admin/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.min.js')}}"></script>
+<script src="{{url('assets/admin/plugins/JalaliDatePicker/jalalidatepicker.min.js')}}"></script>
 
 <script src="https://unpkg.com/boxicons@2.1.3/dist/boxicons.js"></script>
 <script src="{{url('assets/admin/js/index.js')}}"></script>
