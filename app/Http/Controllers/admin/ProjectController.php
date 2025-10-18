@@ -32,7 +32,6 @@ class ProjectController extends Controller
     public function create()
     {
         $excludedRoles = ['Manager'];
-
         $managers = User::whereHas('roles', function ($query) use ($excludedRoles) {
             $query->whereIn('name', $excludedRoles);
         })->latest()->get();

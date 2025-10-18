@@ -39,10 +39,10 @@
                         <div class="col-md-4">
                             <label for="start_date" class="form-label">تاریخ شروع پروژه </label>
                             <input name="start_date"
-                                class="result form-control"
-                                type="text"
-                                data-jdp
-                                placeholder="تاریخ شروع پروژه"  value="{{old('start_date')}}" required/>
+                                   class="result form-control"
+                                   type="text"
+                                   data-jdp
+                                   placeholder="تاریخ شروع پروژه"  value="{{old('start_date')}}" required/>
                             <div class="invalid-feedback">تاریخ شروع پروژه الزامی است</div>
                         </div>
                         <div class="col-md-4">
@@ -90,10 +90,10 @@
 
 @push('script')
     <script type="text/javascript">
-            $(function() {
+        $(function() {
             $('#textOne').summernote();
         });
-            $(function() {
+        $(function() {
             $('#techStacks').select2({
                 theme: "bootstrap-5"
             });
