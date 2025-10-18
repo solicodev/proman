@@ -9,7 +9,7 @@
             </div>
             <hr>
             <div class="table-responsive">
-                <table id="table" class="table table-striped table-bordered">
+                <table id="table" class="table table-striped table-bordered page_speed_944522378">
                     <thead>
                     <tr>
                         <th></th>
@@ -37,7 +37,7 @@
                             <td> {!! $user->UserStatus !!}
 
                                 <form action="{{ route('admin.user.status', $user->id) }}" method="post">
-                                    <select name="status" class="form-control" onchange="this.form.submit();">
+                                    <select name="status" class="form-select" onchange="this.form.submit();">
                                         <option value="0" @if($user->status == 0) selected @endif>غیر فعال</option>
                                         <option value="1" @if($user->status == 1) selected @endif>فعال</option>
                                         <option value="2" @if($user->status == 2) selected @endif>تعلیق</option>
@@ -109,4 +109,5 @@
             $('#deleteServiceModal').modal('show');
         }
     </script>
+
 @endpush
