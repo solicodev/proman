@@ -78,6 +78,16 @@
             </li>
             <li class="menu-label">مدیریت پروژه ها</li>
             <li>
+                <a href="{{route('admin.category.index')}}">
+                    <div class="parent-icon">
+
+                        <i  class='bx bx-cookie'>
+                        </i>
+                    </div>
+                    <div class="menu-title">لیست دسته بندی ها</div>
+                </a>
+            </li>
+            <li>
                 <a href="{{route('admin.project.index')}}">
                     <div class="parent-icon">
 

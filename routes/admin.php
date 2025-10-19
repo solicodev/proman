@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\adminController;
+use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\DepartmentController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\admin\PhotoController;
@@ -56,6 +57,13 @@ Route::prefix('admin')->name('admin.')->middleware(['auth','SuperAdminCheck'])->
         Route::post('/store', [DepartmentController::class , 'store'])->name('store');
         Route::put('/update/{department}', [DepartmentController::class , 'update'])->name('update');
         Route::get('/delete/{department}', [DepartmentController::class , 'destroy'])->name('destroy');
+    });
+
+    Route::prefix('category')->name('category.')->group(function () {
+        Route::get('/', [CategoryController::class , 'index'])->name('index');
+        Route::post('/store', [CategoryController::class , 'store'])->name('store');
+        Route::put('/update/{category}', [CategoryController::class , 'update'])->name('update');
+        Route::get('/delete/{category}', [CategoryController::class , 'destroy'])->name('destroy');
     });
 
     Route::prefix('project')->name('project.')->group(function () {
