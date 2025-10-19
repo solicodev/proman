@@ -72,6 +72,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth','SuperAdminCheck'])->
         Route::post('/store', [ProjectController::class , 'store'])->name('store');
         Route::get('/edit/{project}', [ProjectController::class , 'edit'])->name('edit');
         Route::put('/update/{project}', [ProjectController::class , 'update'])->name('update');
+        Route::post('/status/{project}', [ProjectController::class , 'status'])->name('status');
         Route::get('/delete/{project}', [ProjectController::class , 'destroy'])->name('destroy');
     });
 });

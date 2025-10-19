@@ -51,8 +51,6 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
-
             $this->projectService->store($request->all());
             return redirect(route('admin.project.index'))->with('flash_message', 'با موفقیت ایجاد شد');
         try {

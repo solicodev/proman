@@ -31,6 +31,7 @@
 <script src="{{url('assets/admin/plugins/bootstrap-material-datetimepicker/js/moment.min.js')}}"></script>
 <script src="{{url('assets/admin/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.min.js')}}"></script>
 <script src="{{url('assets/admin/plugins/JalaliDatePicker/jalalidatepicker.min.js')}}"></script>
+<script src="{{url('assets/admin/plugins/select2/select2.min.js')}}"></script>
 <script src="https://unpkg.com/boxicons@2.1.3/dist/boxicons.js"></script>
 {{--<script src="{{url('assets/admin/js/index.js')}}">--}}
 {{--</script>--}}

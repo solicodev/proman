@@ -21,7 +21,6 @@
                         <th>تاریخ پایان پروژه</th>
                         <th>مدیر پروژه</th>
                         <th>دسته بندی</th>
-                        <th>سطوح دسترسی</th>
                         <th>وضعیت</th>
                         <th style='width:50px;'>عملیات</th>
                     </tr>
@@ -30,54 +29,15 @@
                     @foreach ($projects as $project)
                         <tr>
                             <td>{{$loop->iteration}}</td>
-                            <td> {{ $project->Name }}</td>
-                            <td> {{ $project->personal_id }}</td>
-                            <td> {{ $project->mobile }}</td>
-                            <td> {{ $project->email }}</td>
-                            <td> </td>
+                            <td style="direction: ltr; text-align: left"> {{ $project->project_code }}</td>
+                            <td> {{ $project->name }}</td>
+                            <td> {{ $project->start_date }}</td>
+                            <td> {{ $project->start_todo_date }}</td>
+                            <td> {{ $project->end_date }}</td>
+                            <td> {{ $project->manager?->Name }}</td>
+                            <td> {{ $project->category?->title }}</td>
                             <td>
-                                <a href="#"
-                                   onclick="openEditModal('{{ route('admin.project.permission',$project->id) }}', JSON.stringify({name:'{{ $project->Name }}', permission: @json($project->permissions->pluck('id')) }))">
-   <span class="badge bg-info text-black">
-       <i class="bx bxs-edit"></i> ویرایش سطوح دسترسی
-   </span>
-                                </a>
-
-{{--                                <a href="#" onclick="openEditModal('{{ route('admin.project.permission',$project->id) }}', JSON.stringify({name:'{{ $project->Name }}' , permission:'{{$project->permissions}}'}))"><span class="badge bg-info text-black">  <i class="bx bxs-edit"></i> ویرایش سطوح دسترسی</span></a>--}}
-                            </td>
-                            <td>
-                                {{--                                {!! $project->projectStatus !!}--}}
-                                <form action="{{ route('admin.project.status', $project->id) }}" method="post" class="d-flex align-items-center gap-3">
-                                    @csrf
-                                    <label class="form-check-label text-warning">
-                                        <input type="radio" name="status" value="0" class="form-check-input"
-                                               onchange="this.form.submit();" @if($project->status == 0) checked @endif>
-                                        غیر فعال
-                                    </label>
-
-                                    <label class="form-check-label text-info">
-                                        <input type="radio" name="status" value="1" class="form-check-input"
-                                               onchange="this.form.submit();" @if($project->status == 1) checked @endif>
-                                        فعال
-                                    </label>
-
-                                    <label class="form-check-label">
-                                        <input type="radio" name="status" value="2" class="form-check-input"
-                                               onchange="this.form.submit();" @if($project->status == 2) checked @endif>
-                                        تعلیق
-                                    </label>
-                                </form>
-
-
-                                {{--                                <form action="{{ route('admin.project.status', $project->id) }}" method="post">--}}
-                                {{--                                    <select name="status" class="form-select" onchange="this.form.submit();">--}}
-                                {{--                                        <option value="0" @if($project->status == 0) selected @endif>غیر فعال</option>--}}
-                                {{--                                        <option value="1" @if($project->status == 1) selected @endif>فعال</option>--}}
-                                {{--                                        <option value="2" @if($project->status == 2) selected @endif>تعلیق</option>--}}
-                                {{--                                    </select>--}}
-                                {{--                                    @csrf--}}
-                                {{--                                </form>--}}
-
+                                {!! $project->ProjectStatus !!}
                             </td>
                             <td>
                                 <div class="d-flex">
