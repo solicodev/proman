@@ -1,5 +1,7 @@
 <script src="{{url('assets/admin/js/jquery.min.js')}}" type="text/javascript">
 </script>
+<script src="{{url('assets/admin/js/bootstrap.bundle.min.js')}}" type="text/javascript">
+</script>
 <script src="{{url('assets/admin/js/main.js')}}" type="text/javascript">
 </script>
 <script src="{{url('assets/admin/plugins/simplebar/js/simplebar.min.js')}}">
