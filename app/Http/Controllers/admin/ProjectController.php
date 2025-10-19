@@ -36,13 +36,13 @@ class ProjectController extends Controller
         $memberRoles = ['Member'];
         $managers = User::whereHas('roles', function ($query) use ($excludedRoles) {
             $query->whereIn('name', $excludedRoles);
-        })->latest()->get();
+        })->whereStatus('1')->latest()->get();
 
         $categories = Category::get();
         $departments = Department::get();
         $members = User::whereHas('roles', function ($query) use ($memberRoles) {
             $query->whereIn('name', $memberRoles);
-        })->latest()->get();
+        })->whereStatus('1')->latest()->get();
         return view('admin.projects.create',get_defined_vars());
     }
 
@@ -76,13 +76,13 @@ class ProjectController extends Controller
         $memberRoles = ['Member'];
         $managers = User::whereHas('roles', function ($query) use ($excludedRoles) {
             $query->whereIn('name', $excludedRoles);
-        })->latest()->get();
+        })->whereStatus('1')->latest()->get();
 
         $categories = Category::get();
         $departments = Department::get();
         $members = User::whereHas('roles', function ($query) use ($memberRoles) {
             $query->whereIn('name', $memberRoles);
-        })->latest()->get();
+        })->whereStatus('1')->latest()->get();
         return view('admin.projects.edit',get_defined_vars());
     }
 
@@ -91,9 +91,10 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
+        try {
             $this->projectService->update($request->all(),$project);
             return redirect(route('admin.project.index'))->with('flash_message', 'با موفقیت ویرایش شد');
-        try {
+
         } catch (Exception $exception) {
             return redirect()->back()->with('err_message', $exception->getMessage());
         }
