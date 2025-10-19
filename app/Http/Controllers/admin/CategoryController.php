@@ -33,12 +33,10 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         try {
-
             $category = new Category();
             $category->title = $request->title;
             $category->parent_id = $request->parent_id;
             $category->save();
-
             return redirect(route('admin.category.index'))->with('flash_message', 'با موفقیت ایجاد شد');
         } catch (Exception $exception) {
             return redirect()->back()->with('err_message', $exception->getMessage());
@@ -66,8 +64,8 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        try {
 
+        try {
             $category->title = $request->title;
             $category->parent_id = $request->parent_id;
             $category->update();

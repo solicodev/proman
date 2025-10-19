@@ -33,7 +33,7 @@
                         <div class="col-md-4">
                             <label for="name" class="form-label">نام پروژه </label>
                             <input type="text" name="name" class="form-control" id="name"
-                                   value="{{old('name')}}" placeholder="نام پروژه" required>
+                                   value="{{old('name')}}" autocomplete="off" placeholder="نام پروژه" required>
                             <div class="invalid-feedback">نام پروژه الزامی است</div>
                         </div>
                         <div class="col-md-4">
@@ -42,7 +42,7 @@
                                    class="result form-control"
                                    type="text"
                                    data-jdp
-                                   placeholder="تاریخ شروع پروژه"  value="{{old('start_date')}}" required/>
+                                   placeholder="تاریخ شروع پروژه" autocomplete="off"  value="{{old('start_date')}}" required/>
                             <div class="invalid-feedback">تاریخ شروع پروژه الزامی است</div>
                         </div>
                         <div class="col-md-4">
@@ -51,10 +51,10 @@
                                    class="result form-control"
                                    type="text"
                                    data-jdp
-                                   placeholder="تاریخ پایان پروژه"  value="{{old('end_date')}}" required/>
+                                   placeholder="تاریخ پایان پروژه" autocomplete="off"  value="{{old('end_date')}}" required/>
                             <div class="invalid-feedback">تاریخ پایان پروژه الزامی است</div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label for="manager_id" class="form-label">مدیر پروژه</label>
                             <select class="form-select" name="manager_id" id="inputProductType" required>
                                 <option>مدیر پروژه را انتخاب کنید</option>
@@ -64,16 +64,55 @@
                             </select>
                             <div class="invalid-feedback">پوزیشن کاری پروژه الزامی است</div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label for="category_id" class="form-label">دسته بندی پروژه</label>
-                            <select class="form-select" name="category_id" id="inputProductType"  required>
-                                <option>دسته بندی پروژه را انتخاب کنید</option>
+                            <select class="form-select" name="category_id" id="inputProductType">
+                                <option></option>
                                 @foreach($categories as $category)
                                     <option value="{{$category->id}}">{{$category->title}} </option>
                                 @endforeach
                             </select>
-                            <div class="invalid-feedback">نقش پروژه الزامی است</div>
+                            {{--                            <div class="invalid-feedback">نقش پروژه الزامی است</div>--}}
                         </div>
+                        <div class="col-md-4">
+                            <label for="department_id" class="form-label">دپارتمان</label>
+                            <select class="form-select" name="department_id" id="inputProductType">
+                                <option></option>
+                                @foreach($departments as $department)
+                                    <option value="{{$department->id}}">{{$department->name}} </option>
+                                @endforeach
+                            </select>
+                            {{--                            <div class="invalid-feedback">نقش پروژه الزامی است</div>--}}
+                        </div>
+
+                        <div class="col-md-12">
+                            <label for="memberStacks" class="form-label">اعضای پروژه</label>
+                            <select class="form-select" id="memberStacks" name="members[]" data-placeholder="انتخاب کنید" multiple required>
+                                @foreach($members as $member)
+                                    <option value="{{$member->id}}">{{$member->Name}} </option>
+                                @endforeach
+                            </select>
+                            <div class="invalid-feedback">اعضای پروژه الزامی است</div>
+                        </div>
+                        <hr>
+                        <div class="col-12">
+                            <label for="gallery" class="form-label">فایل های مربوط به پروژه</label>
+                            <div class="row g-3 images">
+                                <div class="col-md-4 d-flex image">
+                                    <input class='form-control' type="file" name="photos[]" accept="image/*">
+                                    <button type="button" class="btn btn-link text-danger" title='حذف'
+                                            onclick='removeImage(this)'>
+                                        <i class="bx bxs-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-end mt-3">
+                                <button type="button" class="btn btn-outline-info btn-sm" onclick='addImage()'>
+                                    افزودن فایل
+                                </button>
+                            </div>
+                        </div>
+                        <hr>
                         <div class="col-12 mt-5">
                             <div class="d-flex align-items-center justify-content-end">
                                 <button type="submit" class="btn btn-success">
@@ -94,7 +133,7 @@
             $('#textOne').summernote();
         });
         $(function() {
-            $('#techStacks').select2({
+            $('#memberStacks').select2({
                 theme: "bootstrap-5"
             });
         });
@@ -137,5 +176,23 @@
                 okText: "خب",
             });
         });
+
+        function addImage() {
+            $('.images').append(`
+                <div class="col-md-4 d-flex image">
+                    <input class='form-control' type="file" name="photos[]" accept="image/*">
+                    <button type="button" class="btn btn-link text-danger" title='حذف '
+                        onclick='removeImage(this)'>
+                        <i class="bx bxs-trash"></i>
+                    </button>
+                </div>
+            `);
+        }
+
+        function removeImage(el) {
+            $(el).closest('.image').remove();
+        }
+
     </script>
+
 @endpush

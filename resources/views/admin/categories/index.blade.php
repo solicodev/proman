@@ -24,7 +24,7 @@
                     @foreach ($categories as $category)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $category->name }}</td>
+                            <td>{{ $category->title }}</td>
                             <td>
                                 <div class="d-flex">
                                     <a href="#"
@@ -62,10 +62,10 @@
                     <div class="modal-body">
                         <div class="row g-3">
                             <div class="col-12">
-                                <label for="title" class="form-label">نام دسته بندی</label>
-                                <input type="text" name="name" value="{{ old('name') }}" class="form-control"
+                                <label for="title" class="form-label">عنوان دسته بندی</label>
+                                <input type="text" name="title" value="{{ old('title') }}" class="form-control"
                                        id="title" required>
-                                <div class="invalid-feedback">نام دسته بندی الزامی است</div>
+                                <div class="invalid-feedback">عنوان دسته بندی الزامی است</div>
                             </div>
                         </div>
                         <div class="row g-3">
@@ -73,7 +73,7 @@
                                 <label for="parent_id" class="form-label">دسته بندی مادر</label>
                                 <select class="form-select" id="parent_id" name="parent_id"
                                         aria-label="Default select example">
-                                    <option> انتخاب کنید</option>
+                                    <option> </option>
                                     @foreach($parents as $parent)
                                         <option selected="" value="{{$parent->id}}">{{$parent->name}}</option>
                                     @endforeach
@@ -105,9 +105,9 @@
                     <div class="modal-body">
                         <div class="row g-3">
                             <div class="col-12">
-                                <label for="title" class="form-label">نام دسته بندی</label>
-                                <input type="text" name="name" class="form-control" id="name" required>
-                                <div class="invalid-feedback">نام دسته بندی الزامی است</div>
+                                <label for="title" class="form-label">عنوان دسته بندی</label>
+                                <input type="text" name="title" class="form-control" id="title" required>
+                                <div class="invalid-feedback">عنوان دسته بندی الزامی است</div>
                             </div>
                         </div>
 
@@ -175,9 +175,9 @@
         function openEditModal(url, currentData) {
             let data = JSON.parse(currentData);
 
-            $('#editCategoryModalLabel').text(`ویرایش دسته بندی "${data.name}"`);
+            $('#editCategoryModalLabel').text(`ویرایش دسته بندی "${data.title}"`);
 
-            $('#editForm #name').val(data.name);
+            $('#editForm #title').val(data.title);
             $('#editForm #parent_id').val(data.parent_id);
 
             $('#editForm').attr('action', url);

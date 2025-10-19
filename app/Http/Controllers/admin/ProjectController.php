@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Department;
 use App\Models\Project;
 use App\Models\User;
 use App\Services\ProjectService;
@@ -32,12 +33,16 @@ class ProjectController extends Controller
     public function create()
     {
         $excludedRoles = ['Manager'];
+        $memberRoles = ['Member'];
         $managers = User::whereHas('roles', function ($query) use ($excludedRoles) {
             $query->whereIn('name', $excludedRoles);
         })->latest()->get();
 
         $categories = Category::get();
-
+        $departments = Department::get();
+        $members = User::whereHas('roles', function ($query) use ($memberRoles) {
+            $query->whereIn('name', $memberRoles);
+        })->latest()->get();
         return view('admin.projects.create',get_defined_vars());
     }
 
