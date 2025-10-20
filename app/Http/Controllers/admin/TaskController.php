@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Services\TaskService;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TaskController extends Controller
 {
@@ -56,12 +57,15 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+
+        DB::beginTransaction();
             $this->taskService->store($request->all());
+        DB::commit();
             return redirect(route('admin.task.index'))->with('flash_message', 'با موفقیت ایجاد شد');
         try {
 
         } catch (Exception $exception) {
+        DB::rollBack();
             return redirect()->back()->with('err_message', $exception->getMessage());
         }
     }

@@ -49,9 +49,19 @@
                             <label for="duration" class="form-label">زمان انجام تسک</label>
                             <input name="duration"
                                    class="result form-control"
-                                   type="text"
+                                   type="number"
                                    placeholder="زمان انجام تسک مثال : 10 روز " autocomplete="off"  value="{{old('duration')}}" required/>
                             <div class="invalid-feedback">زمان انجام تسک الزامی است</div>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="priority" class="form-label">اولویت تسک</label>
+                            <select class="form-select" name="priority" id="inputProductType" required>
+                                <option value="" disabled selected hidden>اولویت تسک را انتخاب کنید</option>
+                                <option value="0">کم</option>
+                                <option value="1">متوسط</option>
+                                <option value="2">زیاد</option>
+                            </select>
+                            <div class="invalid-feedback">ناظر تسک الزامی است</div>
                         </div>
                         <div class="col-md-4">
                             <label for="manager_id" class="form-label">مدیر تایید کننده تسک</label>
@@ -73,7 +83,7 @@
                             </select>
                             <div class="invalid-feedback">پروژه مربوطه الزامی است</div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <label for="watcher_id" class="form-label">ناظر تسک</label>
                             <select class="form-select" name="watcher_id" id="inputProductType" required>
                                 <option value="" disabled selected hidden>ناظر تسک را انتخاب کنید</option>
@@ -84,7 +94,7 @@
                             <div class="invalid-feedback">ناظر تسک الزامی است</div>
                         </div>
 
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <label for="memberStacks" class="form-label">اعضای تسک</label>
                             <select class="form-select" id="memberStacks" name="members[]" data-placeholder="انتخاب کنید" multiple required>
                                 @foreach($members as $member)
@@ -92,6 +102,12 @@
                                 @endforeach
                             </select>
                             <div class="invalid-feedback">اعضای تسک الزامی است</div>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="description" class="form-label">توضیحات تسک </label>
+                            <textarea type="text" name="description" class="form-control" id="description"
+                                  autocomplete="off" placeholder="توضیحات تسک" required> {{old('description')}}</textarea>
+                            <div class="invalid-feedback">توضیحات تسک الزامی است</div>
                         </div>
                         <hr>
                         <div class="col-12">
