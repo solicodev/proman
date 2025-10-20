@@ -20,9 +20,9 @@
 
                 <!--begin::Logo image-->
                 <a href="index-2.html">
-                    <img alt="Logo" src="assets/media/logos/default-small.svg"
+                    <img alt="Logo" src="{{url('panel/assets/media/logos/logo.png')}}"
                          class="h-30px h-lg-40px theme-light-show" />
-                    <img alt="Logo" src="assets/media/logos/default-small-dark.svg"
+                    <img alt="Logo" src="{{url('panel/assets/media/logos/logo.png')}}"
                          class="h-30px h-lg-40px theme-dark-show" />
                 </a>
                 <!--end::Logo image-->
@@ -63,7 +63,7 @@
                              data-kt-menu-placement="bottom-start" data-kt-menu-offset="-100,0"
                              class="menu-item here show menu-here-bg menu-lg-down-accordion me-0 me-lg-2">
                             <!--begin:Menu link--><span class="menu-link"><span
-                                    class="menu-title">Dashboards</span><span
+                                    class="menu-title">داشبورد</span><span
                                     class="menu-arrow d-lg-none"></span></span><!--end:Menu link--><!--begin:Menu sub-->
                             <div
                                 class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown p-0 w-100 w-lg-850px">
@@ -432,7 +432,7 @@
                              data-kt-menu-placement="bottom-start" data-kt-menu-offset="-300,0"
                              class="menu-item menu-lg-down-accordion me-0 me-lg-2">
                             <!--begin:Menu link--><span class="menu-link"><span
-                                    class="menu-title">Pages</span><span
+                                    class="menu-title">امکانات</span><span
                                     class="menu-arrow d-lg-none"></span></span><!--end:Menu link--><!--begin:Menu sub-->
                             <div class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown p-0">
                                 <!--begin:Pages menu-->
@@ -1907,7 +1907,7 @@
                              data-kt-menu-placement="bottom-start"
                              class="menu-item menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2">
                             <!--begin:Menu link--><span class="menu-link"><span
-                                    class="menu-title">Apps</span><span
+                                    class="menu-title">برنامه ها</span><span
                                     class="menu-arrow d-lg-none"></span></span><!--end:Menu link--><!--begin:Menu sub-->
                             <div
                                 class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown px-lg-2 py-lg-4 w-lg-250px">
@@ -2617,7 +2617,7 @@
                              data-kt-menu-placement="bottom-start"
                              class="menu-item menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2">
                             <!--begin:Menu link--><span class="menu-link"><span
-                                    class="menu-title">Help</span><span
+                                    class="menu-title">راهنما</span><span
                                     class="menu-arrow d-lg-none"></span></span><!--end:Menu link--><!--begin:Menu sub-->
                             <div
                                 class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown px-lg-2 py-lg-4 w-lg-200px">
@@ -2684,7 +2684,7 @@
                              style="background-image:url('assets/media/misc/menu-header-bg.jpg')">
                             <!--begin::Title-->
                             <h3 class="text-white fw-semibold px-9 mt-10 mb-6">
-                                Notifications <span class="fs-8 opacity-75 ps-3">24 reports</span>
+                                Notifications <span class="fs-8 opacity-75 ps-3">24 گزارش</span>
                             </h3>
                             <!--end::Title-->
 
@@ -2692,17 +2692,17 @@
                             <ul class="nav nav-line-tabs nav-line-tabs-2x nav-stretch fw-semibold px-9">
                                 <li class="nav-item">
                                     <a class="nav-link text-white opacity-75 opacity-state-100 pb-4"
-                                       data-bs-toggle="tab" href="#kt_topbar_notifications_1">Alerts</a>
+                                       data-bs-toggle="tab" href="#kt_topbar_notifications_1">هشدارها</a>
                                 </li>
 
                                 <li class="nav-item">
                                     <a class="nav-link text-white opacity-75 opacity-state-100 pb-4 active"
-                                       data-bs-toggle="tab" href="#kt_topbar_notifications_2">Updates</a>
+                                       data-bs-toggle="tab" href="#kt_topbar_notifications_2">اعلان ها</a>
                                 </li>
 
                                 <li class="nav-item">
                                     <a class="nav-link text-white opacity-75 opacity-state-100 pb-4"
-                                       data-bs-toggle="tab" href="#kt_topbar_notifications_3">Logs</a>
+                                       data-bs-toggle="tab" href="#kt_topbar_notifications_3">لاگ</a>
                                 </li>
                             </ul>
                             <!--end::Tabs-->
@@ -3377,7 +3377,7 @@
                          data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
                          data-kt-menu-placement="bottom-end">
                         <img class="symbol symbol-circle symbol-35px symbol-md-40px"
-                             src="assets/media/avatars/300-13.jpg" alt="user" />
+                             src="{{url('panel/assets/media/avatars/300-13.jpg')}}" alt="user" />
                     </div>
 
                     <!--begin::User account menu-->

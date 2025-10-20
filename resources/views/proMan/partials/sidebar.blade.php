@@ -37,11 +37,11 @@
                 <div
                     class="border border-gray-300 border-dashed rounded min-w-100px w-100 py-2 px-4 me-6">
                     <!--begin::Date-->
-                    <span class="fs-6 text-gray-500 fw-bold">Budget</span>
+                    <span class="fs-6 text-gray-500 fw-bold">تسک ها</span>
                     <!--end::Date-->
 
                     <!--begin::Label-->
-                    <div class="fs-2 fw-bold text-success">$14,350</div>
+                    <div class="fs-2 fw-bold text-success">4</div>
                     <!--end::Label-->
                 </div>
                 <!--end::Stat-->
@@ -49,11 +49,11 @@
                 <div
                     class="border border-gray-300 border-dashed rounded min-w-100px w-100 py-2 px-4 ">
                     <!--begin::Date-->
-                    <span class="fs-6 text-gray-500 fw-bold">Spent</span>
+                    <span class="fs-6 text-gray-500 fw-bold">پروژه ها</span>
                     <!--end::Date-->
 
                     <!--begin::Label-->
-                    <div class="fs-2 fw-bold text-danger">$8,029</div>
+                    <div class="fs-2 fw-bold text-info">2</div>
                     <!--end::Label-->
                 </div>
                 <!--end::Stat-->
@@ -64,7 +64,7 @@
             <!--begin::Links-->
             <div class="mb-0">
                 <!--begin::Title-->
-                <h3 class="text-gray-800 fw-bold mb-8">Services</h3>
+                <h3 class="text-gray-800 fw-bold mb-8">دسترسی سریع</h3>
                 <!--end::Title-->
 
                 <!--begin::Row-->
@@ -82,7 +82,7 @@
                             <!--end::Icon-->
 
                             <!--begin::Label-->
-                            <span class="fs-7 fw-bold">Events</span>
+                            <span class="fs-7 fw-bold">پروژه های من</span>
                             <!--end::Label-->
                         </a>
                         <!--end::Link-->
@@ -100,7 +100,7 @@
                             <!--end::Icon-->
 
                             <!--begin::Label-->
-                            <span class="fs-7 fw-bold">Insurance</span>
+                            <span class="fs-7 fw-bold">تسک های من</span>
                             <!--end::Label-->
                         </a>
                         <!--end::Link-->
@@ -118,7 +118,7 @@
                             <!--end::Icon-->
 
                             <!--begin::Label-->
-                            <span class="fs-7 fw-bold">Network</span>
+                            <span class="fs-7 fw-bold">تیکت</span>
                             <!--end::Label-->
                         </a>
                         <!--end::Link-->
@@ -182,8 +182,6 @@
                 <!--end::Row-->
             </div>
             <!--end::Links-->
-
-
 
 
         </div>
