@@ -3,9 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Project extends Model
 {
+    use SoftDeletes;
+    protected $fillable = ['project_code', 'name' , 'start_date' , 'end_date' , 'status' , 'manager_id' , 'category_id' , 'department_id' , 'start_todo_date'];
+
+
     public $status_english =[
         '0' => 'pending' ,
         '1' => 'in_progress' ,
@@ -40,5 +45,14 @@ class Project extends Model
     public function department()
     {
         return $this->belongsTo(Department::class , 'department_id');
+    }
+
+    public function members()
+    {
+        return $this->belongsToMany(User::class , 'project_user' , 'project_id' , 'user_id');
+    }
+    public function photos()
+    {
+        return $this->belongsToMany(Photo::class , 'project_photo' , 'project_id' , 'photo_id');
     }
 }

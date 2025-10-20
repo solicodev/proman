@@ -22,6 +22,7 @@
                         <th>مدیر پروژه</th>
                         <th>دسته بندی</th>
                         <th>وضعیت</th>
+                        <th>تسک ها</th>
                         <th style='width:50px;'>عملیات</th>
                     </tr>
                     </thead>
@@ -38,6 +39,12 @@
                             <td> {{ $project->category?->title }}</td>
                             <td>
                                 {!! $project->ProjectStatus !!}
+                            </td>
+                            <td>
+                                <a href="{{ route('admin.project.edit',$project->id) }}" class='badge bg-info text-black text-warning'>
+                                    مشاهده
+                                    <i class="bx bxs-eye"></i>
+                                </a>
                             </td>
                             <td>
                                 <div class="d-flex">

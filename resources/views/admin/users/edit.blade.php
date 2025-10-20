@@ -24,7 +24,7 @@
 
     <div class="card">
         <div class="card-body p-4">
-            <h5 class="card-title">ایجاد خدمت جدید</h5>
+            <h5 class="card-title">ویرایش کاربر</h5>
             <hr />
             <form action='{{route('admin.user.update',$user->id)}}' method="post" class="form-body mt-4 needs-validation"
                   enctype="multipart/form-data" novalidate>

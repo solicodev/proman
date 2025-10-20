@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Department;
 use App\Models\Project;
 use App\Models\User;
 use App\Services\ProjectService;
@@ -32,12 +33,16 @@ class ProjectController extends Controller
     public function create()
     {
         $excludedRoles = ['Manager'];
+        $memberRoles = ['Member'];
         $managers = User::whereHas('roles', function ($query) use ($excludedRoles) {
             $query->whereIn('name', $excludedRoles);
-        })->latest()->get();
+        })->whereStatus('1')->latest()->get();
 
         $categories = Category::get();
-
+        $departments = Department::get();
+        $members = User::whereHas('roles', function ($query) use ($memberRoles) {
+            $query->whereIn('name', $memberRoles);
+        })->whereStatus('1')->latest()->get();
         return view('admin.projects.create',get_defined_vars());
     }
 
@@ -46,12 +51,9 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
-
+        try {
             $this->projectService->store($request->all());
             return redirect(route('admin.project.index'))->with('flash_message', 'با موفقیت ایجاد شد');
-        try {
-
         } catch (Exception $exception) {
             return redirect()->back()->with('err_message', $exception->getMessage());
         }
@@ -70,6 +72,17 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
+        $excludedRoles = ['Manager'];
+        $memberRoles = ['Member'];
+        $managers = User::whereHas('roles', function ($query) use ($excludedRoles) {
+            $query->whereIn('name', $excludedRoles);
+        })->whereStatus('1')->latest()->get();
+
+        $categories = Category::get();
+        $departments = Department::get();
+        $members = User::whereHas('roles', function ($query) use ($memberRoles) {
+            $query->whereIn('name', $memberRoles);
+        })->whereStatus('1')->latest()->get();
         return view('admin.projects.edit',get_defined_vars());
     }
 
@@ -78,7 +91,13 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        //
+        try {
+            $this->projectService->update($request->all(),$project);
+            return redirect(route('admin.project.index'))->with('flash_message', 'با موفقیت ویرایش شد');
+
+        } catch (Exception $exception) {
+            return redirect()->back()->with('err_message', $exception->getMessage());
+        }
     }
 
     /**

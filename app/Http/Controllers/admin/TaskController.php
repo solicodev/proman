@@ -3,20 +3,25 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
+use App\Models\Task;
+use App\Services\TaskService;
 use Exception;
 use Illuminate\Http\Request;
 
-class CategoryController extends Controller
+class TaskController extends Controller
 {
+    public TaskService $taskService;
+    public function __construct(TaskService $taskService)
+    {
+        $this->taskService = $taskService;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $categories = Category::get();
-        $parents = Category::whereNull('parent_id')->get();
-        return view('admin.categories.index',get_defined_vars());
+        $tasks = Task::get();
+        return view('admin.tasks.index',get_defined_vars());
     }
 
     /**
@@ -24,7 +29,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.tasks.create');
     }
 
     /**
@@ -32,12 +37,11 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+
+            $this->taskService->store($request->all());
+            return redirect(route('admin.task.index'))->with('flash_message', 'با موفقیت ایجاد شد');
         try {
-            $category = new Category();
-            $category->title = $request->title;
-            $category->parent_id = $request->parent_id;
-            $category->save();
-            return redirect(route('admin.category.index'))->with('flash_message', 'با موفقیت ایجاد شد');
+
         } catch (Exception $exception) {
             return redirect()->back()->with('err_message', $exception->getMessage());
         }
@@ -46,7 +50,7 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Category $category)
+    public function show(Task $task)
     {
         //
     }
@@ -54,23 +58,20 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Category $category)
+    public function edit(Task $task)
     {
-        //
+        return view('admin.tasks.edit',get_defined_vars());
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, Task $task)
     {
-
+        $this->taskService->update($request->all(),$task);
+            return redirect(route('admin.task.edit'))->with('flash_message', 'با موفقیت ویرایش شد');
         try {
-            $category->title = $request->title;
-            $category->parent_id = $request->parent_id;
-            $category->update();
 
-            return redirect(route('admin.category.index'))->with('flash_message', 'با موفقیت ایجاد شد');
         } catch (Exception $exception) {
             return redirect()->back()->with('err_message', $exception->getMessage());
         }
@@ -79,11 +80,11 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Category $category)
+    public function destroy(Task $task)
     {
         try {
-            $category->delete();
-            return redirect(route('admin.category.index'))->with('flash_message', ' با موفقیت حذف شد');
+            $task->delete();
+            return redirect(route('admin.task.index'))->with('flash_message', ' با موفقیت حذف شد');
         } catch (Exception $exception) {
             return redirect()->back()->with('err_message', 'خطایی رخ داد مجددا تلاش کنید');
         }

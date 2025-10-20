@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->timestamp('start_date');
-            $table->timestamp('end_date');
+            $table->string('start_date');
+            $table->string('end_date');
             $table->enum('status',[0,1,2,3,4])->default(0);
 
 
