@@ -4,10 +4,17 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Task;
+use App\Services\TaskService;
+use Exception;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
+    public TaskService $taskService;
+    public function __construct(TaskService $taskService)
+    {
+        $this->taskService = $taskService;
+    }
     /**
      * Display a listing of the resource.
      */
@@ -30,7 +37,14 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+            $this->taskService->store($request->all());
+            return redirect(route('admin.task.index'))->with('flash_message', 'با موفقیت ایجاد شد');
+        try {
+
+        } catch (Exception $exception) {
+            return redirect()->back()->with('err_message', $exception->getMessage());
+        }
     }
 
     /**
@@ -54,7 +68,13 @@ class TaskController extends Controller
      */
     public function update(Request $request, Task $task)
     {
-        //
+        $this->taskService->update($request->all(),$task);
+            return redirect(route('admin.task.edit'))->with('flash_message', 'با موفقیت ویرایش شد');
+        try {
+
+        } catch (Exception $exception) {
+            return redirect()->back()->with('err_message', $exception->getMessage());
+        }
     }
 
     /**
@@ -62,6 +82,11 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
-        //
+        try {
+            $task->delete();
+            return redirect(route('admin.task.index'))->with('flash_message', ' با موفقیت حذف شد');
+        } catch (Exception $exception) {
+            return redirect()->back()->with('err_message', 'خطایی رخ داد مجددا تلاش کنید');
+        }
     }
 }

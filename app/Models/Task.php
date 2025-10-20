@@ -9,7 +9,7 @@ class Task extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['title','description','status','priority','parent_id','start_date','end_date','project_id','manager_id'];
+    protected $fillable = ['title','description','status','priority','parent_id','start_date','end_date','project_id','manager_id','duration'];
 
     public function project()
     {
@@ -34,5 +34,17 @@ class Task extends Model
     public function photos()
     {
         return $this->belongsToMany(Photo::class,'task_photo','task_id','photo_id');
+    }
+
+    public function predecessors()
+    {
+        return $this->belongsToMany(Task::class,'task_dependencies','successor_id','predecessor_id')
+            ->withPivot('relation_Type','lag');
+    }
+
+    public function successors()
+    {
+        return $this->belongsToMany(Task::class,'task_dependencies','predecessor_id','successor_id')
+            ->withPivot('relation_Type','lag');
     }
 }
