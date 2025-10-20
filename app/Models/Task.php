@@ -11,6 +11,24 @@ class Task extends Model
 
     protected $fillable = ['title','description','status','priority','parent_id','start_date','end_date','project_id','manager_id','duration'];
 
+    public $status_english =[
+        '0' => 'pending' ,
+        '1' => 'todo' ,
+        '2' => 'in_progress' ,
+        '3' => 'Done' ,
+    ];
+
+    public $statuses = [
+        '0' => '<span class="badge bg-warning text-black">در حال بررسی</span>',
+        '1' => '<span class="badge bg-primary text-black">برای انجام</span>',
+        '2' => '<span class="badge bg-success text-black">در حال انجام</span>',
+        '3' => '<span class="badge bg-secondary text-black">انجام شد</span>',
+    ];
+
+    public function getTaskStatusAttribute()
+    {
+        return $this->statuses[$this->status] ?? '';
+    }
     public function project()
     {
         return $this->belongsTo(Project::class,'project_id');

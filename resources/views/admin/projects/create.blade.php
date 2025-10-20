@@ -62,7 +62,7 @@
                                     <option value="{{$manager->id}}">{{$manager->Name}} - {{role_name($manager->roles()->first()->name)}}</option>
                                 @endforeach
                             </select>
-                            <div class="invalid-feedback">پوزیشن کاری پروژه الزامی است</div>
+                            <div class="invalid-feedback">مدیر پروژه الزامی است</div>
                         </div>
                         <div class="col-md-4">
                             <label for="category_id" class="form-label">دسته بندی پروژه</label>

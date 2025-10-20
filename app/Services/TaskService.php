@@ -23,6 +23,7 @@ class TaskService
         $task->project_id = $param['project_id'];
         $task->manager_id = $param['manager_id'];
         $task->watcher_id = $param['watcher_id'];
+        $task->duration = $param['duration'];
         $task->save();
 
         if($param['photos'])
@@ -39,7 +40,6 @@ class TaskService
         }
 
         $task->assigners()->attach($param['assigners']);
-
         return $task;
     }
 
@@ -54,6 +54,7 @@ class TaskService
         $task->project_id = $param['project_id'];
         $task->manager_id = $param['manager_id'];
         $task->watcher_id = $param['watcher_id'];
+        $task->duration = $param['duration'];
         $task->update();
 
         if($param['photos'])

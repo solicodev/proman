@@ -1,12 +1,12 @@
 @extends('admin.index')
 @section('content')
-    <h6 class="mb-0 text-uppercase">لیست پروژه ها</h6>
+    <h6 class="mb-0 text-uppercase">لیست  تمام تسک ها</h6>
     <hr />
     @include('layouts.message')
     <div class="card">
         <div class="card-body">
             <div class="d-flex align-items-center justify-content-end">
-                <a href="{{ route('admin.project.create') }}" class="btn btn-primary btn-sm">افزودن پروژه</a>
+                <a href="{{ route('admin.task.create') }}" class="btn btn-primary btn-sm">افزودن تسک</a>
             </div>
             <hr>
             <div class="table-responsive">
@@ -15,36 +15,36 @@
                     <tr>
                         <th></th>
                         <th>شناسه پروژه</th>
-                        <th>نام پروژه</th>
+                        <th>عنوان تسک</th>
                         <th>تاریخ شروع تعیین شده</th>
                         <th>تاریخ شروع واقعی</th>
-                        <th>تاریخ پایان پروژه</th>
-                        <th>مدیر پروژه</th>
-                        <th>دسته بندی</th>
+                        <th>تاریخ پایان تسک</th>
+                        <th>مدیر تایید کننده</th>
+                        <th>ناظر تسک</th>
                         <th>وضعیت</th>
                         <th style='width:50px;'>عملیات</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach ($projects as $project)
+                    @foreach ($tasks as $task)
                         <tr>
                             <td>{{$loop->iteration}}</td>
-                            <td style="direction: ltr; text-align: left"> {{ $project->project_code }}</td>
-                            <td> {{ $project->name }}</td>
-                            <td> {{ $project->start_date }}</td>
-                            <td> {{ $project->start_todo_date }}</td>
-                            <td> {{ $project->end_date }}</td>
-                            <td> {{ $project->manager?->Name }}</td>
-                            <td> {{ $project->category?->title }}</td>
+                            <td style="direction: ltr; text-align: left"> {{ $task->task?->task_code }}</td>
+                            <td> {{ $task->title }}</td>
+                            <td> {{ $task->start_date }}</td>
+                            <td> {{ $task->start_todo_date }}</td>
+                            <td> {{ $task->end_date }}</td>
+                            <td> {{ $task->manager?->Name }}</td>
+                            <td> {{ $task->watcher?->Name }}</td>
                             <td>
-                                {!! $project->ProjectStatus !!}
+                                {!! $task->TaskStatus !!}
                             </td>
                             <td>
                                 <div class="d-flex">
-                                    <a href="{{ route('admin.project.edit',$project->id) }}" class='text-warning'>
+                                    <a href="{{ route('admin.task.edit',$task->id) }}" class='text-warning'>
                                         <i class="bx bxs-edit"></i>
                                     </a>
-                                    <a href="#" onclick="openDeleteModal('{{ route('admin.project.destroy',$project->id) }}')"
+                                    <a href="#" onclick="openDeleteModal('{{ route('admin.task.destroy',$task->id) }}')"
                                        class="text-danger ms-3">
                                         <i class="bx bxs-trash"></i>
                                     </a>
@@ -108,7 +108,7 @@
             // پاک‌کردن تیک‌های قبلی
             $('input[name="permissions[]"]').prop('checked', false);
 
-            // old permission for project
+            // old permission for task
             if (Array.isArray(data.permission)) {
                 data.permission.forEach(function (permId) {
                     $('#perm' + permId).prop('checked', true);

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Project;
 use App\Models\Task;
+use App\Models\User;
 use App\Services\TaskService;
 use Exception;
 use Illuminate\Http\Request;
@@ -29,7 +31,24 @@ class TaskController extends Controller
      */
     public function create()
     {
-        return view('admin.tasks.create');
+        $SuperAdminRoles = ['Super Admin'];
+        $excludedRoles = ['Manager'];
+        $memberRoles = ['Member'];
+
+        $managers = User::whereHas('roles', function ($query) use ($excludedRoles) {
+            $query->whereIn('name', $excludedRoles);
+        })->whereStatus('1')->latest()->get();
+
+        $members = User::whereHas('roles', function ($query) use ($memberRoles) {
+            $query->whereIn('name', $memberRoles);
+        })->whereStatus('1')->latest()->get();
+
+        $projects = Project::get();;
+
+        $watchers = User::whereDoesntHave('roles', function ($query) use ($SuperAdminRoles) {
+            $query->whereIn('name', $SuperAdminRoles);
+        })->whereStatus('1')->latest()->get();
+        return view('admin.tasks.create',get_defined_vars());
     }
 
     /**
@@ -37,7 +56,7 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-
+        dd($request);
             $this->taskService->store($request->all());
             return redirect(route('admin.task.index'))->with('flash_message', 'با موفقیت ایجاد شد');
         try {

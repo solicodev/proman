@@ -69,6 +69,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth','SuperAdminCheck'])->
 
     Route::prefix('project')->name('project.')->group(function () {
         Route::get('/', [ProjectController::class , 'index'])->name('index');
+        Route::get('tasks/{project}', [ProjectController::class , 'task'])->name('tasks');
         Route::get('/create', [ProjectController::class , 'create'])->name('create');
         Route::post('/store', [ProjectController::class , 'store'])->name('store');
         Route::get('/edit/{project}', [ProjectController::class , 'edit'])->name('edit');

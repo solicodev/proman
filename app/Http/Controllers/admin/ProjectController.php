@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Department;
 use App\Models\Project;
+use App\Models\Task;
 use App\Models\User;
 use App\Services\ProjectService;
 use Exception;
@@ -25,6 +26,12 @@ class ProjectController extends Controller
     {
         $projects = Project::get();
         return view('admin.projects.index',get_defined_vars());
+    }
+
+    public function task(Project $project)
+    {
+        $tasks = Task::where('project_id',$project->id)->get();
+        return view('admin.projects.tasks',get_defined_vars());
     }
 
     /**

@@ -98,7 +98,7 @@
                 </a>
             </li>
             <li>
-                <a href="{{route('admin.user.index')}}">
+                <a href="{{route('admin.task.index')}}">
                     <div class="parent-icon">
 
                         <i  class='bx bx-cookie'>
