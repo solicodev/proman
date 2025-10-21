@@ -690,20 +690,20 @@
                     <i  class='bx bx-menu'>
                     </i>
                 </div>
-                <div class="search-bar flex-grow-1">
-                    <div class="position-relative search-bar-box">
+{{--                <div class="search-bar flex-grow-1">--}}
+{{--                    <div class="position-relative search-bar-box">--}}
 
-                        <input type="text" class="form-control search-control" placeholder="جستجو کنید...">
-                        <span class="position-absolute top-50 search-show translate-middle-y">
-								<i  class='bx bx-search'>
-								</i>
-								</span>
-                        <span class="position-absolute top-50 search-close translate-middle-y">
-								<i  class='bx bx-x'>
-								</i>
-								</span>
-                    </div>
-                </div>
+{{--                        <input type="text" class="form-control search-control" placeholder="جستجو کنید...">--}}
+{{--                        <span class="position-absolute top-50 search-show translate-middle-y">--}}
+{{--								<i  class='bx bx-search'>--}}
+{{--								</i>--}}
+{{--								</span>--}}
+{{--                        <span class="position-absolute top-50 search-close translate-middle-y">--}}
+{{--								<i  class='bx bx-x'>--}}
+{{--								</i>--}}
+{{--								</span>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
                 <div class="top-menu ms-auto">
                     <ul class="navbar-nav align-items-center gap-1">
                         <li class="nav-item mobile-search-icon d-flex d-lg-none" data-bs-toggle="modal"
@@ -713,79 +713,6 @@
                                 <i  class='bx bx-search'>
                                 </i>
                             </a>
-                        </li>
-                        <li class="nav-item dropdown dropdown-laungauge d-none d-sm-flex">
-                            <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="javascript:;"
-                               data-bs-toggle="dropdown">
-                                <img src="{{url('assets/admin/images/county/02.png')}}" width="22"
-                                     alt="توضیح تصویر">
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li>
-                                    <a class="dropdown-item d-flex align-items-center py-2" href="javascript:;">
-                                        <img
-                                            src="{{url('assets/admin/images/county/01.png')}}" width="20" alt="توضیح تصویر">
-                                        <span
-                                            class="ms-2">انگلیسی</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item d-flex align-items-center py-2" href="javascript:;">
-                                        <img
-                                            src="{{url('assets/admin/images/county/02.png')}}" width="20" alt="توضیح تصویر">
-                                        <span
-                                            class="ms-2">فارسی</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item d-flex align-items-center py-2" href="javascript:;">
-                                        <img
-                                            src="{{url('assets/admin/images/county/03.png')}}" width="20" alt="توضیح تصویر">
-                                        <span
-                                            class="ms-2">فرانسوی</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item d-flex align-items-center py-2" href="javascript:;">
-                                        <img
-                                            src="{{url('assets/admin/images/county/04.png')}}" width="20" alt="توضیح تصویر">
-                                        <span
-                                            class="ms-2">ایتالیایی</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item d-flex align-items-center py-2" href="javascript:;">
-                                        <img
-                                            src="{{url('assets/admin/images/county/05.png')}}" width="20" alt="توضیح تصویر">
-                                        <span
-                                            class="ms-2">کلمبیا</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item d-flex align-items-center py-2" href="javascript:;">
-                                        <img
-                                            src="{{url('assets/admin/images/county/06.png')}}" width="20" alt="توضیح تصویر">
-                                        <span
-                                            class="ms-2">اسپانیایی</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item d-flex align-items-center py-2" href="javascript:;">
-                                        <img
-                                            src="{{url('assets/admin/images/county/07.png')}}" width="20" alt="توضیح تصویر">
-                                        <span
-                                            class="ms-2">گرجی</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item d-flex align-items-center py-2" href="javascript:;">
-                                        <img
-                                            src="{{url('assets/admin/images/county/08.png')}}" width="20" alt="توضیح تصویر">
-                                        <span
-                                            class="ms-2">هندی</span>
-                                    </a>
-                                </li>
-                            </ul>
                         </li>
 
                         <li class="nav-item dropdown dropdown-app">
@@ -928,110 +855,7 @@
                                                 </div>
                                             </a>
                                         </div>
-                                        <div class="col">
-                                            <a href="javascript:;">
-                                                <div class="app-box text-center">
-                                                    <div class="app-icon">
-                                                        <img src="{{url('assets/admin/images/app/google-photos.png')}}" width="30"
-                                                             alt="توضیح تصویر">
-                                                    </div>
-                                                    <div class="app-name">
-                                                        <p class="mb-0 mt-1">تصاویر</p>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="col">
-                                            <a href="javascript:;">
-                                                <div class="app-box text-center">
-                                                    <div class="app-icon">
-                                                        <img src="{{url('assets/admin/images/app/pinterest.png')}}" width="30"
-                                                             alt="توضیح تصویر">
-                                                    </div>
-                                                    <div class="app-name">
-                                                        <p class="mb-0 mt-1">تصاویر</p>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="col">
-                                            <a href="javascript:;">
-                                                <div class="app-box text-center">
-                                                    <div class="app-icon">
-                                                        <img src="{{url('assets/admin/images/app/linkedin.png')}}" width="30"
-                                                             alt="توضیح تصویر">
-                                                    </div>
-                                                    <div class="app-name">
-                                                        <p class="mb-0 mt-1">لینکدین</p>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="col">
-                                            <a href="javascript:;">
-                                                <div class="app-box text-center">
-                                                    <div class="app-icon">
-                                                        <img src="{{url('assets/admin/images/app/dribble.png')}}" width="30"
-                                                             alt="توضیح تصویر">
-                                                    </div>
-                                                    <div class="app-name">
-                                                        <p class="mb-0 mt-1">دریبل</p>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="col">
-                                            <a href="javascript:;">
-                                                <div class="app-box text-center">
-                                                    <div class="app-icon">
-                                                        <img src="{{url('assets/admin/images/app/youtube.png')}}" width="30"
-                                                             alt="توضیح تصویر">
-                                                    </div>
-                                                    <div class="app-name">
-                                                        <p class="mb-0 mt-1">یوتیوب</p>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="col">
-                                            <a href="javascript:;">
-                                                <div class="app-box text-center">
-                                                    <div class="app-icon">
-                                                        <img src="{{url('assets/admin/images/app/google.png')}}" width="30"
-                                                             alt="توضیح تصویر">
-                                                    </div>
-                                                    <div class="app-name">
-                                                        <p class="mb-0 mt-1">اخبار</p>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="col">
-                                            <a href="javascript:;">
-                                                <div class="app-box text-center">
-                                                    <div class="app-icon">
-                                                        <img src="{{url('assets/admin/images/app/envato.png')}}" width="30"
-                                                             alt="توضیح تصویر">
-                                                    </div>
-                                                    <div class="app-name">
-                                                        <p class="mb-0 mt-1">انواتو</p>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="col">
-                                            <a href="javascript:;">
-                                                <div class="app-box text-center">
-                                                    <div class="app-icon">
-                                                        <img src="{{url('assets/admin/images/app/safari.png')}}" width="30"
-                                                             alt="توضیح تصویر">
-                                                    </div>
-                                                    <div class="app-name">
-                                                        <p class="mb-0 mt-1">سافاری</p>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </div>
+
 
                                     </div>
 
@@ -1043,7 +867,7 @@
                         <li class="nav-item dropdown dropdown-large">
                             <a class="nav-link dropdown-toggle dropdown-toggle-nocaret position-relative" href="#"
                                data-bs-toggle="dropdown">
-                                <span class="alert-count">7</span>
+                                <span class="alert-count">2</span>
                                 <i class='bx bx-bell'>
                                 </i>
                             </a>
@@ -1051,7 +875,7 @@
                                 <a href="javascript:;">
                                     <div class="msg-header">
                                         <p class="msg-header-title">اعلانها</p>
-                                        <p class="msg-header-badge">8 جدید</p>
+                                        <p class="msg-header-badge">7 جدید</p>
                                     </div>
                                 </a>
                                 <div class="header-notifications-list">
@@ -1080,331 +904,10 @@
                                             </div>
                                         </div>
                                     </a>
-                                    <a class="dropdown-item" href="javascript:;">
-                                        <div class="d-flex align-items-center">
-                                            <div class="user-online">
-                                                <img src="{{url('assets/admin/images/avatars/avatar-2.png')}}" class="msg-avatar"
-                                                     alt="توضیح تصویر">
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <h6 class="msg-name">عطا کریمی <span class="msg-time float-end">14
-															ثانیه قبل</span>
-                                                </h6>
-                                                <p class="msg-info">با تولید سادگی نامفهوم از صنعت چاپ </p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a class="dropdown-item" href="javascript:;">
-                                        <div class="d-flex align-items-center">
-                                            <div class="notify bg-light-success text-success">
-                                                <img src="{{url('assets/admin/images/app/outlook.png')}}" width="25"
-                                                     alt="توضیح تصویر">
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <h6 class="msg-name">حساب ایجاد شد<span
-                                                        class="msg-time float-end">28 دقیقه قبل</span>
-                                                </h6>
-                                                <p class="msg-info"> با استفاده از طراحان گرافیک است</p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a class="dropdown-item" href="javascript:;">
-                                        <div class="d-flex align-items-center">
-                                            <div class="notify bg-light-info text-info">س س</div>
-                                            <div class="flex-grow-1">
-                                                <h6 class="msg-name">محصول جدید تایید شد <span
-                                                        class="msg-time float-end">2 ساعت قبل</span>
-                                                </h6>
-                                                <p class="msg-info">محصول جدید شما تایید شد</p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a class="dropdown-item" href="javascript:;">
-                                        <div class="d-flex align-items-center">
-                                            <div class="user-online">
-                                                <img src="{{url('assets/admin/images/avatars/avatar-4.png')}}" class="msg-avatar"
-                                                     alt="توضیح تصویر">
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <h6 class="msg-name">کوثر پرهام <span class="msg-time float-end">15
-															دقیقه قبل</span>
-                                                </h6>
-                                                <p class="msg-info">چاپگرها و متون بلکه روزنامه و مجله </p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a class="dropdown-item" href="javascript:;">
-                                        <div class="d-flex align-items-center">
-                                            <div class="notify bg-light-success text-success">
-                                                <i
-                                                    class='bx bx-check-square'>
-                                                </i>
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <h6 class="msg-name">سفارش ارسال شد <span
-                                                        class="msg-time float-end">5 ساعت قبل</span>
-                                                </h6>
-                                                <p class="msg-info">سفارش شما با موفقیت ارسال شد</p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a class="dropdown-item" href="javascript:;">
-                                        <div class="d-flex align-items-center">
-                                            <div class="notify bg-light-primary">
-                                                <img src="{{url('assets/admin/images/app/github.png')}}" width="25"
-                                                     alt="توضیح تصویر">
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <h6 class="msg-name">24 ناشر جدید<span class="msg-time float-end">1
-															روز قبل</span>
-                                                </h6>
-                                                <p class="msg-info">24 ناشر جدید هفته گذشته ثبت نام کرده اند</p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a class="dropdown-item" href="javascript:;">
-                                        <div class="d-flex align-items-center">
-                                            <div class="user-online">
-                                                <img src="{{url('assets/admin/images/avatars/avatar-8.png')}}" class="msg-avatar"
-                                                     alt="توضیح تصویر">
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <h6 class="msg-name">پدرام کوکبی <span class="msg-time float-end">6
-															ساعت قبل</span>
-                                                </h6>
-                                                <p class="msg-info"> در ستون و سطرآنچنان که لازم است</p>
-                                            </div>
-                                        </div>
-                                    </a>
                                 </div>
                                 <a href="javascript:;">
                                     <div class="text-center msg-footer">
                                         <button class="btn btn-light w-100">نمایش همه اعلان ها</button>
-                                    </div>
-                                </a>
-                            </div>
-                        </li>
-                        <li class="nav-item dropdown dropdown-large">
-                            <a class="nav-link dropdown-toggle dropdown-toggle-nocaret position-relative" href="#"
-                               role="button" data-bs-toggle="dropdown" aria-expanded="false"> <span
-                                    class="alert-count">8</span>
-                                <i class='bx bx-shopping-bag'>
-                                </i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end">
-                                <a href="javascript:;">
-                                    <div class="msg-header">
-                                        <p class="msg-header-title">سبد خرید</p>
-                                        <p class="msg-header-badge">10 مورد</p>
-                                    </div>
-                                </a>
-                                <div class="header-message-list">
-                                    <a class="dropdown-item" href="javascript:;">
-                                        <div class="d-flex align-items-center gap-3">
-                                            <div class="position-relative">
-                                                <div class="cart-product rounded-circle bg-light">
-                                                    <img src="{{url('assets/admin/images/products/11.png')}}" class=""
-                                                         alt="توضیح تصویر">
-                                                </div>
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <h6 class="cart-product-title mb-0">تیشرت سفید مردانه</h6>
-                                                <p class="cart-product-price mb-0">1 * 290000</p>
-                                            </div>
-                                            <div class="">
-                                                <p class="cart-price mb-0">250000</p>
-                                            </div>
-                                            <div class="cart-product-cancel">
-
-                                                <i  class="bx bx-x">
-                                                </i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a class="dropdown-item" href="javascript:;">
-                                        <div class="d-flex align-items-center gap-3">
-                                            <div class="position-relative">
-                                                <div class="cart-product rounded-circle bg-light">
-                                                    <img src="{{url('assets/admin/images/products/02.png')}}" class=""
-                                                         alt="توضیح تصویر">
-                                                </div>
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <h6 class="cart-product-title mb-0">تیشرت سفید مردانه</h6>
-                                                <p class="cart-product-price mb-0">1 * 290000</p>
-                                            </div>
-                                            <div class="">
-                                                <p class="cart-price mb-0">250000</p>
-                                            </div>
-                                            <div class="cart-product-cancel">
-
-                                                <i  class="bx bx-x">
-                                                </i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a class="dropdown-item" href="javascript:;">
-                                        <div class="d-flex align-items-center gap-3">
-                                            <div class="position-relative">
-                                                <div class="cart-product rounded-circle bg-light">
-                                                    <img src="{{url('assets/admin/images/products/03.png')}}" class=""
-                                                         alt="توضیح تصویر">
-                                                </div>
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <h6 class="cart-product-title mb-0">تیشرت سفید مردانه</h6>
-                                                <p class="cart-product-price mb-0">1 * 290000</p>
-                                            </div>
-                                            <div class="">
-                                                <p class="cart-price mb-0">250000</p>
-                                            </div>
-                                            <div class="cart-product-cancel">
-
-                                                <i  class="bx bx-x">
-                                                </i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a class="dropdown-item" href="javascript:;">
-                                        <div class="d-flex align-items-center gap-3">
-                                            <div class="position-relative">
-                                                <div class="cart-product rounded-circle bg-light">
-                                                    <img src="{{url('assets/admin/images/products/04.png')}}" class=""
-                                                         alt="توضیح تصویر">
-                                                </div>
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <h6 class="cart-product-title mb-0">تیشرت سفید مردانه</h6>
-                                                <p class="cart-product-price mb-0">1 * 290000</p>
-                                            </div>
-                                            <div class="">
-                                                <p class="cart-price mb-0">250000</p>
-                                            </div>
-                                            <div class="cart-product-cancel">
-
-                                                <i  class="bx bx-x">
-                                                </i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a class="dropdown-item" href="javascript:;">
-                                        <div class="d-flex align-items-center gap-3">
-                                            <div class="position-relative">
-                                                <div class="cart-product rounded-circle bg-light">
-                                                    <img src="{{url('assets/admin/images/products/05.png')}}" class=""
-                                                         alt="توضیح تصویر">
-                                                </div>
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <h6 class="cart-product-title mb-0">تیشرت سفید مردانه</h6>
-                                                <p class="cart-product-price mb-0">1 * 290000</p>
-                                            </div>
-                                            <div class="">
-                                                <p class="cart-price mb-0">250000</p>
-                                            </div>
-                                            <div class="cart-product-cancel">
-
-                                                <i  class="bx bx-x">
-                                                </i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a class="dropdown-item" href="javascript:;">
-                                        <div class="d-flex align-items-center gap-3">
-                                            <div class="position-relative">
-                                                <div class="cart-product rounded-circle bg-light">
-                                                    <img src="{{url('assets/admin/images/products/06.png')}}" class=""
-                                                         alt="توضیح تصویر">
-                                                </div>
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <h6 class="cart-product-title mb-0">تیشرت سفید مردانه</h6>
-                                                <p class="cart-product-price mb-0">1 * 290000</p>
-                                            </div>
-                                            <div class="">
-                                                <p class="cart-price mb-0">250000</p>
-                                            </div>
-                                            <div class="cart-product-cancel">
-
-                                                <i  class="bx bx-x">
-                                                </i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a class="dropdown-item" href="javascript:;">
-                                        <div class="d-flex align-items-center gap-3">
-                                            <div class="position-relative">
-                                                <div class="cart-product rounded-circle bg-light">
-                                                    <img src="{{url('assets/admin/images/products/07.png')}}" class=""
-                                                         alt="توضیح تصویر">
-                                                </div>
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <h6 class="cart-product-title mb-0">تیشرت سفید مردانه</h6>
-                                                <p class="cart-product-price mb-0">1 * 290000</p>
-                                            </div>
-                                            <div class="">
-                                                <p class="cart-price mb-0">250000</p>
-                                            </div>
-                                            <div class="cart-product-cancel">
-
-                                                <i  class="bx bx-x">
-                                                </i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a class="dropdown-item" href="javascript:;">
-                                        <div class="d-flex align-items-center gap-3">
-                                            <div class="position-relative">
-                                                <div class="cart-product rounded-circle bg-light">
-                                                    <img src="{{url('assets/admin/images/products/08.png')}}" class=""
-                                                         alt="توضیح تصویر">
-                                                </div>
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <h6 class="cart-product-title mb-0">تیشرت سفید مردانه</h6>
-                                                <p class="cart-product-price mb-0">1 * 290000</p>
-                                            </div>
-                                            <div class="">
-                                                <p class="cart-price mb-0">250000</p>
-                                            </div>
-                                            <div class="cart-product-cancel">
-
-                                                <i  class="bx bx-x">
-                                                </i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a class="dropdown-item" href="javascript:;">
-                                        <div class="d-flex align-items-center gap-3">
-                                            <div class="position-relative">
-                                                <div class="cart-product rounded-circle bg-light">
-                                                    <img src="{{url('assets/admin/images/products/09.png')}}" class=""
-                                                         alt="توضیح تصویر">
-                                                </div>
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <h6 class="cart-product-title mb-0">تیشرت سفید مردانه</h6>
-                                                <p class="cart-product-price mb-0">1 * 290000</p>
-                                            </div>
-                                            <div class="">
-                                                <p class="cart-price mb-0">250000</p>
-                                            </div>
-                                            <div class="cart-product-cancel">
-
-                                                <i  class="bx bx-x">
-                                                </i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <a href="javascript:;">
-                                    <div class="text-center msg-footer">
-                                        <div class="d-flex align-items-center justify-content-between mb-3">
-                                            <h5 class="mb-0">قیمت کل</h5>
-                                            <h5 class="mb-0 ms-auto">4890000</h5>
-                                        </div>
-                                        <button class="btn btn-light w-100">تسویه حساب</button>
                                     </div>
                                 </a>
                             </div>
@@ -1415,10 +918,11 @@
                     <a class="d-flex align-items-center nav-link dropdown-toggle gap-3 dropdown-toggle-nocaret"
                        href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 
-                        <img src="{{url('assets/admin/images/avatars/avatar-2.png')}}" class="user-img" alt="توضیح تصویر">
+{{--                        <img src="{{url('assets/admin/images/avatars/avatar-2.png')}}" class="user-img" alt="توضیح تصویر">--}}
+                        <i class="bx bx-user-circle font-30"></i>
                         <div class="user-info">
-                            <p class="user-name mb-0">پریا سلطانی</p>
-                            <p class="designattion mb-0">طراح وب</p>
+                            <p class="user-name mb-0">{{\Illuminate\Support\Facades\Auth::user()->Name}}</p>
+                            <p class="designattion mb-0">{{role_name(\Illuminate\Support\Facades\Auth::user()->getRoleNames()->first())}}</p>
                         </div>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">

@@ -83,6 +83,24 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
+        $SuperAdminRoles = ['Super Admin'];
+        $excludedRoles = ['Manager'];
+        $memberRoles = ['Member'];
+
+        $managers = User::whereHas('roles', function ($query) use ($excludedRoles) {
+            $query->whereIn('name', $excludedRoles);
+        })->whereStatus('1')->latest()->get();
+
+        $members = User::whereHas('roles', function ($query) use ($memberRoles) {
+            $query->whereIn('name', $memberRoles);
+        })->whereStatus('1')->latest()->get();
+
+        $projects = Project::get();;
+
+        $watchers = User::whereDoesntHave('roles', function ($query) use ($SuperAdminRoles) {
+            $query->whereIn('name', $SuperAdminRoles);
+        })->whereStatus('1')->latest()->get();
+
         return view('admin.tasks.edit',get_defined_vars());
     }
 
