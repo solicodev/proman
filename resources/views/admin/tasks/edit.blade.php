@@ -11,11 +11,11 @@
                 </li>
                 <li class="breadcrumb-item">
                     <a href="{{ route('admin.project.index') }}">
-                        پروژه
+                        تسک
                     </a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">
-                    ویرایش پروژه
+                    ویرایش تسک
                 </li>
             </ol>
         </nav>
@@ -24,89 +24,104 @@
 
     <div class="card">
         <div class="card-body p-4">
-            <h5 class="card-title">ویرایش پروژه</h5>
+            <h5 class="card-title">ویرایش تسک</h5>
             <hr />
-            <form action='{{route('admin.project.update',$project->id)}}' method="post" class="form-body mt-4 needs-validation"
+            <form action='{{route('admin.project.update',$task->id)}}' method="post" class="form-body mt-4 needs-validation"
                   enctype="multipart/form-data" novalidate>
                 @csrf
                 @method('put')
                 <div class="border border-3 p-4 rounded">
                     <div class="row g-3">
                         <div class="col-md-4">
-                            <label for="name" class="form-label">نام پروژه </label>
-                            <input type="text" name="name" class="form-control" id="name"
-                                   value="{{$project->name}}" autocomplete="off" placeholder="نام پروژه" required>
-                            <div class="invalid-feedback">نام پروژه الزامی است</div>
+                            <label for="title" class="form-label">عنوان تسک </label>
+                            <input type="text" name="title" class="form-control" id="title"
+                                   value="{{$task->title}}" autocomplete="off" placeholder="عنوان تسک" required>
+                            <div class="invalid-feedback">عنوان تسک الزامی است</div>
                         </div>
                         <div class="col-md-4">
-                            <label for="start_date" class="form-label">تاریخ شروع پروژه </label>
+                            <label for="start_date" class="form-label">تاریخ شروع تسک </label>
                             <input name="start_date"
                                    class="result form-control"
                                    type="text"
                                    data-jdp
-                                   placeholder="تاریخ شروع پروژه" autocomplete="off"  value="{{$project->start_date}}" required/>
-                            <div class="invalid-feedback">تاریخ شروع پروژه الزامی است</div>
+                                   placeholder="تاریخ شروع تسک" autocomplete="off"  value="{{$task->start_date}}" required/>
+                            <div class="invalid-feedback">تاریخ شروع تسک الزامی است</div>
                         </div>
                         <div class="col-md-4">
-                            <label for="end_date" class="form-label">تاریخ پایان پروژه</label>
-                            <input name="end_date"
+                            <label for="duration" class="form-label">زمان انجام تسک</label>
+                            <input name="duration"
                                    class="result form-control"
-                                   type="text"
-                                   data-jdp
-                                   placeholder="تاریخ پایان پروژه" autocomplete="off"  value="{{$project->end_date}}" required/>
-                            <div class="invalid-feedback">تاریخ پایان پروژه الزامی است</div>
+                                   type="number"
+                                   placeholder="زمان انجام تسک مثال : 10 روز " autocomplete="off"  value="{{$task->duration}}" required/>
+                            <div class="invalid-feedback">زمان انجام تسک الزامی است</div>
                         </div>
                         <div class="col-md-4">
-                            <label for="manager_id" class="form-label">مدیر پروژه</label>
-                            <select class="form-select" name="manager_id" id="inputProductType" required>
-                                <option>مدیر پروژه را انتخاب کنید</option>
+                            <label for="priority" class="form-label">اولویت تسک</label>
+                            <select class="form-select" name="priority" id="inputProductType" required>
+                                <option value="" disabled selected hidden>اولویت تسک را انتخاب کنید</option>
+                                <option value="0" @if($task->priority == 0) selected @endif>کم</option>
+                                <option value="1" @if($task->priority == 1) selected @endif>متوسط</option>
+                                <option value="2" @if($task->priority == 2) selected @endif>زیاد</option>
+                            </select>
+                            <div class="invalid-feedback">ناظر تسک الزامی است</div>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="manager_id" class="form-label">مدیر تایید کننده تسک</label>
+                            <select class="form-select" name="manager_id" id="inputProductType" required data-placeholder="انتخاب کنید">
+                                <option value="" disabled selected hidden>مدیر تایید کننده تسک را انتخاب کنید</option>
                                 @foreach($managers as $manager)
-                                    <option value="{{$manager->id}}" @if($project->manager?->id == $manager->id ) selected @endif>{{$manager->Name}} - {{role_name($manager->roles()->first()->name)}}</option>
+                                    <option value="{{$manager->id}}" @if($task->manager?->id == $manager->id) selected @endif>{{$manager->Name}} - {{role_name($manager->roles()->first()->name)}}</option>
                                 @endforeach
                             </select>
-                            <div class="invalid-feedback">پوزیشن کاری پروژه الزامی است</div>
+                            <div class="invalid-feedback">مدیر تایید کننده تسک الزامی است</div>
                         </div>
                         <div class="col-md-4">
-                            <label for="category_id" class="form-label">دسته بندی پروژه</label>
-                            <select class="form-select" name="category_id" id="inputProductType">
-                                <option></option>
-                                @foreach($categories as $category)
-                                    <option value="{{$category->id}}" @if($project->category?->id == $category->id) selected @endif>{{$category->title}} </option>
+                            <label for="project_id" class="form-label">تسک مربوطه</label>
+                            <select class="form-select" name="project_id" id="inputProductType">
+                                <option value="" disabled selected hidden>تسک مربوطه را انتخاب کنید</option>
+                                @foreach($projects as $project)
+                                    <option value="{{$project->id}}" @if($task->manager?->id == $manager->id) selected @endif>{{$project->name}} </option>
                                 @endforeach
                             </select>
-                            {{--                            <div class="invalid-feedback">نقش پروژه الزامی است</div>--}}
+                            <div class="invalid-feedback">تسک مربوطه الزامی است</div>
                         </div>
-                        <div class="col-md-4">
-                            <label for="department_id" class="form-label">دپارتمان</label>
-                            <select class="form-select" name="department_id" id="inputProductType">
-                                <option></option>
-                                @foreach($departments as $department)
-                                    <option value="{{$department->id}}" @if($project->department?->id == $department->id) selected @endif>{{$department->name}} </option>
+                        <div class="col-md-6">
+                            <label for="watcher_id" class="form-label">ناظر تسک</label>
+                            <select class="form-select" name="watcher_id" id="inputProductType" required>
+                                <option value="" disabled selected hidden>ناظر تسک را انتخاب کنید</option>
+                                @foreach($watchers as $watcher)
+                                    <option value="{{$watcher->id}}" @if($task->watcher?->id == $watcher->id) selected @endif>{{ $watcher->Name }} </option>
                                 @endforeach
                             </select>
-                            {{--                            <div class="invalid-feedback">نقش پروژه الزامی است</div>--}}
+                            <div class="invalid-feedback">ناظر تسک الزامی است</div>
                         </div>
-                        @if(count($project->members) > 0)
-                            <div class="col-md-12">
-                                <label for="memberStacks" class="form-label">اعضای پروژه</label>
-                                <select class="form-select" id="memberStacks" name="members[]" data-placeholder="انتخاب کنید" multiple required>
-                                    @foreach($members as $member)
-                                        <option value="{{ $member->id }}"
-                                                @if($project->members->contains('id', $member->id)) selected @endif>
-                                            {{ $member->Name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                <div class="invalid-feedback">اعضای پروژه الزامی است</div>
-                            </div>
-                        @endif
+
+                        <div class="col-md-6">
+                            <label for="memberStacks" class="form-label">اعضای تسک</label>
+                            <select class="form-select" id="memberStacks" name="members[]" data-placeholder="انتخاب کنید" multiple required>
+
+                                @foreach($members as $member)
+                                    <option value="{{ $member->id }}"
+                                            @if($task->assigners?->pluck('id')->contains($member->id)) selected @endif>
+                                        {{ $member->Name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <div class="invalid-feedback">اعضای تسک الزامی است</div>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="description" class="form-label">توضیحات تسک </label>
+                            <textarea type="text" name="description" class="form-control" id="description"
+                                      autocomplete="off" placeholder="توضیحات تسک" required> {{old('description')}}</textarea>
+                            <div class="invalid-feedback">توضیحات تسک الزامی است</div>
+                        </div>
                         <hr>
                         <div class="col-12">
-                            <label for="gallery" class="form-label">فایل های مربوط به پروژه</label>
+                            <label for="gallery" class="form-label">فایل های مربوط به تسک</label>
                             <div class="row g-3 images">
-                                @if(count($project->photos) > 0)
-                                    @foreach($project->photos as $photo)
-                                        <div class="col-md-4 d-flex align-items-center image">
+                                @if(count($task->photos) > 0)
+                                    @foreach($task->photos as $photo)
+                                        <div class="col-md-4 d-flex image">
                                             <input class='form-control' type="file" name="photos[]" accept="image/*">
                                             <button type="button" class="btn btn-link text-danger" title='حذف'
                                                     onclick='removeImage(this)'>
@@ -117,6 +132,7 @@
                                             <img src="{{ url($photo->path) }}" class="img-fluid">
                                         </div>
                                     @endforeach
+
                                 @else
                                     <div class="col-md-4 d-flex image">
                                         <input class='form-control' type="file" name="photos[]" accept="image/*">
@@ -137,7 +153,7 @@
                         <div class="col-12 mt-5">
                             <div class="d-flex align-items-center justify-content-end">
                                 <button type="submit" class="btn btn-success">
-                                    ثبت ویرایش پروژه
+                                    ویرایش تسک
                                 </button>
                             </div>
                         </div>

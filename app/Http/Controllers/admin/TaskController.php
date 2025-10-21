@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Services\TaskService;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TaskController extends Controller
 {
@@ -56,12 +57,15 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+
+        DB::beginTransaction();
             $this->taskService->store($request->all());
+        DB::commit();
             return redirect(route('admin.task.index'))->with('flash_message', 'با موفقیت ایجاد شد');
         try {
 
         } catch (Exception $exception) {
+        DB::rollBack();
             return redirect()->back()->with('err_message', $exception->getMessage());
         }
     }
@@ -79,6 +83,24 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
+        $SuperAdminRoles = ['Super Admin'];
+        $excludedRoles = ['Manager'];
+        $memberRoles = ['Member'];
+
+        $managers = User::whereHas('roles', function ($query) use ($excludedRoles) {
+            $query->whereIn('name', $excludedRoles);
+        })->whereStatus('1')->latest()->get();
+
+        $members = User::whereHas('roles', function ($query) use ($memberRoles) {
+            $query->whereIn('name', $memberRoles);
+        })->whereStatus('1')->latest()->get();
+
+        $projects = Project::get();;
+
+        $watchers = User::whereDoesntHave('roles', function ($query) use ($SuperAdminRoles) {
+            $query->whereIn('name', $SuperAdminRoles);
+        })->whereStatus('1')->latest()->get();
+
         return view('admin.tasks.edit',get_defined_vars());
     }
 

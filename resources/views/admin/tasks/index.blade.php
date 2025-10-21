@@ -29,7 +29,7 @@
                     @foreach ($tasks as $task)
                         <tr>
                             <td>{{$loop->iteration}}</td>
-                            <td style="direction: ltr; text-align: left"> {{ $task->task?->task_code }}</td>
+                            <td style="direction: ltr; text-align: left"> {{ $task->project?->project_code }}</td>
                             <td> {{ $task->title }}</td>
                             <td> {{ $task->start_date }}</td>
                             <td> {{ $task->start_todo_date }}</td>
