@@ -73,9 +73,7 @@ class TaskService
                 $task->photos()->sync($photo);
             }
         }
-
         $task->assigners()->sync($param['members']);
-
         return $task;
     }
 }

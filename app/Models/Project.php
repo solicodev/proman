@@ -32,6 +32,19 @@ class Project extends Model
         return $this->statuses[$this->status] ?? '';
     }
 
+    public $panelstatuses = [
+        '0' => '<span class="badge badge-light-danger fw-bold me-auto px-4 py-3">درحال بررسی</span>',
+        '1' => '<span class="badge badge-light-primary fw-bold me-auto px-4 py-3">درحال انجام</span>',
+        '2' => '<span class="badge badge-success fw-bold me-auto px-4 py-3"> تکمیل شد</span>',
+        '3' => '<span class="badge badge-light-secondary fw-bold me-auto px-4 py-3">تعلیق شد</span>',
+        '4' => '<span class="badge badge-light fw-bold me-auto px-4 py-3">کنسل شد</span>',
+    ];
+
+    public function getPanelProjectStatusAttribute()
+    {
+        return $this->panelstatuses[$this->status] ?? '';
+    }
+
     public function manager()
     {
         return $this->belongsTo(User::class , 'manager_id');

@@ -23,6 +23,7 @@
     <link href="{{url('panel/assets/css/style.bundle.rtl.css')}}" rel="stylesheet" type="text/css"/>
     <link href="{{url('panel/assets/css/main.css')}}" rel="stylesheet" type="text/css"/>
     <!--end::Global Stylesheets Bundle-->
+    @stack('styles')
 </head>
 <body id="kt_app_body" data-kt-app-sidebar-enabled="true" data-kt-app-sidebar-fixed="true"
       data-kt-app-sidebar-push-toolbar="true" data-kt-app-sidebar-push-footer="true" data-kt-app-toolbar-enabled="true"
@@ -57,5 +58,6 @@
 <script src="{{url('panel/assets/js/custom/utilities/modals/new-target.js')}}}"></script>
 <script src="{{url('panel/assets/js/custom/utilities/modals/users-search.js')}}"></script>
 <!--end::Custom Javascript-->
+@stack('scripts')
 </body>
 </html>
