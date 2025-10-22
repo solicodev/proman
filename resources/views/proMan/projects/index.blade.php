@@ -1,4 +1,14 @@
+@push('styles')
+    <style>
+        .symbol-style
+        {
+            border:1px solid var(--bs-card-border-color) !important;
+            background-image:url('{{ asset('panel/assets/media/svg/avatars/blank.svg') }}')
+        }
+    </style>
+@endpush
 <x-layout>
+
     <!--begin::Toolbar-->
     <div id="kt_app_toolbar" class="app-toolbar  d-flex pb-3 pb-lg-5 ">
 
@@ -276,7 +286,12 @@
                             <div class="card-title m-0">
                                 <!--begin::Avatar-->
                                 <div class="symbol symbol-50px w-50px bg-light">
-                                    <img src="{{url('panel/assets/media/svg/brand-logos/plurk.svg')}}" alt="image" class="p-3"/>
+                                    @if($project->brand_id)
+                                        <img src="{{route('home')}}/{{$project->brand?->photo?->path}}" alt="image" class="p-3"/>
+                                    @else
+                                        <img src="{{url('panel/assets/media/svg/brand-logos/default.png')}}" alt="image" class="p-3"/>
+                                    @endif
+
                                 </div>
                                 <!--end::Avatar-->
                             </div>
@@ -305,18 +320,18 @@
                             <!--end::Description-->
 
                             <!--begin::Info-->
-                            <div class="d-flex flex-wrap mb-5">
+                            <div class="d-flex flex-wrap justify-content-between mb-5">
                                 <!--begin::Due-->
                                 <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-7 mb-3">
-                                    <div class="fs-6 text-gray-800 fw-bold">Apr 15, 2025</div>
-                                    <div class="fw-semibold text-gray-500">Due Date</div>
+                                    <div class="fs-6 text-gray-800 fw-bold">{{$project->start_date}}</div>
+                                    <div class="fw-semibold text-gray-500">تاریخ شروع تعیین شده</div>
                                 </div>
                                 <!--end::Due-->
 
                                 <!--begin::Budget-->
                                 <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 mb-3">
-                                    <div class="fs-6 text-gray-800 fw-bold">$284,900.00</div>
-                                    <div class="fw-semibold text-gray-500">Budget</div>
+                                    <div class="fs-6 text-gray-800 fw-bold">{{$project->start_date}}</div>
+                                    <div class="fw-semibold text-gray-500">تاریخ پایان تعیین شده</div>
                                 </div>
                                 <!--end::Budget-->
                             </div>
@@ -342,12 +357,20 @@
                                     @foreach($project->members as $member)
                                         <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
                                              title="{{$member->Name}}">
-                                            <span class="symbol-label bg-info text-inverse-primary fw-bold">{{mb_substr($member->Name,0,1)}}</span>
+                                            @if(isset($member->photo_id))
+                                                <img alt="Pic" src="{{route('home')}}/{{$member->photo?->path}}"/>
+
+                                            @else
+                                                <span class="symbol-label bg-info text-inverse-primary fw-bold text-info symbol-style" >{{mb_substr($member->Name,0,1)}}</span>
+                                            @endif
                                         </div>
-{{--                                        <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="Emma Smith">--}}
-{{--                                            <img alt="Pic" src="{{url('panel/assets/media/avatars/300-6.jpg')}}"/>--}}
-{{--                                        </div>--}}
+                                        {{--                                        <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="Emma Smith">--}}
+                                        {{--                                            <img alt="Pic" src="{{url('panel/assets/media/avatars/300-6.jpg')}}"/>--}}
+                                        {{--                                        </div>--}}
                                     @endforeach
+                                @else
+                                    <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" >
+                                    </div>
                                 @endif
                             </div>
                             <!--end::Users-->
@@ -361,49 +384,49 @@
 
         </div>
         <!--end::Row-->
-
+        {{$projects->links("pagination::bootstrap-5")}}
         <!--begin::Pagination-->
-        <div class="d-flex flex-stack flex-wrap pt-10">
-            <div class="fs-6 fw-semibold text-gray-700">
-                Showing 1 to 10 of 50 entries
-            </div>
+        {{--        <div class="d-flex flex-stack flex-wrap pt-10">--}}
+        {{--            <div class="fs-6 fw-semibold text-gray-700">--}}
+        {{--                Showing 1 to 10 of 50 entries--}}
+        {{--            </div>--}}
 
-            <!--begin::Pages-->
-            <ul class="pagination">
-                <li class="page-item previous">
-                    <a href="#" class="page-link"><i class="previous"></i></a>
-                </li>
+        {{--            <!--begin::Pages-->--}}
+        {{--            <ul class="pagination">--}}
+        {{--                <li class="page-item previous">--}}
+        {{--                    <a href="#" class="page-link"><i class="previous"></i></a>--}}
+        {{--                </li>--}}
 
-                <li class="page-item active">
-                    <a href="#" class="page-link">1</a>
-                </li>
+        {{--                <li class="page-item active">--}}
+        {{--                    <a href="#" class="page-link">1</a>--}}
+        {{--                </li>--}}
 
-                <li class="page-item">
-                    <a href="#" class="page-link">2</a>
-                </li>
+        {{--                <li class="page-item">--}}
+        {{--                    <a href="#" class="page-link">2</a>--}}
+        {{--                </li>--}}
 
-                <li class="page-item">
-                    <a href="#" class="page-link">3</a>
-                </li>
+        {{--                <li class="page-item">--}}
+        {{--                    <a href="#" class="page-link">3</a>--}}
+        {{--                </li>--}}
 
-                <li class="page-item">
-                    <a href="#" class="page-link">4</a>
-                </li>
+        {{--                <li class="page-item">--}}
+        {{--                    <a href="#" class="page-link">4</a>--}}
+        {{--                </li>--}}
 
-                <li class="page-item">
-                    <a href="#" class="page-link">5</a>
-                </li>
+        {{--                <li class="page-item">--}}
+        {{--                    <a href="#" class="page-link">5</a>--}}
+        {{--                </li>--}}
 
-                <li class="page-item">
-                    <a href="#" class="page-link">6</a>
-                </li>
+        {{--                <li class="page-item">--}}
+        {{--                    <a href="#" class="page-link">6</a>--}}
+        {{--                </li>--}}
 
-                <li class="page-item next">
-                    <a href="#" class="page-link"><i class="next"></i></a>
-                </li>
-            </ul>
-            <!--end::Pages-->
-        </div>
+        {{--                <li class="page-item next">--}}
+        {{--                    <a href="#" class="page-link"><i class="next"></i></a>--}}
+        {{--                </li>--}}
+        {{--            </ul>--}}
+        {{--            <!--end::Pages-->--}}
+        {{--        </div>--}}
         <!--end::Pagination-->
         <!--begin::Modals-->
 

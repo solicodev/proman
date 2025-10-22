@@ -68,5 +68,9 @@ class User extends Authenticatable
         return $this->statuses[$this->status] ?? '';
     }
 
+    public function photo()
+    {
+        return $this->belongsTo(Photo::class,'photo_id');
+    }
 
 }

@@ -24,7 +24,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::paginate(12);
+        $projects = Project::with(['manager','category','department','members','photos','brand'])->paginate(12);
         return view('proMan.projects.index',get_defined_vars());
     }
 

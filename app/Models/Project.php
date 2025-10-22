@@ -60,6 +60,11 @@ class Project extends Model
         return $this->belongsTo(Department::class , 'department_id');
     }
 
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class, 'brand_id');
+    }
+
     public function members()
     {
         return $this->belongsToMany(User::class , 'project_user' , 'project_id' , 'user_id');

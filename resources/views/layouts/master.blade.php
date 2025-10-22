@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'پنل مدیریت')</title>
-    <link rel="shortcut icon" href="assets/media/logos/favicon.ico"/>
+    <link rel="shortcut icon" href="{{url('panel/assets/media/logos/favicon.ico')}}"/>
 
     <!--begin::Fonts(mandatory for all pages)-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700"/>
@@ -28,6 +28,7 @@
 <body id="kt_app_body" data-kt-app-sidebar-enabled="true" data-kt-app-sidebar-fixed="true"
       data-kt-app-sidebar-push-toolbar="true" data-kt-app-sidebar-push-footer="true" data-kt-app-toolbar-enabled="true"
       class="app-default">
+
 @yield('body')
 <!--begin::Global Javascript Bundle(mandatory for all pages)-->
 <script src="{{url('panel/assets/plugins/global/plugins.bundle.js')}}"></script>
@@ -59,5 +60,6 @@
 <script src="{{url('panel/assets/js/custom/utilities/modals/users-search.js')}}"></script>
 <!--end::Custom Javascript-->
 @stack('scripts')
+
 </body>
 </html>
