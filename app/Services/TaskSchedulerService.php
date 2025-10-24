@@ -32,7 +32,7 @@ class TaskSchedulerService
         });
     }
 
-    private function detectRelationType(Task $pre, Task $succ): string
+    public function detectRelationType(Task $pre, Task $succ): string
     {
         if ($pre->end_date <= $succ->start_date) return 'FS';
         if ($pre->start_date <= $succ->start_date) return 'SS';
@@ -40,7 +40,7 @@ class TaskSchedulerService
         return 'SF';
     }
 
-    private function calculateLag(Task $pre, Task $succ, string $type): int
+    public function calculateLag(Task $pre, Task $succ, string $type): int
     {
         $preStart = Carbon::parse($pre->start_date);
         $preEnd   = Carbon::parse($pre->end_date);
@@ -56,7 +56,7 @@ class TaskSchedulerService
         };
     }
 
-    private function updateSuccessorDates(TaskDependency $dep)
+    public function updateSuccessorDates(TaskDependency $dep)
     {
         $pre = $dep->predecessor;
         $succ = $dep->successor;
