@@ -48,12 +48,12 @@ class ProjectController extends Controller
             $query->whereIn('name', $excludedRoles);
         })->whereStatus('1')->latest()->get();
 
-        $categories = Category::get();
+        $categories = Category::with('getChid')->get();
         $departments = Department::get();
         $members = User::whereHas('roles', function ($query) use ($memberRoles) {
             $query->whereIn('name', $memberRoles);
         })->whereStatus('1')->latest()->get();
-        $brands = Brand::with('photo')->get();
+        $brands = Brand::with(['photo','getChid'])->get();
         return view('proMan.projects.create',get_defined_vars());
     }
 
@@ -91,7 +91,9 @@ class ProjectController extends Controller
             $query->whereIn('name', $excludedRoles);
         })->whereStatus('1')->latest()->get();
 
-        $categories = Category::get();
+        $categories = Category::with('getChid')->get();
+        $brands = Brand::with(['photo','getChid'])->get();
+
         $departments = Department::get();
         $members = User::whereHas('roles', function ($query) use ($memberRoles) {
             $query->whereIn('name', $memberRoles);

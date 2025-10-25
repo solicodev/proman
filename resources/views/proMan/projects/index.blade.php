@@ -362,33 +362,35 @@
                             <!--end::Progress-->
 
                             <!--begin::Users-->
-                            <div class="symbol-group symbol-hover">
+                            <div class="symbol-group symbol-hover d-flex align-items-center">
                                 <!--begin::User-->
-                                @if(count($project->members)>0)
+                                @if(count($project->members) > 0)
                                     @foreach($project->members as $member)
                                         <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
-                                             title="{{$member->Name}}">
+                                             title="{{ $member->Name }}">
                                             @if(isset($member->photo_id))
-                                                <img alt="Pic" src="{{route('home')}}/{{$member->photo?->path}}"/>
-
+                                                <img alt="Pic" src="{{ route('home') }}/{{ $member->photo?->path }}" />
                                             @else
-                                                <span class="symbol-label bg-info text-inverse-primary fw-bold text-info symbol-style" >{{mb_substr($member->Name,0,1)}}</span>
+                                                <span class="symbol-label bg-info text-inverse-primary fw-bold text-info symbol-style">
+                        {{ mb_substr($member->Name, 0, 1) }}
+                    </span>
                                             @endif
                                         </div>
-                                        {{--                                        <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="Emma Smith">--}}
-                                        {{--                                            <img alt="Pic" src="{{url('panel/assets/media/avatars/300-6.jpg')}}"/>--}}
-                                        {{--                                        </div>--}}
                                     @endforeach
                                 @else
-                                    <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" >
-                                    </div>
+                                    <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"></div>
                                 @endif
+
+                                <!-- دکمه ویرایش در انتهای خط -->
+                                <button class="btn btn-sm btn-light-primary ms-auto">ویرایش</button>
                             </div>
+
                             <!--end::Users-->
                         </div>
                         <!--end:: Card body-->
                     </a>
                     <!--end::Card-->
+
                 </div>
             @endforeach
             <!--end::Col-->

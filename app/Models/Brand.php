@@ -12,4 +12,13 @@ class Brand extends Model
     {
         return $this->belongsTo(Photo::class,'photo_id');
     }
+
+    public function sumcat()
+    {
+        return $this->hasOne(Category::class , 'id' , 'parent_id');
+    }
+    public function getChid()
+    {
+        return $this->hasMany(Category::class , 'parent_id');
+    }
 }
