@@ -35,32 +35,20 @@
 
                     <!--begin::Item-->
                     <li class="breadcrumb-item text-gray-700 fw-bold lh-1">
-                        <a href="#" class="text-white text-hover-primary">
+                        <a href="{{route('dashboard.index')}}" class="text-white text-hover-primary">
                             <i class="ki-outline ki-home text-gray-700 fs-6"></i> </a>
                     </li>
                     <!--end::Item-->
 
                     <!--begin::Item-->
                     <li class="breadcrumb-item">
-                        <i class="ki-outline ki-right fs-7 text-gray-700 mx-n1"></i></li>
+                        <i class="ki-outline ki-left fs-7 text-gray-700 mx-n1"></i></li>
                     <!--end::Item-->
 
 
                     <!--begin::Item-->
                     <li class="breadcrumb-item text-gray-700 fw-bold lh-1">
-                        Projects
-                    </li>
-                    <!--end::Item-->
-
-                    <!--begin::Item-->
-                    <li class="breadcrumb-item">
-                        <i class="ki-outline ki-right fs-7 text-gray-700 mx-n1"></i></li>
-                    <!--end::Item-->
-
-
-                    <!--begin::Item-->
-                    <li class="breadcrumb-item text-gray-700">
-                        My Projects
+                        پروژه های من
                     </li>
                     <!--end::Item-->
 
@@ -73,16 +61,15 @@
 
             <!--begin::Actions-->
             <div class="d-flex align-self-center flex-center flex-shrink-0">
-                <a href="#" class="btn btn-sm btn-success d-flex flex-center ms-3 px-4 py-3" data-bs-toggle="modal"
-                   data-bs-target="#kt_modal_invite_friends">
+                <a href="{{route('dashboard.project.create')}}" class="btn btn-sm btn-success d-flex flex-center ms-3 px-4 py-3" >
                     <i class="ki-outline ki-plus-square fs-2"></i>
-                    <span>Invite</span>
+                    <span>ایجاد پروژه</span>
                 </a>
 
-                <a href="#" class="btn btn-sm btn-dark ms-3 px-4 py-3" data-bs-toggle="modal"
-                   data-bs-target="#kt_modal_new_target">
-                    Create <span class="d-none d-sm-inline">Target</span>
-                </a>
+{{--                <a href="#" class="btn btn-sm btn-dark ms-3 px-4 py-3" data-bs-toggle="modal"--}}
+{{--                   data-bs-target="#kt_modal_new_target">--}}
+{{--                    Create <span class="d-none d-sm-inline">Target</span>--}}
+{{--                </a>--}}
             </div>
             <!--end::Actions-->
         </div>

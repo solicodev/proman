@@ -34,7 +34,7 @@ class TaskService
             for($i = 0; $i<count($param['photos']); $i++)
             {
                 $photo = new Photo();
-                $photo->path = file_store($param['photos'][$i], 'assets/uploads/tasks/', '');
+                $photo->path = file_store($param['photos'][$i], 'uploads/tasks/', '');
                 $photo->name = $param['photos'][$i];
                 $photo->user_id = Auth::id();
                 $photo->save();
@@ -66,7 +66,7 @@ class TaskService
             for($i = 0; $i<count($param['photos']); $i++)
             {
                 $photo = new Photo();
-                $photo->path = file_store($param['photos'][$i], 'assets/uploads/tasks/', '');
+                $photo->path = file_store($param['photos'][$i], 'uploads/tasks/', '');
                 $photo->name = $param['photos'][$i];
                 $photo->user_id = Auth::id();
                 $photo->save();

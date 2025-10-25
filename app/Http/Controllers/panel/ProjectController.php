@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\panel;
 
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Department;
 use App\Models\Project;
@@ -52,6 +53,7 @@ class ProjectController extends Controller
         $members = User::whereHas('roles', function ($query) use ($memberRoles) {
             $query->whereIn('name', $memberRoles);
         })->whereStatus('1')->latest()->get();
+        $brands = Brand::with('photo')->get();
         return view('proMan.projects.create',get_defined_vars());
     }
 
@@ -60,9 +62,11 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        try {
+        dd($request);
+//            $photos = explode(',', $request->input('photos')[0]);
             $this->projectService->store($request->all());
             return redirect(route('proMan.project.index'))->with('flash_message', 'با موفقیت ایجاد شد');
+        try {
         } catch (Exception $exception) {
             return redirect()->back()->with('err_message', $exception->getMessage());
         }
@@ -73,7 +77,7 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        //
+        return view('proMan.projects.show',get_defined_vars());
     }
 
     /**

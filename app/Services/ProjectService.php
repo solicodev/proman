@@ -24,6 +24,7 @@ class ProjectService
         $project->manager_id = $param['manager_id'];
         $project->category_id = $param['category_id'];
         $project->department_id = $param['department_id'];
+        $project->description = $param['description'] ?? null;
         $project->save();
 
         if($param['photos'])
@@ -31,7 +32,7 @@ class ProjectService
             for($i = 0; $i<count($param['photos']); $i++)
             {
                 $photo = new Photo();
-                $photo->path = file_store($param['photos'][$i], 'assets/uploads/projects/', '');
+                $photo->path = file_store($param['photos'][$i], 'uploads/projects/', '');
                 $photo->name = $param['photos'][$i];
                 $photo->user_id = Auth::id();
                 $photo->save();
@@ -51,17 +52,18 @@ class ProjectService
         $project->manager_id = $param['manager_id'];
         $project->category_id = $param['category_id'];
         $project->department_id = $param['department_id'];
+        $project->description = $param['description'] ?? null;
         $project->update();
 
         if (isset($param['photos'])) {
             foreach ($param['photos'] as $key => $photo) {
                 if (isset($project->photos[$key])){
                     File::delete($project->photos[$key]->path);
-                    $project->photos[$key]->path = file_store($photo, 'assets/uploads/projects/', '');
+                    $project->photos[$key]->path = file_store($photo, 'uploads/projects/', '');
                     $project->photos[$key]->save();
                 }else {
                     $ph = new Photo();
-                    $ph->path = file_store($photo, 'assets/uploads/projects/', '');
+                    $ph->path = file_store($photo, 'uploads/projects/', '');
                     $ph->name = $photo;
                     $ph->user_id = Auth::id();
                     $project->photos()->save($ph);
