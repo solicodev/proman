@@ -50,7 +50,7 @@ class ProjectService
         $project->name = $param['name'];
         $project->start_date = $param['start_date'];
         $project->end_date = $param['end_date'];
-        $project->manager_id = $param['manager_id'];
+        $project->manager_id = Auth::id();
         $project->category_id = $param['category_id'];
         $project->department_id = $param['department_id'];
         $project->description = $param['description'] ?? null;
@@ -65,7 +65,7 @@ class ProjectService
                 }else {
                     $ph = new Photo();
                     $ph->path = file_store($photo, 'uploads/projects/', '');
-                    $ph->name = $photo;
+//                    $ph->name = $photo;
                     $ph->user_id = Auth::id();
                     $project->photos()->save($ph);
                 }

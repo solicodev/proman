@@ -64,10 +64,10 @@ class ProjectController extends Controller
      */
     public function store(ProjectStoreRequest $request)
     {
-//            $photos = explode(',', $request->input('photos')[0]);
-           $project = $this->projectService->store($request->all());
-            return redirect(route('dashboard.project.redirect',$project->id))->with('flash_message', 'با موفقیت ایجاد شد');
         try {
+//            $photos = explode(',', $request->input('photos')[0]);
+            $project = $this->projectService->store($request->all());
+            return redirect(route('dashboard.project.redirect',$project->id))->with('flash_message', 'با موفقیت ایجاد شد');
         } catch (Exception $exception) {
             return redirect()->back()->with('err_message', $exception->getMessage());
         }
