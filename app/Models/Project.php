@@ -40,6 +40,7 @@ class Project extends Model
         '4' => '<span class="badge badge-light fw-bold me-auto px-4 py-3">کنسل شد</span>',
     ];
 
+
     public function getPanelProjectStatusAttribute()
     {
         return $this->panelstatuses[$this->status] ?? '';

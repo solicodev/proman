@@ -62,8 +62,8 @@
             <!--begin::Actions-->
             <div class="d-flex align-self-center flex-center flex-shrink-0">
                 <a href="{{route('dashboard.project.create')}}" class="btn btn-sm btn-success d-flex flex-center ms-3 px-4 py-3" >
-                    <i class="ki-outline ki-plus-square fs-2"></i>
-                    <span>ایجاد پروژه</span>
+
+                     ایجاد پروژه<i class="ki-outline ki-plus-square fs-2 ps-5"></i>
                 </a>
 
                 {{--                <a href="#" class="btn btn-sm btn-dark ms-3 px-4 py-3" data-bs-toggle="modal"--}}
@@ -372,8 +372,8 @@
                                                 <img alt="Pic" src="{{ route('home') }}/{{ $member->photo?->path }}" />
                                             @else
                                                 <span class="symbol-label bg-info text-inverse-primary fw-bold text-info symbol-style">
-                        {{ mb_substr($member->Name, 0, 1) }}
-                    </span>
+                                                    {{ mb_substr($member->Name, 0, 1) }}
+                                                </span>
                                             @endif
                                         </div>
                                     @endforeach
@@ -381,8 +381,8 @@
                                     <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"></div>
                                 @endif
 
-                                <!-- دکمه ویرایش در انتهای خط -->
-                                <button class="btn btn-sm btn-light-primary ms-auto">ویرایش</button>
+
+                                <button class="btn btn-sm btn-light-primary ms-auto">ویرایش<i class="ki-outline ki-pencil fs-1 ps-3"></i></button>
                             </div>
 
                             <!--end::Users-->
