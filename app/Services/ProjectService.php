@@ -21,7 +21,7 @@ class ProjectService
         $project->start_date = $param['start_date'];
         $project->end_date = $param['end_date'];
         $project->project_code = 'P_' . $rand;
-        $project->manager_id = $param['manager_id'];
+        $project->manager_id = Auth::id();
         $project->category_id = $param['category_id'];
         $project->department_id = $param['department_id'];
         $project->description = $param['description'] ?? null;
@@ -31,9 +31,10 @@ class ProjectService
         {
             for($i = 0; $i<count($param['photos']); $i++)
             {
+
                 $photo = new Photo();
                 $photo->path = file_store($param['photos'][$i], 'uploads/projects/', '');
-                $photo->name = $param['photos'][$i];
+//                $photo->name = $explode[2];
                 $photo->user_id = Auth::id();
                 $photo->save();
                 $project->photos()->attach($photo);

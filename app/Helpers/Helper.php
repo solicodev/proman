@@ -194,7 +194,7 @@ if (!function_exists('file_store')) {
             $destinationPath = $u_path;
             $extension = $file->getClientOriginalExtension();
             $fileName = $u_prefix . md5(time() . uniqid() . '-' . $originalName) . '.' . $extension;
-            $file->move($destinationPath, $fileName);
+            copy($file->getRealPath(), $destinationPath . $fileName);
             $f_path = $destinationPath . "" . $fileName;
 
 //            if (isImage($f_path)) {

@@ -136,34 +136,41 @@
                                     </div>
 
                                     <div class="fv-row mb-8">
-
+                                        <label class="form-label required">برند</label>
+                                        <select class="form-select form-select-solid" data-control="select2"
+                                                data-placeholder="برند را انتخاب کنید" name="brand_id" required>
+                                            <option></option>
+                                            @foreach($brands as $brand)
+                                                <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
 
-                                    <div class="row g-3 mb-8">
-                                        <div class="col-md-6 fv-row">
-                                            <label class="form-label required">مدیر پروژه</label>
-                                            <select class="form-select form-select-solid" data-control="select2"
-                                                    data-placeholder="مدیر پروژه را انتخاب کنید" name="manager_id" required>
-                                                <option></option>
-                                                @foreach($managers as $manager)
-                                                    <option value="{{ $manager->id }}">{{ $manager->Name }} - نقش:
-                                                        {{ role_name($manager->roles()->first()->name) }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
+{{--                                    <div class="row g-3 mb-8">--}}
+{{--                                        <div class="col-md-6 fv-row">--}}
+{{--                                            <label class="form-label required">مدیر پروژه</label>--}}
+{{--                                            <select class="form-select form-select-solid" data-control="select2"--}}
+{{--                                                    data-placeholder="مدیر پروژه را انتخاب کنید" name="manager_id" required>--}}
+{{--                                                <option></option>--}}
+{{--                                                @foreach($managers as $manager)--}}
+{{--                                                    <option value="{{ $manager->id }}">{{ $manager->Name }} - نقش:--}}
+{{--                                                        {{ role_name($manager->roles()->first()->name) }}--}}
+{{--                                                    </option>--}}
+{{--                                                @endforeach--}}
+{{--                                            </select>--}}
+{{--                                        </div>--}}
 
-                                        <div class="col-md-6 fv-row">
-                                            <label class="form-label required">برند</label>
-                                            <select class="form-select form-select-solid" data-control="select2"
-                                                    data-placeholder="برند را انتخاب کنید" name="brand_id" required>
-                                                <option></option>
-                                                @foreach($brands as $brand)
-                                                    <option value="{{ $brand->id }}">{{ $brand->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
+{{--                                        <div class="col-md-6 fv-row">--}}
+{{--                                            <label class="form-label required">برند</label>--}}
+{{--                                            <select class="form-select form-select-solid" data-control="select2"--}}
+{{--                                                    data-placeholder="برند را انتخاب کنید" name="brand_id" required>--}}
+{{--                                                <option></option>--}}
+{{--                                                @foreach($brands as $brand)--}}
+{{--                                                    <option value="{{ $brand->id }}">{{ $brand->name }}</option>--}}
+{{--                                                @endforeach--}}
+{{--                                            </select>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
                                     <div class="fv-row mb-8">
                                         <label class="form-label required">اعضای پروژه</label>
                                         <select class="form-select form-select-solid" data-control="select2"

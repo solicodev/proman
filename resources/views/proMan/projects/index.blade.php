@@ -66,10 +66,10 @@
                     <span>ایجاد پروژه</span>
                 </a>
 
-{{--                <a href="#" class="btn btn-sm btn-dark ms-3 px-4 py-3" data-bs-toggle="modal"--}}
-{{--                   data-bs-target="#kt_modal_new_target">--}}
-{{--                    Create <span class="d-none d-sm-inline">Target</span>--}}
-{{--                </a>--}}
+                {{--                <a href="#" class="btn btn-sm btn-dark ms-3 px-4 py-3" data-bs-toggle="modal"--}}
+                {{--                   data-bs-target="#kt_modal_new_target">--}}
+                {{--                    Create <span class="d-none d-sm-inline">Target</span>--}}
+                {{--                </a>--}}
             </div>
             <!--end::Actions-->
         </div>
@@ -326,7 +326,7 @@
 
                             <!--begin::Description-->
                             <p class="text-gray-500 fw-semibold fs-5 mt-1 mb-7">
-                                {{$project->description}}
+                                {!! mb_substr($project->description,0,100).'...'!!}
                             </p>
                             <!--end::Description-->
 

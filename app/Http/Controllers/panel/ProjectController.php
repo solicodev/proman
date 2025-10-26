@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\panel;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProjectStoreRequest;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Department;
@@ -12,6 +13,7 @@ use App\Models\User;
 use App\Services\ProjectService;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
 {
@@ -25,8 +27,8 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::with(['manager','category','department','members','photos','brand'])->paginate(12);
-        $last_projects = Project::with(['manager','category','department','members','photos','brand'])->take(3)->latest()->get();
+        $projects = Project::with(['manager','category','department','members','photos','brand'])->where('manager_id',Auth::id())->paginate(6);
+        $last_projects = Project::with(['manager','category','department','members','photos','brand'])->where('manager_id',Auth::id())->take(3)->latest()->get();
 
         return view('proMan.projects.index',get_defined_vars());
     }
@@ -60,18 +62,21 @@ class ProjectController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ProjectStoreRequest $request)
     {
-        dd($request);
 //            $photos = explode(',', $request->input('photos')[0]);
-            $this->projectService->store($request->all());
-            return redirect(route('proMan.project.index'))->with('flash_message', 'با موفقیت ایجاد شد');
+           $project = $this->projectService->store($request->all());
+            return redirect(route('dashboard.project.redirect',$project->id))->with('flash_message', 'با موفقیت ایجاد شد');
         try {
         } catch (Exception $exception) {
             return redirect()->back()->with('err_message', $exception->getMessage());
         }
     }
 
+    public function redirect(Project $project)
+    {
+        return view('proMan.projects.redirect',get_defined_vars());
+    }
     /**
      * Display the specified resource.
      */
