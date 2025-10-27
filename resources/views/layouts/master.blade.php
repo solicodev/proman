@@ -76,7 +76,8 @@
 <script src="{{url('panel/assets/js/custom/utilities/modals/new-target.js')}}}"></script>
 <script src="{{url('panel/assets/js/custom/utilities/modals/users-search.js')}}"></script>
 
-
+<script src="{{url('panel/assets/js/widgets.bundle.js')}}"></script>
+<script src="{{url('panel/assets/js/custom/widgets.js')}}"></script>
 
 <script src="{{url('assets/admin/plugins/datetimepicker/js/legacy.js')}}"></script>
 <script src="{{url('assets/admin/plugins/datetimepicker/js/picker.js')}}"></script>

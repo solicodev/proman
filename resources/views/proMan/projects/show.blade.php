@@ -124,7 +124,8 @@
                         </div>
                         <!--end::Card body-->
                     </div>
-                    <!--end::Timeline Widget 1-->    </div>
+                    <!--end::Timeline Widget 1-->
+                </div>
                 <div class="col-lg-6 my-5">
                     <!--begin::Summary-->
                     <div class="card card-flush h-lg-100">
