@@ -1,283 +1,146 @@
 <x-layout>
-    <div class="d-flex flex-column flex-column-fluid">
-        <div id="kt_app_toolbar" class="app-toolbar  d-flex pb-3 pb-lg-5 ">
-            <div class="d-flex flex-stack flex-row-fluid">
-                <div class="d-flex flex-column flex-row-fluid">
-                    <div class="page-title d-flex align-items-center me-3">
-                        <h1 class="page-heading d-flex flex-column justify-content-center text-gray-900 fw-bold fs-lg-2x gap-2">
-                            <span>{{$project->name}} <small>{{$project->project_code}}</small></span>
-                        </h1>
-                    </div>
-                    <ul class="breadcrumb breadcrumb-separatorless fw-semibold mb-3 fs-7">
-                        <li class="breadcrumb-item text-gray-700 fw-bold lh-1">
-                            <a href="{{route('dashboard.index')}}" class="text-white text-hover-primary">
-                                <i class="ki-outline ki-home text-gray-700 fs-6"></i>
-                            </a>
-                        </li>
-                        <li class="breadcrumb-item">
-                            <i class="ki-outline ki-left fs-7 text-gray-700 mx-n1"></i>
-                        </li>
-                        <li class="breadcrumb-item text-gray-700 fw-bold lh-1">
-                            <a href="{{route('dashboard.project.index')}}" class="text-white text-hover-primary">
-                                پروژه های من
-                            </a>
-                        </li>
-                        <li class="breadcrumb-item">
-                            <i class="ki-outline ki-left fs-7 text-gray-700 mx-n1"></i>
-                        </li>
-                        <li class="breadcrumb-item text-gray-700">
-                            {{$project->name}}
-                        </li>
-                    </ul>
-                </div>
-                {{--                    <div class="d-flex align-self-center flex-center flex-shrink-0">--}}
-                {{--                        <a href="#" class="btn btn-sm btn-success d-flex flex-center ms-3 px-4 py-3"  data-bs-toggle="modal" data-bs-target="#kt_modal_invite_friends">--}}
-                {{--                            <i class="ki-outline ki-plus-square fs-2"></i>--}}
-                {{--                            <span>Invite</span>--}}
-                {{--                        </a>--}}
-
-                {{--                        <a href="#" class="btn btn-sm btn-dark ms-3 px-4 py-3"  data-bs-toggle="modal" data-bs-target="#kt_modal_new_target">--}}
-                {{--                            Create <span class="d-none d-sm-inline">Target</span>--}}
-                {{--                        </a>--}}
-                {{--                    </div>--}}
-            </div>
-        </div>
-        <div id="kt_app_content" class="app-content  flex-column-fluid " >
-            <div class="card mb-6 mb-xl-9">
-                <div class="card-body pt-9 pb-0">
-                    <div class="d-flex flex-wrap flex-sm-nowrap mb-6">
-                        <div class="d-flex flex-center flex-shrink-0 bg-light rounded w-100px h-100px w-lg-150px h-lg-150px me-7 mb-4">
-                            @if($project->brand_id)
-                            <img class="mw-50px mw-lg-75px" src="{{route('home')}}/{{$project->brand?->photo?->path}}" alt="image"/>
-                            @else
-                            <img class="mw-50px mw-lg-75px" src="{{url('panel/assets/media/svg/brand-logos/volicity-9.svg')}}" alt="image"/>
-                            @endif
-                        </div>
-                        <div class="flex-grow-1">
-                            <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
-                                <div class="d-flex flex-column">
-                                    <div class="d-flex align-items-center justify-content-between mb-1">
-                                        <div class="d-flex align-items-center">
-                                            <a href="#" class="text-gray-800 text-hover-primary fs-2 fw-bold me-3">
-                                                {{ $project->name }}
-                                            </a>
-                                            {!! $project->PanelProjectStatus !!}
-                                        </div>
-
-                                        <div class="d-flex">
-                                            <a href="#" class="btn btn-sm btn-bg-light btn-active-color-primary me-3" data-bs-toggle="modal" data-bs-target="#kt_modal_users_search">
-                                                اطلاع رسانی به اعضای پروژه<i class="ki-outline ki-notification-on fs-1 ps-3"></i>
-                                            </a>
-                                            <a href="{{route('dashboard.project.edit',$project->id)}}" class="btn btn-sm btn-bg-light btn-active-color-primary me-3" data-bs-toggle="modal" data-bs-target="#kt_modal_users_search">
-                                                ویرایش <i class="ki-outline ki-pencil fs-1 ps-3"></i>
-                                            </a>
-                                            <a href="{{route('dashboard.project.destroy',$project->id)}}" class="btn btn-sm btn-light-danger" onclick="return confirm('اطمینان دارید پروژه حذف شود؟');">
-                                                <i class="ki-outline ki-trash fs-1 ps-3"></i>
-                                            </a>
-                                            <div class="me-0">
-                                                <button class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                                                    <i class="ki-solid ki-dots-horizontal fs-2x"></i>
-                                                </button>
-                                                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px py-3" data-kt-menu="true">
-                                                    <div class="menu-item px-3">
-                                                        <div class="menu-content text-muted pb-2 px-3 fs-7 text-uppercase">
-                                                            خروجی pdf
-                                                        </div>
-                                                    </div>
-                                                    <div class="menu-item px-3">
-                                                        <a href="#" class="menu-link px-3">
-                                                           ایجاد تسک
-                                                        </a>
-                                                    </div>
-                                                    <div class="menu-item px-3">
-                                                        <a href="#" class="menu-link flex-stack px-3">
-                                                            ایجاد تسک
-                                                            <span class="ms-2" data-bs-toggle="tooltip" title="Create Task">
-                                                            <i class="ki-outline ki-plus-square fs-6"></i>
-                                                        </span>
-                                                        </a>
-                                                    </div>
-                                                    <div class="menu-item px-3" data-kt-menu-trigger="hover" data-kt-menu-placement="right-end">
-                                                        <a href="#" class="menu-link px-3">
-                                                            <span class="menu-title">منوی چند سطحی</span>
-                                                            <span class="menu-arrow"></span>
-                                                        </a>
-                                                        <div class="menu-sub menu-sub-dropdown w-175px py-4">
-                                                            <div class="menu-item px-3">
-                                                                <a href="#" class="menu-link px-3">
-                                                                    Plans
-                                                                </a>
-                                                            </div>
-                                                            <div class="menu-item px-3">
-                                                                <a href="#" class="menu-link px-3">
-                                                                    Billing
-                                                                </a>
-                                                            </div>
-                                                            <div class="menu-item px-3">
-                                                                <a href="#" class="menu-link px-3">
-                                                                    Statements
-                                                                </a>
-                                                            </div>
-                                                            <div class="separator my-2"></div>
-                                                            <div class="menu-item px-3">
-                                                                <div class="menu-content px-3">
-                                                                    <label class="form-check form-switch form-check-custom form-check-solid">
-                                                                        <input class="form-check-input w-30px h-20px" type="checkbox" value="1" checked="checked" name="notifications"/>
-                                                                        <span class="form-check-label text-muted fs-6">
-                                                                    Recuring
-                                                                    </span>
-                                                                    </label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="d-flex flex-wrap fw-semibold mb-4 fs-5 text-gray-500">
-                                        {!! $project->description !!}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="d-flex flex-wrap justify-content-start">
-                                <div class="d-flex flex-wrap col-12">
-                                    <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
-                                        <div class="d-flex align-items-center">
-                                            <i class="ki-outline ki-security-user fs-3 text-primary me-2"></i>
-                                            <div class="fs-4 fw-bold" >{{$project->manager?->Name}}</div>
-                                        </div>
-                                        <div class="fw-semibold fs-6 text-gray-500">مدیر پروژه</div>
-                                    </div>
-                                    <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
-                                        <div class="d-flex align-items-center">
-                                            <i class="ki-outline ki-category fs-3 text-success me-2"></i>
-                                            <div class="fs-4 fw-bold" >{{$project->category?->title}}</div>
-                                        </div>
-                                        <div class="fw-semibold fs-6 text-gray-500">دسته بندی</div>
-                                    </div>
-                                    <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
-                                        <div class="d-flex align-items-center">
-                                            <i class="ki-outline ki-geolocation-home fs-3 text-info me-2"></i>
-                                            <div class="fs-4 fw-bold" >{{$project->department?->name}}</div>
-                                        </div>
-                                        <div class="fw-semibold fs-6 text-gray-500">دپارتمان</div>
-                                    </div>
-                                    <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
-                                        <div class="d-flex align-items-center">
-                                            <div class="fs-4 fw-bold">{{verta($project->created_at)->format('Y/m/d')}}</div>
-                                        </div>
-                                        <div class="fw-semibold fs-6 text-gray-500">تاریخ ایجاد پروژه</div>
-                                    </div>
-                                    <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
-                                        <div class="d-flex align-items-center">
-                                            @php
-                                                $start_date = explode(' ',$project->start_date);
-                                            @endphp
-                                            <div class="fs-4 fw-bold">{{$start_date[0]}}</div>
-                                        </div>
-                                        <div class="fw-semibold fs-6 text-gray-500">تاریخ شروع تخمینی</div>
-                                    </div>
-                                    <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
-                                        <div class="d-flex align-items-center">
-                                            @php
-                                                $end_date = explode(' ',$project->end_date);
-                                            @endphp
-                                            <div class="fs-4 fw-bold">{{$end_date[0]}}</div>
-                                        </div>
-                                        <div class="fw-semibold fs-6 text-gray-500">تاریخ پایان تخمینی</div>
-                                    </div>
-                                    @if($project->start_todo_date)
-                                        <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
-                                            <div class="d-flex align-items-center">
-                                                @php
-                                                    $start_todo_date = explode(' ',$project->start_todo_date);
-                                                @endphp
-                                                <div class="fs-4 fw-bold">{{$start_todo_date[0]}}</div>
-                                            </div>
-                                            <div class="fw-semibold fs-6 text-gray-500">تاریخ شروع واقعی</div>
-                                        </div>
-                                    @endif
-
-                                </div>
-                                <div class="symbol-group symbol-hover mb-3 col-12">
-                                    @if(count($project->members)>0)
-                                        @foreach($project->members as $member)
-                                            @if(!$member->photo_id)
-                                            <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="Alan Warden">
-                                                <span class="symbol-label bg-warning text-inverse-warning fw-bold">{{ mb_substr($member->Name, 0, 1) }}</span>
-                                            </div>
-                                            @else
-                                            <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="Michael Eberon">
-                                                <img alt="Pic" src="{{ route('home') }}/{{ $member->photo?->path }}" />
-                                            </div>
-                                            @endif
-                                        @endforeach
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="separator"></div>
-                    <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold">
-                        <li class="nav-item">
-                            <a class="nav-link text-active-primary py-5 me-6 active" href="{{route('dashboard.project.show' , $project->id)}}">
-                                اطلاعات کلی
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-active-primary py-5 me-6 " href="targets.html">
-                                تسک ها
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link text-active-primary py-5 me-6 " href="users.html">
-                                اعضای پروژه
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-active-primary py-5 me-6 " href="files.html">
-                                فایل ها
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-active-primary py-5 me-6 " href="activity.html">
-                                فعالیت ها
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-active-primary py-5 me-6 " href="settings.html">
-                                تنظیمات
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <!--end::Navbar-->
-            <!--begin::Row-->
+   @include('proMan.projects.main-card')
             <div class="row gx-6 gx-xl-9">
-                <!--begin::Col-->
-                <div class="col-lg-6">
+                <div class="col-12">
+                    <!--begin::Timeline Widget 4-->
+                    <div class="card h-md-100">
+                        <!--begin::Card header-->
+                        <div class="card-header position-relative py-0 border-bottom-1">
+                            <!--begin::Card title-->
+                            <h3 class="card-title text-gray-800 fw-bold">Active Tasks</h3>
+                            <!--end::Card title-->
+
+                            <!--begin::Tabs-->
+                            <ul class="nav nav-stretch nav-pills nav-pills-custom d-flex mt-4">
+                                <!--begin::Nav item-->
+                                <li class="nav-item p-0 ms-0">
+                                    <a class="nav-link btn btn-color-gray-500 flex-center px-3 active"
+                                       data-kt-timeline-widget-4="tab" data-bs-toggle="tab" href="#kt_timeline_widget_4_tab_day">
+                                        <!--begin::Title-->
+                                        <span class="nav-text fw-semibold fs-4 mb-3">Day</span>
+                                        <!--end::Title-->
+
+                                        <!--begin::Bullet-->
+                                        <span class="bullet-custom position-absolute z-index-2 w-100 h-1px top-100 bottom-n100 bg-primary rounded"></span>
+                                        <!--end::Bullet-->
+                                    </a>
+                                </li>
+                                <!--end::Nav item-->
+
+                                <!--begin::Nav item-->
+                                <li class="nav-item p-0 ms-0">
+                                    <a class="nav-link btn btn-color-gray-500 flex-center px-3"
+                                       data-kt-timeline-widget-4="tab" data-bs-toggle="tab" href="#kt_timeline_widget_4_tab_week">
+                                        <!--begin::Title-->
+                                        <span class="nav-text fw-semibold fs-4 mb-3">Week</span>
+                                        <!--end::Title-->
+
+                                        <!--begin::Bullet-->
+                                        <span class="bullet-custom position-absolute z-index-2 w-100 h-1px top-100 bottom-n100 bg-primary rounded"></span>
+                                        <!--end::Bullet-->
+                                    </a>
+                                </li>
+                                <!--end::Nav item-->
+
+                                <!--begin::Nav item-->
+                                <li class="nav-item p-0 ms-0">
+                                    <a class="nav-link btn btn-color-gray-500 flex-center px-3"
+                                       data-kt-timeline-widget-4="tab" data-bs-toggle="tab" href="#kt_timeline_widget_4_tab_month">
+                                        <!--begin::Title-->
+                                        <span class="nav-text fw-semibold fs-4 mb-3">Month</span>
+                                        <!--end::Title-->
+
+                                        <!--begin::Bullet-->
+                                        <span class="bullet-custom position-absolute z-index-2 w-100 h-1px top-100 bottom-n100 bg-primary rounded"></span>
+                                        <!--end::Bullet-->
+                                    </a>
+                                </li>
+                                <!--end::Nav item-->
+
+                                <!--begin::Nav item-->
+                                <li class="nav-item p-0 ms-0">
+                                    <a class="nav-link btn btn-color-gray-500 flex-center px-3"
+                                       data-kt-timeline-widget-4="tab" data-bs-toggle="tab" href="#kt_timeline_widget_4_tab_2022">
+                                        <!--begin::Title-->
+                                        <span class="nav-text fw-semibold fs-4 mb-3">2022</span>
+                                        <!--end::Title-->
+
+                                        <!--begin::Bullet-->
+                                        <span class="bullet-custom position-absolute z-index-2 w-100 h-1px top-100 bottom-n100 bg-primary rounded"></span>
+                                        <!--end::Bullet-->
+                                    </a>
+                                </li>
+                                <!--end::Nav item-->
+                            </ul>
+                            <!--end::Tabs-->
+                        </div>
+                        <!--end::Card header-->
+
+                        <!--begin::Card body-->
+                        <div class="card-body pb-0">
+                            <!--begin::Tab content-->
+                            <div class="tab-content">
+                                <!--begin::Tab pane-->
+                                <div class="tab-pane active" id="kt_timeline_widget_4_tab_day" role="tabpanel" aria-labelledby="day-tab" data-kt-timeline-widget-4-blockui="true">
+                                    <div class="table-responsive pb-10">
+                                        <!--begin::Timeline-->
+                                        <div id="kt_timeline_widget_4_1" class="vis-timeline-custom h-350px min-w-700px" data-kt-timeline-widget-4-image-root="/metronic8/demo37/assets/media/"></div>
+                                        <!--end::Timeline-->
+                                    </div>
+                                </div>
+                                <!--end::Tab pane-->
+
+                                <!--begin::Tab pane-->
+                                <div class="tab-pane" id="kt_timeline_widget_4_tab_week" role="tabpanel" aria-labelledby="week-tab" data-kt-timeline-widget-4-blockui="true">
+                                    <div class="table-responsive pb-10">
+                                        <!--begin::Timeline-->
+                                        <div id="kt_timeline_widget_4_2" class="vis-timeline-custom h-350px min-w-700px" data-kt-timeline-widget-4-image-root="/metronic8/demo37/assets/media/"></div>
+                                        <!--end::Timeline-->
+                                    </div>
+                                </div>
+                                <!--end::Tab pane-->
+
+                                <!--begin::Tab pane-->
+                                <div class="tab-pane" id="kt_timeline_widget_4_tab_month" role="tabpanel" aria-labelledby="month-tab" data-kt-timeline-widget-4-blockui="true">
+                                    <div class="table-responsive pb-10">
+                                        <!--begin::Timeline-->
+                                        <div id="kt_timeline_widget_4_3" class="vis-timeline-custom h-350px min-w-700px" data-kt-timeline-widget-4-image-root="/metronic8/demo37/assets/media/"></div>
+                                        <!--end::Timeline-->
+                                    </div>
+                                </div>
+                                <!--end::Tab pane-->
+
+                                <!--begin::Tab pane-->
+                                <div class="tab-pane" id="kt_timeline_widget_4_tab_2022" role="tabpanel" aria-labelledby="week-tab" data-kt-timeline-widget-4-blockui="true">
+                                    <div class="table-responsive pb-10">
+                                        <!--begin::Timeline-->
+                                        <div id="kt_timeline_widget_4_4" class="vis-timeline-custom h-350px min-w-700px" data-kt-timeline-widget-4-image-root="/metronic8/demo37/assets/media/"></div>
+                                        <!--end::Timeline-->
+                                    </div>
+                                </div>
+                                <!--end::Tab pane-->
+                            </div>
+                            <!--end::Tab content-->
+                        </div>
+                        <!--end::Card body-->
+                    </div>
+                    <!--end::Timeline Widget 1-->    </div>
+                <div class="col-lg-6 my-5">
                     <!--begin::Summary-->
                     <div class="card card-flush h-lg-100">
                         <!--begin::Card header-->
                         <div class="card-header mt-6">
                             <!--begin::Card title-->
                             <div class="card-title flex-column">
-                                <h3 class="fw-bold mb-1">Tasks Summary</h3>
+                                <h3 class="fw-bold mb-1">گزارش اخیر</h3>
 
-                                <div class="fs-6 fw-semibold text-gray-500">24 Overdue Tasks</div>
+                                <div class="fs-6 fw-semibold text-gray-500">{{verta(\Carbon\Carbon::today())->format('Y/m/d')}}</div>
                             </div>
                             <!--end::Card title-->
 
                             <!--begin::Card toolbar-->
                             <div class="card-toolbar">
-                                <a href="#" class="btn btn-light btn-sm">View Tasks</a>
+                                <a href="{{route('dashboard.project.task',$project->id)}}" class="btn btn-light btn-sm">مشاهده همه گزارشات پروژه<i class="ki-outline ki-eye fs-5 ps-3"></i></a>
                             </div>
                             <!--end::Card toolbar-->
                         </div>
@@ -291,7 +154,7 @@
                                 <div class="position-relative d-flex flex-center h-175px w-175px me-15 mb-7">
                                     <div class="position-absolute translate-middle start-50 top-50 d-flex flex-column flex-center">
                                         <span class="fs-2qx fw-bold">237</span>
-                                        <span class="fs-6 fw-semibold text-gray-500">Total Tasks</span>
+                                        <span class="fs-8 fw-semibold text-gray-500 ">تعداد کل تسک ها</span>
                                     </div>
 
                                     <canvas id="project_overview_chart"></canvas>
@@ -356,80 +219,18 @@
                         </div>
                         <!--end::Card body-->
                     </div>
-                    <!--end::Summary-->    </div>
-                <!--end::Col-->
-
-                <!--begin::Col-->
-                <div class="col-lg-6">
-                    <!--begin::Graph-->
-                    <div class="card card-flush h-lg-100">
-                        <!--begin::Card header-->
-                        <div class="card-header mt-6">
-                            <!--begin::Card title-->
-                            <div class="card-title flex-column">
-                                <h3 class="fw-bold mb-1">Tasks Over Time</h3>
-
-                                <!--begin::Labels-->
-                                <div class="fs-6 d-flex text-gray-500 fs-6 fw-semibold">
-                                    <!--begin::Label-->
-                                    <div class="d-flex align-items-center me-6">
-                    <span class="menu-bullet d-flex align-items-center me-2">
-                        <span class="bullet bg-success"></span>
-                    </span>
-                                        Complete
-                                    </div>
-                                    <!--end::Label-->
-
-                                    <!--begin::Label-->
-                                    <div class="d-flex align-items-center">
-                    <span class="menu-bullet d-flex align-items-center me-2">
-                        <span class="bullet bg-primary"></span>
-                    </span>
-                                        Incomplete
-                                    </div>
-                                    <!--end::Label-->
-                                </div>
-                                <!--end::Labels-->
-                            </div>
-                            <!--end::Card title-->
-
-                            <!--begin::Card toolbar-->
-                            <div class="card-toolbar">
-                                <!--begin::Select-->
-                                <select name="status" data-control="select2" data-hide-search="true" class="form-select form-select-solid form-select-sm fw-bold w-100px">
-                                    <option value="1">2020 Q1</option>
-                                    <option value="2">2020 Q2</option>
-                                    <option value="3" selected>2020 Q3</option>
-                                    <option value="4">2020 Q4</option>
-                                </select>
-                                <!--end::Select-->
-                            </div>
-                            <!--end::Card toolbar-->
-                        </div>
-                        <!--end::Card header-->
-
-                        <!--begin::Card body-->
-                        <div class="card-body pt-10 pb-0 px-5">
-                            <!--begin::Chart-->
-                            <div id="kt_project_overview_graph" class="card-rounded-bottom" style="height: 300px"></div>
-                            <!--end::Chart-->
-                        </div>
-                        <!--end::Card body-->
-                    </div>
-                    <!--end::Graph-->    </div>
-                <!--end::Col-->
-
-                <!--begin::Col-->
-                <div class="col-lg-6">
+                    <!--end::Summary-->
+                </div>
+                <div class="col-lg-6 my-5">
                     <!--begin::Card-->
                     <div class="card card-flush h-lg-100">
                         <!--begin::Card header-->
                         <div class="card-header mt-6">
                             <!--begin::Card title-->
                             <div class="card-title flex-column">
-                                <h3 class="fw-bold mb-1">What's on the road?</h3>
+                                <h3 class="fw-bold mb-1">امروز چه کاری باید انجام بشه؟</h3>
 
-                                <div class="fs-6 text-gray-500">Total 482 participants</div>
+                                <div class="fs-6 text-gray-500">تعداد </div>
                             </div>
                             <!--end::Card title-->
 
@@ -1673,601 +1474,81 @@
                         <!--end::Card body-->
                     </div>
                     <!--end::Card-->    </div>
-                <!--end::Col-->
-
-                <!--begin::Col-->
-                <div class="col-lg-6">
-
-                    <!--begin::Card-->
+                <div class="col-lg-6 my-5">
                     <div class="card card-flush h-lg-100">
-                        <!--begin::Card header-->
-                        <div class="card-header mt-6">
-                            <!--begin::Card title-->
-                            <div class="card-title flex-column">
-                                <h3 class="fw-bold mb-1">Latest Files</h3>
-
-                                <div class="fs-6 text-gray-500">Total 382 fiels, 2,6GB space usage</div>
-                            </div>
-                            <!--end::Card title-->
-
-                            <!--begin::Card toolbar-->
-                            <div class="card-toolbar">
-                                <a href="#" class="btn btn-bg-light btn-active-color-primary btn-sm">View All</a>
-                            </div>
-                            <!--end::Card toolbar-->
-                        </div>
-                        <!--end::Card header-->
-
-                        <!--begin::Card body-->
                         <div class="card-body p-9 pt-3">
-                            <!--begin::Files-->
+                            <div class="card-header my-6">
+                                <div class="card-title flex-column">
+                                    <h3 class="fw-bold mb-1">آخرین فایل های پروژه</h3>
+                                    <div class="fs-6 text-gray-500">تعداد کل فایل ها {{$total_files}}</div>
+                                </div>
+                            </div>
                             <div class="d-flex flex-column mb-9">
-                                <!--begin::File-->
-                                <div class="d-flex align-items-center mb-5">
-                                    <!--begin::Icon-->
-                                    <div class="symbol symbol-30px me-5">
-                                        <img alt="Icon" src="../../assets/media/svg/files/pdf.svg" />
-                                    </div>
-                                    <!--end::Icon-->
-
-                                    <!--begin::Details-->
-                                    <div class="fw-semibold">
-                                        <a class="fs-6 fw-bold text-gray-900 text-hover-primary" href="#">Project tech requirements</a>
-
-                                        <div class="text-gray-500">
-                                            2 days ago                        <a href="#">Karina Clark</a>
+                                @foreach($file_collection as $file)
+                                    @php
+                                        $explode_file = explode('.',$file['path']);
+                                        $user = \App\Models\User::with('photo')->where('id',$file['user_id'])->first();
+                                    @endphp
+                                    <div class="d-flex align-items-center mb-5">
+                                        <div class="symbol symbol-30px me-5">
+                                            @if($explode_file[1] == 'pdf')
+                                                <img alt="Icon" src="{{url('panel/assets/media/svg/files/pdf.svg')}}" />
+                                            @elseif($explode_file[1] == 'doc')
+                                                <img alt="Icon" src="{{url('panel/assets/media/svg/files/doc.svg')}}" />
+                                            @elseif($explode_file[1] == 'css')
+                                                <img alt="Icon" src="{{url('panel/assets/media/svg/files/css.svg')}}" />
+                                            @else
+                                                <img alt="Icon" src="{{url('panel/assets/media/svg/files/ai.svg')}}" />
+                                            @endif
                                         </div>
-                                    </div>
-                                    <!--end::Details-->
+                                        <div class="fw-semibold">
+                                            <a class="fs-6 fw-bold text-gray-900 text-hover-primary">{{$user->Name}} </a>
 
-                                    <!--begin::Menu-->
-                                    <button
-                                        type="button"
-                                        class="btn btn-clean btn-sm btn-icon btn-icon-primary btn-active-light-primary ms-auto"
-                                        data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-
-                                        <i class="ki-outline ki-element-plus fs-3"></i>                </button>
-
-
-
-                                    <!--begin::Menu 1-->
-                                    <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px" data-kt-menu="true" id="kt_menu_68ef8af78cc61">
-                                        <!--begin::Header-->
-                                        <div class="px-7 py-5">
-                                            <div class="fs-5 text-gray-900 fw-bold">Filter Options</div>
+                                            <div class="text-gray-500">
+                                                {{verta($file['created_at'])->formatDifference()}}
+                                                <a class="text-active-danger">{{role_name($user->getRoleNames()->first())}}</a>
+                                            </div>
                                         </div>
-                                        <!--end::Header-->
-
-                                        <!--begin::Menu separator-->
-                                        <div class="separator border-gray-200"></div>
-                                        <!--end::Menu separator-->
-
-
-                                        <!--begin::Form-->
-                                        <div class="px-7 py-5">
-                                            <!--begin::Input group-->
-                                            <div class="mb-10">
-                                                <!--begin::Label-->
-                                                <label class="form-label fw-semibold">Status:</label>
-                                                <!--end::Label-->
-
-                                                <!--begin::Input-->
-                                                <div>
-                                                    <select class="form-select form-select-solid" multiple data-kt-select2="true" data-close-on-select="false" data-placeholder="Select option" data-dropdown-parent="#kt_menu_68ef8af78cc61" data-allow-clear="true">
-                                                        <option></option>
-                                                        <option value="1">Approved</option>
-                                                        <option value="2">Pending</option>
-                                                        <option value="2">In Process</option>
-                                                        <option value="2">Rejected</option>
-                                                    </select>
-                                                </div>
-                                                <!--end::Input-->
-                                            </div>
-                                            <!--end::Input group-->
-
-                                            <!--begin::Input group-->
-                                            <div class="mb-10">
-                                                <!--begin::Label-->
-                                                <label class="form-label fw-semibold">Member Type:</label>
-                                                <!--end::Label-->
-
-                                                <!--begin::Options-->
-                                                <div class="d-flex">
-                                                    <!--begin::Options-->
-                                                    <label class="form-check form-check-sm form-check-custom form-check-solid me-5">
-                                                        <input class="form-check-input" type="checkbox" value="1"/>
-                                                        <span class="form-check-label">
-                        Author
-                    </span>
-                                                    </label>
-                                                    <!--end::Options-->
-
-                                                    <!--begin::Options-->
-                                                    <label class="form-check form-check-sm form-check-custom form-check-solid">
-                                                        <input class="form-check-input" type="checkbox" value="2" checked="checked"/>
-                                                        <span class="form-check-label">
-                        Customer
-                    </span>
-                                                    </label>
-                                                    <!--end::Options-->
-                                                </div>
-                                                <!--end::Options-->
-                                            </div>
-                                            <!--end::Input group-->
-
-                                            <!--begin::Input group-->
-                                            <div class="mb-10">
-                                                <!--begin::Label-->
-                                                <label class="form-label fw-semibold">Notifications:</label>
-                                                <!--end::Label-->
-
-                                                <!--begin::Switch-->
-                                                <div class="form-check form-switch form-switch-sm form-check-custom form-check-solid">
-                                                    <input class="form-check-input" type="checkbox" value="" name="notifications" checked />
-                                                    <label class="form-check-label">
-                                                        Enabled
-                                                    </label>
-                                                </div>
-                                                <!--end::Switch-->
-                                            </div>
-                                            <!--end::Input group-->
-
-                                            <!--begin::Actions-->
-                                            <div class="d-flex justify-content-end">
-                                                <button type="reset" class="btn btn-sm btn-light btn-active-light-primary me-2" data-kt-menu-dismiss="true">Reset</button>
-
-                                                <button type="submit" class="btn btn-sm btn-primary" data-kt-menu-dismiss="true">Apply</button>
-                                            </div>
-                                            <!--end::Actions-->
-                                        </div>
-                                        <!--end::Form-->
+                                        <button
+                                            type="button"
+                                            class="btn btn-clean btn-sm btn-icon btn-icon-primary btn-active-light-primary ms-auto"
+                                            data-bs-toggle="tooltip" data-bs-placement="top" title="دانلود فایل">
+                                            <i class="ki-outline ki-cloud-download fs-3"></i>
+                                        </button>
                                     </div>
-                                    <!--end::Menu 1-->                <!--end::Menu-->
-                                </div>
-                                <!--end::File-->
-                                <!--begin::File-->
-                                <div class="d-flex align-items-center mb-5">
-                                    <!--begin::Icon-->
-                                    <div class="symbol symbol-30px me-5">
-                                        <img alt="Icon" src="../../assets/media/svg/files/doc.svg" />
-                                    </div>
-                                    <!--end::Icon-->
-
-                                    <!--begin::Details-->
-                                    <div class="fw-semibold">
-                                        <a class="fs-6 fw-bold text-gray-900 text-hover-primary" href="#">Create FureStibe branding proposal</a>
-
-                                        <div class="text-gray-500">
-                                            Due in 1 day                        <a href="#">Marcus Blake</a>
-                                        </div>
-                                    </div>
-                                    <!--end::Details-->
-
-                                    <!--begin::Menu-->
-                                    <button
-                                        type="button"
-                                        class="btn btn-clean btn-sm btn-icon btn-icon-primary btn-active-light-primary ms-auto"
-                                        data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-
-                                        <i class="ki-outline ki-element-plus fs-3"></i>                </button>
-
-
-
-                                    <!--begin::Menu 1-->
-                                    <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px" data-kt-menu="true" id="kt_menu_68ef8af78cc6d">
-                                        <!--begin::Header-->
-                                        <div class="px-7 py-5">
-                                            <div class="fs-5 text-gray-900 fw-bold">Filter Options</div>
-                                        </div>
-                                        <!--end::Header-->
-
-                                        <!--begin::Menu separator-->
-                                        <div class="separator border-gray-200"></div>
-                                        <!--end::Menu separator-->
-
-
-                                        <!--begin::Form-->
-                                        <div class="px-7 py-5">
-                                            <!--begin::Input group-->
-                                            <div class="mb-10">
-                                                <!--begin::Label-->
-                                                <label class="form-label fw-semibold">Status:</label>
-                                                <!--end::Label-->
-
-                                                <!--begin::Input-->
-                                                <div>
-                                                    <select class="form-select form-select-solid" multiple data-kt-select2="true" data-close-on-select="false" data-placeholder="Select option" data-dropdown-parent="#kt_menu_68ef8af78cc6d" data-allow-clear="true">
-                                                        <option></option>
-                                                        <option value="1">Approved</option>
-                                                        <option value="2">Pending</option>
-                                                        <option value="2">In Process</option>
-                                                        <option value="2">Rejected</option>
-                                                    </select>
-                                                </div>
-                                                <!--end::Input-->
-                                            </div>
-                                            <!--end::Input group-->
-
-                                            <!--begin::Input group-->
-                                            <div class="mb-10">
-                                                <!--begin::Label-->
-                                                <label class="form-label fw-semibold">Member Type:</label>
-                                                <!--end::Label-->
-
-                                                <!--begin::Options-->
-                                                <div class="d-flex">
-                                                    <!--begin::Options-->
-                                                    <label class="form-check form-check-sm form-check-custom form-check-solid me-5">
-                                                        <input class="form-check-input" type="checkbox" value="1"/>
-                                                        <span class="form-check-label">
-                        Author
-                    </span>
-                                                    </label>
-                                                    <!--end::Options-->
-
-                                                    <!--begin::Options-->
-                                                    <label class="form-check form-check-sm form-check-custom form-check-solid">
-                                                        <input class="form-check-input" type="checkbox" value="2" checked="checked"/>
-                                                        <span class="form-check-label">
-                        Customer
-                    </span>
-                                                    </label>
-                                                    <!--end::Options-->
-                                                </div>
-                                                <!--end::Options-->
-                                            </div>
-                                            <!--end::Input group-->
-
-                                            <!--begin::Input group-->
-                                            <div class="mb-10">
-                                                <!--begin::Label-->
-                                                <label class="form-label fw-semibold">Notifications:</label>
-                                                <!--end::Label-->
-
-                                                <!--begin::Switch-->
-                                                <div class="form-check form-switch form-switch-sm form-check-custom form-check-solid">
-                                                    <input class="form-check-input" type="checkbox" value="" name="notifications" checked />
-                                                    <label class="form-check-label">
-                                                        Enabled
-                                                    </label>
-                                                </div>
-                                                <!--end::Switch-->
-                                            </div>
-                                            <!--end::Input group-->
-
-                                            <!--begin::Actions-->
-                                            <div class="d-flex justify-content-end">
-                                                <button type="reset" class="btn btn-sm btn-light btn-active-light-primary me-2" data-kt-menu-dismiss="true">Reset</button>
-
-                                                <button type="submit" class="btn btn-sm btn-primary" data-kt-menu-dismiss="true">Apply</button>
-                                            </div>
-                                            <!--end::Actions-->
-                                        </div>
-                                        <!--end::Form-->
-                                    </div>
-                                    <!--end::Menu 1-->                <!--end::Menu-->
-                                </div>
-                                <!--end::File-->
-                                <!--begin::File-->
-                                <div class="d-flex align-items-center mb-5">
-                                    <!--begin::Icon-->
-                                    <div class="symbol symbol-30px me-5">
-                                        <img alt="Icon" src="../../assets/media/svg/files/css.svg" />
-                                    </div>
-                                    <!--end::Icon-->
-
-                                    <!--begin::Details-->
-                                    <div class="fw-semibold">
-                                        <a class="fs-6 fw-bold text-gray-900 text-hover-primary" href="#">Completed Project Stylings</a>
-
-                                        <div class="text-gray-500">
-                                            Due in 1 day                        <a href="#">Terry Barry</a>
-                                        </div>
-                                    </div>
-                                    <!--end::Details-->
-
-                                    <!--begin::Menu-->
-                                    <button
-                                        type="button"
-                                        class="btn btn-clean btn-sm btn-icon btn-icon-primary btn-active-light-primary ms-auto"
-                                        data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-
-                                        <i class="ki-outline ki-element-plus fs-3"></i>                </button>
-
-
-
-                                    <!--begin::Menu 1-->
-                                    <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px" data-kt-menu="true" id="kt_menu_68ef8af78cc75">
-                                        <!--begin::Header-->
-                                        <div class="px-7 py-5">
-                                            <div class="fs-5 text-gray-900 fw-bold">Filter Options</div>
-                                        </div>
-                                        <!--end::Header-->
-
-                                        <!--begin::Menu separator-->
-                                        <div class="separator border-gray-200"></div>
-                                        <!--end::Menu separator-->
-
-
-                                        <!--begin::Form-->
-                                        <div class="px-7 py-5">
-                                            <!--begin::Input group-->
-                                            <div class="mb-10">
-                                                <!--begin::Label-->
-                                                <label class="form-label fw-semibold">Status:</label>
-                                                <!--end::Label-->
-
-                                                <!--begin::Input-->
-                                                <div>
-                                                    <select class="form-select form-select-solid" multiple data-kt-select2="true" data-close-on-select="false" data-placeholder="Select option" data-dropdown-parent="#kt_menu_68ef8af78cc75" data-allow-clear="true">
-                                                        <option></option>
-                                                        <option value="1">Approved</option>
-                                                        <option value="2">Pending</option>
-                                                        <option value="2">In Process</option>
-                                                        <option value="2">Rejected</option>
-                                                    </select>
-                                                </div>
-                                                <!--end::Input-->
-                                            </div>
-                                            <!--end::Input group-->
-
-                                            <!--begin::Input group-->
-                                            <div class="mb-10">
-                                                <!--begin::Label-->
-                                                <label class="form-label fw-semibold">Member Type:</label>
-                                                <!--end::Label-->
-
-                                                <!--begin::Options-->
-                                                <div class="d-flex">
-                                                    <!--begin::Options-->
-                                                    <label class="form-check form-check-sm form-check-custom form-check-solid me-5">
-                                                        <input class="form-check-input" type="checkbox" value="1"/>
-                                                        <span class="form-check-label">
-                        Author
-                    </span>
-                                                    </label>
-                                                    <!--end::Options-->
-
-                                                    <!--begin::Options-->
-                                                    <label class="form-check form-check-sm form-check-custom form-check-solid">
-                                                        <input class="form-check-input" type="checkbox" value="2" checked="checked"/>
-                                                        <span class="form-check-label">
-                        Customer
-                    </span>
-                                                    </label>
-                                                    <!--end::Options-->
-                                                </div>
-                                                <!--end::Options-->
-                                            </div>
-                                            <!--end::Input group-->
-
-                                            <!--begin::Input group-->
-                                            <div class="mb-10">
-                                                <!--begin::Label-->
-                                                <label class="form-label fw-semibold">Notifications:</label>
-                                                <!--end::Label-->
-
-                                                <!--begin::Switch-->
-                                                <div class="form-check form-switch form-switch-sm form-check-custom form-check-solid">
-                                                    <input class="form-check-input" type="checkbox" value="" name="notifications" checked />
-                                                    <label class="form-check-label">
-                                                        Enabled
-                                                    </label>
-                                                </div>
-                                                <!--end::Switch-->
-                                            </div>
-                                            <!--end::Input group-->
-
-                                            <!--begin::Actions-->
-                                            <div class="d-flex justify-content-end">
-                                                <button type="reset" class="btn btn-sm btn-light btn-active-light-primary me-2" data-kt-menu-dismiss="true">Reset</button>
-
-                                                <button type="submit" class="btn btn-sm btn-primary" data-kt-menu-dismiss="true">Apply</button>
-                                            </div>
-                                            <!--end::Actions-->
-                                        </div>
-                                        <!--end::Form-->
-                                    </div>
-                                    <!--end::Menu 1-->                <!--end::Menu-->
-                                </div>
-                                <!--end::File-->
-                                <!--begin::File-->
-                                <div class="d-flex align-items-center ">
-                                    <!--begin::Icon-->
-                                    <div class="symbol symbol-30px me-5">
-                                        <img alt="Icon" src="../../assets/media/svg/files/ai.svg" />
-                                    </div>
-                                    <!--end::Icon-->
-
-                                    <!--begin::Details-->
-                                    <div class="fw-semibold">
-                                        <a class="fs-6 fw-bold text-gray-900 text-hover-primary" href="#">Create Project Wireframes</a>
-
-                                        <div class="text-gray-500">
-                                            Due in 3 days                        <a href="#">Roth Bloom</a>
-                                        </div>
-                                    </div>
-                                    <!--end::Details-->
-
-                                    <!--begin::Menu-->
-                                    <button
-                                        type="button"
-                                        class="btn btn-clean btn-sm btn-icon btn-icon-primary btn-active-light-primary ms-auto"
-                                        data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-
-                                        <i class="ki-outline ki-element-plus fs-3"></i>                </button>
-
-
-
-                                    <!--begin::Menu 1-->
-                                    <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px" data-kt-menu="true" id="kt_menu_68ef8af78cc7e">
-                                        <!--begin::Header-->
-                                        <div class="px-7 py-5">
-                                            <div class="fs-5 text-gray-900 fw-bold">Filter Options</div>
-                                        </div>
-                                        <!--end::Header-->
-
-                                        <!--begin::Menu separator-->
-                                        <div class="separator border-gray-200"></div>
-                                        <!--end::Menu separator-->
-
-
-                                        <!--begin::Form-->
-                                        <div class="px-7 py-5">
-                                            <!--begin::Input group-->
-                                            <div class="mb-10">
-                                                <!--begin::Label-->
-                                                <label class="form-label fw-semibold">Status:</label>
-                                                <!--end::Label-->
-
-                                                <!--begin::Input-->
-                                                <div>
-                                                    <select class="form-select form-select-solid" multiple data-kt-select2="true" data-close-on-select="false" data-placeholder="Select option" data-dropdown-parent="#kt_menu_68ef8af78cc7e" data-allow-clear="true">
-                                                        <option></option>
-                                                        <option value="1">Approved</option>
-                                                        <option value="2">Pending</option>
-                                                        <option value="2">In Process</option>
-                                                        <option value="2">Rejected</option>
-                                                    </select>
-                                                </div>
-                                                <!--end::Input-->
-                                            </div>
-                                            <!--end::Input group-->
-
-                                            <!--begin::Input group-->
-                                            <div class="mb-10">
-                                                <!--begin::Label-->
-                                                <label class="form-label fw-semibold">Member Type:</label>
-                                                <!--end::Label-->
-
-                                                <!--begin::Options-->
-                                                <div class="d-flex">
-                                                    <!--begin::Options-->
-                                                    <label class="form-check form-check-sm form-check-custom form-check-solid me-5">
-                                                        <input class="form-check-input" type="checkbox" value="1"/>
-                                                        <span class="form-check-label">
-                        Author
-                    </span>
-                                                    </label>
-                                                    <!--end::Options-->
-
-                                                    <!--begin::Options-->
-                                                    <label class="form-check form-check-sm form-check-custom form-check-solid">
-                                                        <input class="form-check-input" type="checkbox" value="2" checked="checked"/>
-                                                        <span class="form-check-label">
-                        Customer
-                    </span>
-                                                    </label>
-                                                    <!--end::Options-->
-                                                </div>
-                                                <!--end::Options-->
-                                            </div>
-                                            <!--end::Input group-->
-
-                                            <!--begin::Input group-->
-                                            <div class="mb-10">
-                                                <!--begin::Label-->
-                                                <label class="form-label fw-semibold">Notifications:</label>
-                                                <!--end::Label-->
-
-                                                <!--begin::Switch-->
-                                                <div class="form-check form-switch form-switch-sm form-check-custom form-check-solid">
-                                                    <input class="form-check-input" type="checkbox" value="" name="notifications" checked />
-                                                    <label class="form-check-label">
-                                                        Enabled
-                                                    </label>
-                                                </div>
-                                                <!--end::Switch-->
-                                            </div>
-                                            <!--end::Input group-->
-
-                                            <!--begin::Actions-->
-                                            <div class="d-flex justify-content-end">
-                                                <button type="reset" class="btn btn-sm btn-light btn-active-light-primary me-2" data-kt-menu-dismiss="true">Reset</button>
-
-                                                <button type="submit" class="btn btn-sm btn-primary" data-kt-menu-dismiss="true">Apply</button>
-                                            </div>
-                                            <!--end::Actions-->
-                                        </div>
-                                        <!--end::Form-->
-                                    </div>
-                                    <!--end::Menu 1-->                <!--end::Menu-->
-                                </div>
-                                <!--end::File-->
-
+                                @endforeach
                             </div>
-                            <!--end::Files-->
 
 
-                            <!--begin::Notice-->
-                            <div class="notice d-flex bg-light-primary rounded border-primary border border-dashed  p-6">
-                                <!--begin::Icon-->
-                                <i class="ki-outline ki-svg/files/upload.svg fs-2tx text-primary me-4"></i>        <!--end::Icon-->
-
-                                <!--begin::Wrapper-->
-                                <div class="d-flex flex-stack flex-grow-1 ">
-                                    <!--begin::Content-->
-                                    <div class=" fw-semibold">
-                                        <h4 class="text-gray-900 fw-bold">Quick file uploader</h4>
-
-                                        <div class="fs-6 text-gray-700 ">Drag & Drop or choose files from computer</div>
-                                    </div>
-                                    <!--end::Content-->
-
-                                </div>
-                                <!--end::Wrapper-->
-                            </div>
-                            <!--end::Notice-->
                         </div>
-                        <!--end::Card body -->
                     </div>
-                    <!--end::Card-->    </div>
-                <!--end::Col-->
-
-                <!--begin::Col-->
-                <div class="col-lg-6">
-                    <!--begin::Card-->
+                    <!--end::Card-->
+                </div>
+                <div class="col-lg-6 my-5">
                     <div class="card  card-flush h-lg-100">
-                        <!--begin::Card header-->
                         <div class="card-header mt-6">
-                            <!--begin::Card title-->
                             <div class="card-title flex-column">
-                                <h3 class="fw-bold mb-1">New Contibutors</h3>
+                                <h3 class="fw-bold mb-1">آخرین کامنت های پروژه</h3>
 
-                                <div class="fs-6 text-gray-500">From total 482 Participants</div>
+                                <div class="fs-6 text-gray-500">تعداد کل کامنت ها</div>
                             </div>
-                            <!--end::Card title-->
-
-                            <!--begin::Card toolbar-->
                             <div class="card-toolbar">
-                                <a href="#" class="btn btn-bg-light btn-active-color-primary btn-sm">View All</a>
+                                <a href="#" class="btn btn-bg-light btn-active-color-primary btn-sm">مشاهده همه</a>
                             </div>
-                            <!--end::Card toolbar-->
                         </div>
-                        <!--end::Card toolbar-->
-
-                        <!--begin::Card body-->
                         <div class="card-body d-flex flex-column p-9 pt-3 mb-9">
-
-                            <!--begin::Item-->
                             <div class="d-flex align-items-center mb-5">
-                                <!--begin::Avatar-->
                                 <div class="me-5 position-relative">
-                                    <!--begin::Image-->
                                     <div class="symbol symbol-35px symbol-circle">
-                                        <img alt="Pic" src="../../assets/media/avatars/300-6.jpg" />
+                                        <img alt="Pic" src="{{url('panel/assets/media/avatars/300-6.jpg')}}" />
                                     </div>
-                                    <!--end::Image-->
-
                                 </div>
-                                <!--end::Avatar-->
-
-                                <!--begin::Details-->
                                 <div class="fw-semibold">
-                                    <a href="#" class="fs-5 fw-bold text-gray-900 text-hover-primary">Emma Smith</a>
+                                    <a href="#" class="fs-5 fw-bold text-gray-900 text-hover-primary">محمد علی ناصحی</a>
 
                                     <div class="text-gray-500">
-                                        8 Pending & 97 Completed Tasks                    </div>
+                                       لورم ایپسوم
+                                    </div>
                                 </div>
                                 <!--end::Details-->
 
@@ -2275,9 +1556,6 @@
                                 <div class="badge badge-light ms-auto">5</div>
                                 <!--end::Badge-->
                             </div>
-                            <!--end::Item-->
-
-                            <!--begin::Item-->
                             <div class="d-flex align-items-center mb-5">
                                 <!--begin::Avatar-->
                                 <div class="me-5 position-relative">
@@ -2296,10 +1574,11 @@
 
                                 <!--begin::Details-->
                                 <div class="fw-semibold">
-                                    <a href="#" class="fs-5 fw-bold text-gray-900 text-hover-primary">Melody Macy</a>
+                                    <a href="#" class="fs-5 fw-bold text-gray-900 text-hover-primary">مهسا امامی</a>
 
                                     <div class="text-gray-500">
-                                        5 Pending & 84 Completed                    </div>
+                                        لورم ایپسوم
+                                    </div>
                                 </div>
                                 <!--end::Details-->
 
@@ -2307,15 +1586,12 @@
                                 <div class="badge badge-light ms-auto">8</div>
                                 <!--end::Badge-->
                             </div>
-                            <!--end::Item-->
-
-                            <!--begin::Item-->
                             <div class="d-flex align-items-center mb-5">
                                 <!--begin::Avatar-->
                                 <div class="me-5 position-relative">
                                     <!--begin::Image-->
                                     <div class="symbol symbol-35px symbol-circle">
-                                        <img alt="Pic" src="../../assets/media/avatars/300-1.jpg" />
+                                        <img alt="Pic" src="{{url('panel/assets/media/avatars/300-1.jpg')}}" />
                                     </div>
                                     <!--end::Image-->
 
@@ -2324,10 +1600,11 @@
 
                                 <!--begin::Details-->
                                 <div class="fw-semibold">
-                                    <a href="#" class="fs-5 fw-bold text-gray-900 text-hover-primary">Max Smith</a>
+                                    <a href="#" class="fs-5 fw-bold text-gray-900 text-hover-primary">مینا دمیرچی</a>
 
                                     <div class="text-gray-500">
-                                        9 Pending & 103 Completed                    </div>
+                                      لورم ایپسوم
+                                    </div>
                                 </div>
                                 <!--end::Details-->
 
@@ -2335,15 +1612,12 @@
                                 <div class="badge badge-light ms-auto">9</div>
                                 <!--end::Badge-->
                             </div>
-                            <!--end::Item-->
-
-                            <!--begin::Item-->
                             <div class="d-flex align-items-center mb-5">
                                 <!--begin::Avatar-->
                                 <div class="me-5 position-relative">
                                     <!--begin::Image-->
                                     <div class="symbol symbol-35px symbol-circle">
-                                        <img alt="Pic" src="../../assets/media/avatars/300-5.jpg" />
+                                        <img alt="Pic" src="{{url('panel/assets/media/avatars/300-5.jpg')}}" />
                                     </div>
                                     <!--end::Image-->
 
@@ -2352,745 +1626,43 @@
 
                                 <!--begin::Details-->
                                 <div class="fw-semibold">
-                                    <a href="#" class="fs-5 fw-bold text-gray-900 text-hover-primary">Sean Bean</a>
+                                    <a href="#" class="fs-5 fw-bold text-gray-900 text-hover-primary">فرتاش آذرسینا</a>
 
                                     <div class="text-gray-500">
-                                        3 Pending & 55 Completed                    </div>
+                                    لورم ایپسوم
+                                    </div>
                                 </div>
-                                <!--end::Details-->
-
-                                <!--begin::Badge-->
                                 <div class="badge badge-light ms-auto">3</div>
-                                <!--end::Badge-->
                             </div>
-                            <!--end::Item-->
-
-                            <!--begin::Item-->
                             <div class="d-flex align-items-center ">
-                                <!--begin::Avatar-->
                                 <div class="me-5 position-relative">
-                                    <!--begin::Image-->
                                     <div class="symbol symbol-35px symbol-circle">
-                                        <img alt="Pic" src="../../assets/media/avatars/300-25.jpg" />
+                                        <img alt="Pic" src="{{url('panel/assets/media/avatars/300-25.jpg')}}" />
                                     </div>
-                                    <!--end::Image-->
-
                                 </div>
-                                <!--end::Avatar-->
-
-                                <!--begin::Details-->
                                 <div class="fw-semibold">
-                                    <a href="#" class="fs-5 fw-bold text-gray-900 text-hover-primary">Brian Cox</a>
+                                    <a href="#" class="fs-5 fw-bold text-gray-900 text-hover-primary">سینا آذرینا</a>
 
                                     <div class="text-gray-500">
-                                        4 Pending & 115 Completed                    </div>
+                                       لورم ایپسوم
+                                    </div>
                                 </div>
-                                <!--end::Details-->
-
-                                <!--begin::Badge-->
                                 <div class="badge badge-light ms-auto">4</div>
-                                <!--end::Badge-->
                             </div>
-                            <!--end::Item-->
                         </div>
-                        <!--end::Card body-->
                     </div>
-                    <!--end::Card-->    </div>
-                <!--end::Col-->
-
-                <!--begin::Col-->
-                <div class="col-lg-6">
-
-                    <!--begin::Tasks-->
-                    <div class="card card-flush h-lg-100">
-                        <!--begin::Card header-->
-                        <div class="card-header mt-6">
-                            <!--begin::Card title-->
-                            <div class="card-title flex-column">
-                                <h3 class="fw-bold mb-1">My Tasks</h3>
-
-                                <div class="fs-6 text-gray-500">Total 25 tasks in backlog</div>
-                            </div>
-                            <!--end::Card title-->
-
-                            <!--begin::Card toolbar-->
-                            <div class="card-toolbar">
-                                <a href="#" class="btn btn-bg-light btn-active-color-primary btn-sm">View All</a>
-                            </div>
-                            <!--end::Card toolbar-->
-                        </div>
-                        <!--end::Card header-->
-
-                        <!--begin::Card body-->
-                        <div class="card-body d-flex flex-column mb-9 p-9 pt-3">
-                            <!--begin::Item-->
-                            <div class="d-flex align-items-center position-relative mb-7">
-                                <!--begin::Label-->
-                                <div class="position-absolute top-0 start-0 rounded h-100 bg-secondary w-4px"></div>
-                                <!--end::Label-->
-
-                                <!--begin::Checkbox-->
-                                <div class="form-check form-check-custom form-check-solid ms-6 me-4">
-                                    <input class="form-check-input" type="checkbox" value=""/>
-                                </div>
-                                <!--end::Checkbox-->
-
-                                <!--begin::Details-->
-                                <div class="fw-semibold">
-                                    <a href="#" class="fs-6 fw-bold text-gray-900 text-hover-primary">Create FureStibe branding logo</a>
-
-                                    <!--begin::Info-->
-                                    <div class="text-gray-500">
-                                        Due in 1 day                        <a href="#">Karina Clark</a>
-                                    </div>
-                                    <!--end::Info-->
-                                </div>
-                                <!--end::Details-->
-
-                                <!--begin::Menu-->
-                                <button
-                                    type="button"
-                                    class="btn btn-clean btn-sm btn-icon btn-icon-primary btn-active-light-primary ms-auto"
-                                    data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-
-                                    <i class="ki-outline ki-element-plus fs-3"></i>                </button>
-
-
-
-                                <!--begin::Menu 1-->
-                                <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px" data-kt-menu="true" id="kt_menu_68ef8af78ccd5">
-                                    <!--begin::Header-->
-                                    <div class="px-7 py-5">
-                                        <div class="fs-5 text-gray-900 fw-bold">Filter Options</div>
-                                    </div>
-                                    <!--end::Header-->
-
-                                    <!--begin::Menu separator-->
-                                    <div class="separator border-gray-200"></div>
-                                    <!--end::Menu separator-->
-
-
-                                    <!--begin::Form-->
-                                    <div class="px-7 py-5">
-                                        <!--begin::Input group-->
-                                        <div class="mb-10">
-                                            <!--begin::Label-->
-                                            <label class="form-label fw-semibold">Status:</label>
-                                            <!--end::Label-->
-
-                                            <!--begin::Input-->
-                                            <div>
-                                                <select class="form-select form-select-solid" multiple data-kt-select2="true" data-close-on-select="false" data-placeholder="Select option" data-dropdown-parent="#kt_menu_68ef8af78ccd5" data-allow-clear="true">
-                                                    <option></option>
-                                                    <option value="1">Approved</option>
-                                                    <option value="2">Pending</option>
-                                                    <option value="2">In Process</option>
-                                                    <option value="2">Rejected</option>
-                                                </select>
-                                            </div>
-                                            <!--end::Input-->
-                                        </div>
-                                        <!--end::Input group-->
-
-                                        <!--begin::Input group-->
-                                        <div class="mb-10">
-                                            <!--begin::Label-->
-                                            <label class="form-label fw-semibold">Member Type:</label>
-                                            <!--end::Label-->
-
-                                            <!--begin::Options-->
-                                            <div class="d-flex">
-                                                <!--begin::Options-->
-                                                <label class="form-check form-check-sm form-check-custom form-check-solid me-5">
-                                                    <input class="form-check-input" type="checkbox" value="1"/>
-                                                    <span class="form-check-label">
-                        Author
-                    </span>
-                                                </label>
-                                                <!--end::Options-->
-
-                                                <!--begin::Options-->
-                                                <label class="form-check form-check-sm form-check-custom form-check-solid">
-                                                    <input class="form-check-input" type="checkbox" value="2" checked="checked"/>
-                                                    <span class="form-check-label">
-                        Customer
-                    </span>
-                                                </label>
-                                                <!--end::Options-->
-                                            </div>
-                                            <!--end::Options-->
-                                        </div>
-                                        <!--end::Input group-->
-
-                                        <!--begin::Input group-->
-                                        <div class="mb-10">
-                                            <!--begin::Label-->
-                                            <label class="form-label fw-semibold">Notifications:</label>
-                                            <!--end::Label-->
-
-                                            <!--begin::Switch-->
-                                            <div class="form-check form-switch form-switch-sm form-check-custom form-check-solid">
-                                                <input class="form-check-input" type="checkbox" value="" name="notifications" checked />
-                                                <label class="form-check-label">
-                                                    Enabled
-                                                </label>
-                                            </div>
-                                            <!--end::Switch-->
-                                        </div>
-                                        <!--end::Input group-->
-
-                                        <!--begin::Actions-->
-                                        <div class="d-flex justify-content-end">
-                                            <button type="reset" class="btn btn-sm btn-light btn-active-light-primary me-2" data-kt-menu-dismiss="true">Reset</button>
-
-                                            <button type="submit" class="btn btn-sm btn-primary" data-kt-menu-dismiss="true">Apply</button>
-                                        </div>
-                                        <!--end::Actions-->
-                                    </div>
-                                    <!--end::Form-->
-                                </div>
-                                <!--end::Menu 1-->                <!--end::Menu-->
-                            </div>
-                            <!--end::Item-->
-                            <!--begin::Item-->
-                            <div class="d-flex align-items-center position-relative mb-7">
-                                <!--begin::Label-->
-                                <div class="position-absolute top-0 start-0 rounded h-100 bg-secondary w-4px"></div>
-                                <!--end::Label-->
-
-                                <!--begin::Checkbox-->
-                                <div class="form-check form-check-custom form-check-solid ms-6 me-4">
-                                    <input class="form-check-input" type="checkbox" value=""/>
-                                </div>
-                                <!--end::Checkbox-->
-
-                                <!--begin::Details-->
-                                <div class="fw-semibold">
-                                    <a href="#" class="fs-6 fw-bold text-gray-900 text-hover-primary">Schedule a meeting with FireBear CTO John</a>
-
-                                    <!--begin::Info-->
-                                    <div class="text-gray-500">
-                                        Due in 3 days                        <a href="#">Rober Doe</a>
-                                    </div>
-                                    <!--end::Info-->
-                                </div>
-                                <!--end::Details-->
-
-                                <!--begin::Menu-->
-                                <button
-                                    type="button"
-                                    class="btn btn-clean btn-sm btn-icon btn-icon-primary btn-active-light-primary ms-auto"
-                                    data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-
-                                    <i class="ki-outline ki-element-plus fs-3"></i>                </button>
-
-
-
-                                <!--begin::Menu 1-->
-                                <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px" data-kt-menu="true" id="kt_menu_68ef8af78ccde">
-                                    <!--begin::Header-->
-                                    <div class="px-7 py-5">
-                                        <div class="fs-5 text-gray-900 fw-bold">Filter Options</div>
-                                    </div>
-                                    <!--end::Header-->
-
-                                    <!--begin::Menu separator-->
-                                    <div class="separator border-gray-200"></div>
-                                    <!--end::Menu separator-->
-
-
-                                    <!--begin::Form-->
-                                    <div class="px-7 py-5">
-                                        <!--begin::Input group-->
-                                        <div class="mb-10">
-                                            <!--begin::Label-->
-                                            <label class="form-label fw-semibold">Status:</label>
-                                            <!--end::Label-->
-
-                                            <!--begin::Input-->
-                                            <div>
-                                                <select class="form-select form-select-solid" multiple data-kt-select2="true" data-close-on-select="false" data-placeholder="Select option" data-dropdown-parent="#kt_menu_68ef8af78ccde" data-allow-clear="true">
-                                                    <option></option>
-                                                    <option value="1">Approved</option>
-                                                    <option value="2">Pending</option>
-                                                    <option value="2">In Process</option>
-                                                    <option value="2">Rejected</option>
-                                                </select>
-                                            </div>
-                                            <!--end::Input-->
-                                        </div>
-                                        <!--end::Input group-->
-
-                                        <!--begin::Input group-->
-                                        <div class="mb-10">
-                                            <!--begin::Label-->
-                                            <label class="form-label fw-semibold">Member Type:</label>
-                                            <!--end::Label-->
-
-                                            <!--begin::Options-->
-                                            <div class="d-flex">
-                                                <!--begin::Options-->
-                                                <label class="form-check form-check-sm form-check-custom form-check-solid me-5">
-                                                    <input class="form-check-input" type="checkbox" value="1"/>
-                                                    <span class="form-check-label">
-                        Author
-                    </span>
-                                                </label>
-                                                <!--end::Options-->
-
-                                                <!--begin::Options-->
-                                                <label class="form-check form-check-sm form-check-custom form-check-solid">
-                                                    <input class="form-check-input" type="checkbox" value="2" checked="checked"/>
-                                                    <span class="form-check-label">
-                        Customer
-                    </span>
-                                                </label>
-                                                <!--end::Options-->
-                                            </div>
-                                            <!--end::Options-->
-                                        </div>
-                                        <!--end::Input group-->
-
-                                        <!--begin::Input group-->
-                                        <div class="mb-10">
-                                            <!--begin::Label-->
-                                            <label class="form-label fw-semibold">Notifications:</label>
-                                            <!--end::Label-->
-
-                                            <!--begin::Switch-->
-                                            <div class="form-check form-switch form-switch-sm form-check-custom form-check-solid">
-                                                <input class="form-check-input" type="checkbox" value="" name="notifications" checked />
-                                                <label class="form-check-label">
-                                                    Enabled
-                                                </label>
-                                            </div>
-                                            <!--end::Switch-->
-                                        </div>
-                                        <!--end::Input group-->
-
-                                        <!--begin::Actions-->
-                                        <div class="d-flex justify-content-end">
-                                            <button type="reset" class="btn btn-sm btn-light btn-active-light-primary me-2" data-kt-menu-dismiss="true">Reset</button>
-
-                                            <button type="submit" class="btn btn-sm btn-primary" data-kt-menu-dismiss="true">Apply</button>
-                                        </div>
-                                        <!--end::Actions-->
-                                    </div>
-                                    <!--end::Form-->
-                                </div>
-                                <!--end::Menu 1-->                <!--end::Menu-->
-                            </div>
-                            <!--end::Item-->
-                            <!--begin::Item-->
-                            <div class="d-flex align-items-center position-relative mb-7">
-                                <!--begin::Label-->
-                                <div class="position-absolute top-0 start-0 rounded h-100 bg-secondary w-4px"></div>
-                                <!--end::Label-->
-
-                                <!--begin::Checkbox-->
-                                <div class="form-check form-check-custom form-check-solid ms-6 me-4">
-                                    <input class="form-check-input" type="checkbox" value=""/>
-                                </div>
-                                <!--end::Checkbox-->
-
-                                <!--begin::Details-->
-                                <div class="fw-semibold">
-                                    <a href="#" class="fs-6 fw-bold text-gray-900 text-hover-primary">9 Degree Porject Estimation</a>
-
-                                    <!--begin::Info-->
-                                    <div class="text-gray-500">
-                                        Due in 1 week                        <a href="#">Neil Owen</a>
-                                    </div>
-                                    <!--end::Info-->
-                                </div>
-                                <!--end::Details-->
-
-                                <!--begin::Menu-->
-                                <button
-                                    type="button"
-                                    class="btn btn-clean btn-sm btn-icon btn-icon-primary btn-active-light-primary ms-auto"
-                                    data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-
-                                    <i class="ki-outline ki-element-plus fs-3"></i>                </button>
-
-
-
-                                <!--begin::Menu 1-->
-                                <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px" data-kt-menu="true" id="kt_menu_68ef8af78cce7">
-                                    <!--begin::Header-->
-                                    <div class="px-7 py-5">
-                                        <div class="fs-5 text-gray-900 fw-bold">Filter Options</div>
-                                    </div>
-                                    <!--end::Header-->
-
-                                    <!--begin::Menu separator-->
-                                    <div class="separator border-gray-200"></div>
-                                    <!--end::Menu separator-->
-
-
-                                    <!--begin::Form-->
-                                    <div class="px-7 py-5">
-                                        <!--begin::Input group-->
-                                        <div class="mb-10">
-                                            <!--begin::Label-->
-                                            <label class="form-label fw-semibold">Status:</label>
-                                            <!--end::Label-->
-
-                                            <!--begin::Input-->
-                                            <div>
-                                                <select class="form-select form-select-solid" multiple data-kt-select2="true" data-close-on-select="false" data-placeholder="Select option" data-dropdown-parent="#kt_menu_68ef8af78cce7" data-allow-clear="true">
-                                                    <option></option>
-                                                    <option value="1">Approved</option>
-                                                    <option value="2">Pending</option>
-                                                    <option value="2">In Process</option>
-                                                    <option value="2">Rejected</option>
-                                                </select>
-                                            </div>
-                                            <!--end::Input-->
-                                        </div>
-                                        <!--end::Input group-->
-
-                                        <!--begin::Input group-->
-                                        <div class="mb-10">
-                                            <!--begin::Label-->
-                                            <label class="form-label fw-semibold">Member Type:</label>
-                                            <!--end::Label-->
-
-                                            <!--begin::Options-->
-                                            <div class="d-flex">
-                                                <!--begin::Options-->
-                                                <label class="form-check form-check-sm form-check-custom form-check-solid me-5">
-                                                    <input class="form-check-input" type="checkbox" value="1"/>
-                                                    <span class="form-check-label">
-                        Author
-                    </span>
-                                                </label>
-                                                <!--end::Options-->
-
-                                                <!--begin::Options-->
-                                                <label class="form-check form-check-sm form-check-custom form-check-solid">
-                                                    <input class="form-check-input" type="checkbox" value="2" checked="checked"/>
-                                                    <span class="form-check-label">
-                        Customer
-                    </span>
-                                                </label>
-                                                <!--end::Options-->
-                                            </div>
-                                            <!--end::Options-->
-                                        </div>
-                                        <!--end::Input group-->
-
-                                        <!--begin::Input group-->
-                                        <div class="mb-10">
-                                            <!--begin::Label-->
-                                            <label class="form-label fw-semibold">Notifications:</label>
-                                            <!--end::Label-->
-
-                                            <!--begin::Switch-->
-                                            <div class="form-check form-switch form-switch-sm form-check-custom form-check-solid">
-                                                <input class="form-check-input" type="checkbox" value="" name="notifications" checked />
-                                                <label class="form-check-label">
-                                                    Enabled
-                                                </label>
-                                            </div>
-                                            <!--end::Switch-->
-                                        </div>
-                                        <!--end::Input group-->
-
-                                        <!--begin::Actions-->
-                                        <div class="d-flex justify-content-end">
-                                            <button type="reset" class="btn btn-sm btn-light btn-active-light-primary me-2" data-kt-menu-dismiss="true">Reset</button>
-
-                                            <button type="submit" class="btn btn-sm btn-primary" data-kt-menu-dismiss="true">Apply</button>
-                                        </div>
-                                        <!--end::Actions-->
-                                    </div>
-                                    <!--end::Form-->
-                                </div>
-                                <!--end::Menu 1-->                <!--end::Menu-->
-                            </div>
-                            <!--end::Item-->
-                            <!--begin::Item-->
-                            <div class="d-flex align-items-center position-relative mb-7">
-                                <!--begin::Label-->
-                                <div class="position-absolute top-0 start-0 rounded h-100 bg-secondary w-4px"></div>
-                                <!--end::Label-->
-
-                                <!--begin::Checkbox-->
-                                <div class="form-check form-check-custom form-check-solid ms-6 me-4">
-                                    <input class="form-check-input" type="checkbox" value=""/>
-                                </div>
-                                <!--end::Checkbox-->
-
-                                <!--begin::Details-->
-                                <div class="fw-semibold">
-                                    <a href="#" class="fs-6 fw-bold text-gray-900 text-hover-primary">Dashgboard UI & UX for Leafr CRM</a>
-
-                                    <!--begin::Info-->
-                                    <div class="text-gray-500">
-                                        Due in 1 week                        <a href="#">Olivia Wild</a>
-                                    </div>
-                                    <!--end::Info-->
-                                </div>
-                                <!--end::Details-->
-
-                                <!--begin::Menu-->
-                                <button
-                                    type="button"
-                                    class="btn btn-clean btn-sm btn-icon btn-icon-primary btn-active-light-primary ms-auto"
-                                    data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-
-                                    <i class="ki-outline ki-element-plus fs-3"></i>                </button>
-
-
-
-                                <!--begin::Menu 1-->
-                                <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px" data-kt-menu="true" id="kt_menu_68ef8af78ccf0">
-                                    <!--begin::Header-->
-                                    <div class="px-7 py-5">
-                                        <div class="fs-5 text-gray-900 fw-bold">Filter Options</div>
-                                    </div>
-                                    <!--end::Header-->
-
-                                    <!--begin::Menu separator-->
-                                    <div class="separator border-gray-200"></div>
-                                    <!--end::Menu separator-->
-
-
-                                    <!--begin::Form-->
-                                    <div class="px-7 py-5">
-                                        <!--begin::Input group-->
-                                        <div class="mb-10">
-                                            <!--begin::Label-->
-                                            <label class="form-label fw-semibold">Status:</label>
-                                            <!--end::Label-->
-
-                                            <!--begin::Input-->
-                                            <div>
-                                                <select class="form-select form-select-solid" multiple data-kt-select2="true" data-close-on-select="false" data-placeholder="Select option" data-dropdown-parent="#kt_menu_68ef8af78ccf0" data-allow-clear="true">
-                                                    <option></option>
-                                                    <option value="1">Approved</option>
-                                                    <option value="2">Pending</option>
-                                                    <option value="2">In Process</option>
-                                                    <option value="2">Rejected</option>
-                                                </select>
-                                            </div>
-                                            <!--end::Input-->
-                                        </div>
-                                        <!--end::Input group-->
-
-                                        <!--begin::Input group-->
-                                        <div class="mb-10">
-                                            <!--begin::Label-->
-                                            <label class="form-label fw-semibold">Member Type:</label>
-                                            <!--end::Label-->
-
-                                            <!--begin::Options-->
-                                            <div class="d-flex">
-                                                <!--begin::Options-->
-                                                <label class="form-check form-check-sm form-check-custom form-check-solid me-5">
-                                                    <input class="form-check-input" type="checkbox" value="1"/>
-                                                    <span class="form-check-label">
-                        Author
-                    </span>
-                                                </label>
-                                                <!--end::Options-->
-
-                                                <!--begin::Options-->
-                                                <label class="form-check form-check-sm form-check-custom form-check-solid">
-                                                    <input class="form-check-input" type="checkbox" value="2" checked="checked"/>
-                                                    <span class="form-check-label">
-                        Customer
-                    </span>
-                                                </label>
-                                                <!--end::Options-->
-                                            </div>
-                                            <!--end::Options-->
-                                        </div>
-                                        <!--end::Input group-->
-
-                                        <!--begin::Input group-->
-                                        <div class="mb-10">
-                                            <!--begin::Label-->
-                                            <label class="form-label fw-semibold">Notifications:</label>
-                                            <!--end::Label-->
-
-                                            <!--begin::Switch-->
-                                            <div class="form-check form-switch form-switch-sm form-check-custom form-check-solid">
-                                                <input class="form-check-input" type="checkbox" value="" name="notifications" checked />
-                                                <label class="form-check-label">
-                                                    Enabled
-                                                </label>
-                                            </div>
-                                            <!--end::Switch-->
-                                        </div>
-                                        <!--end::Input group-->
-
-                                        <!--begin::Actions-->
-                                        <div class="d-flex justify-content-end">
-                                            <button type="reset" class="btn btn-sm btn-light btn-active-light-primary me-2" data-kt-menu-dismiss="true">Reset</button>
-
-                                            <button type="submit" class="btn btn-sm btn-primary" data-kt-menu-dismiss="true">Apply</button>
-                                        </div>
-                                        <!--end::Actions-->
-                                    </div>
-                                    <!--end::Form-->
-                                </div>
-                                <!--end::Menu 1-->                <!--end::Menu-->
-                            </div>
-                            <!--end::Item-->
-                            <!--begin::Item-->
-                            <div class="d-flex align-items-center position-relative ">
-                                <!--begin::Label-->
-                                <div class="position-absolute top-0 start-0 rounded h-100 bg-secondary w-4px"></div>
-                                <!--end::Label-->
-
-                                <!--begin::Checkbox-->
-                                <div class="form-check form-check-custom form-check-solid ms-6 me-4">
-                                    <input class="form-check-input" type="checkbox" value=""/>
-                                </div>
-                                <!--end::Checkbox-->
-
-                                <!--begin::Details-->
-                                <div class="fw-semibold">
-                                    <a href="#" class="fs-6 fw-bold text-gray-900 text-hover-primary">Mivy App R&D, Meeting with clients</a>
-
-                                    <!--begin::Info-->
-                                    <div class="text-gray-500">
-                                        Due in 2 weeks                        <a href="#">Sean Bean</a>
-                                    </div>
-                                    <!--end::Info-->
-                                </div>
-                                <!--end::Details-->
-
-                                <!--begin::Menu-->
-                                <button
-                                    type="button"
-                                    class="btn btn-clean btn-sm btn-icon btn-icon-primary btn-active-light-primary ms-auto"
-                                    data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-
-                                    <i class="ki-outline ki-element-plus fs-3"></i>                </button>
-
-
-
-                                <!--begin::Menu 1-->
-                                <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px" data-kt-menu="true" id="kt_menu_68ef8af78ccf8">
-                                    <!--begin::Header-->
-                                    <div class="px-7 py-5">
-                                        <div class="fs-5 text-gray-900 fw-bold">Filter Options</div>
-                                    </div>
-                                    <!--end::Header-->
-
-                                    <!--begin::Menu separator-->
-                                    <div class="separator border-gray-200"></div>
-                                    <!--end::Menu separator-->
-
-
-                                    <!--begin::Form-->
-                                    <div class="px-7 py-5">
-                                        <!--begin::Input group-->
-                                        <div class="mb-10">
-                                            <!--begin::Label-->
-                                            <label class="form-label fw-semibold">Status:</label>
-                                            <!--end::Label-->
-
-                                            <!--begin::Input-->
-                                            <div>
-                                                <select class="form-select form-select-solid" multiple data-kt-select2="true" data-close-on-select="false" data-placeholder="Select option" data-dropdown-parent="#kt_menu_68ef8af78ccf8" data-allow-clear="true">
-                                                    <option></option>
-                                                    <option value="1">Approved</option>
-                                                    <option value="2">Pending</option>
-                                                    <option value="2">In Process</option>
-                                                    <option value="2">Rejected</option>
-                                                </select>
-                                            </div>
-                                            <!--end::Input-->
-                                        </div>
-                                        <!--end::Input group-->
-
-                                        <!--begin::Input group-->
-                                        <div class="mb-10">
-                                            <!--begin::Label-->
-                                            <label class="form-label fw-semibold">Member Type:</label>
-                                            <!--end::Label-->
-
-                                            <!--begin::Options-->
-                                            <div class="d-flex">
-                                                <!--begin::Options-->
-                                                <label class="form-check form-check-sm form-check-custom form-check-solid me-5">
-                                                    <input class="form-check-input" type="checkbox" value="1"/>
-                                                    <span class="form-check-label">
-                        Author
-                    </span>
-                                                </label>
-                                                <!--end::Options-->
-
-                                                <!--begin::Options-->
-                                                <label class="form-check form-check-sm form-check-custom form-check-solid">
-                                                    <input class="form-check-input" type="checkbox" value="2" checked="checked"/>
-                                                    <span class="form-check-label">
-                        Customer
-                    </span>
-                                                </label>
-                                                <!--end::Options-->
-                                            </div>
-                                            <!--end::Options-->
-                                        </div>
-                                        <!--end::Input group-->
-
-                                        <!--begin::Input group-->
-                                        <div class="mb-10">
-                                            <!--begin::Label-->
-                                            <label class="form-label fw-semibold">Notifications:</label>
-                                            <!--end::Label-->
-
-                                            <!--begin::Switch-->
-                                            <div class="form-check form-switch form-switch-sm form-check-custom form-check-solid">
-                                                <input class="form-check-input" type="checkbox" value="" name="notifications" checked />
-                                                <label class="form-check-label">
-                                                    Enabled
-                                                </label>
-                                            </div>
-                                            <!--end::Switch-->
-                                        </div>
-                                        <!--end::Input group-->
-
-                                        <!--begin::Actions-->
-                                        <div class="d-flex justify-content-end">
-                                            <button type="reset" class="btn btn-sm btn-light btn-active-light-primary me-2" data-kt-menu-dismiss="true">Reset</button>
-
-                                            <button type="submit" class="btn btn-sm btn-primary" data-kt-menu-dismiss="true">Apply</button>
-                                        </div>
-                                        <!--end::Actions-->
-                                    </div>
-                                    <!--end::Form-->
-                                </div>
-                                <!--end::Menu 1-->                <!--end::Menu-->
-                            </div>
-                            <!--end::Item-->
-                        </div>
-                        <!--end::Card body-->
-                    </div>
-                    <!--end::Tasks-->    </div>
-                <!--end::Col-->
+                </div>
             </div>
-            <!--end::Row-->
 
             <!--begin::Table-->
             <div class="card card-flush mt-6 mt-xl-9">
-                <!--begin::Card header-->
                 <div class="card-header mt-5">
-                    <!--begin::Card title-->
                     <div class="card-title flex-column">
-                        <h3 class="fw-bold mb-1">Project Spendings</h3>
+                        <h3 class="fw-bold mb-1">لیست تمام تسک ها</h3>
 
-                        <div class="fs-6 text-gray-500">Total $260,300 sepnt so far</div>
+                        <div class="fs-6 text-gray-500"></div>
                     </div>
-                    <!--begin::Card title-->
-
-                    <!--begin::Card toolbar-->
                     <div class="card-toolbar my-1">
-                        <!--begin::Select-->
                         <div class="me-6 my-1">
                             <select id="kt_filter_year" name="year" data-control="select2" data-hide-search="true" class="w-125px form-select form-select-solid form-select-sm">
                                 <option value="All" selected>All time</option>
@@ -3100,9 +1672,6 @@
                                 <option value="last90days">Last 90 days</option>
                             </select>
                         </div>
-                        <!--end::Select-->
-
-                        <!--begin::Select-->
                         <div class="me-4 my-1">
                             <select id="kt_filter_orders" name="orders" data-control="select2" data-hide-search="true" class="w-125px form-select form-select-solid form-select-sm">
                                 <option value="All" selected>All Orders</option>
@@ -3112,1168 +1681,76 @@
                                 <option value="In Transit">In Transit</option>
                             </select>
                         </div>
-                        <!--end::Select-->
-
-                        <!--begin::Search-->
                         <div class="d-flex align-items-center position-relative my-1">
-                            <i class="ki-outline ki-magnifier fs-3 position-absolute ms-3"></i>                <input type="text" id="kt_filter_search" class="form-control form-control-solid form-select-sm w-150px ps-9" placeholder="Search Order" />
+                            <i class="ki-outline ki-magnifier fs-3 position-absolute ms-3"></i>
+                            <input type="text" id="kt_filter_search" class="form-control form-control-solid form-select-sm w-150px ps-9" placeholder="Search Order" />
                         </div>
-                        <!--end::Search-->
                     </div>
-                    <!--begin::Card toolbar-->
                 </div>
-                <!--end::Card header-->
-
-                <!--begin::Card body-->
                 <div class="card-body pt-0">
-                    <!--begin::Table container-->
                     <div class="table-responsive">
                         <!--begin::Table-->
-                        <table id="kt_profile_overview_table" class="table table-row-bordered table-row-dashed gy-4 align-middle fw-bold">
-                            <thead class="fs-7 text-gray-500 text-uppercase">
+                        <table id="kt_profile_overview_table" class="table table-row-bordered table-row-dashed gy-4 align-middle fw-bold text-start">
+                            <thead class="fs-7 text-gray-500 text-uppercase text-start">
                             <tr>
-                                <th class="min-w-250px">Manager</th>
-                                <th class="min-w-150px">Date</th>
-                                <th class="min-w-90px">Amount</th>
-                                <th class="min-w-90px">Status</th>
-                                <th class="min-w-50px text-end">Details</th>
+                                <th class="text-start">ناظر تسک</th>
+                                <th class="text-start">عنوان تسک</th>
+                                <th class="text-start">تاریخ شروع تخمینی</th>
+                                <th class="text-start">تاریخ پایان تخمینی</th>
+                                <th class="text-start">تاریخ شروع واقعی</th>
+                                <th class="text-start">وضعیت</th>
+                                <th class="text-start">جزییات</th>
                             </tr>
                             </thead>
                             <tbody class="fs-6">
-
+                            @foreach($tasks as $task)
                             <tr>
                                 <td>
-                                    <!--begin::User-->
                                     <div class="d-flex align-items-center">
-                                        <!--begin::Wrapper-->
                                         <div class="me-5 position-relative">
-                                            <!--begin::Avatar-->
                                             <div class="symbol symbol-35px symbol-circle">
-                                                <img alt="Pic" src="../../assets/media/avatars/300-6.jpg" />
+                                                @if($task->watcher?->photo_id)
+                                                <img alt="Pic" src="{{route('home')}}/{{$task->watcher?->photo?->path}}" />
+                                                @else
+                                                    <i class="ki-outline ki-profile-user fs-3"></i>
+                                                @endif
                                             </div>
-                                            <!--end::Avatar-->
 
                                         </div>
-                                        <!--end::Wrapper-->
-
-                                        <!--begin::Info-->
                                         <div class="d-flex flex-column justify-content-center">
-                                            <a href="#" class="fs-6 text-gray-800 text-hover-primary">Emma Smith</a>
+                                            <a href="#" class="fs-6 text-gray-800 text-hover-primary">{{$task->watcher?->Name}}</a>
 
-                                            <div class="fw-semibold text-gray-500">smith@kpmg.com</div>
+                                            <div class="fw-semibold text-gray-500">{{$task->watcher?->email}} - {{role_name($task->watcher?->getRoleNames()->first())}}</div>
                                         </div>
-                                        <!--end::Info-->
                                     </div>
-                                    <!--end::User-->
                                 </td>
-                                <td>May 05, 2025</td>
-                                <td>$700.00</td>
-                                <td>
-                                <span class="badge badge-light-success fw-bold px-4 py-3">
-                                    Approved                                </span>
+
+                                <td class="text-start">{{$task->title}}</td>
+                                <td class="text-start">{{\Carbon\Carbon::parse($task->start_date)->format('Y/m/d')}}</td>
+                                <td class="text-start">@if($task->end_date) {{\Carbon\Carbon::parse($task->end_date)->format('Y/m/d')}}@endif</td>
+                                <td class="text-start">{{\Carbon\Carbon::parse($task->start_date)->format('Y/m/d')}}</td>
+                                <td class="text-start">
+                                    {!! $task->TaskStatus !!}
+{{--                                <span class="badge badge-light-success fw-bold px-4 py-3">--}}
+{{--                                    Approved                                --}}
+{{--                                </span>--}}
                                 </td>
-                                <td class="text-end">
-                                    <a href="#" class="btn btn-light btn-sm">View</a>
+                                <td class="text-start">
+                                    <a href="{{route('dashboard.task.show',$task->id)}}"
+                                        type="button"
+                                        class="btn btn-clean btn-sm btn-icon btn-icon-primary btn-active-light-primary ms-auto"
+                                        data-bs-toggle="tooltip" data-bs-placement="top" title="مشاهده جزییات تسک">
+                                        <i class="ki-outline ki-eye fs-3"></i>
+                                    </a>
+                                    <a href="{{route('dashboard.task.show',$task->id)}}"
+                                       type="button"
+                                       class="btn btn-clean btn-sm btn-icon btn-icon-secondary btn-active-light-warning ms-auto"
+                                       data-bs-toggle="tooltip" data-bs-placement="top" title="آرشیو کردن تسک">
+                                        <i class="ki-outline ki-archive fs-3"></i>
+                                    </a>
                                 </td>
                             </tr>
-
-                            <tr>
-                                <td>
-                                    <!--begin::User-->
-                                    <div class="d-flex align-items-center">
-                                        <!--begin::Wrapper-->
-                                        <div class="me-5 position-relative">
-                                            <!--begin::Avatar-->
-                                            <div class="symbol symbol-35px symbol-circle">
-                                                                                            <span class="symbol-label bg-light-danger text-danger fw-semibold">
-                                                    M                                                </span>
-                                            </div>
-                                            <!--end::Avatar-->
-
-                                            <!--begin::Online-->
-                                            <div class="bg-success position-absolute h-8px w-8px rounded-circle translate-middle start-100 top-100 ms-n1 mt-n1"></div>
-                                            <!--end::Online-->
-                                        </div>
-                                        <!--end::Wrapper-->
-
-                                        <!--begin::Info-->
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <a href="#" class="fs-6 text-gray-800 text-hover-primary">Melody Macy</a>
-
-                                            <div class="fw-semibold text-gray-500">melody@altbox.com</div>
-                                        </div>
-                                        <!--end::Info-->
-                                    </div>
-                                    <!--end::User-->
-                                </td>
-                                <td>May 05, 2025</td>
-                                <td>$980.00</td>
-                                <td>
-                                <span class="badge badge-light-danger fw-bold px-4 py-3">
-                                    Rejected                                </span>
-                                </td>
-                                <td class="text-end">
-                                    <a href="#" class="btn btn-light btn-sm">View</a>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <!--begin::User-->
-                                    <div class="d-flex align-items-center">
-                                        <!--begin::Wrapper-->
-                                        <div class="me-5 position-relative">
-                                            <!--begin::Avatar-->
-                                            <div class="symbol symbol-35px symbol-circle">
-                                                <img alt="Pic" src="../../assets/media/avatars/300-1.jpg" />
-                                            </div>
-                                            <!--end::Avatar-->
-
-                                        </div>
-                                        <!--end::Wrapper-->
-
-                                        <!--begin::Info-->
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <a href="#" class="fs-6 text-gray-800 text-hover-primary">Max Smith</a>
-
-                                            <div class="fw-semibold text-gray-500">max@kt.com</div>
-                                        </div>
-                                        <!--end::Info-->
-                                    </div>
-                                    <!--end::User-->
-                                </td>
-                                <td>Jun 24, 2025</td>
-                                <td>$975.00</td>
-                                <td>
-                                <span class="badge badge-light-success fw-bold px-4 py-3">
-                                    Approved                                </span>
-                                </td>
-                                <td class="text-end">
-                                    <a href="#" class="btn btn-light btn-sm">View</a>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <!--begin::User-->
-                                    <div class="d-flex align-items-center">
-                                        <!--begin::Wrapper-->
-                                        <div class="me-5 position-relative">
-                                            <!--begin::Avatar-->
-                                            <div class="symbol symbol-35px symbol-circle">
-                                                <img alt="Pic" src="../../assets/media/avatars/300-5.jpg" />
-                                            </div>
-                                            <!--end::Avatar-->
-
-                                        </div>
-                                        <!--end::Wrapper-->
-
-                                        <!--begin::Info-->
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <a href="#" class="fs-6 text-gray-800 text-hover-primary">Sean Bean</a>
-
-                                            <div class="fw-semibold text-gray-500">sean@dellito.com</div>
-                                        </div>
-                                        <!--end::Info-->
-                                    </div>
-                                    <!--end::User-->
-                                </td>
-                                <td>Jun 20, 2025</td>
-                                <td>$694.00</td>
-                                <td>
-                                <span class="badge badge-light-warning fw-bold px-4 py-3">
-                                    Pending                                </span>
-                                </td>
-                                <td class="text-end">
-                                    <a href="#" class="btn btn-light btn-sm">View</a>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <!--begin::User-->
-                                    <div class="d-flex align-items-center">
-                                        <!--begin::Wrapper-->
-                                        <div class="me-5 position-relative">
-                                            <!--begin::Avatar-->
-                                            <div class="symbol symbol-35px symbol-circle">
-                                                <img alt="Pic" src="../../assets/media/avatars/300-25.jpg" />
-                                            </div>
-                                            <!--end::Avatar-->
-
-                                        </div>
-                                        <!--end::Wrapper-->
-
-                                        <!--begin::Info-->
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <a href="#" class="fs-6 text-gray-800 text-hover-primary">Brian Cox</a>
-
-                                            <div class="fw-semibold text-gray-500">brian@exchange.com</div>
-                                        </div>
-                                        <!--end::Info-->
-                                    </div>
-                                    <!--end::User-->
-                                </td>
-                                <td>Feb 21, 2025</td>
-                                <td>$738.00</td>
-                                <td>
-                                <span class="badge badge-light-success fw-bold px-4 py-3">
-                                    Approved                                </span>
-                                </td>
-                                <td class="text-end">
-                                    <a href="#" class="btn btn-light btn-sm">View</a>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <!--begin::User-->
-                                    <div class="d-flex align-items-center">
-                                        <!--begin::Wrapper-->
-                                        <div class="me-5 position-relative">
-                                            <!--begin::Avatar-->
-                                            <div class="symbol symbol-35px symbol-circle">
-                                                                                            <span class="symbol-label bg-light-warning text-warning fw-semibold">
-                                                    C                                                </span>
-                                            </div>
-                                            <!--end::Avatar-->
-
-                                            <!--begin::Online-->
-                                            <div class="bg-success position-absolute h-8px w-8px rounded-circle translate-middle start-100 top-100 ms-n1 mt-n1"></div>
-                                            <!--end::Online-->
-                                        </div>
-                                        <!--end::Wrapper-->
-
-                                        <!--begin::Info-->
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <a href="#" class="fs-6 text-gray-800 text-hover-primary">Mikaela Collins</a>
-
-                                            <div class="fw-semibold text-gray-500">mik@pex.com</div>
-                                        </div>
-                                        <!--end::Info-->
-                                    </div>
-                                    <!--end::User-->
-                                </td>
-                                <td>Oct 25, 2025</td>
-                                <td>$467.00</td>
-                                <td>
-                                <span class="badge badge-light-success fw-bold px-4 py-3">
-                                    Approved                                </span>
-                                </td>
-                                <td class="text-end">
-                                    <a href="#" class="btn btn-light btn-sm">View</a>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <!--begin::User-->
-                                    <div class="d-flex align-items-center">
-                                        <!--begin::Wrapper-->
-                                        <div class="me-5 position-relative">
-                                            <!--begin::Avatar-->
-                                            <div class="symbol symbol-35px symbol-circle">
-                                                <img alt="Pic" src="../../assets/media/avatars/300-9.jpg" />
-                                            </div>
-                                            <!--end::Avatar-->
-
-                                        </div>
-                                        <!--end::Wrapper-->
-
-                                        <!--begin::Info-->
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <a href="#" class="fs-6 text-gray-800 text-hover-primary">Francis Mitcham</a>
-
-                                            <div class="fw-semibold text-gray-500">f.mit@kpmg.com</div>
-                                        </div>
-                                        <!--end::Info-->
-                                    </div>
-                                    <!--end::User-->
-                                </td>
-                                <td>May 05, 2025</td>
-                                <td>$983.00</td>
-                                <td>
-                                <span class="badge badge-light-warning fw-bold px-4 py-3">
-                                    Pending                                </span>
-                                </td>
-                                <td class="text-end">
-                                    <a href="#" class="btn btn-light btn-sm">View</a>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <!--begin::User-->
-                                    <div class="d-flex align-items-center">
-                                        <!--begin::Wrapper-->
-                                        <div class="me-5 position-relative">
-                                            <!--begin::Avatar-->
-                                            <div class="symbol symbol-35px symbol-circle">
-                                                                                            <span class="symbol-label bg-light-danger text-danger fw-semibold">
-                                                    O                                                </span>
-                                            </div>
-                                            <!--end::Avatar-->
-
-                                            <!--begin::Online-->
-                                            <div class="bg-success position-absolute h-8px w-8px rounded-circle translate-middle start-100 top-100 ms-n1 mt-n1"></div>
-                                            <!--end::Online-->
-                                        </div>
-                                        <!--end::Wrapper-->
-
-                                        <!--begin::Info-->
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <a href="#" class="fs-6 text-gray-800 text-hover-primary">Olivia Wild</a>
-
-                                            <div class="fw-semibold text-gray-500">olivia@corpmail.com</div>
-                                        </div>
-                                        <!--end::Info-->
-                                    </div>
-                                    <!--end::User-->
-                                </td>
-                                <td>Mar 10, 2025</td>
-                                <td>$880.00</td>
-                                <td>
-                                <span class="badge badge-light-danger fw-bold px-4 py-3">
-                                    Rejected                                </span>
-                                </td>
-                                <td class="text-end">
-                                    <a href="#" class="btn btn-light btn-sm">View</a>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <!--begin::User-->
-                                    <div class="d-flex align-items-center">
-                                        <!--begin::Wrapper-->
-                                        <div class="me-5 position-relative">
-                                            <!--begin::Avatar-->
-                                            <div class="symbol symbol-35px symbol-circle">
-                                                                                            <span class="symbol-label bg-light-primary text-primary fw-semibold">
-                                                    N                                                </span>
-                                            </div>
-                                            <!--end::Avatar-->
-
-                                            <!--begin::Online-->
-                                            <div class="bg-success position-absolute h-8px w-8px rounded-circle translate-middle start-100 top-100 ms-n1 mt-n1"></div>
-                                            <!--end::Online-->
-                                        </div>
-                                        <!--end::Wrapper-->
-
-                                        <!--begin::Info-->
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <a href="#" class="fs-6 text-gray-800 text-hover-primary">Neil Owen</a>
-
-                                            <div class="fw-semibold text-gray-500">owen.neil@gmail.com</div>
-                                        </div>
-                                        <!--end::Info-->
-                                    </div>
-                                    <!--end::User-->
-                                </td>
-                                <td>Sep 22, 2025</td>
-                                <td>$994.00</td>
-                                <td>
-                                <span class="badge badge-light-info fw-bold px-4 py-3">
-                                    In progress                                </span>
-                                </td>
-                                <td class="text-end">
-                                    <a href="#" class="btn btn-light btn-sm">View</a>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <!--begin::User-->
-                                    <div class="d-flex align-items-center">
-                                        <!--begin::Wrapper-->
-                                        <div class="me-5 position-relative">
-                                            <!--begin::Avatar-->
-                                            <div class="symbol symbol-35px symbol-circle">
-                                                <img alt="Pic" src="../../assets/media/avatars/300-23.jpg" />
-                                            </div>
-                                            <!--end::Avatar-->
-
-                                        </div>
-                                        <!--end::Wrapper-->
-
-                                        <!--begin::Info-->
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <a href="#" class="fs-6 text-gray-800 text-hover-primary">Dan Wilson</a>
-
-                                            <div class="fw-semibold text-gray-500">dam@consilting.com</div>
-                                        </div>
-                                        <!--end::Info-->
-                                    </div>
-                                    <!--end::User-->
-                                </td>
-                                <td>Sep 22, 2025</td>
-                                <td>$608.00</td>
-                                <td>
-                                <span class="badge badge-light-warning fw-bold px-4 py-3">
-                                    Pending                                </span>
-                                </td>
-                                <td class="text-end">
-                                    <a href="#" class="btn btn-light btn-sm">View</a>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <!--begin::User-->
-                                    <div class="d-flex align-items-center">
-                                        <!--begin::Wrapper-->
-                                        <div class="me-5 position-relative">
-                                            <!--begin::Avatar-->
-                                            <div class="symbol symbol-35px symbol-circle">
-                                                                                            <span class="symbol-label bg-light-danger text-danger fw-semibold">
-                                                    E                                                </span>
-                                            </div>
-                                            <!--end::Avatar-->
-
-                                            <!--begin::Online-->
-                                            <div class="bg-success position-absolute h-8px w-8px rounded-circle translate-middle start-100 top-100 ms-n1 mt-n1"></div>
-                                            <!--end::Online-->
-                                        </div>
-                                        <!--end::Wrapper-->
-
-                                        <!--begin::Info-->
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <a href="#" class="fs-6 text-gray-800 text-hover-primary">Emma Bold</a>
-
-                                            <div class="fw-semibold text-gray-500">emma@intenso.com</div>
-                                        </div>
-                                        <!--end::Info-->
-                                    </div>
-                                    <!--end::User-->
-                                </td>
-                                <td>Apr 15, 2025</td>
-                                <td>$597.00</td>
-                                <td>
-                                <span class="badge badge-light-info fw-bold px-4 py-3">
-                                    In progress                                </span>
-                                </td>
-                                <td class="text-end">
-                                    <a href="#" class="btn btn-light btn-sm">View</a>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <!--begin::User-->
-                                    <div class="d-flex align-items-center">
-                                        <!--begin::Wrapper-->
-                                        <div class="me-5 position-relative">
-                                            <!--begin::Avatar-->
-                                            <div class="symbol symbol-35px symbol-circle">
-                                                <img alt="Pic" src="../../assets/media/avatars/300-12.jpg" />
-                                            </div>
-                                            <!--end::Avatar-->
-
-                                        </div>
-                                        <!--end::Wrapper-->
-
-                                        <!--begin::Info-->
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <a href="#" class="fs-6 text-gray-800 text-hover-primary">Ana Crown</a>
-
-                                            <div class="fw-semibold text-gray-500">ana.cf@limtel.com</div>
-                                        </div>
-                                        <!--end::Info-->
-                                    </div>
-                                    <!--end::User-->
-                                </td>
-                                <td>Jul 25, 2025</td>
-                                <td>$544.00</td>
-                                <td>
-                                <span class="badge badge-light-warning fw-bold px-4 py-3">
-                                    Pending                                </span>
-                                </td>
-                                <td class="text-end">
-                                    <a href="#" class="btn btn-light btn-sm">View</a>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <!--begin::User-->
-                                    <div class="d-flex align-items-center">
-                                        <!--begin::Wrapper-->
-                                        <div class="me-5 position-relative">
-                                            <!--begin::Avatar-->
-                                            <div class="symbol symbol-35px symbol-circle">
-                                                                                            <span class="symbol-label bg-light-info text-info fw-semibold">
-                                                    A                                                </span>
-                                            </div>
-                                            <!--end::Avatar-->
-
-                                            <!--begin::Online-->
-                                            <div class="bg-success position-absolute h-8px w-8px rounded-circle translate-middle start-100 top-100 ms-n1 mt-n1"></div>
-                                            <!--end::Online-->
-                                        </div>
-                                        <!--end::Wrapper-->
-
-                                        <!--begin::Info-->
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <a href="#" class="fs-6 text-gray-800 text-hover-primary">Robert Doe</a>
-
-                                            <div class="fw-semibold text-gray-500">robert@benko.com</div>
-                                        </div>
-                                        <!--end::Info-->
-                                    </div>
-                                    <!--end::User-->
-                                </td>
-                                <td>Jul 25, 2025</td>
-                                <td>$402.00</td>
-                                <td>
-                                <span class="badge badge-light-info fw-bold px-4 py-3">
-                                    In progress                                </span>
-                                </td>
-                                <td class="text-end">
-                                    <a href="#" class="btn btn-light btn-sm">View</a>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <!--begin::User-->
-                                    <div class="d-flex align-items-center">
-                                        <!--begin::Wrapper-->
-                                        <div class="me-5 position-relative">
-                                            <!--begin::Avatar-->
-                                            <div class="symbol symbol-35px symbol-circle">
-                                                <img alt="Pic" src="../../assets/media/avatars/300-13.jpg" />
-                                            </div>
-                                            <!--end::Avatar-->
-
-                                        </div>
-                                        <!--end::Wrapper-->
-
-                                        <!--begin::Info-->
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <a href="#" class="fs-6 text-gray-800 text-hover-primary">John Miller</a>
-
-                                            <div class="fw-semibold text-gray-500">miller@mapple.com</div>
-                                        </div>
-                                        <!--end::Info-->
-                                    </div>
-                                    <!--end::User-->
-                                </td>
-                                <td>Mar 10, 2025</td>
-                                <td>$749.00</td>
-                                <td>
-                                <span class="badge badge-light-info fw-bold px-4 py-3">
-                                    In progress                                </span>
-                                </td>
-                                <td class="text-end">
-                                    <a href="#" class="btn btn-light btn-sm">View</a>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <!--begin::User-->
-                                    <div class="d-flex align-items-center">
-                                        <!--begin::Wrapper-->
-                                        <div class="me-5 position-relative">
-                                            <!--begin::Avatar-->
-                                            <div class="symbol symbol-35px symbol-circle">
-                                                                                            <span class="symbol-label bg-light-success text-success fw-semibold">
-                                                    L                                                </span>
-                                            </div>
-                                            <!--end::Avatar-->
-
-                                            <!--begin::Online-->
-                                            <div class="bg-success position-absolute h-8px w-8px rounded-circle translate-middle start-100 top-100 ms-n1 mt-n1"></div>
-                                            <!--end::Online-->
-                                        </div>
-                                        <!--end::Wrapper-->
-
-                                        <!--begin::Info-->
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <a href="#" class="fs-6 text-gray-800 text-hover-primary">Lucy Kunic</a>
-
-                                            <div class="fw-semibold text-gray-500">lucy.m@fentech.com</div>
-                                        </div>
-                                        <!--end::Info-->
-                                    </div>
-                                    <!--end::User-->
-                                </td>
-                                <td>Sep 22, 2025</td>
-                                <td>$811.00</td>
-                                <td>
-                                <span class="badge badge-light-warning fw-bold px-4 py-3">
-                                    Pending                                </span>
-                                </td>
-                                <td class="text-end">
-                                    <a href="#" class="btn btn-light btn-sm">View</a>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <!--begin::User-->
-                                    <div class="d-flex align-items-center">
-                                        <!--begin::Wrapper-->
-                                        <div class="me-5 position-relative">
-                                            <!--begin::Avatar-->
-                                            <div class="symbol symbol-35px symbol-circle">
-                                                <img alt="Pic" src="../../assets/media/avatars/300-21.jpg" />
-                                            </div>
-                                            <!--end::Avatar-->
-
-                                            <!--begin::Online-->
-                                            <div class="bg-success position-absolute h-8px w-8px rounded-circle translate-middle start-100 top-100 ms-n1 mt-n1"></div>
-                                            <!--end::Online-->
-                                        </div>
-                                        <!--end::Wrapper-->
-
-                                        <!--begin::Info-->
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <a href="#" class="fs-6 text-gray-800 text-hover-primary">Ethan Wilder</a>
-
-                                            <div class="fw-semibold text-gray-500">ethan@loop.com.au</div>
-                                        </div>
-                                        <!--end::Info-->
-                                    </div>
-                                    <!--end::User-->
-                                </td>
-                                <td>Jun 24, 2025</td>
-                                <td>$710.00</td>
-                                <td>
-                                <span class="badge badge-light-danger fw-bold px-4 py-3">
-                                    Rejected                                </span>
-                                </td>
-                                <td class="text-end">
-                                    <a href="#" class="btn btn-light btn-sm">View</a>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <!--begin::User-->
-                                    <div class="d-flex align-items-center">
-                                        <!--begin::Wrapper-->
-                                        <div class="me-5 position-relative">
-                                            <!--begin::Avatar-->
-                                            <div class="symbol symbol-35px symbol-circle">
-                                                <img alt="Pic" src="../../assets/media/avatars/300-6.jpg" />
-                                            </div>
-                                            <!--end::Avatar-->
-
-                                        </div>
-                                        <!--end::Wrapper-->
-
-                                        <!--begin::Info-->
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <a href="#" class="fs-6 text-gray-800 text-hover-primary">Emma Smith</a>
-
-                                            <div class="fw-semibold text-gray-500">smith@kpmg.com</div>
-                                        </div>
-                                        <!--end::Info-->
-                                    </div>
-                                    <!--end::User-->
-                                </td>
-                                <td>Jul 25, 2025</td>
-                                <td>$876.00</td>
-                                <td>
-                                <span class="badge badge-light-warning fw-bold px-4 py-3">
-                                    Pending                                </span>
-                                </td>
-                                <td class="text-end">
-                                    <a href="#" class="btn btn-light btn-sm">View</a>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <!--begin::User-->
-                                    <div class="d-flex align-items-center">
-                                        <!--begin::Wrapper-->
-                                        <div class="me-5 position-relative">
-                                            <!--begin::Avatar-->
-                                            <div class="symbol symbol-35px symbol-circle">
-                                                <img alt="Pic" src="../../assets/media/avatars/300-23.jpg" />
-                                            </div>
-                                            <!--end::Avatar-->
-
-                                        </div>
-                                        <!--end::Wrapper-->
-
-                                        <!--begin::Info-->
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <a href="#" class="fs-6 text-gray-800 text-hover-primary">Dan Wilson</a>
-
-                                            <div class="fw-semibold text-gray-500">dam@consilting.com</div>
-                                        </div>
-                                        <!--end::Info-->
-                                    </div>
-                                    <!--end::User-->
-                                </td>
-                                <td>Jun 24, 2025</td>
-                                <td>$615.00</td>
-                                <td>
-                                <span class="badge badge-light-warning fw-bold px-4 py-3">
-                                    Pending                                </span>
-                                </td>
-                                <td class="text-end">
-                                    <a href="#" class="btn btn-light btn-sm">View</a>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <!--begin::User-->
-                                    <div class="d-flex align-items-center">
-                                        <!--begin::Wrapper-->
-                                        <div class="me-5 position-relative">
-                                            <!--begin::Avatar-->
-                                            <div class="symbol symbol-35px symbol-circle">
-                                                <img alt="Pic" src="../../assets/media/avatars/300-5.jpg" />
-                                            </div>
-                                            <!--end::Avatar-->
-
-                                        </div>
-                                        <!--end::Wrapper-->
-
-                                        <!--begin::Info-->
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <a href="#" class="fs-6 text-gray-800 text-hover-primary">Sean Bean</a>
-
-                                            <div class="fw-semibold text-gray-500">sean@dellito.com</div>
-                                        </div>
-                                        <!--end::Info-->
-                                    </div>
-                                    <!--end::User-->
-                                </td>
-                                <td>Sep 22, 2025</td>
-                                <td>$602.00</td>
-                                <td>
-                                <span class="badge badge-light-danger fw-bold px-4 py-3">
-                                    Rejected                                </span>
-                                </td>
-                                <td class="text-end">
-                                    <a href="#" class="btn btn-light btn-sm">View</a>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <!--begin::User-->
-                                    <div class="d-flex align-items-center">
-                                        <!--begin::Wrapper-->
-                                        <div class="me-5 position-relative">
-                                            <!--begin::Avatar-->
-                                            <div class="symbol symbol-35px symbol-circle">
-                                                                                            <span class="symbol-label bg-light-danger text-danger fw-semibold">
-                                                    E                                                </span>
-                                            </div>
-                                            <!--end::Avatar-->
-
-                                            <!--begin::Online-->
-                                            <div class="bg-success position-absolute h-8px w-8px rounded-circle translate-middle start-100 top-100 ms-n1 mt-n1"></div>
-                                            <!--end::Online-->
-                                        </div>
-                                        <!--end::Wrapper-->
-
-                                        <!--begin::Info-->
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <a href="#" class="fs-6 text-gray-800 text-hover-primary">Emma Bold</a>
-
-                                            <div class="fw-semibold text-gray-500">emma@intenso.com</div>
-                                        </div>
-                                        <!--end::Info-->
-                                    </div>
-                                    <!--end::User-->
-                                </td>
-                                <td>Mar 10, 2025</td>
-                                <td>$862.00</td>
-                                <td>
-                                <span class="badge badge-light-warning fw-bold px-4 py-3">
-                                    Pending                                </span>
-                                </td>
-                                <td class="text-end">
-                                    <a href="#" class="btn btn-light btn-sm">View</a>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <!--begin::User-->
-                                    <div class="d-flex align-items-center">
-                                        <!--begin::Wrapper-->
-                                        <div class="me-5 position-relative">
-                                            <!--begin::Avatar-->
-                                            <div class="symbol symbol-35px symbol-circle">
-                                                <img alt="Pic" src="../../assets/media/avatars/300-13.jpg" />
-                                            </div>
-                                            <!--end::Avatar-->
-
-                                        </div>
-                                        <!--end::Wrapper-->
-
-                                        <!--begin::Info-->
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <a href="#" class="fs-6 text-gray-800 text-hover-primary">John Miller</a>
-
-                                            <div class="fw-semibold text-gray-500">miller@mapple.com</div>
-                                        </div>
-                                        <!--end::Info-->
-                                    </div>
-                                    <!--end::User-->
-                                </td>
-                                <td>Jun 24, 2025</td>
-                                <td>$877.00</td>
-                                <td>
-                                <span class="badge badge-light-danger fw-bold px-4 py-3">
-                                    Rejected                                </span>
-                                </td>
-                                <td class="text-end">
-                                    <a href="#" class="btn btn-light btn-sm">View</a>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <!--begin::User-->
-                                    <div class="d-flex align-items-center">
-                                        <!--begin::Wrapper-->
-                                        <div class="me-5 position-relative">
-                                            <!--begin::Avatar-->
-                                            <div class="symbol symbol-35px symbol-circle">
-                                                                                            <span class="symbol-label bg-light-primary text-primary fw-semibold">
-                                                    N                                                </span>
-                                            </div>
-                                            <!--end::Avatar-->
-
-                                            <!--begin::Online-->
-                                            <div class="bg-success position-absolute h-8px w-8px rounded-circle translate-middle start-100 top-100 ms-n1 mt-n1"></div>
-                                            <!--end::Online-->
-                                        </div>
-                                        <!--end::Wrapper-->
-
-                                        <!--begin::Info-->
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <a href="#" class="fs-6 text-gray-800 text-hover-primary">Neil Owen</a>
-
-                                            <div class="fw-semibold text-gray-500">owen.neil@gmail.com</div>
-                                        </div>
-                                        <!--end::Info-->
-                                    </div>
-                                    <!--end::User-->
-                                </td>
-                                <td>Jun 24, 2025</td>
-                                <td>$755.00</td>
-                                <td>
-                                <span class="badge badge-light-info fw-bold px-4 py-3">
-                                    In progress                                </span>
-                                </td>
-                                <td class="text-end">
-                                    <a href="#" class="btn btn-light btn-sm">View</a>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <!--begin::User-->
-                                    <div class="d-flex align-items-center">
-                                        <!--begin::Wrapper-->
-                                        <div class="me-5 position-relative">
-                                            <!--begin::Avatar-->
-                                            <div class="symbol symbol-35px symbol-circle">
-                                                                                            <span class="symbol-label bg-light-danger text-danger fw-semibold">
-                                                    E                                                </span>
-                                            </div>
-                                            <!--end::Avatar-->
-
-                                            <!--begin::Online-->
-                                            <div class="bg-success position-absolute h-8px w-8px rounded-circle translate-middle start-100 top-100 ms-n1 mt-n1"></div>
-                                            <!--end::Online-->
-                                        </div>
-                                        <!--end::Wrapper-->
-
-                                        <!--begin::Info-->
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <a href="#" class="fs-6 text-gray-800 text-hover-primary">Emma Bold</a>
-
-                                            <div class="fw-semibold text-gray-500">emma@intenso.com</div>
-                                        </div>
-                                        <!--end::Info-->
-                                    </div>
-                                    <!--end::User-->
-                                </td>
-                                <td>May 05, 2025</td>
-                                <td>$565.00</td>
-                                <td>
-                                <span class="badge badge-light-warning fw-bold px-4 py-3">
-                                    Pending                                </span>
-                                </td>
-                                <td class="text-end">
-                                    <a href="#" class="btn btn-light btn-sm">View</a>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <!--begin::User-->
-                                    <div class="d-flex align-items-center">
-                                        <!--begin::Wrapper-->
-                                        <div class="me-5 position-relative">
-                                            <!--begin::Avatar-->
-                                            <div class="symbol symbol-35px symbol-circle">
-                                                <img alt="Pic" src="../../assets/media/avatars/300-1.jpg" />
-                                            </div>
-                                            <!--end::Avatar-->
-
-                                        </div>
-                                        <!--end::Wrapper-->
-
-                                        <!--begin::Info-->
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <a href="#" class="fs-6 text-gray-800 text-hover-primary">Max Smith</a>
-
-                                            <div class="fw-semibold text-gray-500">max@kt.com</div>
-                                        </div>
-                                        <!--end::Info-->
-                                    </div>
-                                    <!--end::User-->
-                                </td>
-                                <td>Jun 24, 2025</td>
-                                <td>$991.00</td>
-                                <td>
-                                <span class="badge badge-light-danger fw-bold px-4 py-3">
-                                    Rejected                                </span>
-                                </td>
-                                <td class="text-end">
-                                    <a href="#" class="btn btn-light btn-sm">View</a>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <!--begin::User-->
-                                    <div class="d-flex align-items-center">
-                                        <!--begin::Wrapper-->
-                                        <div class="me-5 position-relative">
-                                            <!--begin::Avatar-->
-                                            <div class="symbol symbol-35px symbol-circle">
-                                                <img alt="Pic" src="../../assets/media/avatars/300-5.jpg" />
-                                            </div>
-                                            <!--end::Avatar-->
-
-                                        </div>
-                                        <!--end::Wrapper-->
-
-                                        <!--begin::Info-->
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <a href="#" class="fs-6 text-gray-800 text-hover-primary">Sean Bean</a>
-
-                                            <div class="fw-semibold text-gray-500">sean@dellito.com</div>
-                                        </div>
-                                        <!--end::Info-->
-                                    </div>
-                                    <!--end::User-->
-                                </td>
-                                <td>Sep 22, 2025</td>
-                                <td>$427.00</td>
-                                <td>
-                                <span class="badge badge-light-danger fw-bold px-4 py-3">
-                                    Rejected                                </span>
-                                </td>
-                                <td class="text-end">
-                                    <a href="#" class="btn btn-light btn-sm">View</a>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <!--begin::User-->
-                                    <div class="d-flex align-items-center">
-                                        <!--begin::Wrapper-->
-                                        <div class="me-5 position-relative">
-                                            <!--begin::Avatar-->
-                                            <div class="symbol symbol-35px symbol-circle">
-                                                <img alt="Pic" src="../../assets/media/avatars/300-9.jpg" />
-                                            </div>
-                                            <!--end::Avatar-->
-
-                                        </div>
-                                        <!--end::Wrapper-->
-
-                                        <!--begin::Info-->
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <a href="#" class="fs-6 text-gray-800 text-hover-primary">Francis Mitcham</a>
-
-                                            <div class="fw-semibold text-gray-500">f.mit@kpmg.com</div>
-                                        </div>
-                                        <!--end::Info-->
-                                    </div>
-                                    <!--end::User-->
-                                </td>
-                                <td>Oct 25, 2025</td>
-                                <td>$535.00</td>
-                                <td>
-                                <span class="badge badge-light-success fw-bold px-4 py-3">
-                                    Approved                                </span>
-                                </td>
-                                <td class="text-end">
-                                    <a href="#" class="btn btn-light btn-sm">View</a>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <!--begin::User-->
-                                    <div class="d-flex align-items-center">
-                                        <!--begin::Wrapper-->
-                                        <div class="me-5 position-relative">
-                                            <!--begin::Avatar-->
-                                            <div class="symbol symbol-35px symbol-circle">
-                                                <img alt="Pic" src="../../assets/media/avatars/300-12.jpg" />
-                                            </div>
-                                            <!--end::Avatar-->
-
-                                        </div>
-                                        <!--end::Wrapper-->
-
-                                        <!--begin::Info-->
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <a href="#" class="fs-6 text-gray-800 text-hover-primary">Ana Crown</a>
-
-                                            <div class="fw-semibold text-gray-500">ana.cf@limtel.com</div>
-                                        </div>
-                                        <!--end::Info-->
-                                    </div>
-                                    <!--end::User-->
-                                </td>
-                                <td>Jul 25, 2025</td>
-                                <td>$584.00</td>
-                                <td>
-                                <span class="badge badge-light-danger fw-bold px-4 py-3">
-                                    Rejected                                </span>
-                                </td>
-                                <td class="text-end">
-                                    <a href="#" class="btn btn-light btn-sm">View</a>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <!--begin::User-->
-                                    <div class="d-flex align-items-center">
-                                        <!--begin::Wrapper-->
-                                        <div class="me-5 position-relative">
-                                            <!--begin::Avatar-->
-                                            <div class="symbol symbol-35px symbol-circle">
-                                                <img alt="Pic" src="../../assets/media/avatars/300-21.jpg" />
-                                            </div>
-                                            <!--end::Avatar-->
-
-                                            <!--begin::Online-->
-                                            <div class="bg-success position-absolute h-8px w-8px rounded-circle translate-middle start-100 top-100 ms-n1 mt-n1"></div>
-                                            <!--end::Online-->
-                                        </div>
-                                        <!--end::Wrapper-->
-
-                                        <!--begin::Info-->
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <a href="#" class="fs-6 text-gray-800 text-hover-primary">Ethan Wilder</a>
-
-                                            <div class="fw-semibold text-gray-500">ethan@loop.com.au</div>
-                                        </div>
-                                        <!--end::Info-->
-                                    </div>
-                                    <!--end::User-->
-                                </td>
-                                <td>Nov 10, 2025</td>
-                                <td>$678.00</td>
-                                <td>
-                                <span class="badge badge-light-danger fw-bold px-4 py-3">
-                                    Rejected                                </span>
-                                </td>
-                                <td class="text-end">
-                                    <a href="#" class="btn btn-light btn-sm">View</a>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <!--begin::User-->
-                                    <div class="d-flex align-items-center">
-                                        <!--begin::Wrapper-->
-                                        <div class="me-5 position-relative">
-                                            <!--begin::Avatar-->
-                                            <div class="symbol symbol-35px symbol-circle">
-                                                                                            <span class="symbol-label bg-light-danger text-danger fw-semibold">
-                                                    E                                                </span>
-                                            </div>
-                                            <!--end::Avatar-->
-
-                                            <!--begin::Online-->
-                                            <div class="bg-success position-absolute h-8px w-8px rounded-circle translate-middle start-100 top-100 ms-n1 mt-n1"></div>
-                                            <!--end::Online-->
-                                        </div>
-                                        <!--end::Wrapper-->
-
-                                        <!--begin::Info-->
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <a href="#" class="fs-6 text-gray-800 text-hover-primary">Emma Bold</a>
-
-                                            <div class="fw-semibold text-gray-500">emma@intenso.com</div>
-                                        </div>
-                                        <!--end::Info-->
-                                    </div>
-                                    <!--end::User-->
-                                </td>
-                                <td>Oct 25, 2025</td>
-                                <td>$477.00</td>
-                                <td>
-                                <span class="badge badge-light-danger fw-bold px-4 py-3">
-                                    Rejected                                </span>
-                                </td>
-                                <td class="text-end">
-                                    <a href="#" class="btn btn-light btn-sm">View</a>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <!--begin::User-->
-                                    <div class="d-flex align-items-center">
-                                        <!--begin::Wrapper-->
-                                        <div class="me-5 position-relative">
-                                            <!--begin::Avatar-->
-                                            <div class="symbol symbol-35px symbol-circle">
-                                                                                            <span class="symbol-label bg-light-danger text-danger fw-semibold">
-                                                    M                                                </span>
-                                            </div>
-                                            <!--end::Avatar-->
-
-                                            <!--begin::Online-->
-                                            <div class="bg-success position-absolute h-8px w-8px rounded-circle translate-middle start-100 top-100 ms-n1 mt-n1"></div>
-                                            <!--end::Online-->
-                                        </div>
-                                        <!--end::Wrapper-->
-
-                                        <!--begin::Info-->
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <a href="#" class="fs-6 text-gray-800 text-hover-primary">Melody Macy</a>
-
-                                            <div class="fw-semibold text-gray-500">melody@altbox.com</div>
-                                        </div>
-                                        <!--end::Info-->
-                                    </div>
-                                    <!--end::User-->
-                                </td>
-                                <td>Sep 22, 2025</td>
-                                <td>$556.00</td>
-                                <td>
-                                <span class="badge badge-light-warning fw-bold px-4 py-3">
-                                    Pending                                </span>
-                                </td>
-                                <td class="text-end">
-                                    <a href="#" class="btn btn-light btn-sm">View</a>
-                                </td>
-                            </tr>
+                            @endforeach
                             </tbody>
                         </table>
                         <!--end::Table-->
@@ -4282,27 +1759,7 @@
                 </div>
                 <!--end::Card body-->
             </div>
-            <!--end::Card-->
+            <!--end::Table-->
         </div>
     </div>
-    <div id="kt_app_footer" class="app-footer  d-flex flex-column flex-md-row align-items-center flex-center flex-md-stack py-2 py-lg-4 " >
-
-
-
-        <!--begin::Copyright-->
-        <div class="text-gray-900 order-2 order-md-1">
-            <span class="text-muted fw-semibold me-1">2025&copy;</span>
-            <a href="https://keenthemes.com/" target="_blank" class="text-gray-800 text-hover-primary">Keenthemes</a>
-        </div>
-        <!--end::Copyright-->
-
-        <!--begin::Menu-->
-        <ul class="menu menu-gray-600 menu-hover-primary fw-semibold order-1">
-            <li class="menu-item"><a href="https://keenthemes.com/" target="_blank" class="menu-link px-2">About</a></li>
-
-            <li class="menu-item"><a href="https://devs.keenthemes.com/" target="_blank" class="menu-link px-2">Support</a></li>
-
-            <li class="menu-item"><a href="https://1.envato.market/EA4JP" target="_blank" class="menu-link px-2">Purchase</a></li>
-        </ul>
-        <!--end::Menu-->    </div>
 </x-layout>

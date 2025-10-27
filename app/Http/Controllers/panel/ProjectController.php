@@ -7,12 +7,14 @@ use App\Http\Requests\ProjectStoreRequest;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Department;
+use App\Models\Photo;
 use App\Models\Project;
 use App\Models\Task;
 use App\Models\User;
 use App\Services\ProjectService;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
@@ -37,6 +39,43 @@ class ProjectController extends Controller
     {
         $tasks = Task::where('project_id',$project->id)->get();
         return view('proMan.projects.tasks',get_defined_vars());
+    }
+
+    public function file(Project $project)
+    {
+        $tasks = Task::with(['photos','project'])->where('project_id',$project->id)->get();
+        $task_files = [];
+        foreach ($tasks as $task)
+        {
+            $task_files = $task->photos->toArray();
+        }
+        $files_array = array_merge($task_files , $project->photos->toArray());
+
+        $collection = collect($files_array);
+        $currentPage = request()->get('page', 1);
+        $perPage = 10;
+
+        $currentPageItems = $collection->slice(($currentPage - 1) * $perPage, $perPage)->values();
+
+        $resultFiles = new LengthAwarePaginator(
+            $currentPageItems,
+            $collection->count(),
+            $perPage,
+            $currentPage,
+            ['path' => request()->url(), 'query' => request()->query()]
+        );
+
+        return view('proMan.projects.files',get_defined_vars());
+    }
+    public function member(Project $project)
+    {
+        $memberRoles = ['Member'];
+        $members = User::whereHas('roles', function ($query) use ($memberRoles) {
+            $query->whereIn('name', $memberRoles);
+        })->whereStatus('1')->latest()->get();
+
+        return view('proMan.projects.members',get_defined_vars());
+
     }
 
     /**
@@ -82,6 +121,18 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
+        $tasks = Task::with(['photos','project'])->where('project_id',$project->id)->get();
+        $task_files = [];
+        foreach ($tasks as $task)
+        {
+            $task_files = $task->photos->toArray();
+        }
+        $files_array = array_merge($task_files , $project->photos->toArray());
+        $file_collection = collect($files_array)->take(5);
+        $total_files = collect($files_array)->count();
+
+
+        $tasks = Task::with(['project','manager','watcher','assigners','photos','predecessors','successors'])->where('project_id',$project->id)->paginate(15);
         return view('proMan.projects.show',get_defined_vars());
     }
 
@@ -132,4 +183,6 @@ class ProjectController extends Controller
             return redirect()->back()->with('err_message', 'خطایی رخ داد مجددا تلاش کنید');
         }
     }
+
+
 }

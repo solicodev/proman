@@ -290,7 +290,7 @@
                 <div class="col-md-6 col-xl-4">
 
                     <!--begin::Card-->
-                    <a href="{{route('dashboard.project.edit',$project->id)}}" class="card border-hover-primary ">
+                    <div href="" class="card border-hover-primary ">
                         <!--begin::Card header-->
                         <div class="card-header border-0 pt-9">
                             <!--begin::Card Title-->
@@ -319,9 +319,12 @@
                         <!--begin:: Card body-->
                         <div class="card-body p-9">
                             <!--begin::Name-->
-                            <div class="fs-3 fw-bold text-gray-900">
-                                {{$project->name}}
-                            </div>
+                            <a href="{{route('dashboard.project.show',$project->id)}}">
+                                <div class="fs-3 fw-bold text-light-primary-900 ">
+                                    {{$project->name}}
+                                </div>
+                            </a>
+
                             <!--end::Name-->
 
                             <!--begin::Description-->
@@ -362,33 +365,46 @@
                             <!--end::Progress-->
 
                             <!--begin::Users-->
-                            <div class="symbol-group symbol-hover d-flex align-items-center">
-                                <!--begin::User-->
-                                @if(count($project->members) > 0)
-                                    @foreach($project->members as $member)
-                                        <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
-                                             title="{{ $member->Name }}">
-                                            @if(isset($member->photo_id))
-                                                <img alt="Pic" src="{{ route('home') }}/{{ $member->photo?->path }}" />
-                                            @else
-                                                <span class="symbol-label bg-info text-inverse-primary fw-bold text-info symbol-style">
-                                                    {{ mb_substr($member->Name, 0, 1) }}
-                                                </span>
-                                            @endif
-                                        </div>
-                                    @endforeach
-                                @else
-                                    <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"></div>
-                                @endif
+                            <div class="symbol-group symbol-hover d-flex justify-content-between align-items-center">
+                                <div class="d-flex">
+                                    @if(count($project->members) > 0)
+                                        @foreach($project->members as $member)
+                                            <div class="symbol symbol-35px symbol-circle me-2" data-bs-toggle="tooltip"
+                                                 title="{{ $member->Name }}">
+                                                @if(isset($member->photo_id))
+                                                    <img alt="Pic" src="{{ route('home') }}/{{ $member->photo?->path }}" />
+                                                @else
+                                                    <span class="symbol-label bg-info text-inverse-primary fw-bold text-info symbol-style">
+                            {{ mb_substr($member->Name, 0, 1) }}
+                        </span>
+                                                @endif
+                                            </div>
+                                        @endforeach
+                                    @else
+                                        <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"></div>
+                                    @endif
+                                </div>
 
+                                <div class="d-flex gap-2">
+                                    <a href="{{route('dashboard.project.edit',$project->id)}}"
+                                       class="btn btn-sm  btn-light-primary">
+                                        ویرایش<i class="ki-outline ki-pencil fs-3 ps-3"></i>
+                                    </a>
 
-                                <button class="btn btn-sm btn-light-primary ms-auto">ویرایش<i class="ki-outline ki-pencil fs-1 ps-3"></i></button>
+                                    <a href="{{route('dashboard.project.destroy',$project->id)}}"
+                                       class="btn btn-sm btn-icon btn-icon-danger"
+                                       data-bs-toggle="tooltip" data-bs-placement="top" title="حذف"
+                                       onclick="return confirm('اطمینان دارید پروژه حذف شود؟');">
+                                        <i class="ki-outline ki-trash fs-3 ps-3"></i>
+                                    </a>
+                                </div>
                             </div>
+
 
                             <!--end::Users-->
                         </div>
                         <!--end:: Card body-->
-                    </a>
+                    </div>
                     <!--end::Card-->
 
                 </div>
