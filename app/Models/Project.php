@@ -77,6 +77,6 @@ class Project extends Model
 
     public function dependencies() // project dependency for PR->PO->GR
     {
-        return $this->morphMany(ProjectDependency::class, 'project_dependencies');
+        return $this->belongsToMany(ProjectDependency::class, 'project_dependencies','project_id');
     }
 }

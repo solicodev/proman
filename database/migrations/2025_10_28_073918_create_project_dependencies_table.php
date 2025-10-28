@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('project_dependencies', function (Blueprint $table) {
             $table->id();
-            $table->morphs('dependent');
-
+            $table->string('title')->nullable();
+            $table->text('description')->nullable();
             $table->unsignedBigInteger('project_id');
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
 
