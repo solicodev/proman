@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Photo;
 use App\Models\Project;
+use App\Models\ProjectDependency;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 
@@ -73,6 +74,36 @@ class ProjectService
         }
 
         $project->members()->sync($param['members']);
+        return $project;
+    }
+
+    public function option(array $param , Project $project)
+    {
+        if (isset($param['title_dependencies'])) {
+            foreach ($param['title_dependencies'] as $key => $dependency) {
+                if (isset($project->dependencies[$key])){
+                    $project->dependencies[$key]->title = $dependency;
+                    $project->dependencies[$key]->description = $dependency;
+                    $project->dependencies[$key]->save();
+                }else {
+                    $project_dependency = new ProjectDependency();
+                    $project_dependency->title = $dependency;
+                    $project_dependency->project_id  = $project->id;
+                    $project->dependencies()->save($project_dependency);
+                }
+            }
+        }
+        else
+        {
+            for ($i=0; $i<count($param['title_dependencies']); $i++)
+            {
+                $project_dependency = new ProjectDependency();
+                $project_dependency->title = $param['title_dependencies'][$i];
+                $project_dependency->description = $param['description_dependencies'][$i];
+                $project_dependency->project_id  = $project->id;
+                $project->dependencies()->save($project_dependency);
+            }
+        }
         return $project;
     }
 }

@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Models\Department;
 use App\Models\Photo;
 use App\Models\Project;
+use App\Models\ProjectDependency;
 use App\Models\Task;
 use App\Models\User;
 use App\Services\ProjectService;
@@ -76,6 +77,12 @@ class ProjectController extends Controller
 
         return view('proMan.projects.members',get_defined_vars());
 
+    }
+
+    public function dependency(Project $project)
+    {
+        $projectDependencies = ProjectDependency::where('project_id',$project->id)->paginate(12);
+        return view('proMan.projects.projectDependency',get_defined_vars());
     }
 
     /**
@@ -165,7 +172,18 @@ class ProjectController extends Controller
     {
         try {
             $this->projectService->update($request->all(),$project);
-            return redirect(route('proMan.project.index'))->with('flash_message', 'با موفقیت ویرایش شد');
+            return redirect(route('dashboard.project.show',$project->id))->with('flash_message', 'با موفقیت ویرایش شد');
+
+        } catch (Exception $exception) {
+            return redirect()->back()->with('err_message', $exception->getMessage());
+        }
+    }
+
+    public function option(Request $request,Project $project)
+    {
+        try {
+            $this->projectService->option($request->all(),$project);
+            return redirect(route('dashboard.project.show',$project->id))->with('flash_message', 'با موفقیت افزوده شد');
 
         } catch (Exception $exception) {
             return redirect()->back()->with('err_message', $exception->getMessage());

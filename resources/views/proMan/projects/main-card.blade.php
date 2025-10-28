@@ -257,6 +257,11 @@
                             تنظیمات
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-active-primary py-5 me-6 " href="{{route('dashboard.project.dependency',$project->id)}}">
+                            آپشن | جزییات پروژه
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>

@@ -1694,6 +1694,7 @@
                         <table id="kt_profile_overview_table" class="table table-row-bordered table-row-dashed gy-4 align-middle fw-bold text-start">
                             <thead class="fs-7 text-gray-500 text-uppercase text-start">
                             <tr>
+                                <th class="text-start">ردیف</th>
                                 <th class="text-start">ناظر تسک</th>
                                 <th class="text-start">عنوان تسک</th>
                                 <th class="text-start">تاریخ شروع تخمینی</th>
@@ -1706,6 +1707,7 @@
                             <tbody class="fs-6">
                             @foreach($tasks as $task)
                             <tr>
+                                <td>{{$loop->iteration}}</td>
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <div class="me-5 position-relative">

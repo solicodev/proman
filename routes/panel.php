@@ -17,11 +17,13 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
         Route::get('/tasks/{project}', [ProjectController::class, 'task'])->name('task');
         Route::get('/files/{project}', [ProjectController::class, 'file'])->name('file');
         Route::get('/members/{project}', [ProjectController::class, 'member'])->name('member');
+        Route::get('/dependencies/{project}', [ProjectController::class, 'dependency'])->name('dependency');
 
         Route::get('/create', [ProjectController::class, 'create'])->name('create');
         Route::post('/store', [ProjectController::class, 'store'])->name('store');
         Route::get('/edit/{project}', [ProjectController::class, 'edit'])->name('edit');
         Route::put('/update/{project}', [ProjectController::class, 'update'])->name('update');
+        Route::put('/option/{project}', [ProjectController::class, 'option'])->name('options');
         Route::get('/delete/{project}', [ProjectController::class, 'destroy'])->name('destroy');
     });
 
