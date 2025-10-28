@@ -133,6 +133,7 @@ class ProjectController extends Controller
 
 
         $tasks = Task::with(['project','manager','watcher','assigners','photos','predecessors','successors'])->where('project_id',$project->id)->paginate(15);
+
         return view('proMan.projects.show',get_defined_vars());
     }
 

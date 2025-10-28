@@ -9,7 +9,7 @@
                 </div>
                 <ul class="breadcrumb breadcrumb-separatorless fw-semibold mb-3 fs-7">
                     <li class="breadcrumb-item text-gray-700 fw-bold lh-1">
-                        <a href="{{route('dashboard.index')}}" class="text-white text-hover-primary">
+                        <a href="{{route('dashboard.index')}}" class="text-hover-primary">
                             <i class="ki-outline ki-home text-gray-700 fs-6"></i>
                         </a>
                     </li>
@@ -17,7 +17,7 @@
                         <i class="ki-outline ki-left fs-7 text-gray-700 mx-n1"></i>
                     </li>
                     <li class="breadcrumb-item text-gray-700 fw-bold lh-1">
-                        <a href="{{route('dashboard.project.index')}}" class="text-white text-hover-primary">
+                        <a href="{{route('dashboard.project.index')}}" class="text-hover-primary">
                             پروژه های من
                         </a>
                     </li>
@@ -41,7 +41,7 @@
             {{--                    </div>--}}
         </div>
     </div>
-    <div id="kt_app_content" class="app-content  flex-column-fluid " >
+    <div id="kt_app_content" class="app-content  flex-column-fluid" >
         <div class="card mb-6 mb-xl-9">
             <div class="card-body pt-9 pb-0">
                 <div class="d-flex flex-wrap flex-sm-nowrap mb-6">
@@ -55,7 +55,7 @@
                     <div class="flex-grow-1">
                         <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
                             <div class="d-flex flex-column w-100">
-                                <div class="d-flex align-items-center justify-content-between mb-1">
+                                <div class="d-flex align-items-center justify-content-between mb-5">
                                     <div class="d-flex align-items-center">
                                         <a href="#" class="text-gray-800 text-hover-primary fs-2 fw-bold me-3">
                                             {{ $project->name }}
@@ -206,15 +206,15 @@
                                 @endif
 
                             </div>
-                            <div class="symbol-group symbol-hover mb-3 col-12">
+                            <div class="symbol-group symbol-hover my-3 col-12">
                                 @if(count($project->members)>0)
                                     @foreach($project->members as $member)
                                         @if(!$member->photo_id)
-                                            <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="Alan Warden">
+                                            <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="{{$member->Name}}">
                                                 <span class="symbol-label bg-warning text-inverse-warning fw-bold">{{ mb_substr($member->Name, 0, 1) }}</span>
                                             </div>
                                         @else
-                                            <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="Michael Eberon">
+                                            <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="{{$member->Name}}">
                                                 <img alt="Pic" src="{{ route('home') }}/{{ $member->photo?->path }}" />
                                             </div>
                                         @endif

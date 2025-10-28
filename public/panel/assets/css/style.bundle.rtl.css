@@ -56935,7 +56935,7 @@ body {
 @media (min-width: 992px) {
     .app-sidebar {
         right: auto !important;
-        top: 160px !important;
+        top: 13% !important;
         transition: top .3s ease
     }
 
@@ -56946,7 +56946,8 @@ body {
 
     .app-sidebar-wrapper {
         border-radius: 1.5rem;
-        background-color: var(--bs-body-bg)
+        background-color: var(--bs-body-bg);
+        height:99%;
     }
 }
 

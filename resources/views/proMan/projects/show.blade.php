@@ -141,7 +141,7 @@
 
                             <!--begin::Card toolbar-->
                             <div class="card-toolbar">
-                                <a href="{{route('dashboard.project.task',$project->id)}}" class="btn btn-light btn-sm">مشاهده همه گزارشات پروژه<i class="ki-outline ki-eye fs-5 ps-3"></i></a>
+                                <a href="{{route('dashboard.project.task',$project->id)}}" class="btn btn-bg-light btn-active-color-primary btn-sm">مشاهده همه گزارشات پروژه<i class="ki-outline ki-eye fs-5 ps-3"></i></a>
                             </div>
                             <!--end::Card toolbar-->
                         </div>
@@ -1534,7 +1534,7 @@
                                 <div class="fs-6 text-gray-500">تعداد کل کامنت ها</div>
                             </div>
                             <div class="card-toolbar">
-                                <a href="#" class="btn btn-bg-light btn-active-color-primary btn-sm">مشاهده همه</a>
+                                <a href="#" class="btn btn-bg-light btn-active-color-primary btn-sm">مشاهده همه<i class="ki-outline ki-eye fs-5 ps-3"></i></a>
                             </div>
                         </div>
                         <div class="card-body d-flex flex-column p-9 pt-3 mb-9">

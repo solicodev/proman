@@ -29,6 +29,8 @@
     <link href="{{url('assets/admin/plugins/datetimepicker/css/classic.time.css')}}" rel="stylesheet" />
     <link href="{{url('assets/admin/plugins/datetimepicker/css/classic.date.css')}}" rel="stylesheet" />
     <link href="{{url('assets/admin/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.min.css')}}" rel="stylesheet"/>
+    <link href="{{url('panel/assets/plugins/custom/vis-timeline/vis-timeline.bundle.css')}}" rel="stylesheet" type="text/css" />
+
     @stack('styles')
 </head>
 <body id="kt_app_body" data-kt-app-sidebar-enabled="true" data-kt-app-sidebar-fixed="true"
@@ -86,6 +88,8 @@
 <script src="{{url('assets/admin/plugins/bootstrap-material-datetimepicker/js/moment.min.js')}}"></script>
 <script src="{{url('assets/admin/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.min.js')}}"></script>
 <script src="{{url('assets/admin/plugins/JalaliDatePicker/jalalidatepicker.min.js')}}"></script>
+
+<script src="{{url('panel/assets/plugins/custom/vis-timeline/vis-timeline.bundle.js')}}"></script>
 <script>
     jalaliDatepicker.startWatch({
         showTodayBtn: true,
