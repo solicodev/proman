@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\panel;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\DB;
 use App\Models\Task;
 use App\Models\TaskDependency;
 use App\Services\TaskSchedulerService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use function response;
 
 class TaskDependencyController extends Controller
