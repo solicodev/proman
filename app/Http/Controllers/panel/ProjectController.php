@@ -38,7 +38,7 @@ class ProjectController extends Controller
 
     public function task(Project $project)
     {
-        $tasks = Task::where('project_id',$project->id)->get();
+        $tasks = Task::with(['project','manager','watcher','assigners','photos','predecessors','successors'])->where('project_id',$project->id)->paginate(15);
         return view('proMan.projects.tasks',get_defined_vars());
     }
 

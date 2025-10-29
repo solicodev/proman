@@ -1,86 +1,34 @@
 <x-layout>
     <div class="d-flex flex-column flex-column-fluid" data-select2-id="select2-data-135-nh5p">
-
-        <!--begin::Toolbar-->
         <div id="kt_app_toolbar" class="app-toolbar  d-flex pb-3 pb-lg-5 ">
-
-            <!--begin::Toolbar container-->
             <div class="d-flex flex-stack flex-row-fluid">
-                <!--begin::Toolbar container-->
                 <div class="d-flex flex-column flex-row-fluid">
-                    <!--begin::Toolbar wrapper-->
-
-                    <!--begin::Page title-->
                     <div class="page-title d-flex align-items-center me-3">
-                        <!--begin::Title-->
                         <h1 class="page-heading d-flex flex-column justify-content-center text-gray-900 fw-bold fs-lg-2x gap-2">
-                            <span>افزودن پروژه</span>
-
+                            <span>افزودن تسک</span>
                         </h1>
-                        <!--end::Title-->
                     </div>
-                    <!--end::Page title-->
-
-
-                    <!--begin::Breadcrumb-->
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold mb-3 fs-7">
-
-                        <!--begin::Item-->
                         <li class="breadcrumb-item text-gray-700 fw-bold lh-1">
                             <a href="{{route('dashboard.index')}}" class="text-white text-hover-primary">
                                 <i class="ki-outline ki-home text-gray-700 fs-6"></i>
                             </a>
                         </li>
-                        <!--end::Item-->
-
-                        <!--begin::Item-->
                         <li class="breadcrumb-item">
                             <i class="ki-outline ki-left fs-7 text-gray-700 mx-n1"></i>
                         </li>
-                        <!--end::Item-->
-
-
-                        <!--begin::Item-->
                         <li class="breadcrumb-item text-gray-700 fw-bold lh-1">
-                            پروژه های من
+                            تسک های من
                         </li>
-                        <!--end::Item-->
-
-                        <!--begin::Item-->
                         <li class="breadcrumb-item">
                             <i class="ki-outline ki-left fs-7 text-gray-700 mx-n1"></i>
                         </li>
-                        <!--end::Item-->
-
-
-                        <!--begin::Item-->
                         <li class="breadcrumb-item text-gray-700 fw-bold lh-1">
-                            ایجاد پروژه
+                            ایجاد تسک
                         </li>
-                        <!--end::Item-->
-
-
-
                     </ul>
-                    <!--end::Breadcrumb-->
-
                 </div>
-                <!--end::Toolbar container-->
-
-                <!--begin::Actions-->
-                {{--                <div class="d-flex align-self-center flex-center flex-shrink-0">--}}
-                {{--                    <a href="#" class="btn btn-sm btn-success d-flex flex-center ms-3 px-4 py-3" data-bs-toggle="modal" data-bs-target="#kt_modal_invite_friends">--}}
-                {{--                        <i class="ki-outline ki-plus-square fs-2"></i>--}}
-                {{--                        <span>Invite</span>--}}
-                {{--                    </a>--}}
-
-                {{--                    <a href="#" class="btn btn-sm btn-dark ms-3 px-4 py-3" data-bs-toggle="modal" data-bs-target="#kt_modal_new_target">--}}
-                {{--                        Create <span class="d-none d-sm-inline">Target</span>--}}
-                {{--                    </a>--}}
-                {{--                </div>--}}
-                <!--end::Actions-->
             </div>
-            <!--end::Toolbar container-->
         </div>
         <div id="kt_app_content" class="app-content  flex-column-fluid " data-select2-id="select2-data-kt_app_content">
             <div class="card" data-select2-id="select2-data-134-tiwj">
@@ -94,13 +42,13 @@
                             <div class="row">
                                 <div class="col-lg-8 col-md-7 card shadow-sm p-4">
                                     <div class="pb-10 pb-lg-12">
-                                        <h2 class="fw-bold text-gray-900">جزئیات پروژه</h2>
+                                        <h2 class="fw-bold text-gray-900">جزئیات تسک</h2>
                                     </div>
 
                                     <div class="fv-row mb-10">
-                                        <label class="form-label required">نام پروژه</label>
+                                        <label class="form-label required">نام تسک</label>
                                         <input name="name" value="{{ old('name') }}" class="form-control form-control-lg form-control-solid"
-                                               placeholder="نام پروژه" required>
+                                               placeholder="نام تسک" required>
                                     </div>
 
                                     <div class="row g-3 mb-8">
@@ -112,7 +60,7 @@
                                                        class="result form-control form-control-solid ps-12"
                                                        type="text"
                                                        data-jdp
-                                                       placeholder="تاریخ شروع پروژه"
+                                                       placeholder="تاریخ شروع تسک"
                                                        autocomplete="off"
                                                        value="{{ old('start_date') }}"
                                                        required />
@@ -126,7 +74,7 @@
                                                        class="result form-control form-control-solid ps-12"
                                                        type="text"
                                                        data-jdp
-                                                       placeholder="تاریخ پایان پروژه"
+                                                       placeholder="تاریخ پایان تسک"
                                                        autocomplete="off"
                                                        value="{{ old('end_date') }}"
                                                        required />
@@ -139,17 +87,17 @@
                                         <select class="form-select form-select-solid" data-control="select2"
                                                 data-placeholder="برند را انتخاب کنید" name="brand_id" required>
                                             <option></option>
-                                            @foreach($brands as $brand)
-                                                <option value="{{ $brand->id }}">{{ $brand->name }}</option>
-                                            @endforeach
+{{--                                            @foreach($brands as $brand)--}}
+{{--                                                <option value="{{ $brand->id }}">{{ $brand->name }}</option>--}}
+{{--                                            @endforeach--}}
                                         </select>
                                     </div>
 
                                     {{--                                    <div class="row g-3 mb-8">--}}
                                     {{--                                        <div class="col-md-6 fv-row">--}}
-                                    {{--                                            <label class="form-label required">مدیر پروژه</label>--}}
+                                    {{--                                            <label class="form-label required">مدیر تسک</label>--}}
                                     {{--                                            <select class="form-select form-select-solid" data-control="select2"--}}
-                                    {{--                                                    data-placeholder="مدیر پروژه را انتخاب کنید" name="manager_id" required>--}}
+                                    {{--                                                    data-placeholder="مدیر تسک را انتخاب کنید" name="manager_id" required>--}}
                                     {{--                                                <option></option>--}}
                                     {{--                                                @foreach($managers as $manager)--}}
                                     {{--                                                    <option value="{{ $manager->id }}">{{ $manager->Name }} - نقش:--}}
@@ -171,13 +119,13 @@
                                     {{--                                        </div>--}}
                                     {{--                                    </div>--}}
                                     <div class="fv-row mb-8">
-                                        <label class="form-label required">اعضای پروژه</label>
+                                        <label class="form-label required">اعضای تسک</label>
                                         <select class="form-select form-select-solid" data-control="select2"
-                                                multiple name="members[]" data-placeholder="اعضای پروژه را انتخاب کنید" required>
+                                                multiple name="members[]" data-placeholder="اعضای تسک را انتخاب کنید" required>
                                             <option></option>
-                                            @foreach($members as $member)
-                                                <option value="{{ $member->id }}">{{ $member->Name }}</option>
-                                            @endforeach
+{{--                                            @foreach($members as $member)--}}
+{{--                                                <option value="{{ $member->id }}">{{ $member->Name }}</option>--}}
+{{--                                            @endforeach--}}
                                         </select>
                                     </div>
                                     <div class="row g-3 mb-8">
@@ -187,9 +135,9 @@
                                                 <select class="form-select form-select-solid" data-control="select2"
                                                         data-placeholder="دپارتمان را انتخاب کنید" name="department_id" required>
                                                     <option></option>
-                                                    @foreach($departments as $department)
-                                                        <option value="{{ $department->id }}">{{ $department->name }}</option>
-                                                    @endforeach
+{{--                                                    @foreach($departments as $department)--}}
+{{--                                                        <option value="{{ $department->id }}">{{ $department->name }}</option>--}}
+{{--                                                    @endforeach--}}
                                                 </select>
                                             </div>
                                         </div>
@@ -199,15 +147,15 @@
                                             <select class="form-select form-select-solid" data-control="select2"
                                                     data-placeholder="دپارتمان را انتخاب کنید" name="category_id" required>
                                                 <option></option>
-                                                @foreach($categories as $category)
-                                                    <option value="{{$category->id}}">{{$category->title}} </option>
-                                                @endforeach
+{{--                                                @foreach($categories as $category)--}}
+{{--                                                    <option value="{{$category->id}}">{{$category->title}} </option>--}}
+{{--                                                @endforeach--}}
                                             </select>
                                         </div>
                                     </div>
 
                                     <div class="fv-row mb-10">
-                                        <label class="form-label">توضیحات پروژه</label>
+                                        <label class="form-label">توضیحات تسک</label>
                                         <textarea name="description" class="form-control form-control-lg form-control-solid"
                                                   rows="3">{{ old('description') }}</textarea>
                                     </div>
@@ -217,7 +165,7 @@
 
                                 <div class="col-lg-4 col-md-5">
                                     <div class="card shadow-sm p-4">
-                                        <h5 class="fw-bold mb-4">فایل‌های پروژه</h5>
+                                        <h5 class="fw-bold mb-4">فایل‌های تسک</h5>
                                         {{--                                        <input type="hidden" name="photos[]" id="pro-photo">--}}
                                         {{--                                        <div class="dropzone" id="kt_dropzonejs_example_1">--}}
                                         {{--                                            <!--begin::Message-->--}}
@@ -229,7 +177,7 @@
 
                                         {{--                                                <!--begin::Info-->--}}
                                         {{--                                                <div class="ms-4">--}}
-                                        {{--                                                    <h3 class="fs-5 fw-bold text-gray-900 mb-1">فایل های مربوط به پروژه</h3>--}}
+                                        {{--                                                    <h3 class="fs-5 fw-bold text-gray-900 mb-1">فایل های مربوط به تسک</h3>--}}
                                         {{--                                                    <span class="fs-7 fw-semibold text-gray-500">آپلود</span>--}}
                                         {{--                                                </div>--}}
                                         {{--                                                <!--end::Info-->--}}
@@ -301,7 +249,7 @@
 {{--                                            </div>--}}
 {{--                                            <div class="d-flex justify-content-end mt-3">--}}
 {{--                                                <button type="button" class="btn btn-outline-info btn-sm" onclick='addDependency()'>--}}
-{{--                                                    افزودن آپشن یا جزییات به پروژه<i class="ki-outline ki-plus fs-3"></i>--}}
+{{--                                                    افزودن آپشن یا جزییات به تسک<i class="ki-outline ki-plus fs-3"></i>--}}
 {{--                                                </button>--}}
 {{--                                            </div>--}}
 {{--                                        </div>--}}
@@ -309,7 +257,7 @@
                                 </div>
                             </div>
                             <div class="d-flex justify-content-end">
-                                <button type="submit" onclick="productGallery()" class="btn btn-primary btn-sm"> ثبت پروژه<i class="ki-outline ki-plus-square fs-3 px-2"></i></button>
+                                <button type="submit" onclick="productGallery()" class="btn btn-primary btn-sm"> ثبت تسک<i class="ki-outline ki-plus-square fs-3 px-2"></i></button>
                             </div>
                         </form>
 

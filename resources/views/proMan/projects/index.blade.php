@@ -259,7 +259,7 @@
             <!--begin::Heading-->
             <h2 class="fs-2 fw-semibold my-2">
                 پروژه های
-                <span class="fs-6 text-gray-500 ms-1">by Status</span>
+                <span class="fs-6 text-gray-500 ms-1">براساس وضعیت</span>
             </h2>
             <!--end::Heading-->
 
@@ -321,7 +321,7 @@
                             <!--begin::Name-->
                             <a href="{{route('dashboard.project.show',$project->id)}}">
                                 <div class="fs-3 fw-bold text-light-primary-900 ">
-                                    {{$project->name}}
+                                    {{$project->name}} <i class="ki-outline ki-eye fs-5 ps-3 text-primary"></i>
                                 </div>
                             </a>
 

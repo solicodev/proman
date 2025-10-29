@@ -209,7 +209,7 @@
                                     <!--begin::Content-->
                                     <div class=" fw-semibold">
 
-                                        <div class="fs-6 text-gray-700 "><a href="#" class="fw-bold me-1">Invite New .NET Collaborators</a> to create great outstanding business to business .jsp modutr class scripts</div>
+{{--                                        <div class="fs-6 text-gray-700 "><a href="#" class="fw-bold me-1">Invite New .NET Collaborators</a> to create great outstanding business to business .jsp modutr class scripts</div>--}}
                                     </div>
                                     <!--end::Content-->
 
@@ -1666,20 +1666,20 @@
                     <div class="card-toolbar my-1">
                         <div class="me-6 my-1">
                             <select id="kt_filter_year" name="year" data-control="select2" data-hide-search="true" class="w-125px form-select form-select-solid form-select-sm">
-                                <option value="All" selected>All time</option>
-                                <option value="thisyear">This year</option>
-                                <option value="thismonth">This month</option>
-                                <option value="lastmonth">Last month</option>
-                                <option value="last90days">Last 90 days</option>
+                                <option value="All" selected>همه زمان ها</option>
+                                <option value="thisyear">امسال</option>
+                                <option value="thismonth">این ماه</option>
+                                <option value="lastmonth">اخرین ماه</option>
+                                <option value="last90days">90 روز گذشته</option>
                             </select>
                         </div>
                         <div class="me-4 my-1">
                             <select id="kt_filter_orders" name="orders" data-control="select2" data-hide-search="true" class="w-125px form-select form-select-solid form-select-sm">
-                                <option value="All" selected>All Orders</option>
-                                <option value="Approved">Approved</option>
-                                <option value="Declined">Declined</option>
-                                <option value="In Progress">In Progress</option>
-                                <option value="In Transit">In Transit</option>
+                                <option value="All" selected>همه</option>
+                                <option value="Approved">درحال بررسی</option>
+                                <option value="Declined">برای انجام</option>
+                                <option value="In Progress">در حال انجام</option>
+                                <option value="In Transit">انجام شد</option>
                             </select>
                         </div>
                         <div class="d-flex align-items-center position-relative my-1">

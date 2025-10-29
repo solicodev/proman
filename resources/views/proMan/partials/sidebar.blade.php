@@ -183,56 +183,56 @@
             </div>
             <!--end::Links-->
 
-            <div id="kt_app_settings_content" class="position-relative mt-auto"
-                 data-kt-scroll="true" data-kt-scroll-wrappers="#kt_app_layout_builder_body"
-                 data-kt-scroll-dependencies="#kt_app_layout_builder_header, #kt_app_layout_builder_footer"
-                 data-kt-scroll-offset="5px">
-                <div class="separator separator-dashed my-5"></div>
+{{--            <div id="kt_app_settings_content" class="position-relative mt-auto"--}}
+{{--                 data-kt-scroll="true" data-kt-scroll-wrappers="#kt_app_layout_builder_body"--}}
+{{--                 data-kt-scroll-dependencies="#kt_app_layout_builder_header, #kt_app_layout_builder_footer"--}}
+{{--                 data-kt-scroll-offset="5px">--}}
+{{--                <div class="separator separator-dashed my-5"></div>--}}
 
 
-                <form method="POST" action="{{ route('change-theme') }}" class="form"
-                      id="kt_app_layout_builder_form">
-                    @csrf
-                    <input type="hidden" id="kt_app_layout_builder_action"
-                           name="layout-builder[action]" />
-                    <div class="card-body p-0">
-                        <div class="form-group">
-                            <div class="row" data-kt-buttons="true"
-                                 data-kt-buttons-target=".form-check-image,.form-check-input">
+{{--                <form method="POST" action="{{ route('change-theme') }}" class="form"--}}
+{{--                      id="kt_app_layout_builder_form">--}}
+{{--                    @csrf--}}
+{{--                    <input type="hidden" id="kt_app_layout_builder_action"--}}
+{{--                           name="layout-builder[action]" />--}}
+{{--                    <div class="card-body p-0">--}}
+{{--                        <div class="form-group">--}}
+{{--                            <div class="row" data-kt-buttons="true"--}}
+{{--                                 data-kt-buttons-target=".form-check-image,.form-check-input">--}}
 
-                                <div class="col-6">
-                                    <label class="form-check-image form-check-success">
-                                        <div
-                                            class="form-check form-check-custom form-check-solid form-check-sm form-check-success">
-                                            <input class="change-theme-input form-check-input"
-                                                   type="radio" value="light" name="theme_mode"
-                                                   id="kt_layout_builder_theme_mode_light" />
+{{--                                <div class="col-6">--}}
+{{--                                    <label class="form-check-image form-check-success">--}}
+{{--                                        <div--}}
+{{--                                            class="form-check form-check-custom form-check-solid form-check-sm form-check-success">--}}
+{{--                                            <input class="change-theme-input form-check-input"--}}
+{{--                                                   type="radio" value="light" name="theme_mode"--}}
+{{--                                                   id="kt_layout_builder_theme_mode_light" />--}}
 
-                                            <div class="form-check-label text-gray-700">
-                                                روشن
-                                            </div>
-                                        </div>
-                                    </label>
-                                </div>
-                                <div class="col-6">
-                                    <label class="form-check-image form-check-success">
-                                        <div
-                                            class="form-check form-check-custom form-check-solid form-check-sm form-check-success">
-                                            <input class="change-theme-input form-check-input"
-                                                   type="radio" value="dark" name="theme_mode"
-                                                   id="kt_layout_builder_theme_mode_dark" />
+{{--                                            <div class="form-check-label text-gray-700">--}}
+{{--                                                روشن--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    </label>--}}
+{{--                                </div>--}}
+{{--                                <div class="col-6">--}}
+{{--                                    <label class="form-check-image form-check-success">--}}
+{{--                                        <div--}}
+{{--                                            class="form-check form-check-custom form-check-solid form-check-sm form-check-success">--}}
+{{--                                            <input class="change-theme-input form-check-input"--}}
+{{--                                                   type="radio" value="dark" name="theme_mode"--}}
+{{--                                                   id="kt_layout_builder_theme_mode_dark" />--}}
 
-                                            <div class="form-check-label text-gray-700">
-                                                تیره
-                                            </div>
-                                        </div>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
+{{--                                            <div class="form-check-label text-gray-700">--}}
+{{--                                                تیره--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    </label>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </form>--}}
+{{--            </div>--}}
         </div>
         <!--end::Nav wrapper-->
     </div>

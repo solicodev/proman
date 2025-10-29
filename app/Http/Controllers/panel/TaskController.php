@@ -3,11 +3,24 @@
 namespace App\Http\Controllers\panel;
 
 use App\Http\Controllers\Controller;
+use App\Models\Project;
 use App\Models\Task;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
+    public function index(Project $project)
+    {
+        $tasks = Task::with(['project','manager','watcher','assigners','photos','predecessors','successors'])->where('project_id',$project->id)->paginate(15);
+        dd($tasks);
+        return view('proMan.projects.tasks',get_defined_vars());
+    }
+
+    public function create(Project $project)
+    {
+
+        return view('proMan.tasks.create', get_defined_vars());
+    }
     public function store(Request $request)
     {
         $data = $request->validate([
