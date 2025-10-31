@@ -67,4 +67,14 @@ class Task extends Model
         return $this->belongsToMany(Task::class,'task_dependencies','predecessor_id','successor_id')
             ->withPivot('relation_Type','lag');
     }
+
+    public function parent()
+    {
+        return $this->belongsTo(Task::class, 'parent_id');
+    }
+
+      public function children()
+    {
+        return $this->hasMany(Task::class, 'parent_id');
+    }
 }

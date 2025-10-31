@@ -43,6 +43,7 @@
             <!--end::Wrapper-->
         </div>
         <!--end::Controls-->
+        <a href="#" class="btn btn-primary er w-100 fs-6 px-8 py-4"  data-bs-toggle="modal" data-bs-target="#kt_modal_new_target">ایجاد تسک </a>
     </div>
 
 
@@ -195,9 +196,16 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- ✅ دکمه ساخت تسک جدید -->
+                        <div class="card-footer text-center py-3">
+                            <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#kt_modal_new_target_sub">
+                                ساخت زیر تسک جدید<i class="ki-outline ki-plus-square fs-6 px-2"></i>
+                            </a>
+                        </div>
                     </div>
+
                     <!--end::Card-->
-                    <a href="#" class="btn btn-primary er w-100 fs-6 px-8 py-4"  data-bs-toggle="modal" data-bs-target="#kt_modal_new_target">ایجاد تسک </a>
+
                 </div>
                 <!--end::Col-->
 
@@ -724,6 +732,204 @@
                         <div class="mb-13 text-center">
                             <!--begin::Title-->
                             <h1 class="mb-3">افزودن تسک</h1>
+                            <!--end::Title-->
+
+                            <!--begin::Description-->
+                            <div class="text-muted fw-semibold fs-5">
+                                 برای پروژه
+                                <a href="#" class="fw-bold link-primary">{{$project->name}} - {{$project->project_code}}</a>.
+                            </div>
+                            <!--end::Description-->
+                        </div>
+                        <!--end::Heading-->
+
+                        <!--begin::Input group-->
+                        <div class="d-flex flex-column mb-8 fv-row">
+                            <!--begin::Label-->
+                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                <span class="required">عنوان</span>
+                                <span class="ms-1"  data-bs-toggle="tooltip" title="عنوان تسک را بنویسید" >
+	                                <i class="ki-outline ki-information-5 text-gray-500 fs-6"></i>
+                                </span>
+                            </label>
+                            <input type="text" class="form-control form-control-solid" placeholder="عنوان تسک" name="target_title"/>
+                        </div>
+                        <!--end::Input group-->
+
+                        <div class="row g-9 mb-8">
+                            <div class="col-md-6 fv-row">
+                                <label class="required fs-6 fw-semibold mb-2">تاریخ شروع</label>
+                                <div class="position-relative d-flex align-items-center">
+                                    <i class="ki-outline ki-calendar-8 fs-2 position-absolute mx-4"></i>
+                                    <input name="start_date"
+                                           class="result form-control form-control-solid ps-12"
+                                           type="text"
+                                           data-jdp
+                                           placeholder="تاریخ شروع پروژه"
+                                           autocomplete="off"
+                                           value="{{ old('start_date') }}"
+                                           required />
+                                </div>
+                            </div>
+                            <div class="col-md-6 fv-row">
+                                <label class="required fs-6 fw-semibold mb-2">تاریخ پایان</label>
+                                <div class="position-relative d-flex align-items-center">
+                                    <i class="ki-outline ki-calendar-8 fs-2 position-absolute mx-4"></i>
+                                    <input name="end_date"
+                                           class="result form-control form-control-solid ps-12"
+                                           type="text"
+                                           data-jdp
+                                           placeholder="تاریخ پایان پروژه"
+                                           autocomplete="off"
+                                           value="{{ old('end_date') }}"
+                                           required />
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Input group-->
+                        <div class="row g-9 mb-8">
+                            <!--begin::Col-->
+                            <div class="col-md-12 fv-row">
+                                <label class="required fs-6 fw-semibold mb-2">اولویت تسک </label>
+
+                                <select class="form-select form-select-solid"  data-control="select2" data-hide-search="true"
+                                          data-placeholder="تسک را به کاربران مد نظرتان assign کنید" name="target_assign">
+                                    <option></option>
+                                    <option value="0">کم</option>
+                                    <option value="1">متوسط</option>
+                                    <option value="2">زیاد</option>
+                                </select>
+                            </div>
+                            <!--end::Col-->
+                        </div>
+                        <div class="row g-9 mb-8">
+                            <!--begin::Col-->
+                            <div class="col-md-12 fv-row">
+                                <label class="required fs-6 fw-semibold mb-2">مدیر تایید کننده تسک</label>
+
+                                <select class="form-select form-select-solid"  data-control="select2" data-hide-search="true"
+                                          data-placeholder="مدیر تایید کننده تسک" name="target_assign">
+                                    <option></option>
+                                    <option value="1">فریناز حقیقی</option>
+                                    <option value="2">داوود یوسفی</option>
+                                    <option value="3">مهسا امامی</option>
+                                    <option value="4">فرتاش آذرسینا</option>
+                                    <option value="5">محمد اوتادی</option>
+                                </select>
+                            </div>
+                            <!--end::Col-->
+                        </div>
+                        <div class="row g-9 mb-8">
+                            <!--begin::Col-->
+                            <div class="col-md-12 fv-row">
+                                <label class="required fs-6 fw-semibold mb-2">ناظر تسک</label>
+
+                                <select class="form-select form-select-solid"  data-control="select2" data-hide-search="true"
+                                        data-placeholder="ناظر تسک" name="target_assign">
+                                    <option></option>
+                                    <option value="1">فریناز حقیقی</option>
+                                    <option value="2">داوود یوسفی</option>
+                                    <option value="3">مهسا امامی</option>
+                                    <option value="4">فرتاش آذرسینا</option>
+                                    <option value="5">محمد اوتادی</option>
+                                </select>
+                            </div>
+                            <!--end::Col-->
+                        </div>
+                        <!--begin::Input group-->
+                        <div class="row g-9 mb-8">
+                            <!--begin::Col-->
+                            <div class="col-md-12 fv-row">
+                                <label class="required fs-6 fw-semibold mb-2">کاربران تسک </label>
+
+                                <select class="form-select form-select-solid"  data-control="select2" data-hide-search="true"
+                                        multiple  data-placeholder="تسک را به کاربران مد نظرتان assign کنید" name="target_assign">
+                                    <option></option>
+                                    <option value="1">فریناز حقیقی</option>
+                                    <option value="2">داوود یوسفی</option>
+                                    <option value="3">مهسا امامی</option>
+                                    <option value="4">فرتاش آذرسینا</option>
+                                    <option value="5">محمد اوتادی</option>
+                                </select>
+                            </div>
+                            <!--end::Col-->
+                        </div>
+                        <!--begin::Input group-->
+                        <div class="d-flex flex-column mb-8">
+                            <label class="fs-6 fw-semibold mb-2">توضیحات تسک</label>
+                            <textarea class="form-control form-control-solid" rows="3" name="target_details" placeholder="توضیحات تسک">
+                            </textarea>
+                        </div>
+                        <!--end::Input group-->
+
+                        <!--begin::Input group-->
+                        <div class="col-12">
+                            <label for="gallery" class="form-label">فایل های مربوط به تسک</label>
+                            <div class="row g-3 images">
+                                <div class="col-md-4 d-flex image">
+                                    <input class='form-control' type="file" name="photos[]" accept="image/*">
+                                    <button type="button" class="btn btn-link text-danger" title='حذف'
+                                            onclick='removeImage(this)'>
+                                        <i class="bx bxs-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-end mt-3">
+                                <button type="button" class="btn btn-outline-info btn-sm" onclick='addImage()'>
+                                    افزودن فایل
+                                </button>
+                            </div>
+                        </div>
+
+                        <!--begin::Actions-->
+                        <div class="text-center">
+                            <button type="reset" id="kt_modal_new_target_cancel" class="btn btn-light me-3">
+                                Cancel
+                            </button>
+
+                            <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary">
+                            <span class="indicator-label">
+                                ثبت تسک
+                            </span>
+                                <span class="indicator-progress">
+                                Please wait...
+                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                </span>
+                            </button>
+                        </div>
+                        <!--end::Actions-->
+                    </form>
+                    <!--end:Form-->
+                </div>
+                <!--end::Modal body-->
+            </div>
+            <!--end::Modal content-->
+        </div>
+        <!--end::Modal dialog-->
+    </div>
+    <div class="modal fade" id="kt_modal_new_target_sub" tabindex="-1" aria-hidden="true">
+        <!--begin::Modal dialog-->
+        <div class="modal-dialog modal-dialog-centered mw-650px">
+            <!--begin::Modal content-->
+            <div class="modal-content rounded">
+                <!--begin::Modal header-->
+                <div class="modal-header pb-0 border-0 justify-content-end">
+                    <!--begin::Close-->
+                    <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                        <i class="ki-outline ki-cross fs-1"></i>
+                    </div>
+                    <!--end::Close-->
+                </div>
+                <!--begin::Modal header-->
+
+                <!--begin::Modal body-->
+                <div class="modal-body scroll-y px-10 px-lg-15 pt-0 pb-15">
+                    <!--begin:Form-->
+                    <form id="kt_modal_new_target_form" class="form" action="#">
+                        <!--begin::Heading-->
+                        <div class="mb-13 text-center">
+                            <!--begin::Title-->
+                            <h1 class="mb-3">افزودن زیرتسک</h1>
                             <!--end::Title-->
 
                             <!--begin::Description-->

@@ -46,6 +46,20 @@ class TaskController extends Controller
         ]);
     }
 
+    public function storeSubtask(Request $request,Task $parentTask)
+    {
+        $subtask = $parentTask->children()->create([
+            'title' => 'زیرتسک جدید',
+            'status' => 0,
+            'priority' => 1,
+            'duration' => 10,
+            'start_date' => now(),
+        ]);
+
+        return back()->with('success', 'زیرتسک با موفقیت ایجاد شد.');
+
+    }
+
     public function update(Request $request, Task $task)
     {
         $data = $request->validate([
