@@ -5,7 +5,8 @@
      data-kt-drawer-toggle="#kt_app_sidebar_toggle">
 
     <!--begin::Sidebar nav-->
-    <div class="app-sidebar-wrapper py-8 py-lg-10" id="kt_app_sidebar_wrapper">
+    <div class=" app-sidebar-wrapper py-8 py-lg-10 pe-5"  data-kt-scroll="true"
+         data-kt-scroll-height="{default: '100px', lg: '100vh'}" id="kt_app_sidebar_wrapper">
         <!--begin::Nav wrapper-->
         <div id="kt_app_sidebar_nav_wrapper" class="d-flex flex-column px-8 px-lg-10 hover-scroll-y"
              data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-max-height="auto"
@@ -13,22 +14,22 @@
              data-kt-scroll-wrappers="#kt_app_sidebar, #kt_app_sidebar_wrapper"
              data-kt-scroll-offset="{default: '10px', lg: '40px'}">
             <!--begin::Progress-->
-            <div class="d-flex align-items-center flex-column w-100 mb-8 mb-lg-10">
-                <div
-                    class="d-flex justify-content-between fw-bolder fs-6 text-gray-800  w-100 mt-auto mb-3">
-                    <span>Your Goal</span>
-                </div>
+{{--            <div class="d-flex align-items-center flex-column w-100 mb-8 mb-lg-10">--}}
+{{--                <div--}}
+{{--                    class="d-flex justify-content-between fw-bolder fs-6 text-gray-800  w-100 mt-auto mb-3">--}}
+{{--                    <span>Your Goal</span>--}}
+{{--                </div>--}}
 
-                <div class="w-100 bg-light-info rounded mb-2" style="height: 24px">
-                    <div class="bg-info rounded" role="progressbar"
-                         style="height: 24px; width: 37%;" aria-valuenow="50" aria-valuemin="0"
-                         aria-valuemax="100"></div>
-                </div>
+{{--                <div class="w-100 bg-light-info rounded mb-2" style="height: 24px">--}}
+{{--                    <div class="bg-info rounded" role="progressbar"--}}
+{{--                         style="height: 24px; width: 37%;" aria-valuenow="50" aria-valuemin="0"--}}
+{{--                         aria-valuemax="100"></div>--}}
+{{--                </div>--}}
 
-                <div class="fw-semibold fs-7 text-primary w-100 mt-auto">
-                    <span>reached 37% of your target</span>
-                </div>
-            </div>
+{{--                <div class="fw-semibold fs-7 text-primary w-100 mt-auto">--}}
+{{--                    <span>reached 37% of your target</span>--}}
+{{--                </div>--}}
+{{--            </div>--}}
             <!--end::Progress-->
 
             <!--begin::Stats-->

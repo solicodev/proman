@@ -56925,7 +56925,7 @@ body {
     [data-kt-app-header-sticky=on] .app-header .app-header-wrapper {
         border-bottom-left-radius: 1.5rem;
         border-bottom-right-radius: 1.5rem;
-        background-color: var(--bs-app-header-sticky-bg-color);
+        background-color: var(--bs-dark-bg-subtle);
         box-shadow: var(--bs-app-header-sticky-box-shadow);
         padding-right: 20px;
         padding-left: 20px
@@ -56935,7 +56935,7 @@ body {
 @media (min-width: 992px) {
     .app-sidebar {
         right: auto !important;
-        top: 13% !important;
+        top: 15% !important;
         transition: top .3s ease
     }
 

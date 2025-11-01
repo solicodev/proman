@@ -87,6 +87,7 @@
                             <label for="watcher_id" class="form-label">ناظر تسک</label>
                             <select class="form-select" name="watcher_id" id="inputProductType" required>
                                 <option value="" disabled selected hidden>ناظر تسک را انتخاب کنید</option>
+                                <option></option>
                                 @foreach($watchers as $watcher)
                                     <option value="{{$watcher->id}}">{{ $watcher->Name }} </option>
                                 @endforeach

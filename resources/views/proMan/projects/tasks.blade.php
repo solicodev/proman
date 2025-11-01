@@ -10,7 +10,9 @@
             <span class="fs-6 text-gray-500 fw-semibold ms-1">آپدیت بر اساس ↓</span>
         </h3>
         <!--end::Heading-->
-
+        <div class="d-flex flex-wrap my-1">
+            <a href="#" class="btn btn-primary er w-100 fs-6 px-8 py-4"  data-bs-toggle="modal" data-bs-target="#kt_modal_new_target">ایجاد تسک<i class="ki-outline ki-plus-square fs-2 px-2"></i> </a>
+        </div>
         <!--begin::Controls-->
         <div class="d-flex flex-wrap my-1">
             <!--begin::Tab nav-->
@@ -43,7 +45,7 @@
             <!--end::Wrapper-->
         </div>
         <!--end::Controls-->
-        <a href="#" class="btn btn-primary er w-100 fs-6 px-8 py-4"  data-bs-toggle="modal" data-bs-target="#kt_modal_new_target">ایجاد تسک </a>
+
     </div>
 
 
@@ -53,607 +55,97 @@
         <div id="kt_project_targets_card_pane" class="tab-pane fade show active">
             <!--begin::Row-->
             <div class="row g-9">
-                <!--begin::Col-->
-                <div class="col-md-3 col-lg-12 col-xl-3">
-                    <!--begin::Col header-->
-                    <div class="mb-9">
-                        <div class="d-flex flex-stack">
-                            <div class="fw-bold fs-4">
-                                در حال بررسی
-                                <span class="fs-6 text-gray-500 ms-2">2</span>
-                            </div>
-
-                            <!--begin::Menu-->
-                            <div>
-                                <button
-                                    type="button"
-                                    class="btn btn-sm btn-icon btn-color-light-dark btn-active-light-primary"
-                                    data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                                    <i class="ki-outline ki-element-plus fs-2"></i>
-                                </button>
-                                <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px" data-kt-menu="true" id="kt_menu_68ef8af7c4409">
-                                    <!--begin::Header-->
-                                    <div class="px-7 py-5">
-                                        <div class="fs-5 text-gray-900 fw-bold">فیلتر بر اساس</div>
+                <div class="row">
+                    @foreach($columns as $key => $column)
+                        <div class="col-md-3 col-lg-12 col-xl-3">
+                            <!--begin::Col header-->
+                            <div class="mb-9">
+                                <div class="d-flex flex-stack">
+                                    <div class="fw-bold fs-4">
+                                        {{ $column['title'] }}
+                                        <span class="fs-6 text-gray-500 ms-2">{{ $tasks[$key]->count() ?? 0 }}</span>
                                     </div>
-                                    <!--end::Header-->
 
-                                    <!--begin::Menu separator-->
-                                    <div class="separator border-gray-200"></div>
-                                    <!--end::Menu separator-->
+                                    <!-- منوی فیلتر -->
+                                    <div>
+                                        <button type="button"
+                                                class="btn btn-sm btn-icon btn-color-light-dark btn-active-light-primary"
+                                                data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+                                            <i class="ki-outline ki-element-plus fs-2"></i>
+                                        </button>
+                                    </div>
+                                </div>
 
+                                <div class="h-3px w-100 bg-{{ $column['color'] }}"></div>
+                            </div>
+                            <!--end::Col header-->
 
-                                    <!--begin::Form-->
-                                    <div class="px-7 py-5">
-                                        <!--begin::Input group-->
-                                        <div class="mb-10">
-                                            <!--begin::Label-->
-                                            <label class="form-label fw-semibold">اولویت تسک:</label>
-                                            <!--end::Label-->
-
-                                            <!--begin::Input-->
+                            <!--begin::Tasks Loop-->
+                            @forelse($tasks[$key] ?? [] as $task)
+                                <div class="card mb-6 mb-xl-9">
+                                    <div class="card-body">
+                                        <div class="d-flex flex-stack mb-3">
+                                            <div>{!! $task->task_status !!}</div>
                                             <div>
-                                                <select class="form-select form-select-solid" multiple data-kt-select2="true" data-close-on-select="false" data-placeholder="اولویت را انتخاب کنید" data-dropdown-parent="#kt_menu_68ef8af7c4409" data-allow-clear="true">
-                                                    <option></option>
-                                                    <option value="0">کم</option>
-                                                    <option value="1">متوسط</option>
-                                                    <option value="2">زیاد</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex justify-content-end">
-                                            <button type="reset" class="btn btn-sm btn-light btn-active-light-primary me-2" data-kt-menu-dismiss="true">بازیابی</button>
-
-                                            <button type="submit" class="btn btn-sm btn-primary" data-kt-menu-dismiss="true">اعمال</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="h-3px w-100 bg-warning"></div>
-                    </div>
-
-                    <!--begin::Card-->
-                    <div class="card mb-6 mb-xl-9">
-                        <!--begin::Card body-->
-                        <div class="card-body">
-                            <!--begin::Header-->
-                            <div class="d-flex flex-stack mb-3">
-                                <!--begin::Badge-->
-                                <div class="badge badge-light">وضعیت</div>
-                                <!--end::Badge-->
-
-                                <!--begin::Menu-->
-                                <div>
-                                    <button type="button" class="btn btn-sm btn-icon btn-color-light-dark btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                                        <i class="ki-outline ki-element-plus fs-2"></i>
-                                    </button>
-
-                                    <!--begin::Menu 3-->
-                                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px py-3" data-kt-menu="true">
-                                        <!--begin::Heading-->
-                                        <div class="menu-item px-3">
-                                            <div class="menu-content text-muted pb-2 px-3 fs-7 text-uppercase">
-                                                عملیات تسک
+                                                <button type="button"
+                                                        class="btn btn-sm btn-icon btn-color-light-dark btn-active-light-primary"
+                                                        data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+                                                    <i class="ki-outline ki-element-plus fs-2"></i>
+                                                </button>
                                             </div>
                                         </div>
 
-                                        <div class="menu-item px-3">
-                                            <a href="#" class="menu-link px-3">
-                                                کامنت ها
-                                            </a>
-                                        </div>
-                                        <div class="menu-item px-3">
-                                            <a href="#" class="menu-link flex-stack px-3">
-                                                تغییر وضعیت
-
-                                                <span class="ms-2" data-bs-toggle="tooltip" title="Specify a target name for future usage and reference">
-                                                    <i class="ki-outline ki-information fs-6"></i>
-                                                </span>
-                                            </a>
-                                        </div>
-                                        <div class="menu-item px-3">
-                                            <a href="#" class="menu-link px-3">
-                                                ویرایش
+                                        <div class="mb-2">
+                                            <a href="#" class="fs-4 fw-bold mb-1 text-gray-900 text-hover-primary">
+                                                {{ $task->title }}
                                             </a>
                                         </div>
 
-                                        <div class="menu-item px-3 my-1">
-                                            <a href="#" class="menu-link px-3">
-                                                حذف
-                                            </a>
+                                        <div class="fs-6 fw-semibold text-gray-600 mb-5">
+                                            {{ $task->description }}
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="mb-2">
-                                <a href="#" class="fs-4 fw-bold mb-1 text-gray-900 text-hover-primary">دریافت PR</a>
-                            </div>
-                            <div class="fs-6 fw-semibold text-gray-600 mb-5">برای پروژه تستی PR دریافت شود</div>
-                            <div class="d-flex flex-stack flex-wrapr">
-                                <!--begin::Users-->
-                                <div class="symbol-group symbol-hover my-1">
-                                    <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="Melody Macy">
-                                        <img alt="Pic" src="{{url('panel/assets/media/avatars/300-2.jpg')}}" />
+                                        <!-- نمایش زیرتسک‌ها -->
+                                        @if($task->children && $task->children->count() > 0)
+                                            <div class="ms-5 mt-4 border-start ps-3">
+                                                @foreach($task->children as $subtask)
+                                                    <div class="card mb-3 shadow-sm">
+                                                        <div class="card-body py-3 px-4">
+                                                            <div class="d-flex justify-content-between">
+                                                                <span class="fw-bold text-gray-800">{{ $subtask->title }}</span>
+                                                                <span class="badge bg-light text-muted">{!! $subtask->TaskStatus !!}</span>
+                                                            </div>
+                                                            <div class="text-gray-600 small mt-1">
+                                                                {{ $subtask->description }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        @endif
+                                        <!-- پایان زیرتسک‌ها -->
+
                                     </div>
-                                    <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="Harry Mcpherson">
-                                        <img alt="Pic" src="{{url('panel/assets/media/avatars/300-19.jpg')}}" />
-                                    </div>
-                                    <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="Susan Redwood">
-                                        <span class="symbol-label bg-primary text-inverse-primary fw-bold">S</span>
+
+                                    <!-- دکمه زیر تسک -->
+                                    <div class="card-footer text-center py-3">
+                                        <a href="#" class="btn btn-primary btn-sm"
+                                           onclick="openEditModal('{{ route('dashboard.task.subtasks.store', $task->id) }}',
+               JSON.stringify({title:'{{ $task->title }}'}))">
+                                            ساخت زیر تسک جدید
+                                            <i class="ki-outline ki-plus-square fs-6 px-2"></i>
+                                        </a>
                                     </div>
                                 </div>
-                                <div class="d-flex my-1">
-                                    <div class="border border-dashed border-gray-300 rounded d-flex align-items-center py-2 px-3">
-                                        <i class="ki-outline ki-paper-clip fs-3"></i>
-                                        <span class="ms-1 fs-7 fw-bold text-gray-600">4</span>
-                                    </div>
-                                    <div class="border border-dashed border-gray-300 d-flex align-items-center rounded py-2 px-3 ms-3">
-                                        <i class="ki-outline ki-message-text-2 fs-3"></i>
-                                        <span class="ms-1 fs-7 fw-bold text-gray-600">4</span>
-                                    </div>
-                                </div>
-                            </div>
+                            @empty
+                                <div class="alert alert-light text-center">تسکی در این وضعیت وجود ندارد</div>
+                            @endforelse
+
+                            <!--end::Tasks Loop-->
                         </div>
-                        <!-- ✅ دکمه ساخت تسک جدید -->
-                        <div class="card-footer text-center py-3">
-                            <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#kt_modal_new_target_sub">
-                                ساخت زیر تسک جدید<i class="ki-outline ki-plus-square fs-6 px-2"></i>
-                            </a>
-                        </div>
-                    </div>
-
-                    <!--end::Card-->
-
+                    @endforeach
                 </div>
-                <!--end::Col-->
 
-                <!--begin::Col-->
-                <div class="col-md-3 col-lg-12 col-xl-3">
-                    <!--begin::Col header-->
-                    <div class="mb-9">
-                        <div class="d-flex flex-stack">
-                            <div class="fw-bold fs-4">
-                                برای انجام
-                                <span class="fs-6 text-gray-500 ms-2">2</span>
-                            </div>
-
-                            <!--begin::Menu-->
-                            <div>
-                                <button
-                                    type="button"
-                                    class="btn btn-sm btn-icon btn-color-light-dark btn-active-light-primary"
-                                    data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                                    <i class="ki-outline ki-element-plus fs-2"></i>
-                                </button>
-                                <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px" data-kt-menu="true" id="kt_menu_68ef8af7c4409">
-                                    <!--begin::Header-->
-                                    <div class="px-7 py-5">
-                                        <div class="fs-5 text-gray-900 fw-bold">فیلتر بر اساس</div>
-                                    </div>
-                                    <!--end::Header-->
-
-                                    <!--begin::Menu separator-->
-                                    <div class="separator border-gray-200"></div>
-                                    <!--end::Menu separator-->
-
-
-                                    <!--begin::Form-->
-                                    <div class="px-7 py-5">
-                                        <!--begin::Input group-->
-                                        <div class="mb-10">
-                                            <!--begin::Label-->
-                                            <label class="form-label fw-semibold">اولویت تسک:</label>
-                                            <!--end::Label-->
-
-                                            <!--begin::Input-->
-                                            <div>
-                                                <select class="form-select form-select-solid" multiple data-kt-select2="true" data-close-on-select="false" data-placeholder="اولویت را انتخاب کنید" data-dropdown-parent="#kt_menu_68ef8af7c4409" data-allow-clear="true">
-                                                    <option></option>
-                                                    <option value="0">کم</option>
-                                                    <option value="1">متوسط</option>
-                                                    <option value="2">زیاد</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex justify-content-end">
-                                            <button type="reset" class="btn btn-sm btn-light btn-active-light-primary me-2" data-kt-menu-dismiss="true">بازیابی</button>
-
-                                            <button type="submit" class="btn btn-sm btn-primary" data-kt-menu-dismiss="true">اعمال</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="h-3px w-100 bg-info"></div>
-                    </div>
-                    <!--end::Col header-->
-
-
-                    <div class="card mb-6 mb-xl-9">
-                        <!--begin::Card body-->
-                        <div class="card-body">
-                            <!--begin::Header-->
-                            <div class="d-flex flex-stack mb-3">
-                                <!--begin::Badge-->
-                                <div class="badge badge-light">وضعیت</div>
-                                <!--end::Badge-->
-
-                                <!--begin::Menu-->
-                                <div>
-                                    <button type="button" class="btn btn-sm btn-icon btn-color-light-dark btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                                        <i class="ki-outline ki-element-plus fs-2"></i>
-                                    </button>
-
-                                    <!--begin::Menu 3-->
-                                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px py-3" data-kt-menu="true">
-                                        <!--begin::Heading-->
-                                        <div class="menu-item px-3">
-                                            <div class="menu-content text-muted pb-2 px-3 fs-7 text-uppercase">
-                                                عملیات تسک
-                                            </div>
-                                        </div>
-
-                                        <div class="menu-item px-3">
-                                            <a href="#" class="menu-link px-3">
-                                                کامنت ها
-                                            </a>
-                                        </div>
-                                        <div class="menu-item px-3">
-                                            <a href="#" class="menu-link flex-stack px-3">
-                                                تغییر وضعیت
-
-                                                <span class="ms-2" data-bs-toggle="tooltip" title="Specify a target name for future usage and reference">
-                                                    <i class="ki-outline ki-information fs-6"></i>
-                                                </span>
-                                            </a>
-                                        </div>
-                                        <div class="menu-item px-3">
-                                            <a href="#" class="menu-link px-3">
-                                                ویرایش
-                                            </a>
-                                        </div>
-
-                                        <div class="menu-item px-3 my-1">
-                                            <a href="#" class="menu-link px-3">
-                                                حذف
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="mb-2">
-                                <a href="#" class="fs-4 fw-bold mb-1 text-gray-900 text-hover-primary">دریافت PR</a>
-                            </div>
-                            <div class="fs-6 fw-semibold text-gray-600 mb-5">برای پروژه تستی PR دریافت شود</div>
-                            <div class="d-flex flex-stack flex-wrapr">
-                                <!--begin::Users-->
-                                <div class="symbol-group symbol-hover my-1">
-                                    <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="Melody Macy">
-                                        <img alt="Pic" src="{{url('panel/assets/media/avatars/300-2.jpg')}}" />
-                                    </div>
-                                    <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="Harry Mcpherson">
-                                        <img alt="Pic" src="{{url('panel/assets/media/avatars/300-19.jpg')}}" />
-                                    </div>
-                                    <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="Susan Redwood">
-                                        <span class="symbol-label bg-primary text-inverse-primary fw-bold">S</span>
-                                    </div>
-                                </div>
-                                <div class="d-flex my-1">
-                                    <div class="border border-dashed border-gray-300 rounded d-flex align-items-center py-2 px-3">
-                                        <i class="ki-outline ki-paper-clip fs-3"></i>
-                                        <span class="ms-1 fs-7 fw-bold text-gray-600">4</span>
-                                    </div>
-                                    <div class="border border-dashed border-gray-300 d-flex align-items-center rounded py-2 px-3 ms-3">
-                                        <i class="ki-outline ki-message-text-2 fs-3"></i>
-                                        <span class="ms-1 fs-7 fw-bold text-gray-600">4</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--end::Col-->
-
-                <!--begin::Col-->
-                <div class="col-md-3 col-lg-12 col-xl-3">
-                    <!--begin::Col header-->
-                    <div class="mb-9">
-                        <div class="d-flex flex-stack">
-                            <div class="fw-bold fs-4">
-                                در حال انجام
-                                <span class="fs-6 text-gray-500 ms-2">2</span>
-                            </div>
-
-                            <!--begin::Menu-->
-                            <div>
-                                <button
-                                    type="button"
-                                    class="btn btn-sm btn-icon btn-color-light-dark btn-active-light-primary"
-                                    data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                                    <i class="ki-outline ki-element-plus fs-2"></i>
-                                </button>
-                                <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px" data-kt-menu="true" id="kt_menu_68ef8af7c4409">
-                                    <!--begin::Header-->
-                                    <div class="px-7 py-5">
-                                        <div class="fs-5 text-gray-900 fw-bold">فیلتر بر اساس</div>
-                                    </div>
-                                    <!--end::Header-->
-
-                                    <!--begin::Menu separator-->
-                                    <div class="separator border-gray-200"></div>
-                                    <!--end::Menu separator-->
-
-
-                                    <!--begin::Form-->
-                                    <div class="px-7 py-5">
-                                        <!--begin::Input group-->
-                                        <div class="mb-10">
-                                            <!--begin::Label-->
-                                            <label class="form-label fw-semibold">اولویت تسک:</label>
-                                            <!--end::Label-->
-
-                                            <!--begin::Input-->
-                                            <div>
-                                                <select class="form-select form-select-solid" multiple data-kt-select2="true" data-close-on-select="false" data-placeholder="اولویت را انتخاب کنید" data-dropdown-parent="#kt_menu_68ef8af7c4409" data-allow-clear="true">
-                                                    <option></option>
-                                                    <option value="0">کم</option>
-                                                    <option value="1">متوسط</option>
-                                                    <option value="2">زیاد</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex justify-content-end">
-                                            <button type="reset" class="btn btn-sm btn-light btn-active-light-primary me-2" data-kt-menu-dismiss="true">بازیابی</button>
-
-                                            <button type="submit" class="btn btn-sm btn-primary" data-kt-menu-dismiss="true">اعمال</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="h-3px w-100 bg-primary"></div>
-                    </div>
-                    <!--end::Col header-->
-
-                    <div class="card mb-6 mb-xl-9">
-                        <!--begin::Card body-->
-                        <div class="card-body">
-                            <!--begin::Header-->
-                            <div class="d-flex flex-stack mb-3">
-                                <!--begin::Badge-->
-                                <div class="badge badge-light">وضعیت</div>
-                                <!--end::Badge-->
-
-                                <!--begin::Menu-->
-                                <div>
-                                    <button type="button" class="btn btn-sm btn-icon btn-color-light-dark btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                                        <i class="ki-outline ki-element-plus fs-2"></i>
-                                    </button>
-
-                                    <!--begin::Menu 3-->
-                                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px py-3" data-kt-menu="true">
-                                        <!--begin::Heading-->
-                                        <div class="menu-item px-3">
-                                            <div class="menu-content text-muted pb-2 px-3 fs-7 text-uppercase">
-                                                عملیات تسک
-                                            </div>
-                                        </div>
-
-                                        <div class="menu-item px-3">
-                                            <a href="#" class="menu-link px-3">
-                                                کامنت ها
-                                            </a>
-                                        </div>
-                                        <div class="menu-item px-3">
-                                            <a href="#" class="menu-link flex-stack px-3">
-                                                تغییر وضعیت
-
-                                                <span class="ms-2" data-bs-toggle="tooltip" title="Specify a target name for future usage and reference">
-                                                    <i class="ki-outline ki-information fs-6"></i>
-                                                </span>
-                                            </a>
-                                        </div>
-                                        <div class="menu-item px-3">
-                                            <a href="#" class="menu-link px-3">
-                                                ویرایش
-                                            </a>
-                                        </div>
-
-                                        <div class="menu-item px-3 my-1">
-                                            <a href="#" class="menu-link px-3">
-                                                حذف
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="mb-2">
-                                <a href="#" class="fs-4 fw-bold mb-1 text-gray-900 text-hover-primary">دریافت PR</a>
-                            </div>
-                            <div class="fs-6 fw-semibold text-gray-600 mb-5">برای پروژه تستی PR دریافت شود</div>
-                            <div class="d-flex flex-stack flex-wrapr">
-                                <!--begin::Users-->
-                                <div class="symbol-group symbol-hover my-1">
-                                    <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="Melody Macy">
-                                        <img alt="Pic" src="{{url('panel/assets/media/avatars/300-2.jpg')}}" />
-                                    </div>
-                                    <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="Harry Mcpherson">
-                                        <img alt="Pic" src="{{url('panel/assets/media/avatars/300-19.jpg')}}" />
-                                    </div>
-                                    <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="Susan Redwood">
-                                        <span class="symbol-label bg-primary text-inverse-primary fw-bold">S</span>
-                                    </div>
-                                </div>
-                                <div class="d-flex my-1">
-                                    <div class="border border-dashed border-gray-300 rounded d-flex align-items-center py-2 px-3">
-                                        <i class="ki-outline ki-paper-clip fs-3"></i>
-                                        <span class="ms-1 fs-7 fw-bold text-gray-600">4</span>
-                                    </div>
-                                    <div class="border border-dashed border-gray-300 d-flex align-items-center rounded py-2 px-3 ms-3">
-                                        <i class="ki-outline ki-message-text-2 fs-3"></i>
-                                        <span class="ms-1 fs-7 fw-bold text-gray-600">4</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--end::Card-->
-                </div>
-                <!--end::Col-->
-
-                <!--begin::Col-->
-                <div class="col-md-3 col-lg-12 col-xl-3">
-                    <!--begin::Col header-->
-                    <div class="mb-9">
-                        <div class="d-flex flex-stack">
-                            <div class="fw-bold fs-4">
-                                انجام شد
-                                <span class="fs-6 text-gray-500 ms-2">2</span>
-                            </div>
-
-                            <!--begin::Menu-->
-                            <div>
-                                <button
-                                    type="button"
-                                    class="btn btn-sm btn-icon btn-color-light-dark btn-active-light-primary"
-                                    data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                                    <i class="ki-outline ki-element-plus fs-2"></i>
-                                </button>
-                                <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px" data-kt-menu="true" id="kt_menu_68ef8af7c4409">
-                                    <!--begin::Header-->
-                                    <div class="px-7 py-5">
-                                        <div class="fs-5 text-gray-900 fw-bold">فیلتر بر اساس</div>
-                                    </div>
-                                    <!--end::Header-->
-
-                                    <!--begin::Menu separator-->
-                                    <div class="separator border-gray-200"></div>
-                                    <!--end::Menu separator-->
-
-
-                                    <!--begin::Form-->
-                                    <div class="px-7 py-5">
-                                        <!--begin::Input group-->
-                                        <div class="mb-10">
-                                            <!--begin::Label-->
-                                            <label class="form-label fw-semibold">اولویت تسک:</label>
-                                            <!--end::Label-->
-
-                                            <!--begin::Input-->
-                                            <div>
-                                                <select class="form-select form-select-solid" multiple data-kt-select2="true" data-close-on-select="false" data-placeholder="اولویت را انتخاب کنید" data-dropdown-parent="#kt_menu_68ef8af7c4409" data-allow-clear="true">
-                                                    <option></option>
-                                                    <option value="0">کم</option>
-                                                    <option value="1">متوسط</option>
-                                                    <option value="2">زیاد</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex justify-content-end">
-                                            <button type="reset" class="btn btn-sm btn-light btn-active-light-primary me-2" data-kt-menu-dismiss="true">بازیابی</button>
-
-                                            <button type="submit" class="btn btn-sm btn-primary" data-kt-menu-dismiss="true">اعمال</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="h-3px w-100 bg-success"></div>
-                    </div>
-                    <!--end::Col header-->
-
-                    <div class="card mb-6 mb-xl-9">
-                        <!--begin::Card body-->
-                        <div class="card-body">
-                            <!--begin::Header-->
-                            <div class="d-flex flex-stack mb-3">
-                                <!--begin::Badge-->
-                                <div class="badge badge-light">وضعیت</div>
-                                <!--end::Badge-->
-
-                                <!--begin::Menu-->
-                                <div>
-                                    <button type="button" class="btn btn-sm btn-icon btn-color-light-dark btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                                        <i class="ki-outline ki-element-plus fs-2"></i>
-                                    </button>
-
-                                    <!--begin::Menu 3-->
-                                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px py-3" data-kt-menu="true">
-                                        <!--begin::Heading-->
-                                        <div class="menu-item px-3">
-                                            <div class="menu-content text-muted pb-2 px-3 fs-7 text-uppercase">
-                                                عملیات تسک
-                                            </div>
-                                        </div>
-
-                                        <div class="menu-item px-3">
-                                            <a href="#" class="menu-link px-3">
-                                                کامنت ها
-                                            </a>
-                                        </div>
-                                        <div class="menu-item px-3">
-                                            <a href="#" class="menu-link flex-stack px-3">
-                                                تغییر وضعیت
-
-                                                <span class="ms-2" data-bs-toggle="tooltip" title="Specify a target name for future usage and reference">
-                                                    <i class="ki-outline ki-information fs-6"></i>
-                                                </span>
-                                            </a>
-                                        </div>
-                                        <div class="menu-item px-3">
-                                            <a href="#" class="menu-link px-3">
-                                                ویرایش
-                                            </a>
-                                        </div>
-
-                                        <div class="menu-item px-3 my-1">
-                                            <a href="#" class="menu-link px-3">
-                                                حذف
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="mb-2">
-                                <a href="#" class="fs-4 fw-bold mb-1 text-gray-900 text-hover-primary">دریافت PR</a>
-                            </div>
-                            <div class="fs-6 fw-semibold text-gray-600 mb-5">برای پروژه تستی PR دریافت شود</div>
-                            <div class="d-flex flex-stack flex-wrapr">
-                                <!--begin::Users-->
-                                <div class="symbol-group symbol-hover my-1">
-                                    <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="Melody Macy">
-                                        <img alt="Pic" src="{{url('panel/assets/media/avatars/300-2.jpg')}}" />
-                                    </div>
-                                    <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="Harry Mcpherson">
-                                        <img alt="Pic" src="{{url('panel/assets/media/avatars/300-19.jpg')}}" />
-                                    </div>
-                                    <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="Susan Redwood">
-                                        <span class="symbol-label bg-primary text-inverse-primary fw-bold">S</span>
-                                    </div>
-                                </div>
-                                <div class="d-flex my-1">
-                                    <div class="border border-dashed border-gray-300 rounded d-flex align-items-center py-2 px-3">
-                                        <i class="ki-outline ki-paper-clip fs-3"></i>
-                                        <span class="ms-1 fs-7 fw-bold text-gray-600">4</span>
-                                    </div>
-                                    <div class="border border-dashed border-gray-300 d-flex align-items-center rounded py-2 px-3 ms-3">
-                                        <i class="ki-outline ki-message-text-2 fs-3"></i>
-                                        <span class="ms-1 fs-7 fw-bold text-gray-600">4</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--end::Col-->
             </div>
             <!--end::Row-->
         </div>
@@ -698,7 +190,11 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="text-start"><span class="badge badge-light-primary fw-bold me-auto">انجام عملیات</span></td>
+                            <td class="text-start">
+                                <span class="badge badge-light-primary fw-bold me-auto">انجام عملیات</span>
+
+                                <a href="#" class="btn btn-primary er w-100 fs-6 px-8 py-4"  data-bs-toggle="modal" data-bs-target="#kt_modal_new_target">ایجاد تسک<i class="ki-outline ki-plus-square fs-2 px-2"></i> </a>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
@@ -711,7 +207,7 @@
 
     <div class="modal fade" id="kt_modal_new_target" tabindex="-1" aria-hidden="true">
         <!--begin::Modal dialog-->
-        <div class="modal-dialog modal-dialog-centered mw-650px">
+        <div class="modal-dialog modal-dialog-centered mw-900px">
             <!--begin::Modal content-->
             <div class="modal-content rounded">
                 <!--begin::Modal header-->
@@ -727,7 +223,9 @@
                 <!--begin::Modal body-->
                 <div class="modal-body scroll-y px-10 px-lg-15 pt-0 pb-15">
                     <!--begin:Form-->
-                    <form id="kt_modal_new_target_form" class="form" action="#">
+                    <form action="{{route('dashboard.task.store')}}" method="post" id="kt_modal_new_target_form" class="form needs-validation"  autocomplete="off"  enctype="multipart/form-data">
+                        @csrf
+                        <input type="text" hidden="" value="{{$project->id}}" name="project_id">
                         <!--begin::Heading-->
                         <div class="mb-13 text-center">
                             <!--begin::Title-->
@@ -736,23 +234,37 @@
 
                             <!--begin::Description-->
                             <div class="text-muted fw-semibold fs-5">
-                                 برای پروژه
+                                برای پروژه
                                 <a href="#" class="fw-bold link-primary">{{$project->name}} - {{$project->project_code}}</a>.
                             </div>
                             <!--end::Description-->
                         </div>
                         <!--end::Heading-->
 
-                        <!--begin::Input group-->
-                        <div class="d-flex flex-column mb-8 fv-row">
-                            <!--begin::Label-->
-                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                                <span class="required">عنوان</span>
-                                <span class="ms-1"  data-bs-toggle="tooltip" title="عنوان تسک را بنویسید" >
+                        <div class="row g-9 mb-8">
+                            <!--begin::Col-->
+                            <div class="col-md-6 fv-row">
+                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                    <span class="required">عنوان</span>
+                                    <span class="ms-1"  data-bs-toggle="tooltip" title="عنوان تسک را بنویسید" >
 	                                <i class="ki-outline ki-information-5 text-gray-500 fs-6"></i>
                                 </span>
-                            </label>
-                            <input type="text" class="form-control form-control-solid" placeholder="عنوان تسک" name="target_title"/>
+                                </label>
+                                <input type="text" class="form-control form-control-solid" placeholder="عنوان تسک" value="{{old('title')}}" name="title" required/>
+                                <div class="invalid-feedback">عنوان تسک الزامی است</div>
+                            </div>
+                            <div class="col-md-6 fv-row">
+                                <label class="required fs-6 fw-semibold mb-2">اولویت تسک </label>
+
+                                <select class="form-select form-select-solid"  data-control="select2" data-hide-search="true"
+                                        data-placeholder="تسک را به کاربران مد نظرتان assign کنید" name="priority">
+                                    <option></option>
+                                    <option value="0">کم</option>
+                                    <option value="1">متوسط</option>
+                                    <option value="2">زیاد</option>
+                                </select>
+                            </div>
+                            <!--end::Col-->
                         </div>
                         <!--end::Input group-->
 
@@ -765,77 +277,60 @@
                                            class="result form-control form-control-solid ps-12"
                                            type="text"
                                            data-jdp
-                                           placeholder="تاریخ شروع پروژه"
+                                           data-jdp-only-date
+                                           placeholder="تاریخ شروع تسک"
                                            autocomplete="off"
                                            value="{{ old('start_date') }}"
                                            required />
                                 </div>
                             </div>
                             <div class="col-md-6 fv-row">
-                                <label class="required fs-6 fw-semibold mb-2">تاریخ پایان</label>
+                                <label class="required fs-6 fw-semibold mb-2">مدت زمان انجام تسک</label>
                                 <div class="position-relative d-flex align-items-center">
-                                    <i class="ki-outline ki-calendar-8 fs-2 position-absolute mx-4"></i>
-                                    <input name="end_date"
+                                    <i class="ki-outline ki-watch fs-2 position-absolute mx-4"></i>
+                                    <input name="duration"
                                            class="result form-control form-control-solid ps-12"
                                            type="text"
-                                           data-jdp
-                                           placeholder="تاریخ پایان پروژه"
+                                           placeholder="مدت زمان انجام تسک"
                                            autocomplete="off"
-                                           value="{{ old('end_date') }}"
+                                           value="{{ old('duration') }}"
                                            required />
                                 </div>
                             </div>
                         </div>
                         <!--end::Input group-->
-                        <div class="row g-9 mb-8">
-                            <!--begin::Col-->
-                            <div class="col-md-12 fv-row">
-                                <label class="required fs-6 fw-semibold mb-2">اولویت تسک </label>
 
-                                <select class="form-select form-select-solid"  data-control="select2" data-hide-search="true"
-                                          data-placeholder="تسک را به کاربران مد نظرتان assign کنید" name="target_assign">
-                                    <option></option>
-                                    <option value="0">کم</option>
-                                    <option value="1">متوسط</option>
-                                    <option value="2">زیاد</option>
-                                </select>
-                            </div>
-                            <!--end::Col-->
-                        </div>
                         <div class="row g-9 mb-8">
+                            <div class="col-md-4 fv-row">
+                                <label class="required fs-6 fw-semibold mb-2">نیاز به تایید مسئول تایید کننده دارد</label>
+                                <input class="form-check-input" name="manger_check" type="checkbox" value="1" id="flexCheckDefault"/>
+                            </div>
                             <!--begin::Col-->
-                            <div class="col-md-12 fv-row">
+                            <div class="col-md-8 fv-row">
                                 <label class="required fs-6 fw-semibold mb-2">مدیر تایید کننده تسک</label>
 
                                 <select class="form-select form-select-solid"  data-control="select2" data-hide-search="true"
-                                          data-placeholder="مدیر تایید کننده تسک" name="target_assign">
+                                        data-placeholder="مدیر تایید کننده تسک" name="manager_id">
                                     <option></option>
-                                    <option value="1">فریناز حقیقی</option>
-                                    <option value="2">داوود یوسفی</option>
-                                    <option value="3">مهسا امامی</option>
-                                    <option value="4">فرتاش آذرسینا</option>
-                                    <option value="5">محمد اوتادی</option>
+                                    @foreach($managers as $manager)
+                                        <option value="{{$manager->id}}">{{$manager->Name}} - {{role_name($manager->roles()->first()->name)}}</option>
+                                    @endforeach
                                 </select>
                             </div>
-                            <!--end::Col-->
-                        </div>
-                        <div class="row g-9 mb-8">
-                            <!--begin::Col-->
                             <div class="col-md-12 fv-row">
                                 <label class="required fs-6 fw-semibold mb-2">ناظر تسک</label>
 
                                 <select class="form-select form-select-solid"  data-control="select2" data-hide-search="true"
-                                        data-placeholder="ناظر تسک" name="target_assign">
+                                        data-placeholder="ناظر تسک" name="watcher_id">
                                     <option></option>
-                                    <option value="1">فریناز حقیقی</option>
-                                    <option value="2">داوود یوسفی</option>
-                                    <option value="3">مهسا امامی</option>
-                                    <option value="4">فرتاش آذرسینا</option>
-                                    <option value="5">محمد اوتادی</option>
+                                    @foreach($watchers as $watcher)
+                                        <option value="{{$watcher->id}}">{{ $watcher->Name }} </option>
+                                    @endforeach
                                 </select>
                             </div>
                             <!--end::Col-->
                         </div>
+
                         <!--begin::Input group-->
                         <div class="row g-9 mb-8">
                             <!--begin::Col-->
@@ -843,13 +338,11 @@
                                 <label class="required fs-6 fw-semibold mb-2">کاربران تسک </label>
 
                                 <select class="form-select form-select-solid"  data-control="select2" data-hide-search="true"
-                                        multiple  data-placeholder="تسک را به کاربران مد نظرتان assign کنید" name="target_assign">
+                                        multiple  data-placeholder="تسک را به کاربران مد نظرتان assign کنید" name="members[]">
                                     <option></option>
-                                    <option value="1">فریناز حقیقی</option>
-                                    <option value="2">داوود یوسفی</option>
-                                    <option value="3">مهسا امامی</option>
-                                    <option value="4">فرتاش آذرسینا</option>
-                                    <option value="5">محمد اوتادی</option>
+                                    @foreach($members as $member)
+                                        <option value="{{$member->id}}">{{$member->Name}} </option>
+                                    @endforeach
                                 </select>
                             </div>
                             <!--end::Col-->
@@ -857,42 +350,32 @@
                         <!--begin::Input group-->
                         <div class="d-flex flex-column mb-8">
                             <label class="fs-6 fw-semibold mb-2">توضیحات تسک</label>
-                            <textarea class="form-control form-control-solid" rows="3" name="target_details" placeholder="توضیحات تسک">
+                            <textarea class="form-control form-control-solid" name="description" data-kt-autosize="true" placeholder="توضیحات تسک">
+                            {{old('description')}}
                             </textarea>
                         </div>
                         <!--end::Input group-->
-
-                        <!--begin::Input group-->
-                        <div class="col-12">
-                            <label for="gallery" class="form-label">فایل های مربوط به تسک</label>
-                            <div class="row g-3 images">
-                                <div class="col-md-4 d-flex image">
-                                    <input class='form-control' type="file" name="photos[]" accept="image/*">
-                                    <button type="button" class="btn btn-link text-danger" title='حذف'
-                                            onclick='removeImage(this)'>
-                                        <i class="bx bxs-trash"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="d-flex justify-content-end mt-3">
-                                <button type="button" class="btn btn-outline-info btn-sm" onclick='addImage()'>
-                                    افزودن فایل
-                                </button>
-                            </div>
+                        <div class="row g-9 mb-8">
+                            <label for="gallery" class="form-label required">فایل های مربوط به تسک </label>
+                            <input type="file" class="form-control mb-2 mb-md-0" id="gallery"
+                                   name="photos[]" placeholder="تصویر" required multiple>
+                            <div class="invalid-feedback">تصویر الزامی است</div>
                         </div>
+                        <!--begin::Input group-->
+
 
                         <!--begin::Actions-->
                         <div class="text-center">
                             <button type="reset" id="kt_modal_new_target_cancel" class="btn btn-light me-3">
-                                Cancel
+                                انصراف
                             </button>
 
                             <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary">
                             <span class="indicator-label">
-                                ثبت تسک
+                                افزودن تسک
                             </span>
                                 <span class="indicator-progress">
-                                Please wait...
+                                کمی صبر کنید ...
                                     <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
                                 </span>
                             </button>
@@ -907,9 +390,11 @@
         </div>
         <!--end::Modal dialog-->
     </div>
+
+
     <div class="modal fade" id="kt_modal_new_target_sub" tabindex="-1" aria-hidden="true">
         <!--begin::Modal dialog-->
-        <div class="modal-dialog modal-dialog-centered mw-650px">
+        <div class="modal-dialog modal-dialog-centered mw-900px">
             <!--begin::Modal content-->
             <div class="modal-content rounded">
                 <!--begin::Modal header-->
@@ -925,7 +410,8 @@
                 <!--begin::Modal body-->
                 <div class="modal-body scroll-y px-10 px-lg-15 pt-0 pb-15">
                     <!--begin:Form-->
-                    <form id="kt_modal_new_target_form" class="form" action="#">
+                    <form action=""  method="post" id="editForm" class="form" enctype="multipart/form-data">
+                        @csrf
                         <!--begin::Heading-->
                         <div class="mb-13 text-center">
                             <!--begin::Title-->
@@ -934,7 +420,7 @@
 
                             <!--begin::Description-->
                             <div class="text-muted fw-semibold fs-5">
-                                 برای پروژه
+                                برای پروژه
                                 <a href="#" class="fw-bold link-primary">{{$project->name}} - {{$project->project_code}}</a>.
                             </div>
                             <!--end::Description-->
@@ -942,15 +428,30 @@
                         <!--end::Heading-->
 
                         <!--begin::Input group-->
-                        <div class="d-flex flex-column mb-8 fv-row">
-                            <!--begin::Label-->
-                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                                <span class="required">عنوان</span>
-                                <span class="ms-1"  data-bs-toggle="tooltip" title="عنوان تسک را بنویسید" >
+                        <div class="row g-9 mb-8">
+                            <!--begin::Col-->
+                            <div class="col-md-6 fv-row">
+                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                    <span class="required">عنوان</span>
+                                    <span class="ms-1"  data-bs-toggle="tooltip" title="عنوان تسک را بنویسید" >
 	                                <i class="ki-outline ki-information-5 text-gray-500 fs-6"></i>
                                 </span>
-                            </label>
-                            <input type="text" class="form-control form-control-solid" placeholder="عنوان تسک" name="target_title"/>
+                                </label>
+                                <input type="text" class="form-control form-control-solid" placeholder="عنوان تسک" value="{{old('title')}}" name="title" required/>
+                                <div class="invalid-feedback">عنوان تسک الزامی است</div>
+                            </div>
+                            <div class="col-md-6 fv-row">
+                                <label class="required fs-6 fw-semibold mb-2">اولویت تسک </label>
+
+                                <select class="form-select form-select-solid"  data-control="select2" data-hide-search="true"
+                                        data-placeholder="تسک را به کاربران مد نظرتان assign کنید" name="priority">
+                                    <option></option>
+                                    <option value="0">کم</option>
+                                    <option value="1">متوسط</option>
+                                    <option value="2">زیاد</option>
+                                </select>
+                            </div>
+                            <!--end::Col-->
                         </div>
                         <!--end::Input group-->
 
@@ -963,23 +464,22 @@
                                            class="result form-control form-control-solid ps-12"
                                            type="text"
                                            data-jdp
-                                           placeholder="تاریخ شروع پروژه"
+                                           placeholder="تاریخ شروع تسک"
                                            autocomplete="off"
                                            value="{{ old('start_date') }}"
                                            required />
                                 </div>
                             </div>
                             <div class="col-md-6 fv-row">
-                                <label class="required fs-6 fw-semibold mb-2">تاریخ پایان</label>
+                                <label class="required fs-6 fw-semibold mb-2">مدت زمان انجام تسک</label>
                                 <div class="position-relative d-flex align-items-center">
-                                    <i class="ki-outline ki-calendar-8 fs-2 position-absolute mx-4"></i>
-                                    <input name="end_date"
+                                    <i class="ki-outline ki-watch fs-2 position-absolute mx-4"></i>
+                                    <input name="duration"
                                            class="result form-control form-control-solid ps-12"
                                            type="text"
-                                           data-jdp
-                                           placeholder="تاریخ پایان پروژه"
+                                           placeholder="مدت زمان انجام تسک"
                                            autocomplete="off"
-                                           value="{{ old('end_date') }}"
+                                           value="{{ old('duration') }}"
                                            required />
                                 </div>
                             </div>
@@ -987,102 +487,73 @@
                         <!--end::Input group-->
                         <div class="row g-9 mb-8">
                             <!--begin::Col-->
-                            <div class="col-md-12 fv-row">
-                                <label class="required fs-6 fw-semibold mb-2">اولویت تسک </label>
-
-                                <select class="form-select form-select-solid"  data-control="select2" data-hide-search="true"
-                                          data-placeholder="تسک را به کاربران مد نظرتان assign کنید" name="target_assign">
-                                    <option></option>
-                                    <option value="0">کم</option>
-                                    <option value="1">متوسط</option>
-                                    <option value="2">زیاد</option>
-                                </select>
+                            <div class="col-md-4 fv-row">
+                                <label class="required fs-6 fw-semibold mb-2">نیاز به تایید مسئول تایید کننده دارد</label>
+                                <input class="form-check-input" name="sub_manger_check" type="checkbox" value="1" id="sub_flexCheckDefault"/>
                             </div>
-                            <!--end::Col-->
-                        </div>
-                        <div class="row g-9 mb-8">
                             <!--begin::Col-->
-                            <div class="col-md-12 fv-row">
+                            <div class="col-md-8 fv-row">
                                 <label class="required fs-6 fw-semibold mb-2">مدیر تایید کننده تسک</label>
 
                                 <select class="form-select form-select-solid"  data-control="select2" data-hide-search="true"
-                                          data-placeholder="مدیر تایید کننده تسک" name="target_assign">
+                                        data-placeholder="مدیر تایید کننده تسک" name="sub_manager_id">
                                     <option></option>
-                                    <option value="1">فریناز حقیقی</option>
-                                    <option value="2">داوود یوسفی</option>
-                                    <option value="3">مهسا امامی</option>
-                                    <option value="4">فرتاش آذرسینا</option>
-                                    <option value="5">محمد اوتادی</option>
+                                    @foreach($managers as $manager)
+                                        <option value="{{$manager->id}}">{{$manager->Name}} - {{role_name($manager->roles()->first()->name)}}</option>
+                                    @endforeach
                                 </select>
                             </div>
-                            <!--end::Col-->
-                        </div>
-                        <div class="row g-9 mb-8">
-                            <!--begin::Col-->
                             <div class="col-md-12 fv-row">
                                 <label class="required fs-6 fw-semibold mb-2">ناظر تسک</label>
 
                                 <select class="form-select form-select-solid"  data-control="select2" data-hide-search="true"
-                                        data-placeholder="ناظر تسک" name="target_assign">
+                                        data-placeholder="ناظر تسک" name="watcher_id">
                                     <option></option>
-                                    <option value="1">فریناز حقیقی</option>
-                                    <option value="2">داوود یوسفی</option>
-                                    <option value="3">مهسا امامی</option>
-                                    <option value="4">فرتاش آذرسینا</option>
-                                    <option value="5">محمد اوتادی</option>
+                                    @foreach($watchers as $watcher)
+                                        <option value="{{$watcher->id}}">{{ $watcher->Name }} </option>
+                                    @endforeach
                                 </select>
                             </div>
                             <!--end::Col-->
                         </div>
-                        <!--begin::Input group-->
                         <div class="row g-9 mb-8">
                             <!--begin::Col-->
                             <div class="col-md-12 fv-row">
                                 <label class="required fs-6 fw-semibold mb-2">کاربران تسک </label>
 
                                 <select class="form-select form-select-solid"  data-control="select2" data-hide-search="true"
-                                        multiple  data-placeholder="تسک را به کاربران مد نظرتان assign کنید" name="target_assign">
+                                        multiple  data-placeholder="تسک را به کاربران مد نظرتان assign کنید" name="members[]">
                                     <option></option>
-                                    <option value="1">فریناز حقیقی</option>
-                                    <option value="2">داوود یوسفی</option>
-                                    <option value="3">مهسا امامی</option>
-                                    <option value="4">فرتاش آذرسینا</option>
-                                    <option value="5">محمد اوتادی</option>
+                                    @foreach($members as $member)
+                                        <option value="{{$member->id}}">{{$member->Name}} </option>
+                                    @endforeach
                                 </select>
                             </div>
                             <!--end::Col-->
                         </div>
                         <!--begin::Input group-->
+
+                        <!--begin::Input group-->
                         <div class="d-flex flex-column mb-8">
                             <label class="fs-6 fw-semibold mb-2">توضیحات تسک</label>
-                            <textarea class="form-control form-control-solid" rows="3" name="target_details" placeholder="توضیحات تسک">
+                            <textarea class="form-control form-control-solid" name="description" data-kt-autosize="true" placeholder="توضیحات تسک">
+                            {{old('description')}}
                             </textarea>
                         </div>
                         <!--end::Input group-->
 
                         <!--begin::Input group-->
-                        <div class="col-12">
-                            <label for="gallery" class="form-label">فایل های مربوط به تسک</label>
-                            <div class="row g-3 images">
-                                <div class="col-md-4 d-flex image">
-                                    <input class='form-control' type="file" name="photos[]" accept="image/*">
-                                    <button type="button" class="btn btn-link text-danger" title='حذف'
-                                            onclick='removeImage(this)'>
-                                        <i class="bx bxs-trash"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="d-flex justify-content-end mt-3">
-                                <button type="button" class="btn btn-outline-info btn-sm" onclick='addImage()'>
-                                    افزودن فایل
-                                </button>
-                            </div>
+                        <div class="row g-9 mb-8">
+                            <label for="gallery" class="form-label required">فایل های مربوط به تسک </label>
+                            <input type="file" class="form-control mb-2 mb-md-0" id="gallery"
+                                   name="photos[]" placeholder="تصویر" required multiple>
+                            <div class="invalid-feedback">تصویر الزامی است</div>
                         </div>
 
                         <!--begin::Actions-->
                         <div class="text-center">
                             <button type="reset" id="kt_modal_new_target_cancel" class="btn btn-light me-3">
-                                Cancel
+                                انصراف
                             </button>
 
                             <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary">
@@ -1090,7 +561,7 @@
                                 ثبت تسک
                             </span>
                                 <span class="indicator-progress">
-                                Please wait...
+                                کمی صبر کنید ...
                                     <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
                                 </span>
                             </button>
@@ -1109,6 +580,7 @@
     </div>
 
     @push('scripts')
+        <script src="{{ asset('assets/panel/plugins/custom/formrepeater/formrepeater.bundle.js') }}"></script>
         <script>
             jalaliDatepicker.startWatch({
                 showTodayBtn: true,
@@ -1150,11 +622,12 @@
                 enableTime: true,
                 dateFormat: "Y-m-d H:i",
             });
+        </script>
+        <script>
 
             // Define form element
             const form = document.getElementById('kt_docs_formvalidation_text');
 
-            // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
             var validator = FormValidation.formValidation(
                 form,
                 {
@@ -1239,5 +712,81 @@
                 $(el).closest('.image').remove();
             }
         </script>
-            @endpush
+        <script>
+            FilePond.create(document.querySelector('#featureImage'), {
+                ...options,
+                name: 'photo',
+                server: {
+                    process: (fieldName, file, metadata, load, error, progress, abort) => {
+                        const fileURL = URL.createObjectURL(file);
+                        fetch(fileURL).then(res => res.blob()).then(myBlob => {
+                            load(myBlob);
+                            showCropModal('featureImage', fileURL, 27 / 40);
+                        })
+                    }
+                }
+            });
+
+            FilePond.create(document.querySelector('#innerImage'), {
+                ...options,
+                name: 'large_photo',
+                server: {
+                    process: (fieldName, file, metadata, load, error, progress, abort) => {
+                        const fileURL = URL.createObjectURL(file);
+                        fetch(fileURL).then(res => res.blob()).then(myBlob => {
+                            load(myBlob);
+                            showCropModal('innerImage', fileURL, 16 / 11);
+                        })
+                    }
+                }
+            });
+
+            FilePond.create(document.querySelector('#gallery'), {
+                ...options,
+                storeAsFile: true,
+                allowImagePreview: false
+            });
+        </script>
+        <script src="{{url('panel/assets/js/custom/widgets.js')}}"></script>
+        <script>
+            $(document).ready(function() {
+                $('select[name="manager_id"]').closest('.fv-row').hide();
+
+                $('#flexCheckDefault').on('change', function() {
+                    if ($(this).is(':checked')) {
+                        $('select[name="manager_id"]').closest('.fv-row').show();
+                    } else {
+                        $('select[name="manager_id"]').closest('.fv-row').hide();
+                    }
+                });
+            });
+            $(document).ready(function() {
+                $('select[name="sub_manager_id"]').closest('.fv-row').hide();
+
+                $('#sub_flexCheckDefault').on('change', function() {
+                    if ($(this).is(':checked')) {
+                        $('select[name="sub_manager_id"]').closest('.fv-row').show();
+                    } else {
+                        $('select[name="sub_manager_id"]').closest('.fv-row').hide();
+                    }
+                });
+            });
+
+
+            function openEditModal(url, currentData) {
+                let data = JSON.parse(currentData);
+
+                $('#modalTitle').text(`ایجاد زیر تسک برای "${data.title}"`);
+
+                $('#editForm #title').val(data.title);
+
+                $('#editForm').attr('action', url);
+
+                var modal = new bootstrap.Modal(document.getElementById('kt_modal_new_target_sub'));
+                modal.show();
+            }
+
+        </script>
+
+    @endpush
 </x-layout>

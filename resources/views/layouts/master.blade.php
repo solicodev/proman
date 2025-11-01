@@ -30,7 +30,10 @@
     <link href="{{url('assets/admin/plugins/datetimepicker/css/classic.date.css')}}" rel="stylesheet" />
     <link href="{{url('assets/admin/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.min.css')}}" rel="stylesheet"/>
     <link href="{{url('panel/assets/plugins/custom/vis-timeline/vis-timeline.bundle.css')}}" rel="stylesheet" type="text/css" />
-
+    <link href="{{ asset('panel/assets/css/filepond-plugin-image-preview.css') }}" rel="stylesheet" />
+    <link href="{{ asset('panel/assets/css/filepond.css') }}" rel="stylesheet" />
+    <link href="{{ asset('panel/assets/css/cropper.min.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('panel/assets/css/persian-datepicker.min.css') }}">
     @stack('styles')
 </head>
 <body id="kt_app_body" data-kt-app-sidebar-enabled="true" data-kt-app-sidebar-fixed="true"
@@ -90,6 +93,14 @@
 <script src="{{url('assets/admin/plugins/JalaliDatePicker/jalalidatepicker.min.js')}}"></script>
 
 <script src="{{url('panel/assets/plugins/custom/vis-timeline/vis-timeline.bundle.js')}}"></script>
+
+<script src="{{ asset('panel/assets/js/filepond-plugin-image-preview.js') }}"></script>
+<script src="{{ asset('panel/assets/js/filepond-plugin-file-validate-type.js') }}"></script>
+<script src="{{ asset('panel/assets/js/filepond.js') }}"></script>
+<script src="{{ asset('panel/assets/js/cropper.min.js') }}"></script>
+
+<script src="{{ asset('panel/assets/js/persian-date.min.js') }}"></script>
+<script src="{{ asset('panel/assets/js/persian-datepicker.min.js') }}"></script>
 <script>
     jalaliDatepicker.startWatch({
         showTodayBtn: true,
@@ -158,6 +169,15 @@
     });
     productGallery = function () {
         document.getElementById('pro-photo').value = photosGallery
+    }
+</script>
+
+<script>
+    FilePond.registerPlugin(FilePondPluginImagePreview, FilePondPluginFileValidateType);
+
+    const options = {
+        labelIdle: 'فایل خود را اینجا رها کنید یا <span class="filepond--label-action"> انتخاب کنید </span>',
+        acceptedFileTypes: ['image/*'],
     }
 </script>
 <!--end::Custom Javascript-->

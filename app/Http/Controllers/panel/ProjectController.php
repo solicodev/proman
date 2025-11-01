@@ -38,7 +38,35 @@ class ProjectController extends Controller
 
     public function task(Project $project)
     {
-        $tasks = Task::with(['project','manager','watcher','assigners','photos','predecessors','successors'])->where('project_id',$project->id)->paginate(15);
+        $SuperAdminRoles = ['Super Admin'];
+        $excludedRoles = ['Manager'];
+        $memberRoles = ['Member'];
+
+        $managers = User::whereHas('roles', function ($query) use ($excludedRoles) {
+            $query->whereIn('name', $excludedRoles);
+        })->whereStatus('1')->latest()->get();
+
+        $members = User::whereHas('roles', function ($query) use ($memberRoles) {
+            $query->whereIn('name', $memberRoles);
+        })->whereStatus('1')->latest()->get();
+
+        $projects = Project::get();;
+
+        $watchers = User::whereDoesntHave('roles', function ($query) use ($SuperAdminRoles) {
+            $query->whereIn('name', $SuperAdminRoles);
+        })->whereStatus('1')->latest()->get();
+        $item_tasks = Task::with(['project','manager','watcher','assigners','photos','predecessors','successors'])->where('project_id',$project->id)->paginate(15);
+
+
+        $columns = [
+            0 => ['title' => 'در حال بررسی', 'color' => 'warning'],
+            1 => ['title' => 'برای انجام', 'color' => 'primary'],
+            2 => ['title' => 'در حال انجام', 'color' => 'success'],
+            3 => ['title' => 'انجام شد', 'color' => 'secondary'],
+        ];
+
+        $tasks = Task::whereNull('parent_id')->get()->groupBy('status');
+
         return view('proMan.projects.tasks',get_defined_vars());
     }
 

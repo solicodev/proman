@@ -73,7 +73,7 @@ class Task extends Model
         return $this->belongsTo(Task::class, 'parent_id');
     }
 
-      public function children()
+    public function children()
     {
         return $this->hasMany(Task::class, 'parent_id');
     }

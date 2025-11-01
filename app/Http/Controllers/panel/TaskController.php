@@ -3,16 +3,45 @@
 namespace App\Http\Controllers\panel;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SubTaskStoreRequest;
+use App\Http\Requests\TaskStoreRequest;
 use App\Models\Project;
 use App\Models\Task;
+use App\Models\User;
+use App\Services\TaskPanelService;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TaskController extends Controller
 {
+
+    public TaskPanelService $taskPanelService;
+    public function __construct(TaskPanelService $taskPanelService)
+    {
+        $this->taskPanelService = $taskPanelService;
+    }
     public function index(Project $project)
     {
+
+        $SuperAdminRoles = ['Super Admin'];
+        $excludedRoles = ['Manager'];
+        $memberRoles = ['Member'];
+
+        $managers = User::whereHas('roles', function ($query) use ($excludedRoles) {
+            $query->whereIn('name', $excludedRoles);
+        })->whereStatus('1')->latest()->get();
+
+        $members = User::whereHas('roles', function ($query) use ($memberRoles) {
+            $query->whereIn('name', $memberRoles);
+        })->whereStatus('1')->latest()->get();
+
+        $projects = Project::get();;
+
+        $watchers = User::whereDoesntHave('roles', function ($query) use ($SuperAdminRoles) {
+            $query->whereIn('name', $SuperAdminRoles);
+        })->whereStatus('1')->latest()->get();
         $tasks = Task::with(['project','manager','watcher','assigners','photos','predecessors','successors'])->where('project_id',$project->id)->paginate(15);
-        dd($tasks);
         return view('proMan.projects.tasks',get_defined_vars());
     }
 
@@ -21,42 +50,38 @@ class TaskController extends Controller
 
         return view('proMan.tasks.create', get_defined_vars());
     }
-    public function store(Request $request)
+    public function store(TaskStoreRequest $request)
     {
-        $data = $request->validate([
-            'project_id' => 'required|exists:projects,id',
-            'name' => 'required|string|max:255',
-            'start_date' => 'required|date',
-            'end_date' => 'required|date|after_or_equal:start_date',
-            'duration' => 'nullable|integer|min:0'
-        ]);
-
-        // محاسبه duration اگر داده نشده
-        if (empty($data['duration'])) {
-            $data['duration'] = now()
-                ->parse($data['end_date'])
-                ->diffInDays(now()->parse($data['start_date']));
+        try {
+            DB::beginTransaction();
+            $this->taskPanelService->store($request->all());
+            DB::commit();
+            return redirect()->back()->with('flash_message', 'با موفقیت ایجاد شد');
+        } catch (Exception $exception) {
+            DB::rollBack();
+            return redirect()->back()->with('err_message', $exception->getMessage());
         }
-
-        $task = Task::create($data);
-
-        return response()->json([
-            'message' => 'تسک با موفقیت ایجاد شد.',
-            'data' => $task
-        ]);
     }
 
-    public function storeSubtask(Request $request,Task $parentTask)
+    public function storeSubtask(SubTaskStoreRequest $request,Task $task)
     {
-        $subtask = $parentTask->children()->create([
-            'title' => 'زیرتسک جدید',
-            'status' => 0,
-            'priority' => 1,
-            'duration' => 10,
-            'start_date' => now(),
-        ]);
+        DB::beginTransaction();
+        $this->taskPanelService->storeSubtask($request->all(),$task);
+//        $subtask = $parentTask->children()->create([
+//            'title' => 'زیرتسک جدید',
+//            'status' => 0,
+//            'priority' => 1,
+//            'duration' => 10,
+//            'start_date' => now(),
+//        ]);
+        try {
+            DB::commit();
+            return redirect()->back()->with('success', 'زیرتسک با موفقیت ایجاد شد.');
+        } catch (Exception $exception) {
+            DB::rollBack();
+            return redirect()->back()->with('err_message', $exception->getMessage());
+        }
 
-        return back()->with('success', 'زیرتسک با موفقیت ایجاد شد.');
 
     }
 
