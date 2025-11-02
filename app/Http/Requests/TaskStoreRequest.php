@@ -32,7 +32,8 @@ class TaskStoreRequest extends FormRequest
             'duration' => 'required|integer',
             'start_date' => 'required|date',
             'watcher_id' => 'nullable|exists:users,id',
-            'members*' => 'required|array'
+            'members*' => 'required|array',
+
         ];
     }
     public function messages() : array

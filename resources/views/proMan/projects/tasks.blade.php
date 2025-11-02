@@ -302,7 +302,7 @@
                         <div class="row g-9 mb-8">
                             <div class="col-md-4 fv-row">
                                 <label class="required fs-6 fw-semibold mb-2">نیاز به تایید مسئول تایید کننده دارد</label>
-                                <input class="form-check-input" name="manger_check" type="checkbox" value="1" id="flexCheckDefault"/>
+                                <input class="form-check-input" name="manager_check" type="checkbox" value="1" id="flexCheckDefault"/>
                             </div>
                             <!--begin::Col-->
                             <div class="col-md-8 fv-row">
@@ -490,7 +490,7 @@
                             <!--begin::Col-->
                             <div class="col-md-4 fv-row">
                                 <label class="required fs-6 fw-semibold mb-2">نیاز به تایید مسئول تایید کننده دارد</label>
-                                <input class="form-check-input" name="sub_manger_check" type="checkbox" value="1" id="sub_flexCheckDefault"/>
+                                <input class="form-check-input" name="sub_manager_check" type="checkbox" value="1" id="sub_flexCheckDefault"/>
                             </div>
                             <!--begin::Col-->
                             <div class="col-md-8 fv-row">

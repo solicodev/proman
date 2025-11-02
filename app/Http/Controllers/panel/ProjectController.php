@@ -17,6 +17,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ProjectController extends Controller
 {
@@ -139,10 +140,13 @@ class ProjectController extends Controller
     public function store(ProjectStoreRequest $request)
     {
         try {
+            DB::beginTransaction();
 //            $photos = explode(',', $request->input('photos')[0]);
             $project = $this->projectService->store($request->all());
             return redirect(route('dashboard.project.redirect',$project->id))->with('flash_message', 'با موفقیت ایجاد شد');
+            DB::commit();
         } catch (Exception $exception) {
+            DB::rollBack();
             return redirect()->back()->with('err_message', $exception->getMessage());
         }
     }

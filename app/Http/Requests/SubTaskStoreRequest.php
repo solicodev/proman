@@ -24,8 +24,8 @@ class SubTaskStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'manager_id' => 'nullable|exists:users,id',
-            'manager_check' => 'nullable',
+            'sub_manager_id' => 'nullable|exists:users,id',
+            'sub_manager_check' => 'nullable',
             'title' => 'required|string',
             'description' => 'nullable',
             'duration' => 'required|integer',
