@@ -1,9 +1,0 @@
-.idea
-.vscode
-
-vendor/
-composer.phar
-
-.DS_Store
-.Thumbs.db
-.phpunit.result.cache

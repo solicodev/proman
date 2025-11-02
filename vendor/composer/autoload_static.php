@@ -46,7 +46,6 @@ class ComposerStaticInitc514d8f7b9fc5970bdd94287905ef584
         'ce9671a430e4846b44e1c68c7611f9f5' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery.php',
         'a1cfe24d14977df6878b9bf804af2d1c' => __DIR__ . '/..' . '/nunomaduro/collision/src/Adapters/Phpunit/Autoload.php',
         'ec07570ca5a812141189b1fa81503674' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Assert/Functions.php',
-        '93e91ab5012c06808669e356b03bc773' => __DIR__ . '/..' . '/redot/laravel-toastify/src/helpers.php',
         '377b22b161c09ed6e5152de788ca020a' => __DIR__ . '/..' . '/spatie/laravel-permission/src/helpers.php',
         '8fde5feda9697fe0ee53a3938c839fb0' => __DIR__ . '/../..' . '/app/Helpers/Helper.php',
     );
@@ -105,7 +104,6 @@ class ComposerStaticInitc514d8f7b9fc5970bdd94287905ef584
         ),
         'R' => 
         array (
-            'Redot\\LaravelToastify\\' => 22,
             'Ramsey\\Uuid\\' => 12,
             'Ramsey\\Collection\\' => 18,
         ),
@@ -359,10 +357,6 @@ class ComposerStaticInitc514d8f7b9fc5970bdd94287905ef584
         'Spatie\\Permission\\' => 
         array (
             0 => __DIR__ . '/..' . '/spatie/laravel-permission/src',
-        ),
-        'Redot\\LaravelToastify\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/redot/laravel-toastify/src',
         ),
         'Ramsey\\Uuid\\' => 
         array (
@@ -5714,8 +5708,6 @@ class ComposerStaticInitc514d8f7b9fc5970bdd94287905ef584
         'Ramsey\\Uuid\\UuidInterface' => __DIR__ . '/..' . '/ramsey/uuid/src/UuidInterface.php',
         'Ramsey\\Uuid\\Validator\\GenericValidator' => __DIR__ . '/..' . '/ramsey/uuid/src/Validator/GenericValidator.php',
         'Ramsey\\Uuid\\Validator\\ValidatorInterface' => __DIR__ . '/..' . '/ramsey/uuid/src/Validator/ValidatorInterface.php',
-        'Redot\\LaravelToastify\\LaravelToastifyServiceProvider' => __DIR__ . '/..' . '/redot/laravel-toastify/src/LaravelToastifyServiceProvider.php',
-        'Redot\\LaravelToastify\\Toastify' => __DIR__ . '/..' . '/redot/laravel-toastify/src/Toastify.php',
         'ReflectionConstant' => __DIR__ . '/..' . '/symfony/polyfill-php84/Resources/stubs/ReflectionConstant.php',
         'SQLite3Exception' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/SQLite3Exception.php',
         'SebastianBergmann\\CliParser\\AmbiguousOptionException' => __DIR__ . '/..' . '/sebastian/cli-parser/src/exceptions/AmbiguousOptionException.php',
