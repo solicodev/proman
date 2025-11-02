@@ -15,9 +15,7 @@ class TaskPanelService
 {
     public function store(array $param)
     {
-
         $end_date = Carbon::parse($param['start_date'] ?? null)->addDays(intval($param['duration']))->format('Y/m/d');
-
         $task = new Task();
         $task->title = $param['title'];
         $task->description = $param['description'] ?? null;

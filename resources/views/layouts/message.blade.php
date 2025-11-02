@@ -1,28 +1,65 @@
-@if (isset($errors) and is_array($errors) and count($errors) > 0)
+@if ($errors->any())
     @push('scripts')
-        <script type="text/javascript">
-            $.jGrowl('<ul> @foreach ($errors->all() as $error) <li>{{ $error }}</li> @endforeach </ul>', {life: 10000, position: 'bottom-left', theme: 'bg-danger'});
+        <script>
+            $(function () {
+                $.jGrowl(
+                    `<ul style="margin:0; padding-left:20px;">
+                        @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>`,
+                    {
+                        life: 10000,
+                        position: 'bottom-left',
+                        theme: 'bg-danger'
+                    }
+                );
+            });
         </script>
     @endpush
 @endif
-@if(Session::has('flash_message'))
+
+@if (session('flash_message'))
     @push('scripts')
-        <script type="text/javascript">
-            $.jGrowl('{!! session("flash_message") !!}', {life: 10000, position: 'bottom-left', theme: 'bg-success'});
+        <script>
+            $(function () {
+                $.jGrowl(`{!! session('flash_message') !!}`, {
+                    life: 10000,
+                    position: 'bottom-left',
+                    theme: 'bg-success',
+                    animateOpen :  {opacity : 'show'},
+                });
+            });
         </script>
     @endpush
 @endif
-@if(Session::has('err_message'))
+
+@if (session('err_message'))
     @push('scripts')
-        <script type="text/javascript">
-            $.jGrowl('{!! session("err_message") !!}', {life: 10000, position: 'bottom-left', theme: 'bg-danger'});
+        <script>
+            $(function () {
+                $.jGrowl(`{!! session('err_message') !!}`, {
+                    life: 10000,
+                    position: 'bottom-left',
+                    theme: 'bg-danger',
+                    animateOpen :  {opacity : 'show'},
+                });
+            });
         </script>
     @endpush
 @endif
-@if(Session::has('warning_message'))
+
+@if (session('warning_message'))
     @push('scripts')
-        <script type="text/javascript">
-            $.jGrowl('{!! session("warning_message") !!}', {life: 10000, position: 'bottom-left', theme: 'bg-warning'});
+        <script>
+            $(function () {
+                $.jGrowl(`{!! session('warning_message') !!}`, {
+                    life: 10000,
+                    position: 'bottom-left',
+                    theme: 'bg-warning',
+                    animateOpen :  {opacity : 'show'},
+                });
+            });
         </script>
     @endpush
 @endif

@@ -53,13 +53,16 @@ class TaskController extends Controller
     public function store(TaskStoreRequest $request)
     {
         try {
-            DB::beginTransaction();
+//            DB::beginTransaction();
             $this->taskPanelService->store($request->all());
+
+            return redirect()->back()->with('flash_message', ' با موفقیت ایجاد شد :)');
+
+
             DB::commit();
-            return redirect()->back()->with('flash_message', 'با موفقیت ایجاد شد');
         } catch (Exception $exception) {
             DB::rollBack();
-            return redirect()->back()->with('err_message', $exception->getMessage());
+            return redirect()->back()->with('err_message', 'خطایی رخ داد :('.$exception->getMessage());
         }
     }
 
@@ -76,10 +79,10 @@ class TaskController extends Controller
 //        ]);
         try {
             DB::commit();
-            return redirect()->back()->with('success', 'زیرتسک با موفقیت ایجاد شد.');
+            return redirect()->back()->with('flash_message', 'زیرتسک با موفقیت ایجاد شد :)');
         } catch (Exception $exception) {
             DB::rollBack();
-            return redirect()->back()->with('err_message', $exception->getMessage());
+            return redirect()->back()->with('err_message', 'خطایی رخ داد :('.$exception->getMessage());
         }
 
 

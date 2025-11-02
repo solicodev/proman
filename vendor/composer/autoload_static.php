@@ -16,14 +16,10 @@ class ComposerStaticInitc514d8f7b9fc5970bdd94287905ef584
         '662a729f963d39afe703c9d9b7ab4a8c' => __DIR__ . '/..' . '/symfony/polyfill-php83/bootstrap.php',
         'f598d06aa772fa33d905e87be6398fb1' => __DIR__ . '/..' . '/symfony/polyfill-intl-idn/bootstrap.php',
         '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
-        '1c9051359cc4715f5f9b335dba6482da' => __DIR__ . '/..' . '/php-flasher/flasher/functions.php',
-        'da91a01b5badbe5394c83814ef5982ea' => __DIR__ . '/..' . '/php-flasher/flasher/helpers.php',
         'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
         '35a6ad97d21e794e7e22a17d806652e4' => __DIR__ . '/..' . '/nunomaduro/termwind/src/Functions.php',
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
         '4364d9898253482270d33c3e7d349234' => __DIR__ . '/..' . '/hekmatinasser/notowo/src/helpers.php',
-        'ea5fe30a29a003841e935d35db82069e' => __DIR__ . '/..' . '/php-flasher/flasher-toastr/functions.php',
-        '8c15924acd8bcdca7d143b74c5c435ae' => __DIR__ . '/..' . '/php-flasher/flasher-toastr/helpers.php',
         '2203a247e6fda86070a5e4e07aed533a' => __DIR__ . '/..' . '/symfony/clock/Resources/now.php',
         '09f6b20656683369174dd6fa83b7e5fb' => __DIR__ . '/..' . '/symfony/polyfill-uuid/bootstrap.php',
         'a1105708a18b76903365ca1c4aa61b02' => __DIR__ . '/..' . '/symfony/translation/Resources/functions.php',
@@ -31,6 +27,8 @@ class ComposerStaticInitc514d8f7b9fc5970bdd94287905ef584
         '508dab6c0a7dfd955e775df925e6d583' => __DIR__ . '/..' . '/hekmatinasser/jalali/src/helpers.php',
         '47e1160838b5e5a10346ac4084b58c23' => __DIR__ . '/..' . '/laravel/prompts/src/helpers.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
+        '1c9051359cc4715f5f9b335dba6482da' => __DIR__ . '/..' . '/php-flasher/flasher/functions.php',
+        'da91a01b5badbe5394c83814ef5982ea' => __DIR__ . '/..' . '/php-flasher/flasher/helpers.php',
         '801c31d8ed748cfa537fa45402288c95' => __DIR__ . '/..' . '/psy/psysh/src/functions.php',
         'e39a8b23c42d4e1452234d762b03835a' => __DIR__ . '/..' . '/ramsey/uuid/src/functions.php',
         '9d2b9fc6db0f153a0a149fefb182415e' => __DIR__ . '/..' . '/symfony/polyfill-php84/bootstrap.php',
@@ -48,6 +46,7 @@ class ComposerStaticInitc514d8f7b9fc5970bdd94287905ef584
         'ce9671a430e4846b44e1c68c7611f9f5' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery.php',
         'a1cfe24d14977df6878b9bf804af2d1c' => __DIR__ . '/..' . '/nunomaduro/collision/src/Adapters/Phpunit/Autoload.php',
         'ec07570ca5a812141189b1fa81503674' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Assert/Functions.php',
+        '93e91ab5012c06808669e356b03bc773' => __DIR__ . '/..' . '/redot/laravel-toastify/src/helpers.php',
         '377b22b161c09ed6e5152de788ca020a' => __DIR__ . '/..' . '/spatie/laravel-permission/src/helpers.php',
         '8fde5feda9697fe0ee53a3938c839fb0' => __DIR__ . '/../..' . '/app/Helpers/Helper.php',
     );
@@ -106,6 +105,7 @@ class ComposerStaticInitc514d8f7b9fc5970bdd94287905ef584
         ),
         'R' => 
         array (
+            'Redot\\LaravelToastify\\' => 22,
             'Ramsey\\Uuid\\' => 12,
             'Ramsey\\Collection\\' => 18,
         ),
@@ -169,8 +169,6 @@ class ComposerStaticInitc514d8f7b9fc5970bdd94287905ef584
         'F' => 
         array (
             'Fruitcake\\Cors\\' => 15,
-            'Flasher\\Toastr\\Prime\\' => 21,
-            'Flasher\\Toastr\\Laravel\\' => 23,
             'Flasher\\Prime\\' => 14,
             'Flasher\\Laravel\\' => 16,
             'Faker\\' => 6,
@@ -362,6 +360,10 @@ class ComposerStaticInitc514d8f7b9fc5970bdd94287905ef584
         array (
             0 => __DIR__ . '/..' . '/spatie/laravel-permission/src',
         ),
+        'Redot\\LaravelToastify\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/redot/laravel-toastify/src',
+        ),
         'Ramsey\\Uuid\\' => 
         array (
             0 => __DIR__ . '/..' . '/ramsey/uuid/src',
@@ -522,14 +524,6 @@ class ComposerStaticInitc514d8f7b9fc5970bdd94287905ef584
         array (
             0 => __DIR__ . '/..' . '/fruitcake/php-cors/src',
         ),
-        'Flasher\\Toastr\\Prime\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/php-flasher/flasher-toastr',
-        ),
-        'Flasher\\Toastr\\Laravel\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/php-flasher/flasher-toastr-laravel',
-        ),
         'Flasher\\Prime\\' => 
         array (
             0 => __DIR__ . '/..' . '/php-flasher/flasher',
@@ -611,6 +605,7 @@ class ComposerStaticInitc514d8f7b9fc5970bdd94287905ef584
         'App\\Http\\Controllers\\Auth\\VerifyEmailController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/VerifyEmailController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\ProfileController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProfileController.php',
+        'App\\Http\\Controllers\\ProjectDependencyController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProjectDependencyController.php',
         'App\\Http\\Controllers\\admin\\BrandController' => __DIR__ . '/../..' . '/app/Http/Controllers/admin/BrandController.php',
         'App\\Http\\Controllers\\admin\\CategoryController' => __DIR__ . '/../..' . '/app/Http/Controllers/admin/CategoryController.php',
         'App\\Http\\Controllers\\admin\\DepartmentController' => __DIR__ . '/../..' . '/app/Http/Controllers/admin/DepartmentController.php',
@@ -632,18 +627,22 @@ class ComposerStaticInitc514d8f7b9fc5970bdd94287905ef584
         'App\\Http\\Requests\\ProfileUpdateRequest' => __DIR__ . '/../..' . '/app/Http/Requests/ProfileUpdateRequest.php',
         'App\\Http\\Requests\\ProjectRequest' => __DIR__ . '/../..' . '/app/Http/Requests/ProjectRequest.php',
         'App\\Http\\Requests\\ProjectStoreRequest' => __DIR__ . '/../..' . '/app/Http/Requests/ProjectStoreRequest.php',
+        'App\\Http\\Requests\\SubTaskStoreRequest' => __DIR__ . '/../..' . '/app/Http/Requests/SubTaskStoreRequest.php',
+        'App\\Http\\Requests\\TaskStoreRequest' => __DIR__ . '/../..' . '/app/Http/Requests/TaskStoreRequest.php',
         'App\\Models\\Brand' => __DIR__ . '/../..' . '/app/Models/Brand.php',
         'App\\Models\\Category' => __DIR__ . '/../..' . '/app/Models/Category.php',
         'App\\Models\\Department' => __DIR__ . '/../..' . '/app/Models/Department.php',
         'App\\Models\\Photo' => __DIR__ . '/../..' . '/app/Models/Photo.php',
         'App\\Models\\Position' => __DIR__ . '/../..' . '/app/Models/Position.php',
         'App\\Models\\Project' => __DIR__ . '/../..' . '/app/Models/Project.php',
+        'App\\Models\\ProjectDependency' => __DIR__ . '/../..' . '/app/Models/ProjectDependency.php',
         'App\\Models\\Task' => __DIR__ . '/../..' . '/app/Models/Task.php',
         'App\\Models\\TaskDependency' => __DIR__ . '/../..' . '/app/Models/TaskDependency.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Observers\\TaskObserver' => __DIR__ . '/../..' . '/app/Observers/TaskObserver.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Services\\ProjectService' => __DIR__ . '/../..' . '/app/Services/ProjectService.php',
+        'App\\Services\\TaskPanelService' => __DIR__ . '/../..' . '/app/Services/TaskPanelService.php',
         'App\\Services\\TaskSchedulerService' => __DIR__ . '/../..' . '/app/Services/TaskSchedulerService.php',
         'App\\Services\\TaskService' => __DIR__ . '/../..' . '/app/Services/TaskService.php',
         'App\\Services\\UserService' => __DIR__ . '/../..' . '/app/Services/UserService.php',
@@ -1638,12 +1637,6 @@ class ComposerStaticInitc514d8f7b9fc5970bdd94287905ef584
         'Flasher\\Prime\\Translation\\Language\\Spanish' => __DIR__ . '/..' . '/php-flasher/flasher/Translation/Language/Spanish.php',
         'Flasher\\Prime\\Translation\\Messages' => __DIR__ . '/..' . '/php-flasher/flasher/Translation/Messages.php',
         'Flasher\\Prime\\Translation\\TranslatorInterface' => __DIR__ . '/..' . '/php-flasher/flasher/Translation/TranslatorInterface.php',
-        'Flasher\\Toastr\\Laravel\\Facade\\Toastr' => __DIR__ . '/..' . '/php-flasher/flasher-toastr-laravel/Facade/Toastr.php',
-        'Flasher\\Toastr\\Laravel\\FlasherToastrServiceProvider' => __DIR__ . '/..' . '/php-flasher/flasher-toastr-laravel/FlasherToastrServiceProvider.php',
-        'Flasher\\Toastr\\Prime\\Toastr' => __DIR__ . '/..' . '/php-flasher/flasher-toastr/Toastr.php',
-        'Flasher\\Toastr\\Prime\\ToastrBuilder' => __DIR__ . '/..' . '/php-flasher/flasher-toastr/ToastrBuilder.php',
-        'Flasher\\Toastr\\Prime\\ToastrInterface' => __DIR__ . '/..' . '/php-flasher/flasher-toastr/ToastrInterface.php',
-        'Flasher\\Toastr\\Prime\\ToastrPlugin' => __DIR__ . '/..' . '/php-flasher/flasher-toastr/ToastrPlugin.php',
         'Fruitcake\\Cors\\CorsService' => __DIR__ . '/..' . '/fruitcake/php-cors/src/CorsService.php',
         'Fruitcake\\Cors\\Exceptions\\InvalidOptionException' => __DIR__ . '/..' . '/fruitcake/php-cors/src/Exceptions/InvalidOptionException.php',
         'GrahamCampbell\\ResultType\\Error' => __DIR__ . '/..' . '/graham-campbell/result-type/src/Error.php',
@@ -5721,6 +5714,8 @@ class ComposerStaticInitc514d8f7b9fc5970bdd94287905ef584
         'Ramsey\\Uuid\\UuidInterface' => __DIR__ . '/..' . '/ramsey/uuid/src/UuidInterface.php',
         'Ramsey\\Uuid\\Validator\\GenericValidator' => __DIR__ . '/..' . '/ramsey/uuid/src/Validator/GenericValidator.php',
         'Ramsey\\Uuid\\Validator\\ValidatorInterface' => __DIR__ . '/..' . '/ramsey/uuid/src/Validator/ValidatorInterface.php',
+        'Redot\\LaravelToastify\\LaravelToastifyServiceProvider' => __DIR__ . '/..' . '/redot/laravel-toastify/src/LaravelToastifyServiceProvider.php',
+        'Redot\\LaravelToastify\\Toastify' => __DIR__ . '/..' . '/redot/laravel-toastify/src/Toastify.php',
         'ReflectionConstant' => __DIR__ . '/..' . '/symfony/polyfill-php84/Resources/stubs/ReflectionConstant.php',
         'SQLite3Exception' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/SQLite3Exception.php',
         'SebastianBergmann\\CliParser\\AmbiguousOptionException' => __DIR__ . '/..' . '/sebastian/cli-parser/src/exceptions/AmbiguousOptionException.php',

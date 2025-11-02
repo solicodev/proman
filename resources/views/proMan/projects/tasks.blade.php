@@ -1,9 +1,8 @@
 <x-layout>
-
+    @include('layouts.message')
     @include('proMan.projects.main-card')
 
-
-    <div class="d-flex flex-wrap flex-stack pt-10 pb-8">
+    <div class="d-flex flex-wrap flex-stack pt-10 pb-8" data-select2-id="select2-data-135-nh5p">
         <!--begin::Heading-->
         <h3 class="fw-bold my-2">
             تسک های پروژه
@@ -11,7 +10,7 @@
         </h3>
         <!--end::Heading-->
         <div class="d-flex flex-wrap my-1">
-            <a href="#" class="btn btn-primary er w-100 fs-6 px-8 py-4"  data-bs-toggle="modal" data-bs-target="#kt_modal_new_target">ایجاد تسک<i class="ki-outline ki-plus-square fs-2 px-2"></i> </a>
+            <a href="#" class="btn btn-sm btn-primary er w-100 fs-6 px-8 py-4"  data-bs-toggle="modal" data-bs-target="#kt_modal_new_target">ایجاد تسک<i class="ki-outline ki-plus-square fs-6 px-2"></i> </a>
         </div>
         <!--begin::Controls-->
         <div class="d-flex flex-wrap my-1">
@@ -309,7 +308,7 @@
                             <div class="col-md-8 fv-row">
                                 <label class="required fs-6 fw-semibold mb-2">مدیر تایید کننده تسک</label>
 
-                                <select class="form-select form-select-solid"  data-control="select2" data-hide-search="true"
+                                <select class="form-select form-select-solid"  data-control="select2"
                                         data-placeholder="مدیر تایید کننده تسک" name="manager_id">
                                     <option></option>
                                     @foreach($managers as $manager)
@@ -320,7 +319,7 @@
                             <div class="col-md-12 fv-row">
                                 <label class="required fs-6 fw-semibold mb-2">ناظر تسک</label>
 
-                                <select class="form-select form-select-solid"  data-control="select2" data-hide-search="true"
+                                <select class="form-select form-select-solid"  data-control="select2"
                                         data-placeholder="ناظر تسک" name="watcher_id">
                                     <option></option>
                                     @foreach($watchers as $watcher)
@@ -337,7 +336,7 @@
                             <div class="col-md-12 fv-row">
                                 <label class="required fs-6 fw-semibold mb-2">کاربران تسک </label>
 
-                                <select class="form-select form-select-solid"  data-control="select2" data-hide-search="true"
+                                <select class="form-select form-select-solid"  data-control="select2"
                                         multiple  data-placeholder="تسک را به کاربران مد نظرتان assign کنید" name="members[]">
                                     <option></option>
                                     @foreach($members as $member)
@@ -394,7 +393,7 @@
 
     <div class="modal fade" id="kt_modal_new_target_sub" tabindex="-1" aria-hidden="true">
         <!--begin::Modal dialog-->
-        <div class="modal-dialog modal-dialog-centered mw-900px">
+        <div class="modal-dialog modal-dialog-centered mw-900px" >
             <!--begin::Modal content-->
             <div class="modal-content rounded">
                 <!--begin::Modal header-->
@@ -410,14 +409,16 @@
                 <!--begin::Modal body-->
                 <div class="modal-body scroll-y px-10 px-lg-15 pt-0 pb-15">
                     <!--begin:Form-->
-                    <form action=""  method="post" id="editForm" class="form" enctype="multipart/form-data">
+                    <div class="stepper stepper-links d-flex flex-column pt-15 between" id="kt_create_account_stepper" data-kt-stepper="true" data-select2-id="select2-data-kt_create_account_stepper" >
+                    <form action=""  method="post" id="editForm" class="form mx-auto mw-100 w-100 pt-15 pb-10 fv-plugins-bootstrap5 fv-plugins-framework needs-validation"
+                          enctype="multipart/form-data">
                         @csrf
                         <!--begin::Heading-->
                         <div class="mb-13 text-center">
                             <!--begin::Title-->
                             <h1 class="mb-3">افزودن زیرتسک</h1>
                             <!--end::Title-->
-
+                            <input type="hidden" value="{{$project->id}}" name="project_id">
                             <!--begin::Description-->
                             <div class="text-muted fw-semibold fs-5">
                                 برای پروژه
@@ -494,8 +495,7 @@
                             <!--begin::Col-->
                             <div class="col-md-8 fv-row">
                                 <label class="required fs-6 fw-semibold mb-2">مدیر تایید کننده تسک</label>
-
-                                <select class="form-select form-select-solid"  data-control="select2" data-hide-search="true"
+                                <select class="form-select form-select-solid"  data-control="select2"
                                         data-placeholder="مدیر تایید کننده تسک" name="sub_manager_id">
                                     <option></option>
                                     @foreach($managers as $manager)
@@ -506,7 +506,7 @@
                             <div class="col-md-12 fv-row">
                                 <label class="required fs-6 fw-semibold mb-2">ناظر تسک</label>
 
-                                <select class="form-select form-select-solid"  data-control="select2" data-hide-search="true"
+                                <select class="form-select form-select-solid"  data-control="select2"
                                         data-placeholder="ناظر تسک" name="watcher_id">
                                     <option></option>
                                     @foreach($watchers as $watcher)
@@ -521,7 +521,7 @@
                             <div class="col-md-12 fv-row">
                                 <label class="required fs-6 fw-semibold mb-2">کاربران تسک </label>
 
-                                <select class="form-select form-select-solid"  data-control="select2" data-hide-search="true"
+                                <select  class="form-select form-select-solid" data-control="select2"
                                         multiple  data-placeholder="تسک را به کاربران مد نظرتان assign کنید" name="members[]">
                                     <option></option>
                                     @foreach($members as $member)
@@ -568,6 +568,7 @@
                         </div>
                         <!--end::Actions-->
                     </form>
+                </div>
                     <!--end:Form-->
                 </div>
                 <!--end::Modal body-->
@@ -580,6 +581,7 @@
     </div>
 
     @push('scripts')
+
         <script src="{{ asset('assets/panel/plugins/custom/formrepeater/formrepeater.bundle.js') }}"></script>
         <script>
             jalaliDatepicker.startWatch({
@@ -788,5 +790,7 @@
 
         </script>
 
+
     @endpush
 </x-layout>
+

@@ -34,6 +34,9 @@
     <link href="{{ asset('panel/assets/css/filepond.css') }}" rel="stylesheet" />
     <link href="{{ asset('panel/assets/css/cropper.min.css') }}" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('panel/assets/css/persian-datepicker.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/admin/css/jgrowl.min.css') }}">
+
+
     @stack('styles')
 </head>
 <body id="kt_app_body" data-kt-app-sidebar-enabled="true" data-kt-app-sidebar-fixed="true"
@@ -41,6 +44,11 @@
       class="app-default">
 
 @yield('body')
+
+
+<!-- Test -->
+
+{{--<script src="{{ asset('assets/admin/js/jgrowl.min.js') }}"></script>--}}
 <!--begin::Global Javascript Bundle(mandatory for all pages)-->
 <script src="{{url('panel/assets/plugins/global/plugins.bundle.js')}}"></script>
 <script src="{{url('panel/assets/js/scripts.bundle.js')}}"></script>
@@ -101,6 +109,8 @@
 
 <script src="{{ asset('panel/assets/js/persian-date.min.js') }}"></script>
 <script src="{{ asset('panel/assets/js/persian-datepicker.min.js') }}"></script>
+
+
 <script>
     jalaliDatepicker.startWatch({
         showTodayBtn: true,
@@ -171,7 +181,6 @@
         document.getElementById('pro-photo').value = photosGallery
     }
 </script>
-
 <script>
     FilePond.registerPlugin(FilePondPluginImagePreview, FilePondPluginFileValidateType);
 
@@ -180,8 +189,13 @@
         acceptedFileTypes: ['image/*'],
     }
 </script>
+<!-- jQuery -->
+{{--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>--}}
+{{--<script src="{{asset('assets/admin/js/jquery.min.js')}}"></script>--}}
+<!-- jGrowl -->
+
+<script src="{{asset('assets/admin/js/jgrowl.min.js')}}"></script>
 <!--end::Custom Javascript-->
 @stack('scripts')
-
 </body>
 </html>
