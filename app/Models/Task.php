@@ -30,6 +30,17 @@ class Task extends Model
         return $this->statuses[$this->status] ?? '';
     }
 
+    public $priorities = [
+        '0' => 'کم',
+        '1' => 'متوسط',
+        '2' => 'زیاد',
+    ];
+
+    public function getTaskProrityAttribute()
+    {
+        return $this->priorities[$this->priority] ?? '';
+    }
+
 
     public function project()
     {

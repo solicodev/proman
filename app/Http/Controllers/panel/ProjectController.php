@@ -67,6 +67,7 @@ class ProjectController extends Controller
         ];
 
         $tasks = Task::whereNull('parent_id')->where('project_id',$project->id)->get()->groupBy('status');
+        $tb_tasks = Task::whereNull('parent_id')->where('project_id',$project->id)->get();
 
         return view('proMan.projects.tasks',get_defined_vars());
     }

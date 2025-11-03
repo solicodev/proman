@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Auth;
  */
 class TaskPanelService
 {
-    public function store(array $param)
+    public function store(array $param) :Task
     {
         $rand = rand(111111, 999999);
         $end_date = Carbon::parse($param['start_date'] ?? null)->addDays(intval($param['duration']))->format('Y/m/d');
@@ -33,9 +33,9 @@ class TaskPanelService
             $task->manager_check = $param['manager_check'] ?? null;
             $task->manager_id = $param['manager_id'] ?? null;
 
-//            $manager = User::where('id', $param['manager_id'])->first();
-//            //TODO
-//            $message = $manager->Name . ' تسک ' .$task->task_code .' نیاز به تایید دارد لطفا به پنل خود سر بزنید و تیک تایید را بزنید ' ;
+            $manager = User::where('id', $param['manager_id'])->first();
+            //TODO
+            $message = $manager->Name . ' تسک ' .$task->task_code .' نیاز به تایید دارد لطفا به پنل خود سر بزنید و تیک تایید را بزنید ' ;
 //            sendSms($manager->mobile, $message);
         }
 
@@ -62,13 +62,13 @@ class TaskPanelService
             $member_item = User::findOrFail($member);
             //TODO
             $message = $member_item->Name . ' تسک ' .$task->task_code .' برای انجام به شما محول شده است لطفا به پنل خود سر بزنید. مدت زمان انجام این تسک ' . $task->duration . ' روز است';
-            sendSms($member_item->mobile, $message);
+//            sendSms($member_item->mobile, $message);
         }
-        dd($task);
+
         return $task;
     }
 
-    public function storeSubtask(array $param, Task $parentTask)
+    public function storeSubtask(array $param, Task $parentTask) :Task
     {
         $end_date = Carbon::parse($param['start_date'] ?? null)->addDays(intval($param['duration']))->format('Y/m/d');
         $rand = rand(111111, 999999);
@@ -91,7 +91,7 @@ class TaskPanelService
             //TODO
 
             $message = $manager->Name . 'تسک ' .$task->task_code .'نیاز به تایید دارد لطفا تیک تایید را بزنید' ;
-            sendSms($manager->mobile, $message);
+//            sendSms($manager->mobile, $message);
         }
 
         $task->watcher_id = $param['watcher_id'];
@@ -116,7 +116,7 @@ class TaskPanelService
             $member_item = User::where('id',$member)->first();
             //TODO
             $message = $member_item->Name . ' تسک ' .$task->task_code .' برای انجام به شما محول شده است لطفا به پنل خود سر بزنید. مدت زمان انجام این تسک ' . $task->duration . ' روز است';
-            sendSms($member_item->mobile, $message);
+//            sendSms($member_item->mobile, $message);
         }
         return $task;
     }
