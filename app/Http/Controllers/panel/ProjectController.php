@@ -66,7 +66,7 @@ class ProjectController extends Controller
             3 => ['title' => 'انجام شد', 'color' => 'secondary'],
         ];
 
-        $tasks = Task::whereNull('parent_id')->get()->groupBy('status');
+        $tasks = Task::whereNull('parent_id')->where('project_id',$project->id)->get()->groupBy('status');
 
         return view('proMan.projects.tasks',get_defined_vars());
     }

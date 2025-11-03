@@ -35,7 +35,7 @@ class TaskPanelService
 
 //            $manager = User::where('id', $param['manager_id'])->first();
 //            //TODO
-//            $message = $manager->Name . 'تسک ' .$task->task_code .'نیاز به تایید دارد لطفا تیک تایید را بزنید' ;
+//            $message = $manager->Name . ' تسک ' .$task->task_code .' نیاز به تایید دارد لطفا به پنل خود سر بزنید و تیک تایید را بزنید ' ;
 //            sendSms($manager->mobile, $message);
         }
 
@@ -57,6 +57,14 @@ class TaskPanelService
         }
 
         $task->assigners()->attach($param['members']);
+        foreach ($param['members'] as $member)
+        {
+            $member_item = User::findOrFail($member);
+            //TODO
+            $message = $member_item->Name . ' تسک ' .$task->task_code .' برای انجام به شما محول شده است لطفا به پنل خود سر بزنید. مدت زمان انجام این تسک ' . $task->duration . ' روز است';
+            sendSms($member_item->mobile, $message);
+        }
+        dd($task);
         return $task;
     }
 
@@ -79,10 +87,11 @@ class TaskPanelService
             $task->sub_manager_check = $param['sub_manager_check'] ?? null;
             $task->sub_manager_id = $param['sub_manager_id'] ?? null;
 
-//            $manager = User::where('id', $param['manager_id'])->first();
-//            //TODO
-//            $message = $manager->Name . 'تسک ' .$task->task_code .'نیاز به تایید دارد لطفا تیک تایید را بزنید' ;
-//            sendSms($manager->mobile, $message);
+            $manager = User::where('id', $param['sub_manager_id'])->first();
+            //TODO
+
+            $message = $manager->Name . 'تسک ' .$task->task_code .'نیاز به تایید دارد لطفا تیک تایید را بزنید' ;
+            sendSms($manager->mobile, $message);
         }
 
         $task->watcher_id = $param['watcher_id'];
@@ -102,6 +111,13 @@ class TaskPanelService
         }
 
         $task->assigners()->attach($param['members']);
+        foreach ($param['members'] as $member)
+        {
+            $member_item = User::where('id',$member)->first();
+            //TODO
+            $message = $member_item->Name . ' تسک ' .$task->task_code .' برای انجام به شما محول شده است لطفا به پنل خود سر بزنید. مدت زمان انجام این تسک ' . $task->duration . ' روز است';
+            sendSms($member_item->mobile, $message);
+        }
         return $task;
     }
 }

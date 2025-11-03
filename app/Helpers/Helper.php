@@ -280,12 +280,14 @@ if (!function_exists('new_sms')) {
         $password = env('SMS_PASSWORD');
 
         $payload = [
-            'phone_number' => $phone,
+            'phonenumber' => $phone,
             'message' => $otp,
         ];
         $response = Http::withHeaders([
             'Content-Type' => 'text/plain',
             'Authorization' => 'Basic ' . base64_encode("{$username}:{$password}"),
+        ])->withOptions([
+            'verify' => false,
         ])->post($url, $payload);
 
         if ($response->successful()) {

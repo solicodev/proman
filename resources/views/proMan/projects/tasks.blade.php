@@ -55,6 +55,7 @@
             <!--begin::Row-->
             <div class="row g-9">
                 <div class="row">
+                    @if(count($tasks)>0)
                     @foreach($columns as $key => $column)
                         <div class="col-md-3 col-lg-12 col-xl-3">
                             <!--begin::Col header-->
@@ -80,6 +81,7 @@
                             <!--end::Col header-->
 
                             <!--begin::Tasks Loop-->
+
                             @forelse($tasks[$key] ?? [] as $task)
                                 <div class="card mb-6 mb-xl-9">
                                     <div class="card-body">
@@ -104,8 +106,8 @@
                                             {{ $task->description }}
                                         </div>
 
-                                        <!-- نمایش زیرتسک‌ها -->
-                                        @if($task->children && $task->children->count() > 0)
+                                        <!-- SUBTASK SHOW -->
+                                        @if($task->children && $task->children?->count() > 0)
                                             <div class="ms-5 mt-4 border-start ps-3">
                                                 @foreach($task->children as $subtask)
                                                     <div class="card mb-3 shadow-sm">
@@ -140,9 +142,11 @@
                                 <div class="alert alert-light text-center">تسکی در این وضعیت وجود ندارد</div>
                             @endforelse
 
+
                             <!--end::Tasks Loop-->
                         </div>
                     @endforeach
+                    @endif
                 </div>
 
             </div>
