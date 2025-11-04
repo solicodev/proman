@@ -18,4 +18,11 @@ class TaskCheckListService
         $taskCheckList->save();
         return $taskCheckList;
     }
+
+    public function checkList(array $param, TaskChecklist $taskChecklist)
+    {
+        $taskChecklist->check = $param['check'];
+        $taskChecklist->update();
+        return $taskChecklist;
+    }
 }

@@ -40,6 +40,7 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
         Route::get('/delete/{task}', [TaskController::class, 'destroy'])->name('destroy');
         //        check
         Route::post('/tasks/{task}/checklist', [TaskChecklistController::class, 'store'])->name('checklist');
+        Route::post('/tasks/checklist/check/{taskChecklist}', [TaskChecklistController::class, 'check'])->name('checklist.check');
     });
 
 });

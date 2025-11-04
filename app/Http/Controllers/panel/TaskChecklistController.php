@@ -20,15 +20,26 @@ class TaskChecklistController extends Controller
     }
     public function store(TaskCheckListRequest $request , Task $task)
     {
-
+        try {
 //            DB::beginTransaction();
             $this->taskChecklistService->store($request->all(),$task);
             return redirect()->back()->with('flash_message', ' با موفقیت ایجاد شد :)');
 
-        try {
+
             DB::commit();
         } catch (Exception $exception) {
             DB::rollBack();
+            return redirect()->back()->with('err_message', 'خطایی رخ داد :('.$exception->getMessage());
+        }
+    }
+
+    public function check(TaskChecklist $taskChecklist ,Request $request)
+    {
+
+        try {
+            $this->taskChecklistService->checkList($request->all(),$taskChecklist);
+            return redirect()->back()->with('flash_message', 'انجام شد :)');
+        } catch (Exception $exception) {
             return redirect()->back()->with('err_message', 'خطایی رخ داد :('.$exception->getMessage());
         }
     }

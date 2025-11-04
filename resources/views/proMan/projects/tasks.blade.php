@@ -734,7 +734,6 @@
                                     </div>
                                 </div>
                             </form>
-
                         </div>
 
                         <button class="btn btn-sm btn-light-primary">
@@ -791,6 +790,28 @@
                                     <li><a href="#" class="text-primary text-decoration-none">requirements.docx</a></li>
                                 </ul>
                             </div>
+
+                            <div class="mb-4">
+                                @foreach($task->taskCheckList as $key=>$taskChecklist)
+                                <form action="{{ route('dashboard.task.checklist.check', $taskChecklist->id) }}" method="post" enctype="multipart/form-data"
+                                      class="mx-auto mw-100 w-100 pt-15 pb-10 fv-plugins-bootstrap5 fv-plugins-framework needs-validation"
+                                      novalidate id="kt_docs_formvalidation_text" autocomplete="off">
+                                    @csrf
+
+                                <div class="mb-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="check" value="1" id="kt_check_indeterminate_1"
+                                               onchange="this.form.submit();" @if($taskChecklist->check == 1) checked @endif/>
+                                        <label class="form-check-label" for="kt_check_indeterminate_1">
+                                           {{$taskChecklist->title}}
+                                        </label>
+                                    </div>
+                                </div>
+
+                                </form>
+                                @endforeach
+                            </div>
+
                         </div>
                         <!-- کامنت‌ها -->
                         <div class="col-4">

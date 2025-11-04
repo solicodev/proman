@@ -47,7 +47,6 @@ class TaskController extends Controller
 
     public function create(Project $project)
     {
-
         return view('proMan.tasks.create', get_defined_vars());
     }
     public function store(TaskStoreRequest $request)
@@ -56,8 +55,6 @@ class TaskController extends Controller
 //            DB::beginTransaction();
             $this->taskPanelService->store($request->all());
             return redirect()->back()->with('flash_message', ' با موفقیت ایجاد شد :)');
-
-
             DB::commit();
         } catch (Exception $exception) {
             DB::rollBack();
@@ -67,16 +64,10 @@ class TaskController extends Controller
 
     public function storeSubtask(SubTaskStoreRequest $request,Task $task)
     {
-        DB::beginTransaction();
-        $this->taskPanelService->storeSubtask($request->all(),$task);
-//        $subtask = $parentTask->children()->create([
-//            'title' => 'زیرتسک جدید',
-//            'status' => 0,
-//            'priority' => 1,
-//            'duration' => 10,
-//            'start_date' => now(),
-//        ]);
         try {
+            DB::beginTransaction();
+            $this->taskPanelService->storeSubtask($request->all(),$task);
+
             DB::commit();
             return redirect()->back()->with('flash_message', 'زیرتسک با موفقیت ایجاد شد :)');
         } catch (Exception $exception) {

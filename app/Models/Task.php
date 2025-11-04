@@ -88,4 +88,9 @@ class Task extends Model
     {
         return $this->hasMany(Task::class, 'parent_id');
     }
+
+    public function taskCheckList()
+    {
+        return $this->hasMany(TaskChecklist::class, 'task_id');
+    }
 }
