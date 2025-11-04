@@ -202,10 +202,11 @@
                         <!--end::SubTable template-->
 
                         @foreach($tb_tasks as $key => $tb_task)
+
                         <tr data-subtasks='@json($tb_task->children)'>
-                            <td>{{$loop->iteration}}</td>
-                            <td>{{$tb_task->task_code}}</td>
-                            <td>{{$tb_task->title}}</td>
+                            <td class="text-start">{{$loop->iteration}}</td>
+                            <td class="text-start">{{$tb_task->task_code}}</td>
+                            <td class="text-start">{{$tb_task->title}}</td>
                             <td class="text-start">{{$tb_task->start_date}}</td>
                             <td class="text-start">{{$tb_task->end_date}}</td>
                             <td class="text-start">{{$tb_task->TaskPrority}}</td>
@@ -228,7 +229,7 @@
                                 <button type="button" class="btn btn-sm btn-icon btn-light btn-active-light-primary toggle h-25px w-25px"
                                         data-kt-docs-datatable-subtable="expand_row">
                                     <span class="svg-icon fs-3 m-0 toggle-off">+</span>
-                                    <span class="svg-icon fs-3 m-0 toggle-on"><i class="ki-outline ki- fs-3 ps-3"></i></span>
+                                    <span class="svg-icon fs-3 m-0 toggle-on"><i class="ki-outline ki-cross text-danger"></i></span>
                                 </button>
                             </td>
                             <!--end::Actions-->
@@ -836,7 +837,7 @@
             var KTDocsDatatableSubtable = (function () {
                 let table;
                 let datatable;
-                let templateNode = null; // نگهدارندهٔ نسخهٔ خام template (خارج از DOM)
+                let templateNode = null;
 
                 const initDatatable = () => {
                     table = document.querySelector('#kt_docs_datatable_subtable');
@@ -845,21 +846,17 @@
                         return;
                     }
 
-                    // پیدا کردن template در DOM
                     const templateEl = document.querySelector('[data-kt-docs-datatable-subtable="subtable_template"]');
                     if (!templateEl) {
                         console.error('KTDocsDatatableSubtable: template با selector [data-kt-docs-datatable-subtable="subtable_template"] پیدا نشد.');
                         return;
                     }
 
-                    // نگهداری یک نسخهٔ خام از template برای clone کردن بعدی
                     templateNode = templateEl.cloneNode(true);
-                    templateNode.classList.remove('d-none'); // اگر خواستی می‌تونی این خط را برداری، چون clone اولیه داخل DOM نیست
+                    templateNode.classList.remove('d-none');
 
-                    // حذف template اصلی از DOM (مثل کاری که نسخهٔ قبلی انجام می‌داد)
                     templateEl.parentNode.removeChild(templateEl);
 
-                    // Init datatable (مثل قبلی)
                     datatable = $(table).DataTable({
                         info: false,
                         ordering: false,
@@ -926,14 +923,13 @@
                             button.classList.add('active');
                         };
 
-                        // attach and remember handler to avoid duplicates
                         button.addEventListener('click', handler);
                         button._kt_subtask_handler = handler;
                     });
                 };
 
                 const populateTemplate = (data, target) => {
-                    console.log(data);
+
                     const tbody = table.querySelector('tbody');
 
                     data.forEach((d, index) => {
@@ -957,13 +953,11 @@
                         const titleNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_title"]');
                         if (titleNode) titleNode.innerText = safe(d.title);
 
-
                         const sdNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_start_date"]');
                         if (sdNode) sdNode.innerText = safe(d.start_date);
 
                         const edNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_end_date"]');
                         if (edNode) edNode.innerText = safe(d.end_date);
-
 
                         const prNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_priority"]');
                         if (prNode) prNode.innerText = safe(d.TaskPrority);
@@ -973,12 +967,38 @@
 
                         const membersNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_members"]');
                         if (membersNode) {
-                            let membersText = '-';
+                            membersNode.innerHTML = ''; // خالی کن قبل از پر کردن
+
                             if (Array.isArray(d.assigners) && d.assigners.length) {
-                                membersText = d.assigners.map(a => a.Name ?? a.name ?? '-').join('، ');
+                                const container = document.createElement('div');
+                                container.className = 'symbol-group symbol-hover fs-8';
+
+                                d.assigners.forEach(a => {
+                                    const symbol = document.createElement('div');
+                                    symbol.className = 'symbol symbol-25px symbol-circle';
+                                    symbol.setAttribute('data-bs-toggle', 'tooltip');
+                                    symbol.setAttribute('title', a.Name ?? a.name ?? '-');
+                                    if (a.photo && a.photo.path) {
+                                        const img = document.createElement('img');
+                                        img.alt = 'Pic';
+                                        img.src = `{{ route('home') }}/${a.photo.path}`;
+                                        symbol.appendChild(img);
+                                    } else {
+                                        const span = document.createElement('span');
+                                        span.className = 'symbol-label bg-primary text-inverse-primary fw-bold';
+                                        span.innerText = (a.Name ?? a.name ?? '?').substring(0, 1);
+                                        symbol.appendChild(span);
+                                    }
+
+                                    container.appendChild(symbol);
+                                });
+
+                                membersNode.appendChild(container);
+                            } else {
+                                membersNode.innerHTML = '<span class="text-muted fs-8">بدون عضو</span>';
                             }
-                            membersNode.innerText = membersText;
                         }
+
 
                         const actionsNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_actions"]');
                         if (actionsNode) {

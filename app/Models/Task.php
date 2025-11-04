@@ -10,7 +10,7 @@ class Task extends Model
     use SoftDeletes;
 
     protected $fillable = ['title','description','status','priority','parent_id','start_date','end_date','project_id','manager_id','duration'];
-
+    protected $appends = ['TaskStatus', 'TaskPrority'];
     public $status_english =[
         '0' => 'pending' ,
         '1' => 'todo' ,
