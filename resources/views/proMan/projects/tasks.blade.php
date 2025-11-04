@@ -189,39 +189,20 @@
                         <tbody class="fw-bold text-gray-600">
                         <!--begin::SubTable template-->
                         <tr data-kt-docs-datatable-subtable="subtable_template" class="d-none">
-                            <td colspan="2">
-                                <div class="d-flex align-items-center gap-3">
-                                    <a href="#" class="symbol symbol-50px bg-secondary bg-opacity-25 rounded">
-                                        <img src="/assets/media/stock/ecommerce/" alt="" data-kt-docs-datatable-subtable="template_image" />
-                                    </a>
-                                    <div class="d-flex flex-column text-muted">
-                                        <a href="#" class="text-gray-900 text-hover-primary fw-bold" data-kt-docs-datatable-subtable="template_name">Product name</a>
-                                        <div class="fs-7" data-kt-docs-datatable-subtable="template_description">Product description</div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="text-end">
-                                <div class="text-gray-900 fs-7">Cost</div>
-                                <div class="text-muted fs-7 fw-bold" data-kt-docs-datatable-subtable="template_cost">1</div>
-                            </td>
-                            <td class="text-end">
-                                <div class="text-gray-900 fs-7">Qty</div>
-                                <div class="text-muted fs-7 fw-bold" data-kt-docs-datatable-subtable="template_qty">1</div>
-                            </td>
-                            <td class="text-end">
-                                <div class="text-gray-900 fs-7">Total</div>
-                                <div class="text-muted fs-7 fw-bold" data-kt-docs-datatable-subtable="template_total">name</div>
-                            </td>
-                            <td class="text-end">
-                                <div class="text-gray-900 fs-7 me-3">On hand</div>
-                                <div class="text-muted fs-7 fw-bold" data-kt-docs-datatable-subtable="template_stock">32</div>
-                            </td>
-                            <td></td>
+                            <td data-kt-docs-datatable-subtable="template_index"></td>
+                            <td data-kt-docs-datatable-subtable="template_id"></td>
+                            <td data-kt-docs-datatable-subtable="template_title"></td>
+                            <td data-kt-docs-datatable-subtable="template_start_date"></td>
+                            <td data-kt-docs-datatable-subtable="template_end_date"></td>
+                            <td data-kt-docs-datatable-subtable="template_priority"></td>
+                            <td data-kt-docs-datatable-subtable="template_status"></td>
+                            <td data-kt-docs-datatable-subtable="template_members"></td>
+                            <td data-kt-docs-datatable-subtable="template_actions"></td>
                         </tr>
                         <!--end::SubTable template-->
 
                         @foreach($tb_tasks as $key => $tb_task)
-                        <tr>
+                        <tr data-subtasks='@json($tb_task->children)'>
                             <td>{{$loop->iteration}}</td>
                             <td>{{$tb_task->task_code}}</td>
                             <td>{{$tb_task->title}}</td>
@@ -242,81 +223,25 @@
                                     @endforeach
                                 </div>
                             </td>
-                            <td class="text-end">
-                                <span class="text-gray-900 fw-bold">$86.70</span>
-                            </td>
-                            <!--end::Profit-->
-
-                            <!--begin::Status-->
-                            <td class="text-end">
-                                <span class="badge py-3 px-4 fs-7 badge-light-primary">Confirmed</span>
-                            </td>
-                            <!--end::Status-->
-
-                            <!--begin::Actions-->
+                                <!--begin::Actions-->
                             <td class="text-end">
                                 <button type="button" class="btn btn-sm btn-icon btn-light btn-active-light-primary toggle h-25px w-25px"
                                         data-kt-docs-datatable-subtable="expand_row">
-                                    <span class="svg-icon fs-3 m-0 toggle-off">...</span>
-                                    <span class="svg-icon fs-3 m-0 toggle-on">...</span>
+                                    <span class="svg-icon fs-3 m-0 toggle-off">+</span>
+                                    <span class="svg-icon fs-3 m-0 toggle-on"><i class="ki-outline ki- fs-3 ps-3"></i></span>
                                 </button>
                             </td>
                             <!--end::Actions-->
                         </tr>
                         @endforeach
 
-                        ...
                         </tbody>
                         <!--end::Table body-->
                     </table>
-
-
-
-                    <table id="kt_profile_overview_table" class="table table-row-bordered table-row-dashed gy-4 align-middle fw-bold">
-                        <thead class="fs-7 text-gray-500 text-uppercase">
-                        <tr>
-                            <th class="text-start">ردیف</th>
-                            <th class="text-start">عنوان</th>
-                            <th class="text-start">تاریخ شروع</th>
-                            <th class="text-start">تاریخ پایان</th>
-                            <th class="text-start">اولویت</th>
-                            <th class="text-start">وضعیت</th>
-                            <th class="text-start">اعضا</th>
-                            <th class="text-start">عملیات</th>
-                        </tr>
-                        </thead>
-                        <tbody class="fs-6">
-                        <tr>
-                            <td class="text-start fw-bold"><a href="#" class="text-gray-900 text-hover-primary">1</a></td>
-                            <td class="text-start"><span class="badge badge-light fw-semibold me-auto">تسک تستی</span></td>
-                            <td class="text-start">1404/07/30</td>
-                            <td class="text-start">1404/08/30</td>
-                            <td class="text-start">کم</td>
-                            <td class="text-start">درحال بررسی</td>
-                            <td class="text-start">
-                                <div class="symbol-group symbol-hover fs-8">
-                                    <div class="symbol symbol-25px symbol-circle" data-bs-toggle="tooltip" title="Melody Macy">
-                                        <img alt="Pic" src="{{url('panel/assets/media/avatars/300-2.jpg')}}" />
-                                    </div>
-                                    <div class="symbol symbol-25px symbol-circle" data-bs-toggle="tooltip" title="John Mixin">
-                                        <img alt="Pic" src="{{url('panel/assets/media/avatars/300-14.jpg')}}" />
-                                    </div>
-                                    <div class="symbol symbol-25px symbol-circle" data-bs-toggle="tooltip" title="Susan Redwood">
-                                        <span class="symbol-label bg-primary text-inverse-primary fw-bold">S</span>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="text-start">
-                                <span class="badge badge-light-primary fw-bold me-auto">انجام عملیات</span>
-
-                                <a href="#" class="btn btn-primary er w-100 fs-6 px-8 py-4"  data-bs-toggle="modal" data-bs-target="#kt_modal_new_target">ایجاد تسک<i class="ki-outline ki-plus-square fs-2 px-2"></i> </a>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
                     <!--end::Table-->
                 </div>
-            </div>    </div>
+            </div>
+        </div>
         <!--end::Tab pane-->
     </div>
     <!--end::Tab Content-->
@@ -506,8 +431,6 @@
         </div>
         <!--end::Modal dialog-->
     </div>
-
-
     <div class="modal fade" id="kt_modal_new_target_sub" tabindex="-1" aria-hidden="true">
         <!--begin::Modal dialog-->
         <div class="modal-dialog modal-dialog-centered mw-900px" >
@@ -694,6 +617,7 @@
         </div>
         <!--end::Modal dialog-->
     </div>
+
     </div>
     </div>
 
@@ -909,254 +833,192 @@
         <script>
             "use strict";
 
-            // Class definition
-            var KTDocsDatatableSubtable = function () {
-                var table;
-                var datatable;
-                var template;
+            var KTDocsDatatableSubtable = (function () {
+                let table;
+                let datatable;
+                let templateNode = null; // نگهدارندهٔ نسخهٔ خام template (خارج از DOM)
 
-                // Private methods
                 const initDatatable = () => {
-                    // Set date data order
-                    const tableRows = table.querySelectorAll('tbody tr');
+                    table = document.querySelector('#kt_docs_datatable_subtable');
+                    if (!table) {
+                        console.error('KTDocsDatatableSubtable: جدول پیدا نشد (#kt_docs_datatable_subtable).');
+                        return;
+                    }
 
-                    tableRows.forEach(row => {
-                        const dateRow = row.querySelectorAll('td');
-                        const realDate = moment(dateRow[1].innerHTML, "DD MMM YYYY, LT").format(); // select date from 2nd column in table
+                    // پیدا کردن template در DOM
+                    const templateEl = document.querySelector('[data-kt-docs-datatable-subtable="subtable_template"]');
+                    if (!templateEl) {
+                        console.error('KTDocsDatatableSubtable: template با selector [data-kt-docs-datatable-subtable="subtable_template"] پیدا نشد.');
+                        return;
+                    }
 
-                        // Skip template
-                        if (!row.closest('[data-kt-docs-datatable-subtable="subtable_template"]')) {
-                            dateRow[1].setAttribute('data-order', realDate);
-                            dateRow[1].innerText = moment(realDate).fromNow();
-                        }
-                    });
+                    // نگهداری یک نسخهٔ خام از template برای clone کردن بعدی
+                    templateNode = templateEl.cloneNode(true);
+                    templateNode.classList.remove('d-none'); // اگر خواستی می‌تونی این خط را برداری، چون clone اولیه داخل DOM نیست
 
-                    // Get subtable template
-                    const subtable = document.querySelector('[data-kt-docs-datatable-subtable="subtable_template"]');
-                    template = subtable.cloneNode(true);
-                    template.classList.remove('d-none');
+                    // حذف template اصلی از DOM (مثل کاری که نسخهٔ قبلی انجام می‌داد)
+                    templateEl.parentNode.removeChild(templateEl);
 
-                    // Remove subtable template
-                    subtable.parentNode.removeChild(subtable);
-
-                    // Init datatable --- more info on datatables: https://datatables.net/manual/
+                    // Init datatable (مثل قبلی)
                     datatable = $(table).DataTable({
-                        "info": false,
-                        'order': [],
-                        "lengthChange": false,
-                        'pageLength': 6,
-                        'ordering': false,
-                        'paging': false,
-                        'columnDefs': [
-                            { orderable: false, targets: 0 }, // Disable ordering on column 0 (checkbox)
-                            { orderable: false, targets: 6 }, // Disable ordering on column 6 (actions)
+                        info: false,
+                        ordering: false,
+                        paging: false,
+                        lengthChange: false,
+                        pageLength: 6,
+                        columnDefs: [
+                            { orderable: false, targets: [0, 6] }
                         ]
                     });
 
-                    // Re-init functions on every table re-draw -- more info: https://datatables.net/reference/event/draw
                     datatable.on('draw', function () {
                         resetSubtable();
                         handleActionButton();
                     });
-                }
+                };
 
-                // Subtable data sample
-                const data = [
-                    {
-                        image: '76',
-                        name: 'Go Pro 8',
-                        description: 'Latest  version of Go Pro.',
-                        cost: '500.00',
-                        qty: '1',
-                        total: '500.00',
-                        stock: '12'
-                    },
-                    {
-                        image: '60',
-                        name: 'Bose Earbuds',
-                        description: 'Top quality earbuds from Bose.',
-                        cost: '300.00',
-                        qty: '1',
-                        total: '300.00',
-                        stock: '8'
-                    },
-                    {
-                        image: '211',
-                        name: 'Dry-fit Sports T-shirt',
-                        description: 'Comfortable sportswear for everyday use.',
-                        cost: '89.00',
-                        qty: '1',
-                        total: '89.00',
-                        stock: '18'
-                    },
-                    {
-                        image: '21',
-                        name: 'Apple Airpod 3',
-                        description: 'Apple\'s latest and most advanced earbuds.',
-                        cost: '200.00',
-                        qty: '2',
-                        total: '400.00',
-                        stock: '32'
-                    },
-                    {
-                        image: '83',
-                        name: 'Nike Pumps',
-                        description: 'Apple\'s latest and most advanced headphones.',
-                        cost: '200.00',
-                        qty: '1',
-                        total: '200.00',
-                        stock: '8'
-                    }
-                ];
-
-                // Handle action button
                 const handleActionButton = () => {
                     const buttons = document.querySelectorAll('[data-kt-docs-datatable-subtable="expand_row"]');
 
-                    // Sample row items counter --- for demo purpose only, remove this variable in your project
-                    const rowItems = [4, 1, 5, 1, 4, 2];
-
-                    buttons.forEach((button, index) => {
-                        button.addEventListener('click', e => {
-                            e.stopImmediatePropagation();
+                    buttons.forEach((button) => {
+                        // remove previous handlers to avoid double-binding
+                        button.removeEventListener && button.removeEventListener('click', button._kt_subtask_handler);
+                        const handler = (e) => {
                             e.preventDefault();
+                            e.stopImmediatePropagation();
 
                             const row = button.closest('tr');
                             const rowClasses = ['isOpen', 'border-bottom-0'];
 
-                            // Get total number of items to generate --- for demo purpose only, remove this code snippet in your project
-                            const demoData = [];
-                            for (var j = 0; j < rowItems[index]; j++) {
-                                demoData.push(data[j]);
+                            // subtasks باید از data attribute بیاد (Blade: data-subtasks='@json($task->children)')
+                            let subtasks = [];
+                            try {
+                                subtasks = JSON.parse(row.dataset.subtasks || '[]');
+                            } catch (err) {
+                                console.error('خطا JSON subtasks برای ردیف:', err, row.dataset.subtasks);
+                                subtasks = [];
                             }
-                            // End of generating demo data
 
-                            // Handle subtable expanded state
                             if (row.classList.contains('isOpen')) {
-                                // Remove all subtables from current order row
-                                while (row.nextSibling && row.nextSibling.getAttribute('data-kt-docs-datatable-subtable') === 'subtable_template') {
+                                while (row.nextSibling && row.nextSibling.getAttribute && row.nextSibling.getAttribute('data-kt-docs-datatable-subtable') === 'subtable_template') {
                                     row.nextSibling.parentNode.removeChild(row.nextSibling);
                                 }
                                 row.classList.remove(...rowClasses);
                                 button.classList.remove('active');
+                                return;
+                            }
+
+                            if (!templateNode) {
+                                console.error('KTDocsDatatableSubtable: templateNode موجود نیست — clone ممکن نیست.');
+                                return;
+                            }
+
+                            if (subtasks.length > 0) {
+                                populateTemplate(subtasks, row);
                             } else {
-                                populateTemplate(demoData, row);
-                                row.classList.add(...rowClasses);
-                                button.classList.add('active');
+                                const emptyRow = templateNode.cloneNode(true);
+                                emptyRow.querySelector('[data-kt-docs-datatable-subtable="template_title"]').innerText = 'زیرتسکی یافت نشد';
+                                const tbody = table.querySelector('tbody');
+                                tbody.insertBefore(emptyRow, row.nextSibling);
                             }
-                        });
-                    });
-                }
 
-                // Populate template with content/data -- content/data can be replaced with relevant data from database or API
+                            row.classList.add(...rowClasses);
+                            button.classList.add('active');
+                        };
+
+                        // attach and remember handler to avoid duplicates
+                        button.addEventListener('click', handler);
+                        button._kt_subtask_handler = handler;
+                    });
+                };
+
                 const populateTemplate = (data, target) => {
+                    console.log(data);
+                    const tbody = table.querySelector('tbody');
+
                     data.forEach((d, index) => {
-                        // Clone template node
-                        const newTemplate = template.cloneNode(true);
-
-                        // Stock badges
-                        const lowStock = `<div class="badge badge-light-warning">Low Stock</div>`;
-                        const inStock = `<div class="badge badge-light-success">In Stock</div>`;
-
-                        // Select data elements
-                        const image = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_image"]');
-                        const name = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_name"]');
-                        const description = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_description"]');
-                        const cost = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_cost"]');
-                        const qty = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_qty"]');
-                        const total = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_total"]');
-                        const stock = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_stock"]');
-
-                        // Populate elements with data
-                        const imageSrc = image.getAttribute('src');
-                        image.setAttribute('src', imageSrc + d.image + '.png');
-                        name.innerText = d.name;
-                        description.innerText = d.description;
-                        cost.innerText = d.cost;
-                        qty.innerText = d.qty;
-                        total.innerText = d.total;
-                        if (d.stock > 10) {
-                            stock.innerHTML = inStock;
-                        } else {
-                            stock.innerHTML = lowStock;
-                        }
-
-                        // New template border controller
-                        // When only 1 row is available
-                        if (data.length === 1) {
-                            let borderClasses = ['rounded', 'rounded-end-0'];
-                            newTemplate.querySelectorAll('td')[0].classList.add(...borderClasses);
-                            borderClasses = ['rounded', 'rounded-start-0'];
-                            newTemplate.querySelectorAll('td')[4].classList.add(...borderClasses);
-
-                            // Remove bottom border
-                            newTemplate.classList.add('border-bottom-0');
-                        } else {
-                            // When multiple rows detected
-                            if (index === (data.length - 1)) { // first row
-                                let borderClasses = ['rounded-start', 'rounded-bottom-0'];
-                                newTemplate.querySelectorAll('td')[0].classList.add(...borderClasses);
-                                borderClasses = ['rounded-end', 'rounded-bottom-0'];
-                                newTemplate.querySelectorAll('td')[4].classList.add(...borderClasses);
-                            }
-                            if (index === 0) { // last row
-                                let borderClasses = ['rounded-start', 'rounded-top-0'];
-                                newTemplate.querySelectorAll('td')[0].classList.add(...borderClasses);
-                                borderClasses = ['rounded-end', 'rounded-top-0'];
-                                newTemplate.querySelectorAll('td')[4].classList.add(...borderClasses);
-
-                                // Remove bottom border on last row
-                                newTemplate.classList.add('border-bottom-0');
-                            }
-                        }
-
-                        // Insert new template into table
-                        const tbody = table.querySelector('tbody');
-                        tbody.insertBefore(newTemplate, target.nextSibling);
-                    });
-                }
-
-                // Reset subtable
-                const resetSubtable = () => {
-                    const subtables = document.querySelectorAll('[data-kt-docs-datatable-subtable="subtable_template"]');
-                    subtables.forEach(st => {
-                        st.parentNode.removeChild(st);
-                    });
-
-                    const rows = table.querySelectorAll('tbody tr');
-                    rows.forEach(r => {
-                        r.classList.remove('isOpen');
-                        if (r.querySelector('[data-kt-docs-datatable-subtable="expand_row"]')) {
-                            r.querySelector('[data-kt-docs-datatable-subtable="expand_row"]').classList.remove('active');
-                        }
-                    });
-                }
-
-                // Public methods
-                return {
-                    init: function () {
-                        table = document.querySelector('#kt_docs_datatable_subtable');
-
-                        if (!table) {
+                        if (!templateNode) {
+                            console.error('populateTemplate: templateNode نال است.');
                             return;
                         }
 
+                        const newTemplate = templateNode.cloneNode(true);
+                        newTemplate.setAttribute('data-kt-docs-datatable-subtable', 'subtable_template');
+                        newTemplate.classList.remove('d-none');
+
+                        const safe = (v) => (v === null || v === undefined ? '-' : v);
+
+                        const idxNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_index"]');
+                        if (idxNode) idxNode.innerText = index + 1;
+
+                        const idNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_id"]');
+                        if (idNode) idNode.innerText = safe(d.task_code ?? '-');
+
+                        const titleNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_title"]');
+                        if (titleNode) titleNode.innerText = safe(d.title);
+
+
+                        const sdNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_start_date"]');
+                        if (sdNode) sdNode.innerText = safe(d.start_date);
+
+                        const edNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_end_date"]');
+                        if (edNode) edNode.innerText = safe(d.end_date);
+
+
+                        const prNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_priority"]');
+                        if (prNode) prNode.innerText = safe(d.TaskPrority);
+
+                        const stNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_status"]');
+                        if (stNode) stNode.innerHTML = safe(d.TaskStatus);
+
+                        const membersNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_members"]');
+                        if (membersNode) {
+                            let membersText = '-';
+                            if (Array.isArray(d.assigners) && d.assigners.length) {
+                                membersText = d.assigners.map(a => a.Name ?? a.name ?? '-').join('، ');
+                            }
+                            membersNode.innerText = membersText;
+                        }
+
+                        const actionsNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_actions"]');
+                        if (actionsNode) {
+                            actionsNode.innerHTML = `
+                <a href="/panel/tasks/${d.id ?? 0}" class="btn btn-sm btn-light-primary">
+                    مشاهده
+                </a>`;
+                        }
+
+                        tbody.insertBefore(newTemplate, target.nextSibling);
+                    });
+                };
+
+
+                const resetSubtable = () => {
+                    const subtables = document.querySelectorAll('[data-kt-docs-datatable-subtable="subtable_template"]');
+                    subtables.forEach((st) => st.parentNode.removeChild(st));
+
+                    const rows = table.querySelectorAll('tbody tr');
+                    rows.forEach((r) => {
+                        r.classList.remove('isOpen');
+                        const toggle = r.querySelector('[data-kt-docs-datatable-subtable="expand_row"]');
+                        if (toggle) toggle.classList.remove('active');
+                    });
+                };
+
+                return {
+                    init: function () {
                         initDatatable();
                         handleActionButton();
                     }
-                }
-            }();
+                };
+            })();
 
-            // Webpack support
-            if (typeof module !== 'undefined') {
-                module.exports = KTDocsDatatableSubtable;
-            }
-
-            // On document ready
             KTUtil.onDOMContentLoaded(function () {
                 KTDocsDatatableSubtable.init();
             });
         </script>
+
+
 
     @endpush
 </x-layout>
