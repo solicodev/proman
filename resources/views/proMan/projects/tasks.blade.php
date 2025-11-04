@@ -56,102 +56,105 @@
             <div class="row g-9">
                 <div class="row">
                     @if(count($tasks)>0)
-                    @foreach($columns as $key => $column)
-                        <div class="col-md-3 col-lg-12 col-xl-3">
-                            <!--begin::Col header-->
-                            <div class="mb-9">
-                                <div class="d-flex flex-stack">
-                                    <div class="fw-bold fs-4">
-                                        {{ $column['title'] }}
-                                        <span class="fs-6 text-gray-500 ms-2">{{ count($tasks[$key] ?? []) }}</span>
+                        @foreach($columns as $key => $column)
+                            <div class="col-md-3 col-lg-12 col-xl-3">
+                                <!--begin::Col header-->
+                                <div class="mb-9">
+                                    <div class="d-flex flex-stack">
+                                        <div class="fw-bold fs-4">
+                                            {{ $column['title'] }}
+                                            <span class="fs-6 text-gray-500 ms-2">{{ count($tasks[$key] ?? []) }}</span>
+                                        </div>
+
+                                        <!-- منوی فیلتر -->
+                                        <div>
+                                            <button type="button"
+                                                    class="btn btn-sm btn-icon btn-color-light-dark btn-active-light-primary"
+                                                    data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+                                                <i class="ki-outline ki-element-plus fs-2"></i>
+                                            </button>
+                                        </div>
                                     </div>
 
-                                    <!-- منوی فیلتر -->
-                                    <div>
-                                        <button type="button"
-                                                class="btn btn-sm btn-icon btn-color-light-dark btn-active-light-primary"
-                                                data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                                            <i class="ki-outline ki-element-plus fs-2"></i>
-                                        </button>
-                                    </div>
+                                    <div class="h-3px w-100 bg-{{ $column['color'] }}"></div>
                                 </div>
+                                <!--end::Col header-->
 
-                                <div class="h-3px w-100 bg-{{ $column['color'] }}"></div>
-                            </div>
-                            <!--end::Col header-->
+                                <!--begin::Tasks Loop-->
 
-                            <!--begin::Tasks Loop-->
-
-                            @forelse($tasks[$key] ?? [] as $task)
-                                <div class="card mb-6 mb-xl-9">
-                                    <div class="card-body">
-                                        <div class="d-flex flex-stack mb-3">
-                                            <div>{!! $task->task_status !!}</div>
-                                            <div>
-                                                <button type="button"
-                                                        class="btn btn-sm btn-icon btn-color-light-dark btn-active-light-primary"
-                                                        data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                                                    <i class="ki-outline ki-element-plus fs-2"></i>
-                                                </button>
+                                @forelse($tasks[$key] ?? [] as $task)
+                                    <div class="card mb-6 mb-xl-9">
+                                        <div class="card-body">
+                                            <div class="d-flex flex-stack mb-3">
+                                                <div>{!! $task->task_status !!}</div>
+                                                <div>
+                                                    <button type="button"
+                                                            class="btn btn-sm btn-icon btn-color-light-dark btn-active-light-primary"
+                                                            data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+                                                        <i class="ki-outline ki-element-plus fs-2"></i>
+                                                    </button>
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        <div class="mb-2">
-                                            <a href="#" class="fs-4 fw-bold mb-1 text-gray-900 text-hover-primary">
-                                                {{ $task->title }}
-                                            </a>
-                                        </div>
+                                            <div class="mb-2">
+                                                <a href="#" class="fs-4 fw-bold mb-1 text-gray-900 text-hover-primary">
+                                                    {{ $task->title }}
+                                                </a>
+                                            </div>
 
-                                        <div class="fs-6 fw-semibold text-gray-600 mb-5">
-                                            {{ $task->description }}
-                                        </div>
+                                            <div class="fs-6 fw-semibold text-gray-600 mb-5">
+                                                {{ $task->description }}
+                                            </div>
 
-                                        <!-- SUBTASK SHOW -->
-                                        @if($task->children && $task->children?->count() > 0)
-                                            <div class="ms-5 mt-4 border-start ps-3">
-                                                @foreach($task->children as $subtask)
-                                                    <div class="card mb-3 shadow-sm">
-                                                        <div class="card-body py-3 px-4">
-                                                            <div class="d-flex justify-content-between">
-                                                                <span class="fw-bold text-gray-800">{{ $subtask->title }}</span>
-                                                                <span class="badge bg-light text-muted">{!! $subtask->TaskStatus !!}</span>
-                                                            </div>
-                                                            <div class="text-gray-600 small mt-1">
-                                                                {{ $subtask->description }}
+                                            <!-- SUBTASK SHOW -->
+                                            @if($task->children && $task->children?->count() > 0)
+                                                <div class="ms-5 mt-4 border-start ps-3">
+                                                    @foreach($task->children as $subtask)
+                                                        <div class="card mb-3 shadow-sm">
+                                                            <div class="card-body py-3 px-4">
+                                                                <div class="d-flex justify-content-between">
+                                                                    <span class="fw-bold text-gray-800">{{ $subtask->title }}</span>
+                                                                    <span class="badge bg-light text-muted">{!! $subtask->TaskStatus !!}</span>
+                                                                </div>
+                                                                <div class="text-gray-600 small mt-1">
+                                                                    {{ $subtask->description }}
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                @endforeach
-                                            </div>
-                                        @endif
-                                        <!-- پایان زیرتسک‌ها -->
+                                                    @endforeach
+                                                </div>
+                                            @endif
+                                            <!-- پایان زیرتسک‌ها -->
 
-                                    </div>
+                                        </div>
 
-                                    <!-- دکمه زیر تسک -->
-                                    <div class="card-footer text-center py-3">
-                                        <a href="#" class="btn btn-primary btn-sm"
-                                           onclick="openEditModal('{{ route('dashboard.task.subtasks.store', $task->id) }}',
+                                        <!-- دکمه زیر تسک -->
+                                        <div class="card-footer text-center py-3">
+                                            <a href="#" class="btn btn-light-primary btn-sm"
+                                               onclick="openEditModal('{{ route('dashboard.task.subtasks.store', $task->id) }}',
                JSON.stringify({title:'{{ $task->title }}'}))">
-                                            ساخت زیر تسک جدید
-                                            <i class="ki-outline ki-plus-square fs-6 px-2"></i>
-                                        </a>
+                                                ساخت زیر تسک جدید
+                                                <i class="ki-outline ki-plus-square fs-6 px-2"></i>
+                                            </a>
+                                            <a href="#" onclick="openShowModal('{{ route('dashboard.task.show', $task->id) }}',
+               JSON.stringify({title:'{{ $task->title }}'}))"
+                                               class="btn btn-sm btn-light-info" data-bs-toggle="tooltip" data-bs-placement="top" title="مشاهده"><i class="ki-outline ki-eye fs-6 px-2"></i></a>
+                                        </div>
                                     </div>
-                                </div>
-                            @empty
-                                <div class="alert alert-dismissible bg-secondary d-flex flex-column flex-sm-row w-100 p-5 mb-10">
-                                    <div class="d-flex flex-column">
-{{--                                        <h4 class="mb-2 text-light">خالی</h4>--}}
-                                        <span>تسکی در این وضعیت وجود ندارد!</span>
+                                @empty
+                                    <div class="alert alert-dismissible bg-secondary d-flex flex-column flex-sm-row w-100 p-5 mb-10">
+                                        <div class="d-flex flex-column">
+                                            {{--                                        <h4 class="mb-2 text-light">خالی</h4>--}}
+                                            <span>تسکی در این وضعیت وجود ندارد!</span>
+                                        </div>
                                     </div>
-                                </div>
-{{--                                <div class="alert alert-light text-center">تسکی در این وضعیت وجود ندارد</div>--}}
-                            @endforelse
+                                    {{--                                <div class="alert alert-light text-center">تسکی در این وضعیت وجود ندارد</div>--}}
+                                @endforelse
 
 
-                            <!--end::Tasks Loop-->
-                        </div>
-                    @endforeach
+                                <!--end::Tasks Loop-->
+                            </div>
+                        @endforeach
                     @endif
                 </div>
 
@@ -203,37 +206,37 @@
 
                         @foreach($tb_tasks as $key => $tb_task)
 
-                        <tr data-subtasks='@json($tb_task->children)'>
-                            <td class="text-start">{{$loop->iteration}}</td>
-                            <td class="text-start">{{$tb_task->task_code}}</td>
-                            <td class="text-start">{{$tb_task->title}}</td>
-                            <td class="text-start">{{$tb_task->start_date}}</td>
-                            <td class="text-start">{{$tb_task->end_date}}</td>
-                            <td class="text-start">{{$tb_task->TaskPrority}}</td>
-                            <td class="text-start">{!! $tb_task->TaskStatus !!}</td>
-                            <td class="text-start">
-                                <div class="symbol-group symbol-hover fs-8">
-                                    @foreach($tb_task->assigners as $assigner)
-                                    <div class="symbol symbol-25px symbol-circle" data-bs-toggle="tooltip" title="{{$assigner->Name}}">
-                                       @if($assigner->photo_id)
-                                        <img alt="Pic" src="{{ route('home') }}/{{$assigner->photo?->path}}" />
-                                        @else
-                                            <span class="symbol-label bg-primary text-inverse-primary fw-bold">{{ mb_substr($assigner->Name, 0, 1) }}</span>
-                                        @endif
+                            <tr data-subtasks='@json($tb_task->children)'>
+                                <td class="text-start">{{$loop->iteration}}</td>
+                                <td class="text-start">{{$tb_task->task_code}}</td>
+                                <td class="text-start">{{$tb_task->title}}</td>
+                                <td class="text-start">{{$tb_task->start_date}}</td>
+                                <td class="text-start">{{$tb_task->end_date}}</td>
+                                <td class="text-start">{{$tb_task->TaskPrority}}</td>
+                                <td class="text-start">{!! $tb_task->TaskStatus !!}</td>
+                                <td class="text-start">
+                                    <div class="symbol-group symbol-hover fs-8">
+                                        @foreach($tb_task->assigners as $assigner)
+                                            <div class="symbol symbol-25px symbol-circle" data-bs-toggle="tooltip" title="{{$assigner->Name}}">
+                                                @if($assigner->photo_id)
+                                                    <img alt="Pic" src="{{ route('home') }}/{{$assigner->photo?->path}}" />
+                                                @else
+                                                    <span class="symbol-label bg-primary text-inverse-primary fw-bold">{{ mb_substr($assigner->Name, 0, 1) }}</span>
+                                                @endif
+                                            </div>
+                                        @endforeach
                                     </div>
-                                    @endforeach
-                                </div>
-                            </td>
+                                </td>
                                 <!--begin::Actions-->
-                            <td class="text-end">
-                                <button type="button" class="btn btn-sm btn-icon btn-light btn-active-light-primary toggle h-25px w-25px"
-                                        data-kt-docs-datatable-subtable="expand_row">
-                                    <span class="svg-icon fs-3 m-0 toggle-off">+</span>
-                                    <span class="svg-icon fs-3 m-0 toggle-on"><i class="ki-outline ki-cross text-danger"></i></span>
-                                </button>
-                            </td>
-                            <!--end::Actions-->
-                        </tr>
+                                <td class="text-end">
+                                    <button type="button" class="btn btn-sm btn-icon btn-light btn-active-light-primary toggle h-25px w-25px"
+                                            data-kt-docs-datatable-subtable="expand_row">
+                                        <span class="svg-icon fs-3 m-0 toggle-off">+</span>
+                                        <span class="svg-icon fs-3 m-0 toggle-on"><i class="ki-outline ki-cross text-danger"></i></span>
+                                    </button>
+                                </td>
+                                <!--end::Actions-->
+                            </tr>
                         @endforeach
 
                         </tbody>
@@ -451,165 +454,165 @@
                 <div class="modal-body scroll-y px-10 px-lg-15 pt-0 pb-15">
                     <!--begin:Form-->
                     <div class="stepper stepper-links d-flex flex-column pt-15 between" id="kt_create_account_stepper" data-kt-stepper="true" data-select2-id="select2-data-kt_create_account_stepper" >
-                    <form action=""  method="post" id="editForm" class="form mx-auto mw-100 w-100 pt-15 pb-10 fv-plugins-bootstrap5 fv-plugins-framework needs-validation"
-                          enctype="multipart/form-data">
-                        @csrf
-                        <!--begin::Heading-->
-                        <div class="mb-13 text-center">
-                            <!--begin::Title-->
-                            <h1 class="mb-3">افزودن زیرتسک</h1>
-                            <!--end::Title-->
-                            <input type="hidden" value="{{$project->id}}" name="project_id">
-                            <!--begin::Description-->
-                            <div class="text-muted fw-semibold fs-5">
-                                برای پروژه
-                                <a href="#" class="fw-bold link-primary">{{$project->name}} - {{$project->project_code}}</a>.
+                        <form action=""  method="post" id="editForm" class="form mx-auto mw-100 w-100 pt-15 pb-10 fv-plugins-bootstrap5 fv-plugins-framework needs-validation"
+                              enctype="multipart/form-data">
+                            @csrf
+                            <!--begin::Heading-->
+                            <div class="mb-13 text-center">
+                                <!--begin::Title-->
+                                <h1 class="mb-3">افزودن زیرتسک</h1>
+                                <!--end::Title-->
+                                <input type="hidden" value="{{$project->id}}" name="project_id">
+                                <!--begin::Description-->
+                                <div class="text-muted fw-semibold fs-5">
+                                    برای پروژه
+                                    <a href="#" class="fw-bold link-primary">{{$project->name}} - {{$project->project_code}}</a>.
+                                </div>
+                                <!--end::Description-->
                             </div>
-                            <!--end::Description-->
-                        </div>
-                        <!--end::Heading-->
+                            <!--end::Heading-->
 
-                        <!--begin::Input group-->
-                        <div class="row g-9 mb-8">
-                            <!--begin::Col-->
-                            <div class="col-md-6 fv-row">
-                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                                    <span class="required">عنوان</span>
-                                    <span class="ms-1"  data-bs-toggle="tooltip" title="عنوان تسک را بنویسید" >
+                            <!--begin::Input group-->
+                            <div class="row g-9 mb-8">
+                                <!--begin::Col-->
+                                <div class="col-md-6 fv-row">
+                                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                        <span class="required">عنوان</span>
+                                        <span class="ms-1"  data-bs-toggle="tooltip" title="عنوان تسک را بنویسید" >
 	                                <i class="ki-outline ki-information-5 text-gray-500 fs-6"></i>
                                 </span>
-                                </label>
-                                <input type="text" class="form-control form-control-solid" placeholder="عنوان تسک" value="{{old('title')}}" name="title" required/>
-                                <div class="invalid-feedback">عنوان تسک الزامی است</div>
-                            </div>
-                            <div class="col-md-6 fv-row">
-                                <label class="required fs-6 fw-semibold mb-2">اولویت تسک </label>
+                                    </label>
+                                    <input type="text" class="form-control form-control-solid" placeholder="عنوان تسک" value="{{old('title')}}" name="title" required/>
+                                    <div class="invalid-feedback">عنوان تسک الزامی است</div>
+                                </div>
+                                <div class="col-md-6 fv-row">
+                                    <label class="required fs-6 fw-semibold mb-2">اولویت تسک </label>
 
-                                <select class="form-select form-select-solid"  data-control="select2" data-hide-search="true"
-                                        data-placeholder="تسک را به کاربران مد نظرتان assign کنید" name="priority">
-                                    <option></option>
-                                    <option value="0">کم</option>
-                                    <option value="1">متوسط</option>
-                                    <option value="2">زیاد</option>
-                                </select>
+                                    <select class="form-select form-select-solid"  data-control="select2" data-hide-search="true"
+                                            data-placeholder="تسک را به کاربران مد نظرتان assign کنید" name="priority">
+                                        <option></option>
+                                        <option value="0">کم</option>
+                                        <option value="1">متوسط</option>
+                                        <option value="2">زیاد</option>
+                                    </select>
+                                </div>
+                                <!--end::Col-->
                             </div>
-                            <!--end::Col-->
-                        </div>
-                        <!--end::Input group-->
+                            <!--end::Input group-->
 
-                        <div class="row g-9 mb-8">
-                            <div class="col-md-6 fv-row">
-                                <label class="required fs-6 fw-semibold mb-2">تاریخ شروع</label>
-                                <div class="position-relative d-flex align-items-center">
-                                    <i class="ki-outline ki-calendar-8 fs-2 position-absolute mx-4"></i>
-                                    <input name="start_date"
-                                           class="result form-control form-control-solid ps-12"
-                                           type="text"
-                                           data-jdp
-                                           placeholder="تاریخ شروع تسک"
-                                           autocomplete="off"
-                                           value="{{ old('start_date') }}"
-                                           required />
+                            <div class="row g-9 mb-8">
+                                <div class="col-md-6 fv-row">
+                                    <label class="required fs-6 fw-semibold mb-2">تاریخ شروع</label>
+                                    <div class="position-relative d-flex align-items-center">
+                                        <i class="ki-outline ki-calendar-8 fs-2 position-absolute mx-4"></i>
+                                        <input name="start_date"
+                                               class="result form-control form-control-solid ps-12"
+                                               type="text"
+                                               data-jdp
+                                               placeholder="تاریخ شروع تسک"
+                                               autocomplete="off"
+                                               value="{{ old('start_date') }}"
+                                               required />
+                                    </div>
+                                </div>
+                                <div class="col-md-6 fv-row">
+                                    <label class="required fs-6 fw-semibold mb-2">مدت زمان انجام تسک</label>
+                                    <div class="position-relative d-flex align-items-center">
+                                        <i class="ki-outline ki-watch fs-2 position-absolute mx-4"></i>
+                                        <input name="duration"
+                                               class="result form-control form-control-solid ps-12"
+                                               type="text"
+                                               placeholder="مدت زمان انجام تسک"
+                                               autocomplete="off"
+                                               value="{{ old('duration') }}"
+                                               required />
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-6 fv-row">
-                                <label class="required fs-6 fw-semibold mb-2">مدت زمان انجام تسک</label>
-                                <div class="position-relative d-flex align-items-center">
-                                    <i class="ki-outline ki-watch fs-2 position-absolute mx-4"></i>
-                                    <input name="duration"
-                                           class="result form-control form-control-solid ps-12"
-                                           type="text"
-                                           placeholder="مدت زمان انجام تسک"
-                                           autocomplete="off"
-                                           value="{{ old('duration') }}"
-                                           required />
+                            <!--end::Input group-->
+                            <div class="row g-9 mb-8">
+                                <!--begin::Col-->
+                                <div class="col-md-4 fv-row">
+                                    <label class="required fs-6 fw-semibold mb-2">نیاز به تایید مسئول تایید کننده دارد</label>
+                                    <input class="form-check-input" name="sub_manager_check" type="checkbox" value="1" id="sub_flexCheckDefault"/>
                                 </div>
-                            </div>
-                        </div>
-                        <!--end::Input group-->
-                        <div class="row g-9 mb-8">
-                            <!--begin::Col-->
-                            <div class="col-md-4 fv-row">
-                                <label class="required fs-6 fw-semibold mb-2">نیاز به تایید مسئول تایید کننده دارد</label>
-                                <input class="form-check-input" name="sub_manager_check" type="checkbox" value="1" id="sub_flexCheckDefault"/>
-                            </div>
-                            <!--begin::Col-->
-                            <div class="col-md-8 fv-row">
-                                <label class="required fs-6 fw-semibold mb-2">مدیر تایید کننده تسک</label>
-                                <select class="form-select form-select-solid"  data-control="select2"
-                                        data-placeholder="مدیر تایید کننده تسک" name="sub_manager_id">
-                                    <option></option>
-                                    @foreach($managers as $manager)
-                                        <option value="{{$manager->id}}">{{$manager->Name}} - {{role_name($manager->roles()->first()->name)}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-12 fv-row">
-                                <label class="required fs-6 fw-semibold mb-2">ناظر تسک</label>
+                                <!--begin::Col-->
+                                <div class="col-md-8 fv-row">
+                                    <label class="required fs-6 fw-semibold mb-2">مدیر تایید کننده تسک</label>
+                                    <select class="form-select form-select-solid"  data-control="select2"
+                                            data-placeholder="مدیر تایید کننده تسک" name="sub_manager_id">
+                                        <option></option>
+                                        @foreach($managers as $manager)
+                                            <option value="{{$manager->id}}">{{$manager->Name}} - {{role_name($manager->roles()->first()->name)}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-12 fv-row">
+                                    <label class="required fs-6 fw-semibold mb-2">ناظر تسک</label>
 
-                                <select class="form-select form-select-solid"  data-control="select2"
-                                        data-placeholder="ناظر تسک" name="watcher_id">
-                                    <option></option>
-                                    @foreach($watchers as $watcher)
-                                        <option value="{{$watcher->id}}">{{ $watcher->Name }} </option>
-                                    @endforeach
-                                </select>
+                                    <select class="form-select form-select-solid"  data-control="select2"
+                                            data-placeholder="ناظر تسک" name="watcher_id">
+                                        <option></option>
+                                        @foreach($watchers as $watcher)
+                                            <option value="{{$watcher->id}}">{{ $watcher->Name }} </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <!--end::Col-->
                             </div>
-                            <!--end::Col-->
-                        </div>
-                        <div class="row g-9 mb-8">
-                            <!--begin::Col-->
-                            <div class="col-md-12 fv-row">
-                                <label class="required fs-6 fw-semibold mb-2">کاربران تسک </label>
+                            <div class="row g-9 mb-8">
+                                <!--begin::Col-->
+                                <div class="col-md-12 fv-row">
+                                    <label class="required fs-6 fw-semibold mb-2">کاربران تسک </label>
 
-                                <select  class="form-select form-select-solid" data-control="select2"
-                                        multiple  data-placeholder="تسک را به کاربران مد نظرتان assign کنید" name="members[]">
-                                    <option></option>
-                                    @foreach($members as $member)
-                                        <option value="{{$member->id}}">{{$member->Name}} </option>
-                                    @endforeach
-                                </select>
+                                    <select  class="form-select form-select-solid" data-control="select2"
+                                             multiple  data-placeholder="تسک را به کاربران مد نظرتان assign کنید" name="members[]">
+                                        <option></option>
+                                        @foreach($members as $member)
+                                            <option value="{{$member->id}}">{{$member->Name}} </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <!--end::Col-->
                             </div>
-                            <!--end::Col-->
-                        </div>
-                        <!--begin::Input group-->
+                            <!--begin::Input group-->
 
-                        <!--begin::Input group-->
-                        <div class="d-flex flex-column mb-8">
-                            <label class="fs-6 fw-semibold mb-2">توضیحات تسک</label>
-                            <textarea class="form-control form-control-solid" name="description" data-kt-autosize="true" placeholder="توضیحات تسک">
+                            <!--begin::Input group-->
+                            <div class="d-flex flex-column mb-8">
+                                <label class="fs-6 fw-semibold mb-2">توضیحات تسک</label>
+                                <textarea class="form-control form-control-solid" name="description" data-kt-autosize="true" placeholder="توضیحات تسک">
                             {{old('description')}}
                             </textarea>
-                        </div>
-                        <!--end::Input group-->
+                            </div>
+                            <!--end::Input group-->
 
-                        <!--begin::Input group-->
-                        <div class="row g-9 mb-8">
-                            <label for="gallery" class="form-label required">فایل های مربوط به تسک </label>
-                            <input type="file" class="form-control mb-2 mb-md-0" id="gallery"
-                                   name="photos[]" placeholder="تصویر" required multiple>
-                            <div class="invalid-feedback">تصویر الزامی است</div>
-                        </div>
+                            <!--begin::Input group-->
+                            <div class="row g-9 mb-8">
+                                <label for="gallery" class="form-label required">فایل های مربوط به تسک </label>
+                                <input type="file" class="form-control mb-2 mb-md-0" id="gallery"
+                                       name="photos[]" placeholder="تصویر" required multiple>
+                                <div class="invalid-feedback">تصویر الزامی است</div>
+                            </div>
 
-                        <!--begin::Actions-->
-                        <div class="text-center">
-                            <button type="reset" id="kt_modal_new_target_cancel" class="btn btn-light me-3">
-                                انصراف
-                            </button>
+                            <!--begin::Actions-->
+                            <div class="text-center">
+                                <button type="reset" id="kt_modal_new_target_cancel" class="btn btn-light me-3">
+                                    انصراف
+                                </button>
 
-                            <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary">
+                                <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary">
                             <span class="indicator-label">
                                 ثبت تسک
                             </span>
-                                <span class="indicator-progress">
+                                    <span class="indicator-progress">
                                 کمی صبر کنید ...
                                     <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
                                 </span>
-                            </button>
-                        </div>
-                        <!--end::Actions-->
-                    </form>
-                </div>
+                                </button>
+                            </div>
+                            <!--end::Actions-->
+                        </form>
+                    </div>
                     <!--end:Form-->
                 </div>
                 <!--end::Modal body-->
@@ -618,6 +621,290 @@
         </div>
         <!--end::Modal dialog-->
     </div>
+
+
+    <div class="modal fade" id="kt_modal_task_show" tabindex="-1" aria-hidden="true">
+        <!--begin::Modal dialog-->
+        <div class="modal-dialog modal-dialog-centered mw-1024px modal-xl" >
+            <!--begin::Modal content-->
+            <div class="modal-content border-0 shadow-lg">
+                <div class="modal-header bg-light">
+                    <h5 class="modal-title fw-bold" id="taskModalLabel">
+                        <i class="bi bi-card-checklist me-2 text-primary"></i>
+                        عنوان تسک
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="بستن"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="d-flex align-items-center flex-wrap gap-2 mb-4">
+
+                        <!-- Input تاریخ -->
+                        <div>
+                            <input name="start_date"
+                                   id="start_date"
+                                   class="result form-control form-control-solid ps-12"
+                                   type="text"
+                                   data-jdp
+                                   placeholder="انتخاب تاریخ انجام تسک"
+                                   autocomplete="off"
+                                   required />
+                        </div>
+
+                        <div class="dropdown">
+                            <button type="button" class="btn btn-light-primary btn-sm rotate"
+                                    data-kt-menu-trigger="click"
+                                    data-kt-menu-placement="bottom-start"
+                                    data-kt-menu-offset="30px, 30px">
+                                برچسب
+                                <span class="svg-icon fs-3 rotate-180 ms-3 me-0">
+                                    <i class="ki-outline ki-down fs-6"></i>
+                                </span>
+                            </button>
+
+                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800
+                    menu-state-bg-light-primary fw-semibold w-auto min-w-200 mw-300px"
+                                 data-kt-menu="true">
+
+                                <div class="menu-item px-3">
+                                    <div class="menu-content fs-6 text-gray-900 fw-bold px-3 py-4">برچسب‌ها</div>
+                                </div>
+                                <div class="separator mb-3 opacity-75"></div>
+
+                                <div class="menu-item px-3"><a href="#" class="menu-link px-3">New Ticket</a></div>
+                                <div class="menu-item px-3"><a href="#" class="menu-link px-3">New Customer</a></div>
+
+                                <div class="menu-item px-3" data-kt-menu-trigger="hover" data-kt-menu-placement="right-start">
+                                    <a href="#" class="menu-link px-3">
+                                        <span class="menu-title">New Group</span>
+                                        <span class="menu-arrow"></span>
+                                    </a>
+                                    <div class="menu-sub menu-sub-dropdown w-175px py-4">
+                                        <div class="menu-item px-3"><a href="#" class="menu-link px-3">Admin Group</a></div>
+                                        <div class="menu-item px-3"><a href="#" class="menu-link px-3">Staff Group</a></div>
+                                        <div class="menu-item px-3"><a href="#" class="menu-link px-3">Member Group</a></div>
+                                    </div>
+                                </div>
+
+                                <div class="menu-item px-3"><a href="#" class="menu-link px-3">New Contact</a></div>
+                                <div class="separator mt-3 opacity-75"></div>
+                                <div class="menu-item px-3">
+                                    <div class="menu-content px-3 py-3">
+                                        <a class="btn btn-light-primary btn-sm px-4" href="#">Generate Reports</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- دکمه‌های دیگر -->
+                        <button class="btn btn-sm btn-light-primary rotate"
+                                data-kt-menu-trigger="click"
+                                data-kt-menu-placement="bottom-start"
+                                data-kt-menu-offset="30px, 30px">
+                            چک‌لیست
+                            <span class="svg-icon fs-3 rotate-180 ms-3 me-0">
+                                    <i class="ki-outline ki-down fs-6"></i>
+                                </span>
+                        </button>
+                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800
+                             menu-state-bg-light-primary fw-semibold w-auto min-w-200 mw-300px"
+                             data-kt-menu="true">
+
+                            <div class="menu-item px-3">
+                                <div class="menu-content fs-6 text-gray-900 fw-bold px-3 py-4">افزودن چک لیست</div>
+                            </div>
+                            <div class="separator mb-3 opacity-75"></div>
+                            <form action="{{ route('dashboard.task.checklist',$task->id) }}" method="post" enctype="multipart/form-data"
+                                  class="mx-auto mw-100 w-100 fv-plugins-bootstrap5 fv-plugins-framework needs-validation"
+                                  novalidate id="kt_docs_formvalidation_text" autocomplete="off">
+                                @csrf
+
+                                <div class="shadow-sm p-4">
+
+                                    <div class="fv-row mb-10">
+                                        <label class="form-label required">چک لیست</label>
+                                        <input name="title" value="{{ old('title') }}" class="form-control form-control-lg"
+                                               placeholder="چک لیست" required>
+                                    </div>
+                                </div>
+
+                                <div class="menu-item d-flex justify-content-end px-3">
+                                    <div class="menu-content  px-3 py-3">
+                                        <button class="btn btn-light-primary btn-sm px-4">افزودن<i class="ki-outline ki-plus-square fs-3 px-2"></i></button>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+
+                        <button class="btn btn-sm btn-light-primary">
+                            اعضا
+                            <i class="ki-outline ki-down fs-6"></i>
+                        </button>
+                    </div>
+
+                    <div class="d-flex">
+                        <div class="col-8">
+                            <!-- وضعیت و تاریخ‌ها -->
+                            <div class="d-flex justify-content-between mb-3">
+                                <span class="badge bg-success">در حال انجام</span>
+                                <small class="text-muted">مهلت: ۱۴۰۴/۰۸/۲۰</small>
+                            </div>
+
+                            <!-- توضیحات -->
+                            <div class="mb-4">
+                                <h6 class="fw-semibold mb-2">توضیحات</h6>
+                                <p class="text-muted mb-0">
+                                    این تسک مربوط به طراحی صفحه‌ی داشبورد مدیر است و باید تا پایان هفته تکمیل شود.
+                                </p>
+                            </div>
+
+                            <!-- اعضا -->
+                            <div class="mb-4">
+                                <h6 class="fw-semibold mb-2">اعضا</h6>
+                                <div class="d-flex align-items-center flex-wrap gap-2">
+                                    <div class="d-flex align-items-center">
+                                        <div class="symbol symbol-35px symbol-circle">
+                                            <img alt="Pic" src="{{url('panel/assets/media/avatars/300-6.jpg')}}">
+                                        </div>
+                                        <div class="ms-5">
+                                            <a  class="fs-5 fw-bold text-gray-900 text-hover-primary mb-2">علی رضایی</a>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex align-items-center">
+                                        <div class="symbol symbol-35px symbol-circle">
+                                            <img alt="Pic" src="{{url('panel/assets/media/avatars/300-6.jpg')}}">
+                                        </div>
+                                        <div class="ms-5">
+                                            <a  class="fs-5 fw-bold text-gray-900 text-hover-primary mb-2">سارا محمدی</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- فایل‌های پیوست -->
+                            <div class="mb-4">
+                                <h6 class="fw-semibold mb-2">فایل‌ها</h6>
+                                <ul class="list-unstyled mb-0">
+                                    <li><a href="#" class="text-primary text-decoration-none">UI-Dashboard.png</a></li>
+                                    <li><a href="#" class="text-primary text-decoration-none">requirements.docx</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- کامنت‌ها -->
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <h6 class="fw-semibold mb-2">کامنت‌ها</h6>
+                                <div class="d-flex align-items-center">
+                                    <div class="symbol symbol-35px symbol-circle">
+                                        <img alt="Pic" src="{{url('panel/assets/media/avatars/300-6.jpg')}}">
+                                    </div>
+                                    <div class="ms-5">
+                                        <a href="#" class="fs-5 fw-bold text-gray-900 text-hover-primary mb-2">مریم</a>
+                                        <div class="fw-semibold text-muted">لطفاً رنگ دکمه‌ها رو طبق تم پروژه تغییر بدیم.</div>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <div class="symbol symbol-35px symbol-circle">
+                                        <img alt="Pic" src="{{url('panel/assets/media/avatars/300-6.jpg')}}">
+                                    </div>
+                                    <div class="ms-5">
+                                        <a href="#" class="fs-5 fw-bold text-gray-900 text-hover-primary mb-2">مریم</a>
+                                        <div class="fw-semibold text-muted">در نسخه‌ی موبایل هم تست انجام شد و مشکلی نیست.</div>
+                                    </div>
+                                </div>
+
+
+                                <!-- افزودن کامنت -->
+                                <textarea class="form-control mt-2" placeholder="افزودن کامنت جدید..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer bg-light">
+                    <button type="button" class="btn btn-primary">ذخیره تغییرات</button>
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">بستن</button>
+                </div>
+            </div>
+            <!--end::Modal content-->
+        </div>
+        <!--end::Modal dialog-->
+    </div>
+
+    <div class="modal fade" id="kt_modal_task_show" tabindex="-1" aria-hidden="true">
+        <!--begin::Modal dialog-->
+        <div class="modal-dialog modal-dialog-centered mw-900px modal-xl" >
+            <!--begin::Modal content-->
+            <div class="modal-content bg-dark text-light border-0">
+                <div class="modal-body d-flex flex-column flex-lg-row gap-4 p-4">
+
+                    <!-- Left side -->
+                    <div class="flex-grow-1">
+                        <!-- Task Header -->
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <div>
+                                <span class="badge bg-secondary me-2">در حال انجام</span>
+                                <span class="badge bg-info">Back-end</span>
+                            </div>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <h4 class="fw-bold mb-3">نمایش محصولات فروشگاه‌ها در سبد خرید کاربر</h4>
+
+                        <!-- Quick Actions -->
+                        <div class="d-flex flex-wrap gap-2 mb-4">
+                            <button class="btn btn-sm btn-outline-light">+ Add</button>
+                            <button class="btn btn-sm btn-outline-light">Labels</button>
+                            <button class="btn btn-sm btn-outline-light">Dates</button>
+                            <button class="btn btn-sm btn-outline-light">Checklist</button>
+                            <button class="btn btn-sm btn-outline-light">Members</button>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="mb-4">
+                            <h6 class="fw-semibold mb-2"><i class="bi bi-card-text me-2"></i>توضیحات</h6>
+                            <p class="text-light opacity-75">درصد انجام شد 50</p>
+                        </div>
+
+                        <!-- Metadata -->
+                        <div class="text-muted small">
+                            <i class="bi bi-calendar3 me-1"></i> ایجاد شده در ۱۴۰۴/۰۸/۱۳
+                        </div>
+                    </div>
+
+                    <!-- Right side -->
+                    <div class="border-start border-secondary ps-4" style="min-width: 320px;">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h6 class="fw-semibold">نظرات و فعالیت‌ها</h6>
+                            <button class="btn btn-sm btn-outline-light">پنهان‌سازی جزئیات</button>
+                        </div>
+
+                        <textarea class="form-control bg-dark text-light mb-3" rows="2" placeholder="نوشتن کامنت..."></textarea>
+
+                        <div class="small opacity-75">
+                            <strong>فری‌ناز حقیقی</strong> این کارت را اضافه کرد
+                            <br>
+                            <span class="text-muted">8 سپتامبر 2024 - 16:45</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer bg-black border-0 d-flex justify-content-between">
+                    <div>
+                        <button class="btn btn-sm btn-outline-light">Power-ups</button>
+                        <button class="btn btn-sm btn-outline-light">Automations</button>
+                        <button class="btn btn-sm btn-outline-light">Comments</button>
+                    </div>
+                    <button class="btn btn-light btn-sm" data-bs-dismiss="modal">بستن</button>
+                </div>
+            </div>
+            <!--end::Modal content-->
+        </div>
+        <!--end::Modal dialog-->
+    </div>
+
 
     </div>
     </div>
@@ -830,6 +1117,17 @@
                 modal.show();
             }
 
+            function openShowModal(url, currentData) {
+                let data = JSON.parse(currentData);
+
+                $('#modalTitle').text(`مشاهده  "${data.title}"`);
+
+                $('#editForm #title').val(data.title);
+
+                var modal = new bootstrap.Modal(document.getElementById('kt_modal_task_show'));
+                modal.show();
+            }
+
         </script>
         <script>
             "use strict";
@@ -1038,6 +1336,17 @@
             });
         </script>
 
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const menu = document.querySelector('#dateDropdownMenu');
+                menu.addEventListener('shown.bs.dropdown', function () {
+                    setTimeout(() => {
+                        jalaliDatepicker.show(document.getElementById('start_date'));
+                    }, 100);
+                });
+            });
+        </script>
 
 
     @endpush

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\panel\PanelController;
 use App\Http\Controllers\panel\ProjectController;
+use App\Http\Controllers\panel\TaskChecklistController;
 use App\Http\Controllers\panel\TaskController;
 use Illuminate\Support\Facades\Route;
 
@@ -37,6 +38,9 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
         Route::get('/edit/{task}', [TaskController::class, 'edit'])->name('edit');
         Route::put('/update/{task}', [TaskController::class, 'update'])->name('update');
         Route::get('/delete/{task}', [TaskController::class, 'destroy'])->name('destroy');
+        //        check
+        Route::post('/tasks/{task}/checklist', [TaskChecklistController::class, 'store'])->name('checklist');
     });
+
 });
 
