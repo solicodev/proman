@@ -19,10 +19,11 @@ class TaskCheckListService
         return $taskCheckList;
     }
 
-    public function checkList(array $param, TaskChecklist $taskChecklist)
-    {
-        $taskChecklist->check = $param['check'];
-        $taskChecklist->update();
-        return $taskChecklist;
-    }
+//    public function checkList(array $param, TaskChecklist $taskChecklist)
+//    {
+//
+//        $taskChecklist->check = $param['check']  ? '1' : '0';
+//        $taskChecklist->update();
+//        return $taskChecklist;
+//    }
 }

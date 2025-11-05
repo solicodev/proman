@@ -23,7 +23,6 @@ class TaskController extends Controller
     }
     public function index(Project $project)
     {
-
         $SuperAdminRoles = ['Super Admin'];
         $excludedRoles = ['Manager'];
         $memberRoles = ['Member'];
@@ -74,8 +73,6 @@ class TaskController extends Controller
             DB::rollBack();
             return redirect()->back()->with('err_message', 'خطایی رخ داد :('.$exception->getMessage());
         }
-
-
     }
 
     public function update(Request $request, Task $task)
@@ -86,7 +83,6 @@ class TaskController extends Controller
             'end_date' => 'sometimes|date|after_or_equal:start_date',
             'duration' => 'nullable|integer|min:0'
         ]);
-
         $task->update($data);
 
         return response()->json([

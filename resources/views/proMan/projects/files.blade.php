@@ -11,7 +11,7 @@
                 <div class="card-title flex-column">
                     <h3 class="fw-bold mb-1">فایل های آپلود شده در کل پروژه</h3>
 
-                    <div class="fs-6 text-gray-500">Total 382 fiels, 2,6GB space usage</div>
+{{--                    <div class="fs-6 text-gray-500">Total 382 fiels, 2,6GB space usage</div>--}}
                 </div>
 
 {{--                <div class="card-toolbar">--}}
@@ -46,12 +46,12 @@
                                     <a class="text-active-danger">{{role_name($user->getRoleNames()->first())}}</a>
                                 </div>
                             </div>
-                            <button
-                                type="button"
-                                class="btn btn-clean btn-sm btn-icon btn-icon-primary btn-active-light-primary ms-auto"
-                                data-bs-toggle="tooltip" data-bs-placement="top" title="دانلود فایل">
+                            <a href="{{ route('home') }}/{{$file['path']}}"
+                               type="button" download
+                               class="btn btn-clean btn-sm btn-icon btn-icon-primary btn-active-light-primary ms-auto"
+                               data-bs-toggle="tooltip" data-bs-placement="top" title="دانلود فایل">
                                 <i class="ki-outline ki-cloud-download fs-3"></i>
-                            </button>
+                            </a>
                         </div>
                     @endforeach
                         {{$resultFiles->links("pagination::bootstrap-5")}}

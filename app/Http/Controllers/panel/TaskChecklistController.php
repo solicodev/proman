@@ -21,7 +21,7 @@ class TaskChecklistController extends Controller
     public function store(TaskCheckListRequest $request , Task $task)
     {
         try {
-//            DB::beginTransaction();
+            DB::beginTransaction();
             $this->taskChecklistService->store($request->all(),$task);
             return redirect()->back()->with('flash_message', ' با موفقیت ایجاد شد :)');
 
@@ -35,14 +35,28 @@ class TaskChecklistController extends Controller
 
     public function check(TaskChecklist $taskChecklist ,Request $request)
     {
-
         try {
-            $this->taskChecklistService->checkList($request->all(),$taskChecklist);
-            return redirect()->back()->with('flash_message', 'انجام شد :)');
+            $taskChecklist->check = $request->has('check')  ? '1' : '0';
+            $taskChecklist->update();
+
+            return response()->json(['success' => true,'flash_message' => 'انجام شد' , 'checked' => $taskChecklist->check]);
         } catch (Exception $exception) {
-            return redirect()->back()->with('err_message', 'خطایی رخ داد :('.$exception->getMessage());
+            return response()->json(['success' => false, 'err_message' => $exception->getMessage()]);
         }
     }
+
+    public function addstore(TaskCheckListRequest $request , Task $task)
+    {
+
+        $item = $this->taskChecklistService->store($request->all(),$task);
+
+        return response()->json([
+            'success' => true,
+            'flash_message' => 'آیتم جدید با موفقیت افزوده شد.',
+            'item' => $item,
+        ]);
+    }
+
 
     /**
      * Display the specified resource.

@@ -637,6 +637,10 @@
                 </div>
 
                 <div class="modal-body">
+                    <div class="d-flex justify-content-between mb-3">
+                        {!! $task->TaskStatus !!}
+                        <small class="text-muted">مهلت: ۱۴۰۴/۰۸/۲۰</small>
+                    </div>
                     <div class="d-flex align-items-center flex-wrap gap-2 mb-4">
 
                         <!-- Input تاریخ -->
@@ -651,104 +655,189 @@
                                    required />
                         </div>
 
+{{--                        <div class="dropdown">--}}
+{{--                            <button type="button" class="btn btn-light-primary btn-sm rotate"--}}
+{{--                                    data-kt-menu-trigger="click"--}}
+{{--                                    data-kt-menu-placement="bottom-start"--}}
+{{--                                    data-kt-menu-offset="30px, 30px">--}}
+{{--                                برچسب--}}
+{{--                                <span class="svg-icon fs-3 rotate-180 ms-3 me-0">--}}
+{{--                                    <i class="ki-outline ki-down fs-6"></i>--}}
+{{--                                </span>--}}
+{{--                            </button>--}}
+
+{{--                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800--}}
+{{--                                menu-state-bg-light-primary fw-semibold w-auto min-w-200 mw-300px"--}}
+{{--                                 data-kt-menu="true">--}}
+
+{{--                                <div class="menu-item px-3">--}}
+{{--                                    <div class="menu-content fs-6 text-gray-900 fw-bold px-3 py-4">برچسب‌ها</div>--}}
+{{--                                </div>--}}
+{{--                                <div class="separator mb-3 opacity-75"></div>--}}
+
+{{--                                <div class="menu-item px-3"><a href="#" class="menu-link px-3">New Ticket</a></div>--}}
+{{--                                <div class="menu-item px-3"><a href="#" class="menu-link px-3">New Customer</a></div>--}}
+
+{{--                                <div class="menu-item px-3" data-kt-menu-trigger="hover" data-kt-menu-placement="right-start">--}}
+{{--                                    <a href="#" class="menu-link px-3">--}}
+{{--                                        <span class="menu-title">New Group</span>--}}
+{{--                                        <span class="menu-arrow"></span>--}}
+{{--                                    </a>--}}
+{{--                                    <div class="menu-sub menu-sub-dropdown w-175px py-4">--}}
+{{--                                        <div class="menu-item px-3"><a href="#" class="menu-link px-3">Admin Group</a></div>--}}
+{{--                                        <div class="menu-item px-3"><a href="#" class="menu-link px-3">Staff Group</a></div>--}}
+{{--                                        <div class="menu-item px-3"><a href="#" class="menu-link px-3">Member Group</a></div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+
+{{--                                <div class="menu-item px-3"><a href="#" class="menu-link px-3">New Contact</a></div>--}}
+{{--                                <div class="separator mt-3 opacity-75"></div>--}}
+{{--                                <div class="menu-item px-3">--}}
+{{--                                    <div class="menu-content px-3 py-3">--}}
+{{--                                        <a class="btn btn-light-primary btn-sm px-4" href="#">Generate Reports</a>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+
                         <div class="dropdown">
-                            <button type="button" class="btn btn-light-primary btn-sm rotate"
+                            <button class="btn btn-sm btn-light-primary rotate"
                                     data-kt-menu-trigger="click"
                                     data-kt-menu-placement="bottom-start"
                                     data-kt-menu-offset="30px, 30px">
-                                برچسب
+                                چک‌لیست
                                 <span class="svg-icon fs-3 rotate-180 ms-3 me-0">
                                     <i class="ki-outline ki-down fs-6"></i>
                                 </span>
                             </button>
-
                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800
-                    menu-state-bg-light-primary fw-semibold w-auto min-w-200 mw-300px"
+                             menu-state-bg-light-primary fw-semibold w-auto min-w-200 mw-300px"
                                  data-kt-menu="true">
 
                                 <div class="menu-item px-3">
-                                    <div class="menu-content fs-6 text-gray-900 fw-bold px-3 py-4">برچسب‌ها</div>
+                                    <div class="menu-content fs-6 text-gray-900 fw-bold px-3 py-4">افزودن چک لیست</div>
+                                </div>
+                                <div class="separator mb-3 opacity-75"></div>
+                                <form action="{{ route('dashboard.task.checklist',$task->id) }}" method="post" enctype="multipart/form-data"
+                                      class="mx-auto mw-100 w-100 fv-plugins-bootstrap5 fv-plugins-framework needs-validation"
+                                      novalidate id="kt_docs_formvalidation_text" autocomplete="off">
+                                    @csrf
+
+                                    <div class="shadow-sm p-4">
+
+                                        <div class="fv-row mb-10">
+                                            <label class="form-label required">چک لیست</label>
+                                            <input name="title" value="{{ old('title') }}" class="form-control form-control-lg"
+                                                   placeholder="چک لیست" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="menu-item d-flex justify-content-end px-3">
+                                        <div class="menu-content  px-3 py-3">
+                                            <button class="btn btn-light-primary btn-sm px-4">افزودن<i class="ki-outline ki-plus-square fs-3 px-2"></i></button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="dropdown">
+                            <button class="btn btn-sm btn-light-primary rotate"
+                                    data-kt-menu-trigger="click"
+                                    data-kt-menu-placement="bottom-start"
+                                    data-kt-menu-offset="30px, 30px">
+                                اعضا
+                                <span class="svg-icon fs-3 rotate-180 ms-3 me-0">
+                                    <i class="ki-outline ki-down fs-6"></i>
+                                </span>
+                            </button>
+                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800
+                             menu-state-bg-light-primary fw-semibold w-auto min-w-200 mw-300px p-5"
+                                 data-kt-menu="true">
+
+                                <div class="menu-item px-3">
+                                    <div class="menu-content fs-6 text-gray-900 fw-bold px-3 py-4">اعضای تسک</div>
                                 </div>
                                 <div class="separator mb-3 opacity-75"></div>
 
-                                <div class="menu-item px-3"><a href="#" class="menu-link px-3">New Ticket</a></div>
-                                <div class="menu-item px-3"><a href="#" class="menu-link px-3">New Customer</a></div>
-
-                                <div class="menu-item px-3" data-kt-menu-trigger="hover" data-kt-menu-placement="right-start">
-                                    <a href="#" class="menu-link px-3">
-                                        <span class="menu-title">New Group</span>
-                                        <span class="menu-arrow"></span>
-                                    </a>
-                                    <div class="menu-sub menu-sub-dropdown w-175px py-4">
-                                        <div class="menu-item px-3"><a href="#" class="menu-link px-3">Admin Group</a></div>
-                                        <div class="menu-item px-3"><a href="#" class="menu-link px-3">Staff Group</a></div>
-                                        <div class="menu-item px-3"><a href="#" class="menu-link px-3">Member Group</a></div>
-                                    </div>
-                                </div>
-
-                                <div class="menu-item px-3"><a href="#" class="menu-link px-3">New Contact</a></div>
-                                <div class="separator mt-3 opacity-75"></div>
-                                <div class="menu-item px-3">
-                                    <div class="menu-content px-3 py-3">
-                                        <a class="btn btn-light-primary btn-sm px-4" href="#">Generate Reports</a>
-                                    </div>
+                                <div class="symbol-group symbol-hover flex-nowrap">
+                                    @foreach($task->assigners as $assigner)
+                                        <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" data-bs-original-title="{{$assigner->Name}}" >
+                                            @if($assigner->photo_id)
+                                                <img alt="Pic" src="{{ route('home') }}/{{$assigner->photo?->path}}">
+                                            @else
+                                                <span class="symbol-label bg-warning text-inverse-warning fw-bold">{{ mb_substr($assigner->Name, 0, 1) }}</span>
+                                            @endif
+                                        </div>
+                                    @endforeach
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- دکمه‌های دیگر -->
-                        <button class="btn btn-sm btn-light-primary rotate"
-                                data-kt-menu-trigger="click"
-                                data-kt-menu-placement="bottom-start"
-                                data-kt-menu-offset="30px, 30px">
-                            چک‌لیست
-                            <span class="svg-icon fs-3 rotate-180 ms-3 me-0">
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn btn-sm btn-light-primary rotate"
+                                    data-kt-menu-trigger="click"
+                                    data-kt-menu-placement="bottom-start"
+                                    data-kt-menu-offset="30px, 30px">
+                                فایل ها
+                                <span class="svg-icon fs-3 rotate-180 ms-3 me-0">
                                     <i class="ki-outline ki-down fs-6"></i>
                                 </span>
-                        </button>
-                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800
-                             menu-state-bg-light-primary fw-semibold w-auto min-w-200 mw-300px"
-                             data-kt-menu="true">
+                            </button>
+                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800
+                             menu-state-bg-light-primary fw-semibold w-auto min-w-200 mw-300px p-5"
+                                 data-kt-menu="true">
 
-                            <div class="menu-item px-3">
-                                <div class="menu-content fs-6 text-gray-900 fw-bold px-3 py-4">افزودن چک لیست</div>
+                                <div class="menu-item px-3">
+                                    <div class="menu-content fs-6 text-gray-900 fw-bold px-3 py-4">فایل های مربوط به تسک</div>
+                                </div>
+                                <div class="separator mb-3 opacity-75"></div>
+
+                                <ul class="list-unstyled mb-0">
+                                    @foreach($task->photos as $file)
+                                        @php
+                                            $explode_file = explode('.',$file['path']);
+                                            $user = \App\Models\User::with('photo')->where('id',$file['user_id'])->first();
+                                        @endphp
+                                        <div class="d-flex align-items-center mb-5">
+                                            <div class="symbol symbol-30px me-5">
+                                                @if($explode_file[1] == 'pdf')
+                                                    <img alt="Icon" src="{{url('panel/assets/media/svg/files/pdf.svg')}}" />
+                                                @elseif($explode_file[1] == 'doc')
+                                                    <img alt="Icon" src="{{url('panel/assets/media/svg/files/doc.svg')}}" />
+                                                @elseif($explode_file[1] == 'css')
+                                                    <img alt="Icon" src="{{url('panel/assets/media/svg/files/css.svg')}}" />
+                                                @else
+                                                    <img alt="Icon" src="{{url('panel/assets/media/svg/files/ai.svg')}}" />
+                                                @endif
+                                            </div>
+                                            <div class="fw-semibold">
+                                                <a class="fs-6 fw-bold text-gray-900 text-hover-primary">{{$user->Name}} </a>
+
+                                                <div class="text-gray-500">
+                                                    {{verta($file['created_at'])->formatDifference()}}
+                                                    <a class="text-active-danger">{{role_name($user->getRoleNames()->first())}}</a>
+                                                </div>
+                                            </div>
+                                            <a href="{{ route('home') }}/{{$file['path']}}"
+                                                type="button" download
+                                                class="btn btn-clean btn-sm btn-icon btn-icon-primary btn-active-light-primary ms-auto"
+                                                data-bs-toggle="tooltip" data-bs-placement="top" title="دانلود فایل">
+                                                <i class="ki-outline ki-cloud-download fs-3"></i>
+                                            </a>
+                                        </div>
+                                    @endforeach
+{{--                                    <li><a href="#" class="text-primary text-decoration-none">UI-Dashboard.png</a></li>--}}
+{{--                                    <li><a href="#" class="text-primary text-decoration-none">requirements.docx</a></li>--}}
+                                </ul>
                             </div>
-                            <div class="separator mb-3 opacity-75"></div>
-                            <form action="{{ route('dashboard.task.checklist',$task->id) }}" method="post" enctype="multipart/form-data"
-                                  class="mx-auto mw-100 w-100 fv-plugins-bootstrap5 fv-plugins-framework needs-validation"
-                                  novalidate id="kt_docs_formvalidation_text" autocomplete="off">
-                                @csrf
 
-                                <div class="shadow-sm p-4">
-
-                                    <div class="fv-row mb-10">
-                                        <label class="form-label required">چک لیست</label>
-                                        <input name="title" value="{{ old('title') }}" class="form-control form-control-lg"
-                                               placeholder="چک لیست" required>
-                                    </div>
-                                </div>
-
-                                <div class="menu-item d-flex justify-content-end px-3">
-                                    <div class="menu-content  px-3 py-3">
-                                        <button class="btn btn-light-primary btn-sm px-4">افزودن<i class="ki-outline ki-plus-square fs-3 px-2"></i></button>
-                                    </div>
-                                </div>
-                            </form>
                         </div>
-
-                        <button class="btn btn-sm btn-light-primary">
-                            اعضا
-                            <i class="ki-outline ki-down fs-6"></i>
-                        </button>
                     </div>
 
                     <div class="d-flex">
                         <div class="col-8">
-                            <!-- وضعیت و تاریخ‌ها -->
-                            <div class="d-flex justify-content-between mb-3">
-                                <span class="badge bg-success">در حال انجام</span>
-                                <small class="text-muted">مهلت: ۱۴۰۴/۰۸/۲۰</small>
-                            </div>
+
 
                             <!-- توضیحات -->
                             <div class="mb-4">
@@ -758,58 +847,69 @@
                                 </p>
                             </div>
 
-                            <!-- اعضا -->
-                            <div class="mb-4">
-                                <h6 class="fw-semibold mb-2">اعضا</h6>
-                                <div class="d-flex align-items-center flex-wrap gap-2">
-                                    <div class="d-flex align-items-center">
-                                        <div class="symbol symbol-35px symbol-circle">
-                                            <img alt="Pic" src="{{url('panel/assets/media/avatars/300-6.jpg')}}">
-                                        </div>
-                                        <div class="ms-5">
-                                            <a  class="fs-5 fw-bold text-gray-900 text-hover-primary mb-2">علی رضایی</a>
-                                        </div>
-                                    </div>
 
-                                    <div class="d-flex align-items-center">
-                                        <div class="symbol symbol-35px symbol-circle">
-                                            <img alt="Pic" src="{{url('panel/assets/media/avatars/300-6.jpg')}}">
-                                        </div>
-                                        <div class="ms-5">
-                                            <a  class="fs-5 fw-bold text-gray-900 text-hover-primary mb-2">سارا محمدی</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- فایل‌های پیوست -->
-                            <div class="mb-4">
-                                <h6 class="fw-semibold mb-2">فایل‌ها</h6>
-                                <ul class="list-unstyled mb-0">
-                                    <li><a href="#" class="text-primary text-decoration-none">UI-Dashboard.png</a></li>
-                                    <li><a href="#" class="text-primary text-decoration-none">requirements.docx</a></li>
-                                </ul>
-                            </div>
 
                             <div class="mb-4">
-                                @foreach($task->taskCheckList as $key=>$taskChecklist)
-                                <form action="{{ route('dashboard.task.checklist.check', $taskChecklist->id) }}" method="post" enctype="multipart/form-data"
-                                      class="mx-auto mw-100 w-100 pt-15 pb-10 fv-plugins-bootstrap5 fv-plugins-framework needs-validation"
-                                      novalidate id="kt_docs_formvalidation_text" autocomplete="off">
-                                    @csrf
+                                <div class="mb-4">
+                                    @foreach($task->taskCheckList as $key => $taskChecklist)
+                                        <form action="{{ route('dashboard.task.checklist.check', $taskChecklist->id) }}"
+                                              method="post"
+                                              class="checklist-form"
+                                              data-id="{{ $taskChecklist->id }}">
+                                            @csrf
 
-                                <div class="mb-2">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="check" value="1" id="kt_check_indeterminate_1"
-                                               onchange="this.form.submit();" @if($taskChecklist->check == 1) checked @endif/>
-                                        <label class="form-check-label" for="kt_check_indeterminate_1">
-                                           {{$taskChecklist->title}}
-                                        </label>
+                                            <div class="mb-2">
+                                                <div class="form-check">
+                                                    <input class="form-check-input checklist-checkbox"
+                                                           type="checkbox"
+                                                           name="check"
+                                                           value="1"
+                                                           id="checklist_{{ $taskChecklist->id }}"
+                                                           @if($taskChecklist->check == 1) checked @endif />
+                                                    <label class="form-check-label" for="checklist_{{ $taskChecklist->id }}">
+                                                        {{ $taskChecklist->title }}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    @endforeach
+
+                                    <div id="new-checklist-container" class="mt-3">
+                                        <button type="button" id="add-checklist-btn" class="btn btn-sm btn-light-primary">
+                                            <i class="ki-outline ki-plus fs-5"></i> افزودن آیتم به چک لیست
+                                        </button>
+
+                                        <form action="{{ route('dashboard.task.add.checklist',$task->id) }}"
+                                              method="post"
+                                              class="mt-2 d-none"
+                                              id="new-checklist-form">
+                                            @csrf
+                                            <div class="input-group">
+                                                <input type="text" name="title" value="{{old('title')}}" class="form-control" placeholder="عنوان چک‌لیست جدید..." required>
+                                                <button type="submit" class="btn btn btn-light-primary">افزودن</button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
 
-                                </form>
-                                @endforeach
+                                {{--                            @foreach($task->taskCheckList as $key=>$taskChecklist)--}}
+                                {{--                                <form action="{{ route('dashboard.task.checklist.check', $taskChecklist->id) }}" method="post" enctype="multipart/form-data"--}}
+                                {{--                                      class="mx-auto mw-100 w-100 fv-plugins-bootstrap5 fv-plugins-framework needs-validation"--}}
+                                {{--                                      novalidate id="kt_docs_formvalidation_text" autocomplete="off">--}}
+                                {{--                                    @csrf--}}
+
+                                {{--                                <div class="mb-2">--}}
+                                {{--                                    <div class="form-check">--}}
+                                {{--                                        <input class="form-check-input" type="checkbox" name="check" value="1" id="kt_check_indeterminate_1"--}}
+                                {{--                                               onchange="this.form.submit();" @if($taskChecklist->check == 1) checked @endif/>--}}
+                                {{--                                        <label class="form-check-label" for="kt_check_indeterminate_1">--}}
+                                {{--                                           {{$taskChecklist->title}}--}}
+                                {{--                                        </label>--}}
+                                {{--                                    </div>--}}
+                                {{--                                </div>--}}
+
+                                {{--                                </form>--}}
+                                {{--                                @endforeach--}}
                             </div>
 
                         </div>
@@ -844,10 +944,10 @@
                     </div>
                 </div>
 
-                <div class="modal-footer bg-light">
-                    <button type="button" class="btn btn-primary">ذخیره تغییرات</button>
-                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">بستن</button>
-                </div>
+{{--                <div class="modal-footer bg-light">--}}
+{{--                    <button type="button" class="btn btn-primary">ذخیره تغییرات</button>--}}
+{{--                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">بستن</button>--}}
+{{--                </div>--}}
             </div>
             <!--end::Modal content-->
         </div>
@@ -1369,6 +1469,126 @@
             });
         </script>
 
+        <script>
+            // for checklist checked
+            document.addEventListener('DOMContentLoaded', function () {
+                document.querySelectorAll('.checklist-checkbox').forEach(function (checkbox) {
+                    checkbox.addEventListener('change', function (e) {
+                        const form = e.target.closest('form');
+                        const url = form.getAttribute('action');
+                        const formData = new FormData(form);
+
+                        fetch(url, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': form.querySelector('input[name="_token"]').value,
+                                'Accept': 'application/json'
+                            },
+                            body: formData
+                        })
+                            .then(response => response.json())
+                            .then(data => {
+                                console.log('موفق:', data);
+                                if (data.flash_message) {
+                                    $.jGrowl(data.flash_message, {
+                                        life: 3000,
+                                        position: 'bottom-left',
+                                        theme: 'bg-success',
+                                        animateOpen: {opacity: 'show'},
+                                    });
+                                }else {
+                                    $.jGrowl(data.err_message || 'عملیات انجام نشد ⚠️', {
+                                        life: 4000,
+                                        position: 'bottom-left',
+                                        theme: 'bg-danger',
+                                        animateOpen: {opacity: 'show'},
+                                    });
+                                }
+
+                            })
+                            .catch(error => {
+                                console.error('خطا:', error);
+                                alert('مشکلی پیش آمد، دوباره تلاش کنید.');
+                            });
+                    });
+                });
+            });
+        </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+
+                // ✅ نمایش فرم افزودن آیتم
+                const addBtn = document.getElementById('add-checklist-btn');
+                const newForm = document.getElementById('new-checklist-form');
+
+                addBtn.addEventListener('click', function () {
+                    newForm.classList.toggle('d-none');
+                    if (!newForm.classList.contains('d-none')) {
+                        newForm.querySelector('input[name="title"]').focus();
+                    }
+                });
+
+                // ✅ افزودن آیتم جدید با AJAX
+                newForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    const url = newForm.getAttribute('action');
+                    const formData = new FormData(newForm);
+
+                    fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': newForm.querySelector('input[name="_token"]').value,
+                            'Accept': 'application/json'
+                        },
+                        body: formData
+                    })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.success) {
+                                console.log(data)
+                                $.jGrowl(data.flash_message || 'آیتم با موفقیت اضافه شد ✅', {
+                                    life: 3000,
+                                    position: 'bottom-left',
+                                    theme: 'bg-success',
+                                });
+
+                                const newItem = document.createElement('form');
+                                newItem.className = 'checklist-form';
+                                newItem.innerHTML = `
+                                <div class="mb-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input checklist-checkbox"
+                                               type="checkbox"
+                                               name="check"
+                                               value="1"
+                                               id="checklist_${data.item.id}">
+                                        <label class="form-check-label" for="checklist_${data.item.id}">
+                                            ${data.item.title}
+                                        </label>
+                                    </div>
+                                </div>`;
+                                document.getElementById('new-checklist-container').before(newItem);
+                                newForm.reset();
+                                newForm.classList.add('d-none');
+                            } else {
+                                $.jGrowl('افزودن آیتم انجام نشد ⚠️', {
+                                    life: 4000,
+                                    position: 'bottom-left',
+                                    theme: 'bg-warning',
+                                });
+                            }
+                        })
+                        .catch(error => {
+                            console.error('خطا:', err_message);
+                            $.jGrowl('خطایی رخ داد ❌', {
+                                life: 4000,
+                                position: 'bottom-left',
+                                theme: 'bg-danger',
+                            });
+                        });
+                });
+            });
+        </script>
 
     @endpush
 </x-layout>
