@@ -31,9 +31,9 @@ class Task extends Model
     }
 
     public $priorities = [
-        '0' => 'کم',
-        '1' => 'متوسط',
-        '2' => 'زیاد',
+        '0' => '<span class="badge badge-light-primary">کم</span>',
+        '1' => '<span class="badge badge-light-primary">متوسط</span>',
+        '2' => '<span class="badge badge-light-primary">زیاد</span>',
     ];
 
     public function getTaskProrityAttribute()

@@ -138,23 +138,50 @@
                                             </div>
 
                                             <!-- SUBTASK SHOW -->
-                                            @if($task->children && $task->children?->count() > 0)
+                                            @if($task->children && $task->children->count() > 0)
                                                 <div class="ms-5 mt-4 border-start ps-3">
                                                     @foreach($task->children as $subtask)
-                                                        <div class="card mb-3 shadow-sm">
+                                                        <div class="card mb-3 shadow-sm border-bottom rounded-3">
                                                             <div class="card-body py-3 px-4">
-                                                                <div class="d-flex justify-content-between">
-                                                                    <span class="fw-bold text-gray-800">{{ $subtask->title }}</span>
-                                                                    <span class="badge bg-light text-muted">{!! $subtask->TaskStatus !!}</span>
+                                                                <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-2">
+                                                                    <div class="d-flex flex-column">
+                                                                        <span class="fw-bold text-gray-800">{{ $subtask->title }}</span>
+                                                                        <span class="text-gray-600 small mt-1">{{ $subtask->description }}</span>
+                                                                    </div>
+
+                                                                    <div class="d-flex align-items-center gap-2">
+                                                                        {!! $subtask->TaskStatus !!}
+                                                                        {!! $subtask->TaskPrority !!}
+
+                                                                    </div>
                                                                 </div>
-                                                                <div class="text-gray-600 small mt-1">
-                                                                    {{ $subtask->description }}
+
+                                                                {{-- اعضا --}}
+                                                                @if($subtask->assigners && $subtask->assigners->count() > 0)
+                                                                    <div class="mt-3 d-flex flex-wrap align-items-center gap-1">
+                                                                        @foreach($subtask->assigners as $assigner)
+                                                                            <div class="symbol symbol-25px symbol-circle" data-bs-toggle="tooltip" title="{{ $assigner->Name }}">
+                                                                                @if($assigner->photo_id)
+                                                                                    <img src="{{ route('home') }}/{{ $assigner->photo?->path }}" alt="Pic" class="object-fit-cover" />
+                                                                                @else
+                                                                                    <span class="symbol-label bg-primary text-inverse-primary fw-bold">
+                                                                                        {{ mb_substr($assigner->Name, 0, 1) }}
+                                                                                    </span>
+                                                                                @endif
+                                                                            </div>
+                                                                        @endforeach
+                                                                    </div>
+                                                                @endif
+                                                                <div class="d-flex justify-content-end">
+                                                                <a href="#" onclick="openShowModal('{{ route('dashboard.task.show', $subtask->id) }}')"
+                                                                   class="btn btn-sm btn-light-info p-1" data-bs-toggle="tooltip" data-bs-placement="top" title="مشاهده"><i class="ki-outline ki-eye fs-6 px-2"></i></a>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     @endforeach
                                                 </div>
                                             @endif
+
                                             <!-- پایان زیرتسک‌ها -->
 
                                         </div>
@@ -167,22 +194,17 @@
                                                 ساخت زیر تسک جدید
                                                 <i class="ki-outline ki-plus-square fs-6 px-2"></i>
                                             </a>
-                                            <a href="#" onclick="openShowModal('{{ route('dashboard.task.show', $task->id) }}',
-               JSON.stringify({title:'{{ $task->title }}'}))"
+                                            <a href="#" onclick="openShowModal('{{ route('dashboard.task.show', $task->id) }}')"
                                                class="btn btn-sm btn-light-info" data-bs-toggle="tooltip" data-bs-placement="top" title="مشاهده"><i class="ki-outline ki-eye fs-6 px-2"></i></a>
                                         </div>
                                     </div>
                                 @empty
                                     <div class="alert alert-dismissible bg-secondary d-flex flex-column flex-sm-row w-100 p-5 mb-10">
                                         <div class="d-flex flex-column">
-                                            {{--                                        <h4 class="mb-2 text-light">خالی</h4>--}}
                                             <span>تسکی در این وضعیت وجود ندارد!</span>
                                         </div>
                                     </div>
-                                    {{--                                <div class="alert alert-light text-center">تسکی در این وضعیت وجود ندارد</div>--}}
                                 @endforelse
-
-
                                 <!--end::Tasks Loop-->
                             </div>
                         @endforeach
@@ -658,16 +680,17 @@
             <!--begin::Modal content-->
             <div class="modal-content border-0 shadow-lg">
                 <div class="modal-header bg-light">
-                    <h5 class="modal-title fw-bold" id="taskModalLabel">
+                    <h5 class="modal-title fw-bold" id="modalTitle">
                         <i class="bi bi-card-checklist me-2 text-primary"></i>
-                        عنوان تسک
+
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="بستن"></button>
                 </div>
 
                 <div class="modal-body">
-                    <div class="d-flex justify-content-between mb-3">
-                        {!! $task->TaskStatus !!}
+                    <div class="d-flex  mb-3">
+                         <span id="taskStatus"></span>
+                         <span id="TaskPrority"></span>
                         <small class="text-muted">مهلت: ۱۴۰۴/۰۸/۲۰</small>
                     </div>
                     <div class="d-flex align-items-center flex-wrap gap-2 mb-4">
@@ -683,52 +706,6 @@
                                    autocomplete="off"
                                    required />
                         </div>
-
-                        {{--                        <div class="dropdown">--}}
-                        {{--                            <button type="button" class="btn btn-light-primary btn-sm rotate"--}}
-                        {{--                                    data-kt-menu-trigger="click"--}}
-                        {{--                                    data-kt-menu-placement="bottom-start"--}}
-                        {{--                                    data-kt-menu-offset="30px, 30px">--}}
-                        {{--                                برچسب--}}
-                        {{--                                <span class="svg-icon fs-3 rotate-180 ms-3 me-0">--}}
-                        {{--                                    <i class="ki-outline ki-down fs-6"></i>--}}
-                        {{--                                </span>--}}
-                        {{--                            </button>--}}
-
-                        {{--                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800--}}
-                        {{--                                menu-state-bg-light-primary fw-semibold w-auto min-w-200 mw-300px"--}}
-                        {{--                                 data-kt-menu="true">--}}
-
-                        {{--                                <div class="menu-item px-3">--}}
-                        {{--                                    <div class="menu-content fs-6 text-gray-900 fw-bold px-3 py-4">برچسب‌ها</div>--}}
-                        {{--                                </div>--}}
-                        {{--                                <div class="separator mb-3 opacity-75"></div>--}}
-
-                        {{--                                <div class="menu-item px-3"><a href="#" class="menu-link px-3">New Ticket</a></div>--}}
-                        {{--                                <div class="menu-item px-3"><a href="#" class="menu-link px-3">New Customer</a></div>--}}
-
-                        {{--                                <div class="menu-item px-3" data-kt-menu-trigger="hover" data-kt-menu-placement="right-start">--}}
-                        {{--                                    <a href="#" class="menu-link px-3">--}}
-                        {{--                                        <span class="menu-title">New Group</span>--}}
-                        {{--                                        <span class="menu-arrow"></span>--}}
-                        {{--                                    </a>--}}
-                        {{--                                    <div class="menu-sub menu-sub-dropdown w-175px py-4">--}}
-                        {{--                                        <div class="menu-item px-3"><a href="#" class="menu-link px-3">Admin Group</a></div>--}}
-                        {{--                                        <div class="menu-item px-3"><a href="#" class="menu-link px-3">Staff Group</a></div>--}}
-                        {{--                                        <div class="menu-item px-3"><a href="#" class="menu-link px-3">Member Group</a></div>--}}
-                        {{--                                    </div>--}}
-                        {{--                                </div>--}}
-
-                        {{--                                <div class="menu-item px-3"><a href="#" class="menu-link px-3">New Contact</a></div>--}}
-                        {{--                                <div class="separator mt-3 opacity-75"></div>--}}
-                        {{--                                <div class="menu-item px-3">--}}
-                        {{--                                    <div class="menu-content px-3 py-3">--}}
-                        {{--                                        <a class="btn btn-light-primary btn-sm px-4" href="#">Generate Reports</a>--}}
-                        {{--                                    </div>--}}
-                        {{--                                </div>--}}
-                        {{--                            </div>--}}
-                        {{--                        </div>--}}
-
                         <div class="dropdown">
                             <button class="btn btn-sm btn-light-primary rotate"
                                     data-kt-menu-trigger="click"
@@ -883,7 +860,8 @@
                                     <form action="{{ route('dashboard.task.checklist.check', $taskChecklist->id) }}"
                                           method="post"
                                           class="checklist-form mb-2 p-2"
-                                          data-id="{{ $taskChecklist->id }}">
+                                          data-id="{{ $taskChecklist->id }}"
+                                          data-update-url="{{ route('dashboard.task.checklist.update', $taskChecklist->id) }}">
                                         @csrf
 
                                         <div class="form-check d-flex align-items-center">
@@ -891,6 +869,7 @@
                                                    type="checkbox"
                                                    name="check"
                                                    value="1"
+
                                                    id="checklist_{{ $taskChecklist->id }}"
                                                    @if($taskChecklist->check == 1) checked @endif />
 
@@ -1182,17 +1161,74 @@
                 modal.show();
             }
 
-            function openShowModal(url, currentData) {
-                let data = JSON.parse(currentData);
+            function openShowModal(url) {
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    success: function (data) {
+                        console.log(data)
+                        $('#modalTitle').text(`مشاهده "${data.title}"`);
+                        $('#taskStatus').text(`وضعیت: ${data.status}`);
+                        $('#TaskPrority').text(`اولویت: ${data.priority}`);
+                        $('.task-deadline').text(`مهلت: ${data.deadline}`);
+                        $('.task-desc').text(data.description ?? '-');
 
-                $('#modalTitle').text(`مشاهده  "${data.title}"`);
+                        // اعضا
+                        let membersHTML = '';
+                        data.assigners.forEach(a => {
+                            if (a.photo) {
+                                membersHTML += `
+                        <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="${a.name}">
+                            <img src="${window.location.origin}/${a.photo}" alt="${a.name}">
+                        </div>`;
+                            } else {
+                                membersHTML += `
+                        <div class="symbol symbol-35px symbol-circle bg-warning text-white fw-bold" title="${a.name}">
+                            ${a.name.charAt(0)}
+                        </div>`;
+                            }
+                        });
+                        $('#taskMembers').html(membersHTML);
 
-                $('#editForm #title').val(data.title);
+                        // چک‌لیست
+                        let checklistHTML = '';
+                        data.checklists.forEach(c => {
+                            checklistHTML += `
+                    <div class="form-check d-flex align-items-center mb-2">
+                        <input class="form-check-input me-2" type="checkbox" ${c.check ? 'checked' : ''} disabled>
+                        <label class="form-check-label ${c.check ? 'text-decoration-line-through text-muted' : ''}">
+                            ${c.title}
+                        </label>
+                    </div>`;
+                        });
+                        $('#taskChecklist').html(checklistHTML);
 
-                var modal = new bootstrap.Modal(document.getElementById('kt_modal_task_show'));
-                modal.show();
+                        // فایل‌ها
+                        let filesHTML = '';
+                        data.files.forEach(f => {
+                            filesHTML += `
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="ki-outline ki-file fs-3 text-primary me-3"></i>
+                        <div>
+                            <div class="fw-bold">${f.user_name}</div>
+                            <small class="text-muted">${f.created_at} — ${f.user_role}</small>
+                        </div>
+                        <a href="${window.location.origin}/${f.path}" download class="btn btn-sm btn-icon btn-light-primary ms-auto">
+                            <i class="ki-outline ki-cloud-download fs-4"></i>
+                        </a>
+                    </div>`;
+                        });
+                        $('#taskFiles').html(filesHTML);
+
+                        // نمایش مودال
+                        const modal = new bootstrap.Modal(document.getElementById('kt_modal_task_show'));
+                        modal.show();
+                    },
+                    error: function () {
+                        toastr.error('دریافت اطلاعات تسک با خطا مواجه شد');
+                    }
+                });
             }
-
         </script>
         <script>
             "use strict";
@@ -1400,8 +1436,6 @@
                 KTDocsDatatableSubtable.init();
             });
         </script>
-
-
         <script>
             document.addEventListener("DOMContentLoaded", function() {
                 const menu = document.querySelector('#dateDropdownMenu');
@@ -1412,7 +1446,6 @@
                 });
             });
         </script>
-
         <script>
                 document.addEventListener('DOMContentLoaded', function () {
 
@@ -1537,7 +1570,7 @@
                     document.querySelectorAll('.form-check-label').forEach(label => {
                         label.addEventListener('click', function (e) {
                             const form = e.target.closest('form');
-                            const updateUrl = form.getAttribute('action');
+                            const updateUrl = form.dataset.updateUrl; //
                             const currentText = e.target.textContent.trim();
 
                             if (form.querySelector('.editable-input')) return;
@@ -1550,13 +1583,11 @@
                             input.focus();
 
                             input.addEventListener('blur', saveEdit);
-                            input.addEventListener('keydown', function (ev) {
+                            input.addEventListener('keydown', ev => {
                                 if (ev.key === 'Enter') {
                                     ev.preventDefault();
                                     saveEdit();
                                 }
-                            });
-                            input.addEventListener('keydown', function (ev) {
                                 if (ev.key === 'Escape') revertLabel();
                             });
 
@@ -1568,7 +1599,7 @@
                                 }
 
                                 fetch(updateUrl, {
-                                    method: 'POST',
+                                    method: 'PUT',
                                     headers: {
                                         'X-CSRF-TOKEN': '{{ csrf_token() }}',
                                         'Content-Type': 'application/json',
@@ -1579,13 +1610,17 @@
                                     .then(res => res.json())
                                     .then(data => {
                                         if (data.success) {
-                                            $.jGrowl(data.flash_message || 'عنوان بروزرسانی شد ', {
-                                                life: 2500, position: 'bottom-left', theme: 'bg-success'
+                                            $.jGrowl(data.flash_message || 'عنوان بروزرسانی شد', {
+                                                life: 2500,
+                                                position: 'bottom-left',
+                                                theme: 'bg-success'
                                             });
                                             revertLabel(newText);
                                         } else {
                                             $.jGrowl('خطا در بروزرسانی ', {
-                                                life: 2500, position: 'bottom-left', theme: 'bg-danger'
+                                                life: 2500,
+                                                position: 'bottom-left',
+                                                theme: 'bg-danger'
                                             });
                                             revertLabel();
                                         }
@@ -1598,14 +1633,14 @@
                                 newLabel.className = 'form-check-label flex-grow-1';
                                 newLabel.textContent = text;
                                 input.replaceWith(newLabel);
-                                newLabel.addEventListener('click', arguments.callee);
+
+                                newLabel.addEventListener('click', labelClickHandler);
                             }
                         });
                     });
+
                 });
             </script>
-
-
     @endpush
 </x-layout>
 

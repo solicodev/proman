@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('mobile')->nullable();
             $table->string('text')->nullable();
 
-            $table->enum('status',['new','accepted','rejected'])->comment('0=>new,1=>accepted,2=>rejected');
+            $table->enum('status',['0','1','2'])->comment('0=>new,1=>accepted,2=>rejected');
 
             $table->timestamps();
         });

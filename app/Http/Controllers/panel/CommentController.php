@@ -4,10 +4,17 @@ namespace App\Http\Controllers\panel;
 
 use App\Http\Controllers\Controller;
 use App\Models\Comment;
+use App\Services\CommentService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
+    public CommentService $commentService;
+    public function __construct(CommentService $commentService)
+    {
+        $this->commentService = $commentService;
+    }
     /**
      * Display a listing of the resource.
      */
@@ -29,7 +36,14 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
+        $this->commentService->store($request->all());
+        try {
 
+            return redirect()->back()->with('success', 'با موفقیت ثبت شد');
+
+        } catch (\Exception $e) {
+            return redirect()->back()->with('warning', 'خطایی رخ داده است!');
+        }
     }
 
     /**
