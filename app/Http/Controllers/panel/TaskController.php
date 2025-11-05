@@ -94,36 +94,36 @@ class TaskController extends Controller
     public function show($id)
     {
         $task = Task::with(['assigners.photo', 'photos', 'project','manager','watcher','assigners','photos','parent','children','taskCheckList'])->findOrFail($id);
-        return response()->json($task);
-//        return response()->json([
-//            'id'          => $task->id,
-//            'title'       => $task->title,
-//            'status'      => $task->TaskStatus,
-//            'priority'    => $task->TaskPrority,
-//            'description' => $task->description,
-//            'deadline'    => verta($task->end_date)->format('Y/m/d'),
-//            'assigners'   => $task->assigners->map(function ($a) {
-//                return [
-//                    'name' => $a->Name,
-//                    'photo' => $a->photo?->path
-//                ];
-//            }),
-//            'files' => $task->photos->map(function ($p) {
-//                return [
-//                    'path' => $p->path,
-//                    'created_at' => verta($p->created_at)->formatDifference(),
-//                    'user_name' => $p->user?->Name ?? '',
-//                    'user_role' => $p->user?->getRoleNames()->first() ?? ''
-//                ];
-//            }),
-//            'checklists' => $task->taskCheckList->map(function ($c) {
-//                return [
-//                    'id' => $c->id,
-//                    'title' => $c->title,
-//                    'check' => $c->check,
-//                ];
-//            })
-//        ]);
+
+        return response()->json([
+            'id'          => $task->id,
+            'title'       => $task->title,
+            'status'      => $task->TaskStatus,
+            'priority'    => $task->TaskPrority,
+            'description' => $task->description,
+            'deadline'    => verta($task->end_date)->format('Y/m/d'),
+            'assigners'   => $task->assigners->map(function ($a) {
+                return [
+                    'name' => $a->Name,
+                    'photo' => $a->photo?->path
+                ];
+            }),
+            'files' => $task->photos->map(function ($p) {
+                return [
+                    'path' => $p->path,
+                    'created_at' => verta($p->created_at)->formatDifference(),
+                    'user_name' => $p->user?->Name ?? '',
+                    'user_role' => $p->user?->getRoleNames()->first() ?? ''
+                ];
+            }),
+            'checklists' => $task->taskCheckList->map(function ($c) {
+                return [
+                    'id' => $c->id,
+                    'title' => $c->title,
+                    'check' => $c->check,
+                ];
+            })
+        ]);
     }
 
 
