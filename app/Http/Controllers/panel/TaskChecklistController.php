@@ -79,7 +79,15 @@ class TaskChecklistController extends Controller
      */
     public function update(Request $request, TaskChecklist $taskChecklist)
     {
-        //
+        $checklist = TaskChecklist::findOrFail($taskChecklist->id);
+        $checklist->title = $request->title;
+        $checklist->save();
+        try {
+            return response()->json(['success' => true ,'title' => $checklist->title , 'flash_message' => 'ویرایش شد']);
+
+        } catch (Exception $exception) {
+            return response()->json(['success' => false, 'err_message' => $exception->getMessage()]);
+        }
     }
 
     /**
@@ -87,6 +95,13 @@ class TaskChecklistController extends Controller
      */
     public function destroy(TaskChecklist $taskChecklist)
     {
-        //
+        $checklist = TaskChecklist::findOrFail($taskChecklist->id);
+        $checklist->delete();
+
+        try {
+            return response()->json(['success' => true ,'title' => $checklist->title , 'flash_message' => 'حذف شد']);
+        } catch (Exception $exception) {
+            return response()->json(['success' => false, 'err_message' => $exception->getMessage()]);
+        }
     }
 }

@@ -1,4 +1,34 @@
 <x-layout>
+    @push('styles')
+        <style>
+            .checklist-done {
+                text-decoration: line-through;
+                color: #999;
+            }
+            .checklist-item {
+                transition: background-color 0.2s ease;
+                cursor: pointer;
+            }
+
+            .checklist-item:hover {
+                background-color: var(--bs-gray-200);
+            }
+
+            .checklist-done {
+                text-decoration: line-through;
+                color: #999;
+            }
+
+            .delete-checklist {
+                transition: opacity 0.2s ease;
+            }
+
+            .checklist-item:hover .delete-checklist {
+                display: inline-block !important;
+            }
+
+        </style>
+    @endpush
     @include('layouts.message')
     @include('proMan.projects.main-card')
 
@@ -621,8 +651,6 @@
         </div>
         <!--end::Modal dialog-->
     </div>
-
-
     <div class="modal fade" id="kt_modal_task_show" tabindex="-1" aria-hidden="true">
         <!--begin::Modal dialog-->
         <div class="modal-dialog modal-dialog-centered mw-1024px modal-xl" >
@@ -655,50 +683,50 @@
                                    required />
                         </div>
 
-{{--                        <div class="dropdown">--}}
-{{--                            <button type="button" class="btn btn-light-primary btn-sm rotate"--}}
-{{--                                    data-kt-menu-trigger="click"--}}
-{{--                                    data-kt-menu-placement="bottom-start"--}}
-{{--                                    data-kt-menu-offset="30px, 30px">--}}
-{{--                                برچسب--}}
-{{--                                <span class="svg-icon fs-3 rotate-180 ms-3 me-0">--}}
-{{--                                    <i class="ki-outline ki-down fs-6"></i>--}}
-{{--                                </span>--}}
-{{--                            </button>--}}
+                        {{--                        <div class="dropdown">--}}
+                        {{--                            <button type="button" class="btn btn-light-primary btn-sm rotate"--}}
+                        {{--                                    data-kt-menu-trigger="click"--}}
+                        {{--                                    data-kt-menu-placement="bottom-start"--}}
+                        {{--                                    data-kt-menu-offset="30px, 30px">--}}
+                        {{--                                برچسب--}}
+                        {{--                                <span class="svg-icon fs-3 rotate-180 ms-3 me-0">--}}
+                        {{--                                    <i class="ki-outline ki-down fs-6"></i>--}}
+                        {{--                                </span>--}}
+                        {{--                            </button>--}}
 
-{{--                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800--}}
-{{--                                menu-state-bg-light-primary fw-semibold w-auto min-w-200 mw-300px"--}}
-{{--                                 data-kt-menu="true">--}}
+                        {{--                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800--}}
+                        {{--                                menu-state-bg-light-primary fw-semibold w-auto min-w-200 mw-300px"--}}
+                        {{--                                 data-kt-menu="true">--}}
 
-{{--                                <div class="menu-item px-3">--}}
-{{--                                    <div class="menu-content fs-6 text-gray-900 fw-bold px-3 py-4">برچسب‌ها</div>--}}
-{{--                                </div>--}}
-{{--                                <div class="separator mb-3 opacity-75"></div>--}}
+                        {{--                                <div class="menu-item px-3">--}}
+                        {{--                                    <div class="menu-content fs-6 text-gray-900 fw-bold px-3 py-4">برچسب‌ها</div>--}}
+                        {{--                                </div>--}}
+                        {{--                                <div class="separator mb-3 opacity-75"></div>--}}
 
-{{--                                <div class="menu-item px-3"><a href="#" class="menu-link px-3">New Ticket</a></div>--}}
-{{--                                <div class="menu-item px-3"><a href="#" class="menu-link px-3">New Customer</a></div>--}}
+                        {{--                                <div class="menu-item px-3"><a href="#" class="menu-link px-3">New Ticket</a></div>--}}
+                        {{--                                <div class="menu-item px-3"><a href="#" class="menu-link px-3">New Customer</a></div>--}}
 
-{{--                                <div class="menu-item px-3" data-kt-menu-trigger="hover" data-kt-menu-placement="right-start">--}}
-{{--                                    <a href="#" class="menu-link px-3">--}}
-{{--                                        <span class="menu-title">New Group</span>--}}
-{{--                                        <span class="menu-arrow"></span>--}}
-{{--                                    </a>--}}
-{{--                                    <div class="menu-sub menu-sub-dropdown w-175px py-4">--}}
-{{--                                        <div class="menu-item px-3"><a href="#" class="menu-link px-3">Admin Group</a></div>--}}
-{{--                                        <div class="menu-item px-3"><a href="#" class="menu-link px-3">Staff Group</a></div>--}}
-{{--                                        <div class="menu-item px-3"><a href="#" class="menu-link px-3">Member Group</a></div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
+                        {{--                                <div class="menu-item px-3" data-kt-menu-trigger="hover" data-kt-menu-placement="right-start">--}}
+                        {{--                                    <a href="#" class="menu-link px-3">--}}
+                        {{--                                        <span class="menu-title">New Group</span>--}}
+                        {{--                                        <span class="menu-arrow"></span>--}}
+                        {{--                                    </a>--}}
+                        {{--                                    <div class="menu-sub menu-sub-dropdown w-175px py-4">--}}
+                        {{--                                        <div class="menu-item px-3"><a href="#" class="menu-link px-3">Admin Group</a></div>--}}
+                        {{--                                        <div class="menu-item px-3"><a href="#" class="menu-link px-3">Staff Group</a></div>--}}
+                        {{--                                        <div class="menu-item px-3"><a href="#" class="menu-link px-3">Member Group</a></div>--}}
+                        {{--                                    </div>--}}
+                        {{--                                </div>--}}
 
-{{--                                <div class="menu-item px-3"><a href="#" class="menu-link px-3">New Contact</a></div>--}}
-{{--                                <div class="separator mt-3 opacity-75"></div>--}}
-{{--                                <div class="menu-item px-3">--}}
-{{--                                    <div class="menu-content px-3 py-3">--}}
-{{--                                        <a class="btn btn-light-primary btn-sm px-4" href="#">Generate Reports</a>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
+                        {{--                                <div class="menu-item px-3"><a href="#" class="menu-link px-3">New Contact</a></div>--}}
+                        {{--                                <div class="separator mt-3 opacity-75"></div>--}}
+                        {{--                                <div class="menu-item px-3">--}}
+                        {{--                                    <div class="menu-content px-3 py-3">--}}
+                        {{--                                        <a class="btn btn-light-primary btn-sm px-4" href="#">Generate Reports</a>--}}
+                        {{--                                    </div>--}}
+                        {{--                                </div>--}}
+                        {{--                            </div>--}}
+                        {{--                        </div>--}}
 
                         <div class="dropdown">
                             <button class="btn btn-sm btn-light-primary rotate"
@@ -820,15 +848,15 @@
                                                 </div>
                                             </div>
                                             <a href="{{ route('home') }}/{{$file['path']}}"
-                                                type="button" download
-                                                class="btn btn-clean btn-sm btn-icon btn-icon-primary btn-active-light-primary ms-auto"
-                                                data-bs-toggle="tooltip" data-bs-placement="top" title="دانلود فایل">
+                                               type="button" download
+                                               class="btn btn-clean btn-sm btn-icon btn-icon-primary btn-active-light-primary ms-auto"
+                                               data-bs-toggle="tooltip" data-bs-placement="top" title="دانلود فایل">
                                                 <i class="ki-outline ki-cloud-download fs-3"></i>
                                             </a>
                                         </div>
                                     @endforeach
-{{--                                    <li><a href="#" class="text-primary text-decoration-none">UI-Dashboard.png</a></li>--}}
-{{--                                    <li><a href="#" class="text-primary text-decoration-none">requirements.docx</a></li>--}}
+                                    {{--                                    <li><a href="#" class="text-primary text-decoration-none">UI-Dashboard.png</a></li>--}}
+                                    {{--                                    <li><a href="#" class="text-primary text-decoration-none">requirements.docx</a></li>--}}
                                 </ul>
                             </div>
 
@@ -849,47 +877,29 @@
 
 
 
-                            <div class="mb-4">
-                                <div class="mb-4">
-                                    @foreach($task->taskCheckList as $key => $taskChecklist)
-                                        <form action="{{ route('dashboard.task.checklist.check', $taskChecklist->id) }}"
-                                              method="post"
-                                              class="checklist-form"
-                                              data-id="{{ $taskChecklist->id }}">
-                                            @csrf
+                            <div class="m-5">
+                                <div id="checklist-container">
+                                    @foreach($task->taskCheckList as $taskChecklist)
+                                        <div class="checklist-item d-flex align-items-center justify-content-between p-2 mb-2 rounded"
+                                             data-id="{{ $taskChecklist->id }}">
 
-                                            <div class="mb-2">
-                                                <div class="form-check">
-                                                    <input class="form-check-input checklist-checkbox"
-                                                           type="checkbox"
-                                                           name="check"
-                                                           value="1"
-                                                           id="checklist_{{ $taskChecklist->id }}"
-                                                           @if($taskChecklist->check == 1) checked @endif />
-                                                    <label class="form-check-label" for="checklist_{{ $taskChecklist->id }}">
-                                                        {{ $taskChecklist->title }}
-                                                    </label>
-                                                </div>
+                                            <div class="d-flex align-items-center flex-grow-1">
+                                                <input type="checkbox"
+                                                       class="form-check-input me-2 checklist-checkbox"
+                                                       value="1"
+                                                       @if($taskChecklist->check) checked @endif>
+
+                                                <span class="checklist-title flex-grow-1 {{ $taskChecklist->check ? 'checklist-done' : '' }}">
+                                                {{ $taskChecklist->title }}
+                                                </span>
                                             </div>
-                                        </form>
+
+                                            <button type="button"
+                                                    class="btn btn-clean btn-sm btn-icon btn-icon-danger btn-active-light-warning ms-auto mx-2 delete-checklist">
+                                                <i class="ki-outline ki-trash fs-6"></i>
+                                            </button>
+                                        </div>
                                     @endforeach
-
-                                    <div id="new-checklist-container" class="mt-3">
-                                        <button type="button" id="add-checklist-btn" class="btn btn-sm btn-light-primary">
-                                            <i class="ki-outline ki-plus fs-5"></i> افزودن آیتم به چک لیست
-                                        </button>
-
-                                        <form action="{{ route('dashboard.task.add.checklist',$task->id) }}"
-                                              method="post"
-                                              class="mt-2 d-none"
-                                              id="new-checklist-form">
-                                            @csrf
-                                            <div class="input-group">
-                                                <input type="text" name="title" value="{{old('title')}}" class="form-control" placeholder="عنوان چک‌لیست جدید..." required>
-                                                <button type="submit" class="btn btn btn-light-primary">افزودن</button>
-                                            </div>
-                                        </form>
-                                    </div>
                                 </div>
 
                                 {{--                            @foreach($task->taskCheckList as $key=>$taskChecklist)--}}
@@ -944,82 +954,10 @@
                     </div>
                 </div>
 
-{{--                <div class="modal-footer bg-light">--}}
-{{--                    <button type="button" class="btn btn-primary">ذخیره تغییرات</button>--}}
-{{--                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">بستن</button>--}}
-{{--                </div>--}}
-            </div>
-            <!--end::Modal content-->
-        </div>
-        <!--end::Modal dialog-->
-    </div>
-
-    <div class="modal fade" id="kt_modal_task_show" tabindex="-1" aria-hidden="true">
-        <!--begin::Modal dialog-->
-        <div class="modal-dialog modal-dialog-centered mw-900px modal-xl" >
-            <!--begin::Modal content-->
-            <div class="modal-content bg-dark text-light border-0">
-                <div class="modal-body d-flex flex-column flex-lg-row gap-4 p-4">
-
-                    <!-- Left side -->
-                    <div class="flex-grow-1">
-                        <!-- Task Header -->
-                        <div class="d-flex align-items-center justify-content-between mb-3">
-                            <div>
-                                <span class="badge bg-secondary me-2">در حال انجام</span>
-                                <span class="badge bg-info">Back-end</span>
-                            </div>
-                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                        </div>
-
-                        <h4 class="fw-bold mb-3">نمایش محصولات فروشگاه‌ها در سبد خرید کاربر</h4>
-
-                        <!-- Quick Actions -->
-                        <div class="d-flex flex-wrap gap-2 mb-4">
-                            <button class="btn btn-sm btn-outline-light">+ Add</button>
-                            <button class="btn btn-sm btn-outline-light">Labels</button>
-                            <button class="btn btn-sm btn-outline-light">Dates</button>
-                            <button class="btn btn-sm btn-outline-light">Checklist</button>
-                            <button class="btn btn-sm btn-outline-light">Members</button>
-                        </div>
-
-                        <!-- Description -->
-                        <div class="mb-4">
-                            <h6 class="fw-semibold mb-2"><i class="bi bi-card-text me-2"></i>توضیحات</h6>
-                            <p class="text-light opacity-75">درصد انجام شد 50</p>
-                        </div>
-
-                        <!-- Metadata -->
-                        <div class="text-muted small">
-                            <i class="bi bi-calendar3 me-1"></i> ایجاد شده در ۱۴۰۴/۰۸/۱۳
-                        </div>
-                    </div>
-
-                    <!-- Right side -->
-                    <div class="border-start border-secondary ps-4" style="min-width: 320px;">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h6 class="fw-semibold">نظرات و فعالیت‌ها</h6>
-                            <button class="btn btn-sm btn-outline-light">پنهان‌سازی جزئیات</button>
-                        </div>
-
-                        <textarea class="form-control bg-dark text-light mb-3" rows="2" placeholder="نوشتن کامنت..."></textarea>
-
-                        <div class="small opacity-75">
-                            <strong>فری‌ناز حقیقی</strong> این کارت را اضافه کرد
-                            <br>
-                            <span class="text-muted">8 سپتامبر 2024 - 16:45</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="modal-footer bg-black border-0 d-flex justify-content-between">
-                    <div>
-                        <button class="btn btn-sm btn-outline-light">Power-ups</button>
-                        <button class="btn btn-sm btn-outline-light">Automations</button>
-                        <button class="btn btn-sm btn-outline-light">Comments</button>
-                    </div>
-                    <button class="btn btn-light btn-sm" data-bs-dismiss="modal">بستن</button>
-                </div>
+                {{--                <div class="modal-footer bg-light">--}}
+                {{--                    <button type="button" class="btn btn-primary">ذخیره تغییرات</button>--}}
+                {{--                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">بستن</button>--}}
+                {{--                </div>--}}
             </div>
             <!--end::Modal content-->
         </div>
@@ -1489,6 +1427,7 @@
                             .then(response => response.json())
                             .then(data => {
                                 console.log('موفق:', data);
+
                                 if (data.flash_message) {
                                     $.jGrowl(data.flash_message, {
                                         life: 3000,
@@ -1511,13 +1450,13 @@
                                 alert('مشکلی پیش آمد، دوباره تلاش کنید.');
                             });
                     });
+
                 });
             });
         </script>
         <script>
             document.addEventListener('DOMContentLoaded', function () {
 
-                // ✅ نمایش فرم افزودن آیتم
                 const addBtn = document.getElementById('add-checklist-btn');
                 const newForm = document.getElementById('new-checklist-form');
 
@@ -1528,7 +1467,6 @@
                     }
                 });
 
-                // ✅ افزودن آیتم جدید با AJAX
                 newForm.addEventListener('submit', function (e) {
                     e.preventDefault();
                     const url = newForm.getAttribute('action');
