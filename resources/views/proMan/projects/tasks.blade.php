@@ -856,47 +856,16 @@
 
 
                             <div class="m-4">
-                                @foreach($task->taskCheckList as $key => $taskChecklist)
-                                    <form action="{{ route('dashboard.task.checklist.check', $taskChecklist->id) }}"
-                                          method="post"
-                                          class="checklist-form mb-2 p-2"
-                                          data-id="{{ $taskChecklist->id }}"
-                                          data-update-url="{{ route('dashboard.task.checklist.update', $taskChecklist->id) }}">
-                                        @csrf
-
-                                        <div class="form-check d-flex align-items-center">
-                                            <input class="form-check-input checklist-checkbox me-2"
-                                                   type="checkbox"
-                                                   name="check"
-                                                   value="1"
-
-                                                   id="checklist_{{ $taskChecklist->id }}"
-                                                   @if($taskChecklist->check == 1) checked @endif />
-
-                                            <label class="form-check-label flex-grow-1 {{ $taskChecklist->check ? 'text-decoration-line-through text-muted' : '' }}"
-                                                   for="checklist_{{ $taskChecklist->id }}">
-                                                {{ $taskChecklist->title }}
-                                            </label>
-
-                                            <button type="button"
-                                                    class="btn btn-sm btn-icon btn-icon-danger btn-active-light-danger delete-checklist"
-                                                    data-url="{{ route('dashboard.task.checklist.delete', $taskChecklist->id) }}"
-                                                    title="حذف آیتم">
-                                                <i class="ki-outline ki-trash fs-6"></i>
-                                            </button>
-                                        </div>
-                                    </form>
-                                @endforeach
+                                <div id="taskChecklistContainer" class="mb-3" data-task-id="">
+                                    <div class="text-center text-muted py-3">در حال بارگذاری چک‌لیست‌ها...</div>
+                                </div>
 
                                 <div id="new-checklist-container" class="mt-3">
-                                    <button type="button" id="add-checklist-btn" class="btn btn-sm btn-light-primary">
-                                        <i class="ki-outline ki-plus fs-5"></i> افزودن آیتم به چک لیست
-                                    </button>
+{{--                                    <button type="button" id="add-checklist-btn" class="btn btn-sm btn-light-primary">--}}
+{{--                                        <i class="ki-outline ki-plus fs-5"></i> افزودن آیتم به چک لیست--}}
+{{--                                    </button>--}}
 
-                                    <form action="{{ route('dashboard.task.add.checklist',$task->id) }}"
-                                          method="post"
-                                          class="mt-2 d-none"
-                                          id="new-checklist-form">
+                                    <form action="" method="post" class="mt-2 d-none" id="new-checklist-form">
                                         @csrf
                                         <div class="input-group">
                                             <input type="text" name="title" class="form-control" placeholder="عنوان چک‌لیست جدید..." required>
@@ -905,6 +874,7 @@
                                     </form>
                                 </div>
                             </div>
+
 
                         </div>
                         <!-- کامنت‌ها -->
@@ -1161,15 +1131,17 @@
                 modal.show();
             }
 
+
+            // task show modal
             function openShowModal(url) {
                 $.ajax({
                     url: url,
                     type: 'GET',
                     success: function (data) {
-                        console.log(data)
+                        // پر کردن دیتاهای پایه
                         $('#modalTitle').text(`مشاهده "${data.title}"`);
-                        $('#taskStatus').text(`وضعیت: ${data.status}`);
-                        $('#TaskPrority').text(`اولویت: ${data.priority}`);
+                        $('#taskStatus').html(`وضعیت: ${data.status}`);
+                        $('#TaskPrority').html(`اولویت: ${data.priority}`);
                         $('.task-deadline').text(`مهلت: ${data.deadline}`);
                         $('.task-desc').text(data.description ?? '-');
 
@@ -1190,19 +1162,6 @@
                         });
                         $('#taskMembers').html(membersHTML);
 
-                        // چک‌لیست
-                        let checklistHTML = '';
-                        data.checklists.forEach(c => {
-                            checklistHTML += `
-                    <div class="form-check d-flex align-items-center mb-2">
-                        <input class="form-check-input me-2" type="checkbox" ${c.check ? 'checked' : ''} disabled>
-                        <label class="form-check-label ${c.check ? 'text-decoration-line-through text-muted' : ''}">
-                            ${c.title}
-                        </label>
-                    </div>`;
-                        });
-                        $('#taskChecklist').html(checklistHTML);
-
                         // فایل‌ها
                         let filesHTML = '';
                         data.files.forEach(f => {
@@ -1220,15 +1179,21 @@
                         });
                         $('#taskFiles').html(filesHTML);
 
-                        // نمایش مودال
+                        // باز کردن مودال
                         const modal = new bootstrap.Modal(document.getElementById('kt_modal_task_show'));
                         modal.show();
+
+                        // حالا چک‌لیست‌ها رو با تابع جداگانه لود کن
+                        loadTaskChecklists(data.id);
                     },
                     error: function () {
                         toastr.error('دریافت اطلاعات تسک با خطا مواجه شد');
                     }
                 });
             }
+            // checklist fetch
+
+
         </script>
         <script>
             "use strict";
@@ -1446,201 +1411,172 @@
                 });
             });
         </script>
-        <script>
-                document.addEventListener('DOMContentLoaded', function () {
 
-                    // checked without reload page
-                    document.querySelectorAll('.checklist-checkbox').forEach(checkbox => {
-                        checkbox.addEventListener('change', function (e) {
-                            const form = e.target.closest('form');
-                            const url = form.getAttribute('action');
-                            const formData = new FormData(form);
 
-                            fetch(url, {
-                                method: 'POST',
-                                headers: { 'X-CSRF-TOKEN': form.querySelector('input[name="_token"]').value },
-                                body: formData
-                            })
-                                .then(res => res.json())
-                                .then(data => {
-                                    if (data.success) {
-                                        const label = form.querySelector('.form-check-label');
-                                        if (e.target.checked) {
-                                            label.classList.add('text-decoration-line-through', 'text-muted');
-                                        } else {
-                                            label.classList.remove('text-decoration-line-through', 'text-muted');
-                                        }
-                                        $.jGrowl(data.flash_message || 'بروزرسانی شد ', {
-                                            life: 2500, position: 'bottom-left', theme: 'bg-success'
-                                        });
-                                    } else {
-                                        $.jGrowl('خطا در بروزرسانی ️', {
-                                            life: 2500, position: 'bottom-left', theme: 'bg-danger'
-                                        });
-                                    }
+
+{{--          checklist CURD--}}
+            <script>
+                // ✅ گرفتن چک‌لیست‌ها و ساخت HTML
+                function loadTaskChecklists(taskId) {
+                    window.currentTaskId = taskId; // آیدی تسک رو نگه داریم
+                    const container = $('#taskChecklistContainer');
+                    container.html('<div class="text-center text-muted py-3">در حال بارگذاری...</div>');
+
+                    let url = "{{ route('dashboard.task.checklists', ':id') }}".replace(':id', taskId);
+
+                    $.ajax({
+                        url,
+                        type: 'GET',
+                        success: function (checklists) {
+                            let html = '';
+
+                            if (!checklists.length) {
+                                html = '<div class="text-muted mb-3">هیچ آیتمی وجود ندارد.</div>';
+                            } else {
+                                checklists.forEach(c => {
+                                    html += `
+                            <form class="checklist-form mb-2 p-2 border rounded" data-id="${c.id}">
+                                <div class="form-check d-flex align-items-center">
+                                    <input class="form-check-input checklist-checkbox me-2" type="checkbox" ${c.check == 1 ? 'checked' : ''}>
+                                    <input type="text" class="form-control-plaintext checklist-title flex-grow-1 ${c.check == 1 ? 'text-decoration-line-through text-muted' : ''}" value="${c.title}" readonly>
+                                    <button type="button" class="btn btn-sm btn-light-danger delete-checklist" data-id="${c.id}">
+                                        <i class="ki-outline ki-trash fs-6"></i>
+                                    </button>
+                                </div>
+                            </form>`;
                                 });
-                        });
-                    });
+                            }
 
-                    // item delete
-                    document.querySelectorAll('.delete-checklist').forEach(btn => {
-                        btn.addEventListener('click', function () {
-                            const url = btn.dataset.url;
-                            const form = btn.closest('form');
+                            // ✅ دکمه افزودن فقط یکی ساخته میشه
+                            html += `
+                    <div class="mt-3">
+                        <button type="button" id="add-checklist-btn" class="btn btn-sm btn-light-primary w-100">
+                            <i class="ki-outline ki-plus fs-5"></i> افزودن آیتم
+                        </button>
+                        <form class="mt-2 d-none add-checklist-form" data-task-id="${taskId}">
+                            <div class="input-group">
+                                <input type="text" class="form-control new-checklist-title" placeholder="عنوان چک‌لیست جدید..." required>
+                                <button type="submit" class="btn btn-light-primary">افزودن</button>
+                            </div>
+                        </form>
+                    </div>
+                `;
 
-                            if (!confirm('آیا از حذف این آیتم مطمئن هستید؟')) return;
-
-                            fetch(url, {
-                                method: 'DELETE',
-                                headers: {
-                                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                                    'Accept': 'application/json'
-                                }
-                            })
-                                .then(res => res.json())
-                                .then(data => {
-                                    if (data.success) {
-                                        form.remove();
-                                        $.jGrowl('آیتم حذف شد ️', {
-                                            life: 2000, position: 'bottom-left', theme: 'bg-success'
-                                        });
-                                    } else {
-                                        $.jGrowl('حذف انجام نشد ', {
-                                            life: 3000, position: 'bottom-left', theme: 'bg-danger'
-                                        });
-                                    }
-                                });
-                        });
-                    });
-
-                    // show add checklist form
-                    const addBtn = document.getElementById('add-checklist-btn');
-                    const newForm = document.getElementById('new-checklist-form');
-                    addBtn.addEventListener('click', function () {
-                        newForm.classList.toggle('d-none');
-                        if (!newForm.classList.contains('d-none')) {
-                            newForm.querySelector('input[name="title"]').focus();
+                            container.html(html);
+                        },
+                        error: function () {
+                            container.html('<div class="text-danger">خطا در بارگذاری چک‌لیست‌ها.</div>');
                         }
                     });
+                }
 
-                    // add item to checklist
-                    newForm.addEventListener('submit', function (e) {
-                        e.preventDefault();
-                        const url = newForm.getAttribute('action');
-                        const formData = new FormData(newForm);
+                // 🟢 نمایش فرم افزودن فقط یک بار
+                $(document).on('click', '#add-checklist-btn', function () {
+                    $(this).addClass('d-none');
+                    $('.add-checklist-form').removeClass('d-none').find('.new-checklist-title').focus();
+                });
 
-                        fetch(url, {
-                            method: 'POST',
-                            headers: { 'X-CSRF-TOKEN': newForm.querySelector('input[name="_token"]').value },
-                            body: formData
-                        })
-                            .then(res => res.json())
-                            .then(data => {
-                                if (data.success && data.item) {
-                                    $.jGrowl(data.flash_message || 'آیتم اضافه شد ', {
-                                        life: 2500, position: 'bottom-left', theme: 'bg-success'
-                                    });
+                // ➕ افزودن آیتم جدید
+                $(document).on('submit', '.add-checklist-form', function (e) {
+                    e.preventDefault();
+                    const form = $(this);
+                    const title = form.find('.new-checklist-title').val().trim();
+                    const taskId = window.currentTaskId;
 
-                                    // ساخت آیتم جدید
-                                    const newItem = document.createElement('form');
-                                    newItem.className = 'checklist-form mb-2';
-                                    newItem.setAttribute('action', data.item.check_route);
-                                    newItem.innerHTML = `
-                                        <div class="form-check d-flex align-items-center">
-                                            <input class="form-check-input checklist-checkbox me-2" type="checkbox" name="check" value="1" id="checklist_${data.item.id}">
-                                            <label class="form-check-label flex-grow-1">${data.item.title}</label>
-                                            <button type="button" class="btn btn-sm btn-icon btn-icon-danger btn-active-light-danger delete-checklist"
-                                                    data-url="${data.item.delete_route}">
-                                                <i class="ki-outline ki-trash fs-6"></i>
-                                            </button>
-                                        </div>
-                                    `;
-                                    document.getElementById('new-checklist-container').before(newItem);
-                                    newForm.reset();
-                                    newForm.classList.add('d-none');
-                                } else {
-                                    $.jGrowl('افزودن انجام نشد ', {
-                                        life: 2500, position: 'bottom-left', theme: 'bg-danger'
-                                    });
-                                }
-                            });
+                    if (!title) return;
+
+                    const url = "{{ route('dashboard.task.add.checklist', ':id') }}".replace(':id', taskId);
+
+                    $.ajax({
+                        url,
+                        type: 'POST',
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            title
+                        },
+                        success: function () {
+                            form.find('.new-checklist-title').val('');
+                            loadTaskChecklists(taskId); // فقط لیست رو رفرش کن، نه صفحه
+                        },
+                        error: function () {
+                            alert('خطا در افزودن چک‌لیست');
+                        }
                     });
+                });
 
-                    //  (inline edit)
-                    document.querySelectorAll('.form-check-label').forEach(label => {
-                        label.addEventListener('click', function (e) {
-                            const form = e.target.closest('form');
-                            const updateUrl = form.dataset.updateUrl; //
-                            const currentText = e.target.textContent.trim();
+                // 🗑 حذف آیتم
+                $(document).on('click', '.delete-checklist', function () {
+                    const id = $(this).data('id');
+                    const taskId = window.currentTaskId;
 
-                            if (form.querySelector('.editable-input')) return;
+                    const url = "{{ route('dashboard.task.checklist.delete', ':id') }}".replace(':id', id);
 
-                            const input = document.createElement('input');
-                            input.type = 'text';
-                            input.value = currentText;
-                            input.className = 'editable-input';
-                            e.target.replaceWith(input);
-                            input.focus();
-
-                            input.addEventListener('blur', saveEdit);
-                            input.addEventListener('keydown', ev => {
-                                if (ev.key === 'Enter') {
-                                    ev.preventDefault();
-                                    saveEdit();
-                                }
-                                if (ev.key === 'Escape') revertLabel();
-                            });
-
-                            function saveEdit() {
-                                const newText = input.value.trim();
-                                if (newText === currentText || newText === '') {
-                                    revertLabel();
-                                    return;
-                                }
-
-                                fetch(updateUrl, {
-                                    method: 'PUT',
-                                    headers: {
-                                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                                        'Content-Type': 'application/json',
-                                        'Accept': 'application/json'
-                                    },
-                                    body: JSON.stringify({ title: newText })
-                                })
-                                    .then(res => res.json())
-                                    .then(data => {
-                                        if (data.success) {
-                                            $.jGrowl(data.flash_message || 'عنوان بروزرسانی شد', {
-                                                life: 2500,
-                                                position: 'bottom-left',
-                                                theme: 'bg-success'
-                                            });
-                                            revertLabel(newText);
-                                        } else {
-                                            $.jGrowl('خطا در بروزرسانی ', {
-                                                life: 2500,
-                                                position: 'bottom-left',
-                                                theme: 'bg-danger'
-                                            });
-                                            revertLabel();
-                                        }
-                                    })
-                                    .catch(() => revertLabel());
-                            }
-
-                            function revertLabel(text = currentText) {
-                                const newLabel = document.createElement('label');
-                                newLabel.className = 'form-check-label flex-grow-1';
-                                newLabel.textContent = text;
-                                input.replaceWith(newLabel);
-
-                                newLabel.addEventListener('click', labelClickHandler);
-                            }
-                        });
+                    $.ajax({
+                        url,
+                        type: 'DELETE',
+                        data: {_token: "{{ csrf_token() }}"},
+                        success: function () {
+                            loadTaskChecklists(taskId);
+                        },
+                        error: function () {
+                            alert('خطا در حذف آیتم');
+                        }
                     });
+                });
 
+                // ☑ تغییر وضعیت تیک
+                $(document).on('change', '.checklist-checkbox', function () {
+                    const id = $(this).closest('.checklist-form').data('id');
+                    const checked = $(this).is(':checked');
+                    const title = $(this).closest('.form-check').find('.checklist-title');
+
+                    const url = "{{ route('dashboard.task.checklist.check', ':id') }}".replace(':id', id);
+
+                    $.ajax({
+                        url,
+                        type: 'POST',
+                        data: {_token: "{{ csrf_token() }}"},
+                        success: function () {
+                            if (checked)
+                                title.addClass('text-decoration-line-through text-muted');
+                            else
+                                title.removeClass('text-decoration-line-through text-muted');
+                        }
+                    });
+                });
+
+                // ✏️ ویرایش عنوان
+                $(document).on('dblclick', '.checklist-title', function () {
+                    const input = $(this);
+                    input.removeAttr('readonly').focus().addClass('border-bottom border-primary');
+                });
+
+                $(document).on('blur', '.checklist-title', function () {
+                    const input = $(this);
+                    const form = input.closest('.checklist-form');
+                    const id = form.data('id');
+                    const newTitle = input.val().trim();
+
+                    input.attr('readonly', true).removeClass('border-bottom border-primary');
+
+                    const url = "{{ route('dashboard.task.checklist.update', ':id') }}".replace(':id', id);
+
+                    $.ajax({
+                        url,
+                        type: 'PUT',
+                        data: {_token: "{{ csrf_token() }}", title: newTitle},
+                        success: function () {
+                            console.log('ویرایش موفق');
+                        }
+                    });
                 });
             </script>
-    @endpush
+
+
+
+
+
+
+        @endpush
 </x-layout>
 
