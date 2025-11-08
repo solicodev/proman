@@ -91,9 +91,10 @@ class TaskController extends Controller
         ]);
     }
 
+    // data for modal task show
     public function show($id)
     {
-        $task = Task::with(['assigners.photo', 'photos'])->findOrFail($id);
+        $task = Task::with(['assigners.photo', 'photos','comments'])->findOrFail($id);
 
         return response()->json([
             'id'          => $task->id,
@@ -101,7 +102,7 @@ class TaskController extends Controller
             'status'      => $task->TaskStatus,
             'priority'    => $task->TaskPrority,
             'description' => $task->description,
-            'deadline'    => verta($task->end_date)->format('Y/m/d'),
+            'deadline'    => $task->end_date,
             'assigners'   => $task->assigners->map(fn($a) => [
                 'name' => $a->Name,
                 'photo' => $a->photo?->path
@@ -112,8 +113,15 @@ class TaskController extends Controller
                 'user_name'  => $p->user?->Name ?? '',
                 'user_role'  => $p->user?->getRoleNames()->first() ?? ''
             ]),
+            'comments' => $task->comments->map(fn($comment) => [
+                'text' => $comment->text ?? null,
+                'created_at' => verta($comment->created_at)->formatDifference() ?? null,
+                'name' => $comment->user?->Name ?? null,
+                'photo' => $comment->user?->photo?->path ?? null,
+            ])
         ]);
     }
+
     public function getChecklists($id)
     {
         $task = Task::with('taskCheckList')->findOrFail($id);
@@ -125,6 +133,28 @@ class TaskController extends Controller
                 'check' => $c->check,
             ])
         );
+    }
+
+    public function addComment(Request $request, Task $task)
+    {
+        $request->validate([
+            'text' => 'required|string|max:1000',
+        ]);
+
+        $comment = $task->comments()->create([
+            'text' => $request->text,
+            'user_id' => auth()->id(),
+        ]);
+
+        return response()->json([
+            'status' => true,
+            'comment' => [
+                'text' => $comment->text,
+                'created_at' => verta($comment->created_at)->formatDifference(),
+                'name' => $comment->user?->Name,
+                'photo' => $comment->user?->photo?->path,
+            ],
+        ]);
     }
 
 

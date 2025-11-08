@@ -93,4 +93,9 @@ class Task extends Model
     {
         return $this->hasMany(TaskChecklist::class, 'task_id');
     }
+
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'comments')->where('status', 1);
+    }
 }

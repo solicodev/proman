@@ -678,7 +678,7 @@
         <!--begin::Modal dialog-->
         <div class="modal-dialog modal-dialog-centered mw-1024px modal-xl" >
             <!--begin::Modal content-->
-            <div class="modal-content border-0 shadow-lg">
+            <div class="modal-content border-0 shadow-lg scroll h-700px">
                 <div class="modal-header bg-light">
                     <h5 class="modal-title fw-bold" id="modalTitle">
                         <i class="bi bi-card-checklist me-2 text-primary"></i>
@@ -691,7 +691,7 @@
                     <div class="d-flex  mb-3">
                          <span id="taskStatus"></span>
                          <span id="TaskPrority"></span>
-                        <small class="text-muted">مهلت: ۱۴۰۴/۰۸/۲۰</small>
+                        <small id="task-deadline" class="text-muted">مهلت: ۱۴۰۴/۰۸/۲۰</small>
                     </div>
                     <div class="d-flex align-items-center flex-wrap gap-2 mb-4">
 
@@ -766,16 +766,16 @@
                                 </div>
                                 <div class="separator mb-3 opacity-75"></div>
 
-                                <div class="symbol-group symbol-hover flex-nowrap">
-                                    @foreach($task->assigners as $assigner)
-                                        <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" data-bs-original-title="{{$assigner->Name}}" >
-                                            @if($assigner->photo_id)
-                                                <img alt="Pic" src="{{ route('home') }}/{{$assigner->photo?->path}}">
-                                            @else
-                                                <span class="symbol-label bg-warning text-inverse-warning fw-bold">{{ mb_substr($assigner->Name, 0, 1) }}</span>
-                                            @endif
-                                        </div>
-                                    @endforeach
+                                <div class="symbol-group symbol-hover flex-nowrap" id="taskMembers">
+{{--                                    @foreach($task->assigners as $assigner)--}}
+{{--                                        <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" data-bs-original-title="{{$assigner->Name}}" >--}}
+{{--                                            @if($assigner->photo_id)--}}
+{{--                                                <img alt="Pic" src="{{ route('home') }}/{{$assigner->photo?->path}}">--}}
+{{--                                            @else--}}
+{{--                                                <span class="symbol-label bg-warning text-inverse-warning fw-bold">{{ mb_substr($assigner->Name, 0, 1) }}</span>--}}
+{{--                                            @endif--}}
+{{--                                        </div>--}}
+{{--                                    @endforeach--}}
                                 </div>
                             </div>
 
@@ -799,7 +799,7 @@
                                 </div>
                                 <div class="separator mb-3 opacity-75"></div>
 
-                                <ul class="list-unstyled mb-0">
+                                <ul class="list-unstyled mb-0" id="taskFiles">
                                     @foreach($task->photos as $file)
                                         @php
                                             $explode_file = explode('.',$file['path']);
@@ -843,18 +843,13 @@
 
                     <div class="d-flex">
                         <div class="col-8">
-
-
                             <!-- توضیحات -->
                             <div class="mb-4">
                                 <h6 class="fw-semibold mb-2">توضیحات</h6>
-                                <p class="text-muted mb-0">
-                                    {{$task->description ?? '' }}
+                                <p id="task-desc" class="text-muted mb-0">
+
                                 </p>
                             </div>
-
-
-
                             <div class="m-4">
                                 <div id="taskChecklistContainer" class="mb-3" data-task-id="">
                                     <div class="text-center text-muted py-3">در حال بارگذاری چک‌لیست‌ها...</div>
@@ -874,36 +869,24 @@
                                     </form>
                                 </div>
                             </div>
-
-
                         </div>
                         <!-- کامنت‌ها -->
                         <div class="col-4">
-                            <div class="mb-3">
+                            <div id="taskComments" class="scroll h-200px">
                                 <h6 class="fw-semibold mb-2">کامنت‌ها</h6>
-                                <div class="d-flex align-items-center">
-                                    <div class="symbol symbol-35px symbol-circle">
-                                        <img alt="Pic" src="{{url('panel/assets/media/avatars/300-6.jpg')}}">
-                                    </div>
-                                    <div class="ms-5">
-                                        <a href="#" class="fs-5 fw-bold text-gray-900 text-hover-primary mb-2">مریم</a>
-                                        <div class="fw-semibold text-muted">لطفاً رنگ دکمه‌ها رو طبق تم پروژه تغییر بدیم.</div>
-                                    </div>
-                                </div>
-                                <div class="d-flex align-items-center">
-                                    <div class="symbol symbol-35px symbol-circle">
-                                        <img alt="Pic" src="{{url('panel/assets/media/avatars/300-6.jpg')}}">
-                                    </div>
-                                    <div class="ms-5">
-                                        <a href="#" class="fs-5 fw-bold text-gray-900 text-hover-primary mb-2">مریم</a>
-                                        <div class="fw-semibold text-muted">در نسخه‌ی موبایل هم تست انجام شد و مشکلی نیست.</div>
-                                    </div>
-                                </div>
 
-
-                                <!-- افزودن کامنت -->
-                                <textarea class="form-control mt-2" placeholder="افزودن کامنت جدید..."></textarea>
+                                <div id="commentsList" class="scroll h-200px"></div>
                             </div>
+                            <div>
+                                <form method="post" id="commentForm" class="mt-4" data-url="{{ route('dashboard.task.comment.add', $task->id) }}">
+                                    @csrf
+                                    <textarea name="text" class="form-control mb-2" placeholder="افزودن کامنت جدید..." required></textarea>
+                                    <button type="submit" class="btn btn-sm btn-primary">ارسال</button>
+                                </form>
+                            </div>
+
+                            <input type="hidden" id="taskId" value="{{ $task->id }}">
+
                         </div>
                     </div>
                 </div>
@@ -1138,12 +1121,13 @@
                     url: url,
                     type: 'GET',
                     success: function (data) {
+                        console.log(data)
                         // پر کردن دیتاهای پایه
                         $('#modalTitle').text(`مشاهده "${data.title}"`);
                         $('#taskStatus').html(`وضعیت: ${data.status}`);
                         $('#TaskPrority').html(`اولویت: ${data.priority}`);
-                        $('.task-deadline').text(`مهلت: ${data.deadline}`);
-                        $('.task-desc').text(data.description ?? '-');
+                        $('#task-deadline').text(`مهلت: ${data.deadline}`);
+                        $('#task-desc').text(data.description ?? '-');
 
                         // اعضا
                         let membersHTML = '';
@@ -1155,8 +1139,10 @@
                         </div>`;
                             } else {
                                 membersHTML += `
-                        <div class="symbol symbol-35px symbol-circle bg-warning text-white fw-bold" title="${a.name}">
+                        <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" data-bs-original-title="${a.name}">
+                            <span class="symbol-label bg-warning text-inverse-warning fw-bold" title="${a.name}">
                             ${a.name.charAt(0)}
+                             </span>
                         </div>`;
                             }
                         });
@@ -1165,19 +1151,113 @@
                         // فایل‌ها
                         let filesHTML = '';
                         data.files.forEach(f => {
+                            // نوع فایل رو تشخیص می‌دیم برای انتخاب آیکون مناسب
+                            const ext = f.path.split('.').pop().toLowerCase();
+                            let icon = 'ai.svg';
+                            if (ext === 'pdf') icon = 'pdf.svg';
+                            else if (ext === 'doc' || ext === 'docx') icon = 'doc.svg';
+                            else if (ext === 'css') icon = 'css.svg';
+
                             filesHTML += `
-                    <div class="d-flex align-items-center mb-3">
-                        <i class="ki-outline ki-file fs-3 text-primary me-3"></i>
-                        <div>
-                            <div class="fw-bold">${f.user_name}</div>
-                            <small class="text-muted">${f.created_at} — ${f.user_role}</small>
-                        </div>
-                        <a href="${window.location.origin}/${f.path}" download class="btn btn-sm btn-icon btn-light-primary ms-auto">
-                            <i class="ki-outline ki-cloud-download fs-4"></i>
-                        </a>
-                    </div>`;
+                            <div class="d-flex align-items-center mb-5">
+                                <div class="symbol symbol-30px me-5">
+                                    <img alt="Icon" src="${window.location.origin}/panel/assets/media/svg/files/${icon}" />
+                                </div>
+                                <div class="fw-semibold">
+                                    <a class="fs-6 fw-bold text-gray-900 text-hover-primary">${f.user_name}</a>
+                                    <div class="text-gray-500">
+                                        ${f.created_at}
+                                        <a class="text-active-danger">${f.user_role}</a>
+                                    </div>
+                                </div>
+                                <a href="${window.location.origin}/${f.path}"
+                                   download
+                                   class="btn btn-clean btn-sm btn-icon btn-icon-primary btn-active-light-primary ms-auto"
+                                   data-bs-toggle="tooltip" data-bs-placement="top" title="دانلود فایل">
+                                    <i class="ki-outline ki-cloud-download fs-3"></i>
+                                </a>
+                            </div>
+                        `;
                         });
+
                         $('#taskFiles').html(filesHTML);
+
+
+
+                        // comment store
+                        let commentsHTML = '';
+
+                        data.comments.forEach(c => {
+                            // مسیر عکس — اگر کاربر عکس نداشت، عکس پیش‌فرض
+                            const userPhoto = c.photo
+                                ? `${window.location.origin}/${c.photo}`
+                                : `${window.location.origin}/panel/assets/media/svg/avatars/blank.svg`;
+
+                            commentsHTML += `
+                            <div class="d-flex align-items-center mb-4">
+                                <div class="symbol symbol-35px symbol-circle">
+                                    <img alt="Pic" src="${userPhoto}">
+                                </div>
+                                <div class="ms-5">
+                                    <a href="#" class="fs-5 fw-bold text-gray-900 text-hover-primary mb-1">${c.name ?? 'بدون نام'}</a>
+                                    <div class="fw-semibold text-muted">${c.text ?? ''}</div>
+                                    <div class="text-gray-500 small mt-1">${c.created_at ?? ''}</div>
+                                </div>
+                            </div>
+                        `;
+                                            });
+
+                    // show
+                                            $('#taskComments').html(`
+                        <h6 class="fw-semibold mb-2">کامنت‌ها</h6>
+                        ${commentsHTML}
+                    `);
+
+                        // comments store
+
+                        $(document).on('submit', '#commentForm', function (e) {
+                            e.preventDefault();
+
+                            const form = $(this);
+                            const url = $('#taskComments').data('url');
+                            const text = form.find('textarea[name="text"]').val().trim();
+
+                            if (!text) return alert('لطفاً متن کامنت را وارد کنید.');
+
+                            $.ajax({
+                                url: url,
+                                type: 'POST',
+                                data: form.serialize(),
+                                success: function (res) {
+                                    if (res.status) {
+                                        const c = res.comment;
+                                        const userPhoto = c.photo
+                                            ? `${window.location.origin}/${c.photo}`
+                                            : `${window.location.origin}/panel/assets/media/svg/avatars/blank.svg`;
+
+                                        $('#commentsList').prepend(`
+                                            <div class="d-flex align-items-center mb-4">
+                                                <div class="symbol symbol-35px symbol-circle">
+                                                    <img alt="Pic" src="${userPhoto}">
+                                                </div>
+                                                <div class="ms-5">
+                                                    <a href="#" class="fs-5 fw-bold text-gray-900 text-hover-primary mb-1">${c.name}</a>
+                                                    <div class="fw-semibold text-muted">${c.text}</div>
+                                                    <div class="text-gray-500 small mt-1">${c.created_at}</div>
+                                                </div>
+                                            </div>
+                                        `);
+
+                                        form.trigger('reset');
+                                    }
+                                },
+                                error: function () {
+                                    alert('خطا در ارسال کامنت. لطفاً دوباره تلاش کنید.');
+                                }
+                            });
+                        });
+
+
 
                         // باز کردن مودال
                         const modal = new bootstrap.Modal(document.getElementById('kt_modal_task_show'));

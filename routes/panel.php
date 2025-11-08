@@ -46,6 +46,9 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
         Route::put('/tasks/checklist/{taskChecklist}', [TaskChecklistController::class, 'update'])->name('checklist.update');
         Route::delete('/tasks/checklist/{taskChecklist}', [TaskChecklistController::class, 'destroy'])->name('checklist.delete');
         Route::post('/tasks/checklist/check/{taskChecklist}', [TaskChecklistController::class, 'check'])->name('checklist.check');
+
+        Route::post('/tasks/{task}/comments', [TaskController::class, 'addComment'])->name('comment.add');
+
     });
 
 });
