@@ -94,45 +94,81 @@ class TaskController extends Controller
     // data for modal task show
     public function show($id)
     {
-        $task = Task::with(['assigners.photo', 'photos','comments'])->findOrFail($id);
+        $task = Task::with(['assigners.photo', 'photos','comments','manager'])->findOrFail($id);
+        $task_comments = $task->comments()->orderBy('created_at', 'desc')->get();
+        $taskCheck = '';
+        $taskCheckVerify = '';
+        if ($task->manager_check == 1)
+        {
+            $taskCheck = 'بله';
+        }
+        else
+            $taskCheck = 'خیر';
 
-        return response()->json([
-            'id'          => $task->id,
-            'title'       => $task->title,
-            'status'      => $task->TaskStatus,
-            'priority'    => $task->TaskPrority,
-            'description' => $task->description,
-            'deadline'    => $task->end_date,
-            'assigners'   => $task->assigners->map(fn($a) => [
-                'name' => $a->Name,
-                'photo' => $a->photo?->path
-            ]),
-            'files' => $task->photos->map(fn($p) => [
-                'path'       => $p->path,
-                'created_at' => verta($p->created_at)->formatDifference(),
-                'user_name'  => $p->user?->Name ?? '',
-                'user_role'  => $p->user?->getRoleNames()->first() ?? ''
-            ]),
-            'comments' => $task->comments->map(fn($comment) => [
-                'text' => $comment->text ?? null,
-                'created_at' => verta($comment->created_at)->formatDifference() ?? null,
-                'name' => $comment->user?->Name ?? null,
-                'photo' => $comment->user?->photo?->path ?? null,
-            ])
-        ]);
+        if ($task->manager_verify == 1)
+        {
+            $taskCheckVerify = 'بله' ;
+        }
+        else
+            $taskCheckVerify = 'خیر';
+        try {
+            return response()->json([
+                'code'        => $task->task_code,
+                'id'          => $task->id,
+                'title'       => $task->title,
+                'status'      => $task->TaskStatus,
+                'priority'    => $task->TaskPrority,
+                'description' => $task->description,
+                'deadline'    => $task->end_date,
+                'manager'     => $task->manager?->Name,
+                'managerCheck'=> $taskCheck,
+                'managerCheckVerify'=> $taskCheckVerify,
+                'watcher'     => $task->watcher?->Name,
+                'assigners'   => $task->assigners->map(fn($a) => [
+                    'name'  => $a->Name,
+                    'photo' => $a->photo?->path
+                ]),
+                'files' => $task->photos->map(fn($p) => [
+                    'path'       => $p->path,
+                    'created_at' => verta($p->created_at)->formatDifference(),
+                    'user_name'  => $p->user?->Name ?? '',
+                    'user_role'  => $p->user?->getRoleNames()->first() ?? ''
+                ]),
+                'comments' => $task_comments->map(fn($comment) => [
+                    'text' => $comment->text ?? null,
+                    'created_at' => verta($comment->created_at)->formatDifference() ?? null,
+                    'name' => $comment->user?->Name ?? null,
+                    'photo' => $comment->user?->photo?->path ?? null,
+                ])
+            ],200);
+        }
+        catch (Exception $exception) {
+            return response()->json([
+                'success' => true,
+                'err_message' => 'خطایی رخ داده است' . $exception->getMessage(),
+            ],500);
+        }
+
     }
 
     public function getChecklists($id)
     {
         $task = Task::with('taskCheckList')->findOrFail($id);
-
-        return response()->json(
-            $task->taskCheckList->map(fn($c) => [
-                'id' => $c->id,
-                'title' => $c->title,
-                'check' => $c->check,
-            ])
-        );
+        try {
+            return response()->json(
+                $task->taskCheckList->map(fn($c) => [
+                    'id' => $c->id,
+                    'title' => $c->title,
+                    'check' => $c->check,
+                ],201)
+            );
+        }
+        catch (Exception $exception) {
+            return response()->json([
+                'success' => true,
+                'err_message' => 'خطایی رخ داده است' . $exception->getMessage(),
+            ],500);
+        }
     }
 
     public function addComment(Request $request, Task $task)
@@ -145,20 +181,40 @@ class TaskController extends Controller
             'text' => $request->text,
             'user_id' => auth()->id(),
         ]);
-
-        return response()->json([
-            'status' => true,
-            'comment' => [
-                'text' => $comment->text,
-                'created_at' => verta($comment->created_at)->formatDifference(),
-                'name' => $comment->user?->Name,
-                'photo' => $comment->user?->photo?->path,
-            ],
-        ]);
+        try {
+            return response()->json([
+                'success' => true,
+                'comment' => [
+                    'text' => $comment->text,
+                    'created_at' => verta($comment->created_at)->formatDifference(),
+                    'name' => $comment->user?->Name,
+                    'photo' => $comment->user?->photo?->path,
+                ],
+            ],201);
+        }
+        catch (Exception $exception) {
+            return response()->json([
+                'success' => true,
+                'err_message' => 'خطایی رخ داده است' . $exception->getMessage(),
+            ],500);
+        }
     }
 
-
-
-
-
+    public function updateStatus(Request $request, Task $task)
+    {
+        $task->update(['status' => $request->status]);
+        try {
+            return response()->json([
+                'success' => true,
+                'flash_message' => 'وضعیت با موفقیت بروزرسانی شد',
+                'status'  => $task->status,
+            ],201);
+        }
+        catch (Exception $exception) {
+            return response()->json([
+                'success' => true,
+                'err_message' => 'خطایی رخ داده است' . $exception->getMessage(),
+            ],500);
+        }
+    }
 }

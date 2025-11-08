@@ -48,13 +48,13 @@
             <!--begin::Tab nav-->
             <ul class="nav nav-pills me-5">
                 <li class="nav-item m-0">
-                    <a class="btn btn-sm btn-icon btn-light btn-color-muted btn-active-primary active me-3" data-bs-toggle="tab" href="#kt_project_targets_card_pane">
+                    <a class="btn btn-sm btn-icon btn-light btn-color-muted btn-active-primary me-3" data-bs-toggle="tab" href="#kt_project_targets_card_pane">
                         <i class="ki-outline ki-element-plus fs-1"></i>
                     </a>
                 </li>
 
                 <li class="nav-item m-0">
-                    <a class="btn btn-sm btn-icon btn-light btn-color-muted btn-active-primary" data-bs-toggle="tab" href="#kt_project_targets_table_pane">
+                    <a class="btn btn-sm btn-icon btn-light btn-color-muted btn-active-primary active" data-bs-toggle="tab" href="#kt_project_targets_table_pane">
                         <i class="ki-outline ki-row-horizontal fs-2"></i>
                     </a>
                 </li>
@@ -82,7 +82,7 @@
     <!--begin::Tab Content-->
     <div class="tab-content">
         <!--begin::Tab pane-->
-        <div id="kt_project_targets_card_pane" class="tab-pane fade show active">
+        <div id="kt_project_targets_card_pane" class="tab-pane fade show ">
             <!--begin::Row-->
             <div class="row g-9">
                 <div class="row">
@@ -173,8 +173,8 @@
                                                                     </div>
                                                                 @endif
                                                                 <div class="d-flex justify-content-end">
-                                                                <a href="#" onclick="openShowModal('{{ route('dashboard.task.show', $subtask->id) }}')"
-                                                                   class="btn btn-sm btn-light-info p-1" data-bs-toggle="tooltip" data-bs-placement="top" title="مشاهده"><i class="ki-outline ki-eye fs-6 px-2"></i></a>
+                                                                    <a href="#" onclick="openShowModal('{{ route('dashboard.task.show', $subtask->id) }}')"
+                                                                        class="btn btn-sm btn-light-info p-1" data-bs-toggle="tooltip" data-bs-placement="top" title="مشاهده"><i class="ki-outline ki-eye fs-6 px-2"></i></a>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -217,7 +217,7 @@
         <!--end::Tab pane-->
 
         <!--begin::Tab pane-->
-        <div id="kt_project_targets_table_pane" class="tab-pane fade">
+        <div id="kt_project_targets_table_pane" class="tab-pane fade active show">
             <div class="card  card-flush ">
                 <div class="card-body pt-3">
                     <!--begin::Table-->
@@ -235,6 +235,7 @@
                             <th class="text-start">وضعیت</th>
                             <th class="text-start">اعضا</th>
                             <th class="text-start">عملیات</th>
+                            <th class="text-start">نمایش زیر دسته ها</th>
                         </tr>
                         <!--end::Table row-->
                         </thead>
@@ -243,6 +244,9 @@
 
                         <!--begin::Table body-->
                         <tbody class="fw-bold text-gray-600">
+                        <!-- قبل یا بعد از جدول -->
+                        <div id="datatable-template" data-show-route="{{ route('dashboard.task.show', ':id') }}"></div>
+
                         <!--begin::SubTable template-->
                         <tr data-kt-docs-datatable-subtable="subtable_template" class="d-none">
                             <td data-kt-docs-datatable-subtable="template_index"></td>
@@ -258,14 +262,14 @@
                         <!--end::SubTable template-->
 
                         @foreach($tb_tasks as $key => $tb_task)
-
                             <tr data-subtasks='@json($tb_task->children)'>
                                 <td class="text-start">{{$loop->iteration}}</td>
                                 <td class="text-start">{{$tb_task->task_code}}</td>
                                 <td class="text-start">{{$tb_task->title}}</td>
                                 <td class="text-start">{{$tb_task->start_date}}</td>
                                 <td class="text-start">{{$tb_task->end_date}}</td>
-                                <td class="text-start">{{$tb_task->TaskPrority}}</td>
+                                <td class="text-start">{!! $tb_task->TaskPrority !!}</td>
+
                                 <td class="text-start">{!! $tb_task->TaskStatus !!}</td>
                                 <td class="text-start">
                                     <div class="symbol-group symbol-hover fs-8">
@@ -281,11 +285,15 @@
                                     </div>
                                 </td>
                                 <!--begin::Actions-->
-                                <td class="text-end">
-                                    <button type="button" class="btn btn-sm btn-icon btn-light btn-active-light-primary toggle h-25px w-25px"
+                                <td>
+                                    <a href="#" onclick="openShowModal('{{ route('dashboard.task.show', $task->id) }}')"
+                                       class="btn btn-sm btn-light-info p-1" data-bs-toggle="tooltip" data-bs-placement="top" title="مشاهده"><i class="ki-outline ki-eye fs-6 px-2"></i></a>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-icon btn-light btn-active-light-primary  toggle h-25px w-25px"
                                             data-kt-docs-datatable-subtable="expand_row">
-                                        <span class="svg-icon fs-3 m-0 toggle-off">+</span>
-                                        <span class="svg-icon fs-3 m-0 toggle-on"><i class="ki-outline ki-cross text-danger"></i></span>
+                                        <span class="svg-icon fs-6 m-0 toggle-off">+</span>
+                                        <span class="svg-icon fs-6 m-0 toggle-on"><i class="ki-outline ki-cross text-danger"></i></span>
                                     </button>
                                 </td>
                                 <!--end::Actions-->
@@ -678,17 +686,20 @@
         <!--begin::Modal dialog-->
         <div class="modal-dialog modal-dialog-centered mw-1024px modal-xl" >
             <!--begin::Modal content-->
-            <div class="modal-content border-0 shadow-lg scroll h-700px">
+            <div class="modal-content border-0 shadow-lg hover-scroll-y h-700px">
                 <div class="modal-header bg-light">
                     <h5 class="modal-title fw-bold" id="modalTitle">
-                        <i class="bi bi-card-checklist me-2 text-primary"></i>
-
+                        <i class="bi bi-check me-2 text-primary"></i>
                     </h5>
+                    <h6 id="taskCode"></h6>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="بستن"></button>
                 </div>
-
                 <div class="modal-body">
-                    <div class="d-flex  mb-3">
+                    <div class="d-flex justify-content-between mb-3">
+                         <span id="taskManager"></span>
+                         <span id="taskManagerCheck"></span>
+                         <span id="managerCheckVerify"></span>
+                         <span id="watcher"></span>
                          <span id="taskStatus"></span>
                          <span id="TaskPrority"></span>
                         <small id="task-deadline" class="text-muted">مهلت: ۱۴۰۴/۰۸/۲۰</small>
@@ -746,7 +757,6 @@
                                 </form>
                             </div>
                         </div>
-
                         <div class="dropdown">
                             <button class="btn btn-sm btn-light-primary rotate"
                                     data-kt-menu-trigger="click"
@@ -839,6 +849,54 @@
                             </div>
 
                         </div>
+
+                        <div class="dropdown">
+                            <button class="btn btn-sm btn-light-primary rotate"
+                                    data-kt-menu-trigger="click"
+                                    data-kt-menu-placement="bottom-start"
+                                    data-kt-menu-offset="30px, 30px">
+                                عملیات
+                                <span class="svg-icon fs-3 rotate-180 ms-3 me-0">
+                                    <i class="ki-outline ki-down fs-6"></i>
+                                </span>
+                            </button>
+                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800
+                             menu-state-bg-light-primary fw-semibold w-auto min-w-200 mw-500px p-5"
+                                 data-kt-menu="true">
+
+                                <div class="menu-item px-3">
+                                    <div class="menu-content fs-6 text-gray-900 fw-bold px-3 py-4">تغییر وضعیت تسک</div>
+                                </div>
+                                <div class="separator mb-3 opacity-75"></div>
+                                <form method="POST" id="taskStatusForm"
+                                      data-url="{{ route('dashboard.task.update.status', $task->id) }}"
+                                      class="d-flex align-items-center">
+                                    @csrf
+                                    <label class="form-check-label text-warning me-3">
+                                        <input type="radio" name="status" value="0" class="form-check-input"
+                                           @if($task->status == 0) checked @endif>
+                                        در حال بررسی
+                                    </label>
+                                    <label class="form-check-label text-info me-3">
+                                        <input type="radio" name="status" value="1" class="form-check-input"
+                                               @if($task->status == 1) checked @endif>
+                                        برای انجام
+                                    </label>
+                                    <label class="form-check-label me-3">
+                                        <input type="radio" name="status" value="2" class="form-check-input"
+                                               @if($task->status == 2) checked @endif>
+                                        در حال انجام
+                                    </label>
+                                    <label class="form-check-label">
+                                        <input type="radio" name="status" value="3" class="form-check-input"
+                                               @if($task->status == 3) checked @endif>
+                                        انجام شد
+                                    </label>
+                                </form>
+
+                            </div>
+
+                        </div>
                     </div>
 
                     <div class="d-flex">
@@ -872,16 +930,18 @@
                         </div>
                         <!-- کامنت‌ها -->
                         <div class="col-4">
-                            <div id="taskComments" class="scroll h-200px">
+                            <div id="taskComments" class="hover-scroll-y h-400px">
                                 <h6 class="fw-semibold mb-2">کامنت‌ها</h6>
 
-                                <div id="commentsList" class="scroll h-200px"></div>
+                                <div id="commentsList"></div>
                             </div>
                             <div>
-                                <form method="post" id="commentForm" class="mt-4" data-url="{{ route('dashboard.task.comment.add', $task->id) }}">
+                                <form method="POST" id="commentForm" class="mt-4" data-url="{{ route('dashboard.task.comment.add', $task->id) }}">
                                     @csrf
                                     <textarea name="text" class="form-control mb-2" placeholder="افزودن کامنت جدید..." required></textarea>
-                                    <button type="submit" class="btn btn-sm btn-primary">ارسال</button>
+                                   <div class="d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-sm btn-light-primary">ارسال</button>
+                                   </div>
                                 </form>
                             </div>
 
@@ -1122,8 +1182,20 @@
                     type: 'GET',
                     success: function (data) {
                         console.log(data)
-                        // پر کردن دیتاهای پایه
-                        $('#modalTitle').text(`مشاهده "${data.title}"`);
+                        // task data from json controller
+                        $('#modalTitle').text(` مشاهده: ${data.title}`);
+                        $('#taskCode').text(`  ${data.code}`);
+                        if (data.manager) {
+                            $('#taskManager').show().text(`مدیر تایید کننده: ${data.manager}`);
+                            $('#taskManagerCheck').show().text(`آیا تسک توسط مدیر تایید شود؟ ${data.managerCheck}`);
+                            $('#managerCheckVerify').show().text(` تایید شده توسط مدیر : ${data.managerCheckVerify}`);
+                        } else {
+                            $('#taskManager').hide();
+                            $('#taskManagerCheck').hide();
+                            $('#managerCheckVerify').hide();
+                        }
+                        $('#watcher').text(` ناظر تسک : ${data.watcher}`);
+
                         $('#taskStatus').html(`وضعیت: ${data.status}`);
                         $('#TaskPrority').html(`اولویت: ${data.priority}`);
                         $('#task-deadline').text(`مهلت: ${data.deadline}`);
@@ -1215,26 +1287,25 @@
 
                         // comments store
 
-                        $(document).on('submit', '#commentForm', function (e) {
+                        $.ajaxSetup({
+                            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
+                        });
+
+                        $(document).on('submit', '#commentForm', function(e) {
                             e.preventDefault();
-
                             const form = $(this);
-                            const url = $('#taskComments').data('url');
-                            const text = form.find('textarea[name="text"]').val().trim();
-
-                            if (!text) return alert('لطفاً متن کامنت را وارد کنید.');
 
                             $.ajax({
-                                url: url,
+                                url: form.data('url'),
                                 type: 'POST',
                                 data: form.serialize(),
-                                success: function (res) {
+                                success: function(res) {
                                     if (res.status) {
                                         const c = res.comment;
-                                        const userPhoto = c.photo
-                                            ? `${window.location.origin}/${c.photo}`
-                                            : `${window.location.origin}/panel/assets/media/svg/avatars/blank.svg`;
+                                        const userPhoto = c.photo ? `${window.location.origin}/${c.photo}` :
+                                            `${window.location.origin}/panel/assets/media/avatars/blank.png`;
 
+                                        // اضافه کردن کامنت جدید به ابتدای لیست
                                         $('#commentsList').prepend(`
                                             <div class="d-flex align-items-center mb-4">
                                                 <div class="symbol symbol-35px symbol-circle">
@@ -1248,12 +1319,52 @@
                                             </div>
                                         `);
 
+                                        // پاک کردن textarea بعد از ارسال
                                         form.trigger('reset');
                                     }
                                 },
-                                error: function () {
+                                error: function(xhr) {
                                     alert('خطا در ارسال کامنت. لطفاً دوباره تلاش کنید.');
                                 }
+                            });
+                        });
+
+                        $(document).ready(function() {
+                            $(document).on('change', '#taskStatusForm input[name="status"]', function() {
+                                let form = $('#taskStatusForm');
+                                let url = form.data('url');
+                                let status = $(this).val();
+
+                                $.ajax({
+                                    type: 'PUT',
+                                    url: url,
+                                    data: form.serialize(),
+                                    success: function(res) {
+                                        console.log(res)
+                                        if (res.success) {
+                                            // notification
+                                            if (res.success) {
+                                                $.jGrowl(res.flash_message , {
+                                                    life: 5000,
+                                                    position: 'bottom-left',
+                                                    theme: 'bg-success',
+                                                    animateOpen: { opacity: 'show' }
+                                                });
+                                            } else {
+                                                $.jGrowl(res.err_message, {
+                                                    life: 7000,
+                                                    position: 'bottom-left',
+                                                    theme: 'bg-danger',
+                                                    animateOpen: { opacity: 'show' }
+                                                });
+                                            }
+                                        }
+                                    },
+                                    error: function(xhr) {
+                                        toastr.error('خطا در بروزرسانی وضعیت');
+                                        console.error(xhr.responseText);
+                                    }
+                                });
                             });
                         });
 
@@ -1445,12 +1556,21 @@
 
 
                         const actionsNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_actions"]');
-                        if (actionsNode) {
+                        const routeTemplate = document.getElementById('datatable-template').dataset.showRoute;
+
+                        if (actionsNode && routeTemplate) {
+                            const route = routeTemplate.replace(':id', d.id ?? 0);
                             actionsNode.innerHTML = `
-                <a href="/panel/tasks/${d.id ?? 0}" class="btn btn-sm btn-light-primary">
-                    مشاهده
-                </a>`;
+                            <a href="#" onclick="openShowModal('${route}')"
+                               class="btn btn-sm btn-light-info p-1"
+                               data-bs-toggle="tooltip"
+                               data-bs-placement="top"
+                               title="مشاهده">
+                                <i class="ki-outline ki-eye fs-6 px-2"></i>
+                            </a>`;
                         }
+
+
 
                         tbody.insertBefore(newTemplate, target.nextSibling);
                     });
