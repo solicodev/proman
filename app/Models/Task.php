@@ -4,10 +4,24 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Task extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes , LogsActivity;
+
+    protected static $logName = 'task';
+
+    protected static $logAttributes = ['status', 'duration','start_date','end_date','manager_verify'];
+
+    protected static $logOnlyDirty = true;
+
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        return "task has been {$eventName}";
+    }
 
     protected $fillable = ['title','description','status','priority','parent_id','start_date','end_date','project_id','manager_id','duration'];
     protected $appends = ['TaskStatus', 'TaskPrority'];
@@ -32,8 +46,8 @@ class Task extends Model
 
     public $priorities = [
         '0' => '<span class="badge badge-light-primary">کم</span>',
-        '1' => '<span class="badge badge-light-primary">متوسط</span>',
-        '2' => '<span class="badge badge-light-primary">زیاد</span>',
+        '1' => '<span class="badge badge-light-warning">متوسط</span>',
+        '2' => '<span class="badge badge-light-danger">زیاد</span>',
     ];
 
     public function getTaskProrityAttribute()
@@ -97,5 +111,15 @@ class Task extends Model
     public function comments()
     {
         return $this->morphMany(Comment::class, 'comments')->where('status', 1);
+    }
+
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->useLogName('task')
+            ->logOnly(['status', 'duration', 'start_date', 'end_date'])
+            ->logOnlyDirty()
+            ->setDescriptionForEvent(fn(string $eventName) => "Task has been {$eventName}");
     }
 }

@@ -12,6 +12,7 @@ use App\Services\TaskPanelService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Spatie\Activitylog\Models\Activity;
 
 class TaskController extends Controller
 {
@@ -23,6 +24,7 @@ class TaskController extends Controller
     }
     public function index(Project $project)
     {
+        Activity::all();
         $SuperAdminRoles = ['Super Admin'];
         $excludedRoles = ['Manager'];
         $memberRoles = ['Member'];
@@ -94,6 +96,7 @@ class TaskController extends Controller
     // data for modal task show
     public function show($id)
     {
+        Activity::all();
         $task = Task::with(['assigners.photo', 'photos','comments','manager'])->findOrFail($id);
         $task_comments = $task->comments()->orderBy('created_at', 'desc')->get();
         $taskCheck = '';

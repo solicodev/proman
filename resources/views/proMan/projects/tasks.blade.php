@@ -173,8 +173,13 @@
                                                                     </div>
                                                                 @endif
                                                                 <div class="d-flex justify-content-end">
-                                                                    <a href="#" onclick="openShowModal('{{ route('dashboard.task.show', $subtask->id) }}')"
-                                                                        class="btn btn-sm btn-light-info p-1" data-bs-toggle="tooltip" data-bs-placement="top" title="مشاهده"><i class="ki-outline ki-eye fs-6 px-2"></i></a>
+                                                                    <a href="#" onclick="openShowModal(
+                                                                                           '{{ route('dashboard.task.show', $subtask->id) }}',
+                                                                                           '{{ route('dashboard.task.update.status', $subtask->id) }}'
+                                                                                       )"
+                                                                       data-task-id="{{ $subtask->id }}"
+                                                                       data-task-status="{{ $subtask->status }}"
+                                                                       class="btn btn-sm btn-light-info p-1" data-bs-toggle="tooltip" data-bs-placement="top" title="مشاهده"><i class="ki-outline ki-eye fs-6 px-2"></i></a>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -190,11 +195,16 @@
                                         <div class="card-footer text-center py-3">
                                             <a href="#" class="btn btn-light-primary btn-sm"
                                                onclick="openEditModal('{{ route('dashboard.task.subtasks.store', $task->id) }}',
-               JSON.stringify({title:'{{ $task->title }}'}))">
+                                                    JSON.stringify({title:'{{ $task->title }}'}))">
                                                 ساخت زیر تسک جدید
                                                 <i class="ki-outline ki-plus-square fs-6 px-2"></i>
                                             </a>
-                                            <a href="#" onclick="openShowModal('{{ route('dashboard.task.show', $task->id) }}')"
+                                            <a href="#" onclick="openShowModal(
+                                                           '{{ route('dashboard.task.show', $task->id) }}',
+                                                           '{{ route('dashboard.task.update.status', $task->id) }}'
+                                                       )"
+                                               data-task-id="{{ $task->id }}"
+                                               data-task-status="{{ $task->status }}"
                                                class="btn btn-sm btn-light-info" data-bs-toggle="tooltip" data-bs-placement="top" title="مشاهده"><i class="ki-outline ki-eye fs-6 px-2"></i></a>
                                         </div>
                                     </div>
@@ -245,7 +255,10 @@
                         <!--begin::Table body-->
                         <tbody class="fw-bold text-gray-600">
                         <!-- قبل یا بعد از جدول -->
-                        <div id="datatable-template" data-show-route="{{ route('dashboard.task.show', ':id') }}"></div>
+                        <div id="datatable-template"
+                             data-show-route="{{ route('dashboard.task.show', ':id') }}"
+                             data-update-status-route="{{ route('dashboard.task.update.status', ':id') }}">
+                        </div>
 
                         <!--begin::SubTable template-->
                         <tr data-kt-docs-datatable-subtable="subtable_template" class="d-none">
@@ -286,14 +299,25 @@
                                 </td>
                                 <!--begin::Actions-->
                                 <td>
-                                    <a href="#" onclick="openShowModal('{{ route('dashboard.task.show', $task->id) }}')"
-                                       class="btn btn-sm btn-light-info p-1" data-bs-toggle="tooltip" data-bs-placement="top" title="مشاهده"><i class="ki-outline ki-eye fs-6 px-2"></i></a>
+                                    <a href="#" onclick="openShowModal(
+                                                           '{{ route('dashboard.task.show', $task->id) }}',
+                                                           '{{ route('dashboard.task.update.status', $task->id) }}'
+                                                       )"
+                                       data-task-id="{{ $task->id }}"
+                                       data-task-status="{{ $task->status }}"
+                                       class="btn btn-sm btn-light-info" data-bs-toggle="tooltip" data-bs-placement="top" title="مشاهده"><i class="ki-outline ki-eye fs-6 px-2"></i></a>
+                                    <a href="#" class="btn btn-light-primary btn-sm"
+                                       onclick="openEditModal('{{ route('dashboard.task.subtasks.store', $task->id) }}',
+                                                    JSON.stringify({title:'{{ $task->title }}'}))">
+                                        ساخت زیر تسک جدید
+                                        <i class="ki-outline ki-plus-square fs-6 px-2"></i>
+                                    </a>
                                 </td>
                                 <td>
                                     <button type="button" class="btn btn-sm btn-icon btn-light btn-active-light-primary  toggle h-25px w-25px"
                                             data-kt-docs-datatable-subtable="expand_row">
-                                        <span class="svg-icon fs-6 m-0 toggle-off">+</span>
-                                        <span class="svg-icon fs-6 m-0 toggle-on"><i class="ki-outline ki-cross text-danger"></i></span>
+                                        <span class="btn btn-sm btn-light-primary toggle-off"><i class="ki-outline ki-plus"></i></span>
+                                        <span class="btn btn-sm btn-light-danger toggle-on"><i class="ki-outline ki-cross"></i></span>
                                     </button>
                                 </td>
                                 <!--end::Actions-->
@@ -696,12 +720,12 @@
                 </div>
                 <div class="modal-body">
                     <div class="d-flex justify-content-between mb-3">
-                         <span id="taskManager"></span>
-                         <span id="taskManagerCheck"></span>
-                         <span id="managerCheckVerify"></span>
-                         <span id="watcher"></span>
-                         <span id="taskStatus"></span>
-                         <span id="TaskPrority"></span>
+                        <span id="taskManager"></span>
+                        <span id="taskManagerCheck"></span>
+                        <span id="managerCheckVerify"></span>
+                        <span id="watcher"></span>
+                        <span id="taskStatus"></span>
+                        <span id="TaskPrority"></span>
                         <small id="task-deadline" class="text-muted">مهلت: ۱۴۰۴/۰۸/۲۰</small>
                     </div>
                     <div class="d-flex align-items-center flex-wrap gap-2 mb-4">
@@ -777,15 +801,15 @@
                                 <div class="separator mb-3 opacity-75"></div>
 
                                 <div class="symbol-group symbol-hover flex-nowrap" id="taskMembers">
-{{--                                    @foreach($task->assigners as $assigner)--}}
-{{--                                        <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" data-bs-original-title="{{$assigner->Name}}" >--}}
-{{--                                            @if($assigner->photo_id)--}}
-{{--                                                <img alt="Pic" src="{{ route('home') }}/{{$assigner->photo?->path}}">--}}
-{{--                                            @else--}}
-{{--                                                <span class="symbol-label bg-warning text-inverse-warning fw-bold">{{ mb_substr($assigner->Name, 0, 1) }}</span>--}}
-{{--                                            @endif--}}
-{{--                                        </div>--}}
-{{--                                    @endforeach--}}
+                                    {{--                                    @foreach($task->assigners as $assigner)--}}
+                                    {{--                                        <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" data-bs-original-title="{{$assigner->Name}}" >--}}
+                                    {{--                                            @if($assigner->photo_id)--}}
+                                    {{--                                                <img alt="Pic" src="{{ route('home') }}/{{$assigner->photo?->path}}">--}}
+                                    {{--                                            @else--}}
+                                    {{--                                                <span class="symbol-label bg-warning text-inverse-warning fw-bold">{{ mb_substr($assigner->Name, 0, 1) }}</span>--}}
+                                    {{--                                            @endif--}}
+                                    {{--                                        </div>--}}
+                                    {{--                                    @endforeach--}}
                                 </div>
                             </div>
 
@@ -847,9 +871,7 @@
                                     {{--                                    <li><a href="#" class="text-primary text-decoration-none">requirements.docx</a></li>--}}
                                 </ul>
                             </div>
-
                         </div>
-
                         <div class="dropdown">
                             <button class="btn btn-sm btn-light-primary rotate"
                                     data-kt-menu-trigger="click"
@@ -870,11 +892,12 @@
                                 <div class="separator mb-3 opacity-75"></div>
                                 <form method="POST" id="taskStatusForm"
                                       data-url="{{ route('dashboard.task.update.status', $task->id) }}"
+                                      data-parent-id="{{ $task->parent_id }}"
                                       class="d-flex align-items-center">
                                     @csrf
                                     <label class="form-check-label text-warning me-3">
                                         <input type="radio" name="status" value="0" class="form-check-input"
-                                           @if($task->status == 0) checked @endif>
+                                               @if($task->status == 0) checked @endif>
                                         در حال بررسی
                                     </label>
                                     <label class="form-check-label text-info me-3">
@@ -914,9 +937,9 @@
                                 </div>
 
                                 <div id="new-checklist-container" class="mt-3">
-{{--                                    <button type="button" id="add-checklist-btn" class="btn btn-sm btn-light-primary">--}}
-{{--                                        <i class="ki-outline ki-plus fs-5"></i> افزودن آیتم به چک لیست--}}
-{{--                                    </button>--}}
+                                    {{--                                    <button type="button" id="add-checklist-btn" class="btn btn-sm btn-light-primary">--}}
+                                    {{--                                        <i class="ki-outline ki-plus fs-5"></i> افزودن آیتم به چک لیست--}}
+                                    {{--                                    </button>--}}
 
                                     <form action="" method="post" class="mt-2 d-none" id="new-checklist-form">
                                         @csrf
@@ -939,9 +962,9 @@
                                 <form method="POST" id="commentForm" class="mt-4" data-url="{{ route('dashboard.task.comment.add', $task->id) }}">
                                     @csrf
                                     <textarea name="text" class="form-control mb-2" placeholder="افزودن کامنت جدید..." required></textarea>
-                                   <div class="d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-sm btn-light-primary">ارسال</button>
-                                   </div>
+                                    <div class="d-flex justify-content-end">
+                                        <button type="submit" class="btn btn-sm btn-light-primary">ارسال</button>
+                                    </div>
                                 </form>
                             </div>
 
@@ -1176,12 +1199,12 @@
 
 
             // task show modal
-            function openShowModal(url) {
+            function openShowModal(showUrl, updateUrl) {
                 $.ajax({
-                    url: url,
+                    url: showUrl,
                     type: 'GET',
                     success: function (data) {
-                        console.log(data)
+
                         // task data from json controller
                         $('#modalTitle').text(` مشاهده: ${data.title}`);
                         $('#taskCode').text(`  ${data.code}`);
@@ -1277,10 +1300,10 @@
                                 </div>
                             </div>
                         `;
-                                            });
+                        });
 
-                    // show
-                                            $('#taskComments').html(`
+                        // show
+                        $('#taskComments').html(`
                         <h6 class="fw-semibold mb-2">کامنت‌ها</h6>
                         ${commentsHTML}
                     `);
@@ -1329,52 +1352,33 @@
                             });
                         });
 
-                        $(document).ready(function() {
-                            $(document).on('change', '#taskStatusForm input[name="status"]', function() {
-                                let form = $('#taskStatusForm');
-                                let url = form.data('url');
-                                let status = $(this).val();
+                        $('#taskStatusForm').attr('data-url', updateUrl);
 
-                                $.ajax({
-                                    type: 'PUT',
-                                    url: url,
-                                    data: form.serialize(),
-                                    success: function(res) {
-                                        console.log(res)
-                                        if (res.success) {
-                                            // notification
-                                            if (res.success) {
-                                                $.jGrowl(res.flash_message , {
-                                                    life: 5000,
-                                                    position: 'bottom-left',
-                                                    theme: 'bg-success',
-                                                    animateOpen: { opacity: 'show' }
-                                                });
-                                            } else {
-                                                $.jGrowl(res.err_message, {
-                                                    life: 7000,
-                                                    position: 'bottom-left',
-                                                    theme: 'bg-danger',
-                                                    animateOpen: { opacity: 'show' }
-                                                });
-                                            }
-                                        }
-                                    },
-                                    error: function(xhr) {
-                                        toastr.error('خطا در بروزرسانی وضعیت');
-                                        console.error(xhr.responseText);
+                        $(document).off('change', '#taskStatusForm input[name="status"]').on('change', '#taskStatusForm input[name="status"]', function() {
+                            const form = $('#taskStatusForm');
+                            const url = form.data('url');
+                            $.ajax({
+                                type: 'PUT',
+                                url: url,
+                                data: form.serialize(),
+                                success: function(res) {
+                                    if (res.success) {
+                                        $.jGrowl(res.flash_message, {
+                                            life: 4000,
+                                            position: 'bottom-left',
+                                            theme: 'bg-success'
+                                        });
                                     }
-                                });
+                                },
+                                error: function() {
+                                    toastr.error('خطا در بروزرسانی وضعیت');
+                                }
                             });
                         });
 
-
-
-                        // باز کردن مودال
                         const modal = new bootstrap.Modal(document.getElementById('kt_modal_task_show'));
                         modal.show();
 
-                        // حالا چک‌لیست‌ها رو با تابع جداگانه لود کن
                         loadTaskChecklists(data.id);
                     },
                     error: function () {
@@ -1492,7 +1496,6 @@
                             console.error('populateTemplate: templateNode نال است.');
                             return;
                         }
-
                         const newTemplate = templateNode.cloneNode(true);
                         newTemplate.setAttribute('data-kt-docs-datatable-subtable', 'subtable_template');
                         newTemplate.classList.remove('d-none');
@@ -1515,7 +1518,7 @@
                         if (edNode) edNode.innerText = safe(d.end_date);
 
                         const prNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_priority"]');
-                        if (prNode) prNode.innerText = safe(d.TaskPrority);
+                        if (prNode) prNode.innerHTML = safe(d.TaskPrority);
 
                         const stNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_status"]');
                         if (stNode) stNode.innerHTML = safe(d.TaskStatus);
@@ -1557,12 +1560,14 @@
 
                         const actionsNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_actions"]');
                         const routeTemplate = document.getElementById('datatable-template').dataset.showRoute;
+                        const updateStatusTemplate = document.getElementById('datatable-template').dataset.updateStatusRoute;
 
-                        if (actionsNode && routeTemplate) {
+                        if (actionsNode && routeTemplate  && updateStatusTemplate) {
                             const route = routeTemplate.replace(':id', d.id ?? 0);
+                            const updateRoute = updateStatusTemplate.replace(':id', d.id ?? 0);
                             actionsNode.innerHTML = `
-                            <a href="#" onclick="openShowModal('${route}')"
-                               class="btn btn-sm btn-light-info p-1"
+                            <a href="#" onclick="openShowModal('${route}', '${updateRoute}')"
+                               class="btn btn-sm btn-light-info"
                                data-bs-toggle="tooltip"
                                data-bs-placement="top"
                                title="مشاهده">
@@ -1614,27 +1619,27 @@
 
 
 
-{{--          checklist CURD--}}
-            <script>
-                // ✅ گرفتن چک‌لیست‌ها و ساخت HTML
-                function loadTaskChecklists(taskId) {
-                    window.currentTaskId = taskId; // آیدی تسک رو نگه داریم
-                    const container = $('#taskChecklistContainer');
-                    container.html('<div class="text-center text-muted py-3">در حال بارگذاری...</div>');
+        {{--          checklist CURD--}}
+        <script>
+            // ✅ گرفتن چک‌لیست‌ها و ساخت HTML
+            function loadTaskChecklists(taskId) {
+                window.currentTaskId = taskId; // آیدی تسک رو نگه داریم
+                const container = $('#taskChecklistContainer');
+                container.html('<div class="text-center text-muted py-3">در حال بارگذاری...</div>');
 
-                    let url = "{{ route('dashboard.task.checklists', ':id') }}".replace(':id', taskId);
+                let url = "{{ route('dashboard.task.checklists', ':id') }}".replace(':id', taskId);
 
-                    $.ajax({
-                        url,
-                        type: 'GET',
-                        success: function (checklists) {
-                            let html = '';
+                $.ajax({
+                    url,
+                    type: 'GET',
+                    success: function (checklists) {
+                        let html = '';
 
-                            if (!checklists.length) {
-                                html = '<div class="text-muted mb-3">هیچ آیتمی وجود ندارد.</div>';
-                            } else {
-                                checklists.forEach(c => {
-                                    html += `
+                        if (!checklists.length) {
+                            html = '<div class="text-muted mb-3">هیچ آیتمی وجود ندارد.</div>';
+                        } else {
+                            checklists.forEach(c => {
+                                html += `
                             <form class="checklist-form mb-2 p-2 border rounded" data-id="${c.id}">
                                 <div class="form-check d-flex align-items-center">
                                     <input class="form-check-input checklist-checkbox me-2" type="checkbox" ${c.check == 1 ? 'checked' : ''}>
@@ -1644,11 +1649,11 @@
                                     </button>
                                 </div>
                             </form>`;
-                                });
-                            }
+                            });
+                        }
 
-                            // ✅ دکمه افزودن فقط یکی ساخته میشه
-                            html += `
+                        // ✅ دکمه افزودن فقط یکی ساخته میشه
+                        html += `
                     <div class="mt-3">
                         <button type="button" id="add-checklist-btn" class="btn btn-sm btn-light-primary w-100">
                             <i class="ki-outline ki-plus fs-5"></i> افزودن آیتم
@@ -1662,121 +1667,121 @@
                     </div>
                 `;
 
-                            container.html(html);
-                        },
-                        error: function () {
-                            container.html('<div class="text-danger">خطا در بارگذاری چک‌لیست‌ها.</div>');
-                        }
-                    });
-                }
-
-                // 🟢 نمایش فرم افزودن فقط یک بار
-                $(document).on('click', '#add-checklist-btn', function () {
-                    $(this).addClass('d-none');
-                    $('.add-checklist-form').removeClass('d-none').find('.new-checklist-title').focus();
+                        container.html(html);
+                    },
+                    error: function () {
+                        container.html('<div class="text-danger">خطا در بارگذاری چک‌لیست‌ها.</div>');
+                    }
                 });
+            }
 
-                // ➕ افزودن آیتم جدید
-                $(document).on('submit', '.add-checklist-form', function (e) {
-                    e.preventDefault();
-                    const form = $(this);
-                    const title = form.find('.new-checklist-title').val().trim();
-                    const taskId = window.currentTaskId;
+            // 🟢 نمایش فرم افزودن فقط یک بار
+            $(document).on('click', '#add-checklist-btn', function () {
+                $(this).addClass('d-none');
+                $('.add-checklist-form').removeClass('d-none').find('.new-checklist-title').focus();
+            });
 
-                    if (!title) return;
+            // ➕ افزودن آیتم جدید
+            $(document).on('submit', '.add-checklist-form', function (e) {
+                e.preventDefault();
+                const form = $(this);
+                const title = form.find('.new-checklist-title').val().trim();
+                const taskId = window.currentTaskId;
 
-                    const url = "{{ route('dashboard.task.add.checklist', ':id') }}".replace(':id', taskId);
+                if (!title) return;
 
-                    $.ajax({
-                        url,
-                        type: 'POST',
-                        data: {
-                            _token: "{{ csrf_token() }}",
-                            title
-                        },
-                        success: function () {
-                            form.find('.new-checklist-title').val('');
-                            loadTaskChecklists(taskId); // فقط لیست رو رفرش کن، نه صفحه
-                        },
-                        error: function () {
-                            alert('خطا در افزودن چک‌لیست');
-                        }
-                    });
+                const url = "{{ route('dashboard.task.add.checklist', ':id') }}".replace(':id', taskId);
+
+                $.ajax({
+                    url,
+                    type: 'POST',
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        title
+                    },
+                    success: function () {
+                        form.find('.new-checklist-title').val('');
+                        loadTaskChecklists(taskId); // فقط لیست رو رفرش کن، نه صفحه
+                    },
+                    error: function () {
+                        alert('خطا در افزودن چک‌لیست');
+                    }
                 });
+            });
 
-                // 🗑 حذف آیتم
-                $(document).on('click', '.delete-checklist', function () {
-                    const id = $(this).data('id');
-                    const taskId = window.currentTaskId;
+            // 🗑 حذف آیتم
+            $(document).on('click', '.delete-checklist', function () {
+                const id = $(this).data('id');
+                const taskId = window.currentTaskId;
 
-                    const url = "{{ route('dashboard.task.checklist.delete', ':id') }}".replace(':id', id);
+                const url = "{{ route('dashboard.task.checklist.delete', ':id') }}".replace(':id', id);
 
-                    $.ajax({
-                        url,
-                        type: 'DELETE',
-                        data: {_token: "{{ csrf_token() }}"},
-                        success: function () {
-                            loadTaskChecklists(taskId);
-                        },
-                        error: function () {
-                            alert('خطا در حذف آیتم');
-                        }
-                    });
+                $.ajax({
+                    url,
+                    type: 'DELETE',
+                    data: {_token: "{{ csrf_token() }}"},
+                    success: function () {
+                        loadTaskChecklists(taskId);
+                    },
+                    error: function () {
+                        alert('خطا در حذف آیتم');
+                    }
                 });
+            });
 
-                // ☑ تغییر وضعیت تیک
-                $(document).on('change', '.checklist-checkbox', function () {
-                    const id = $(this).closest('.checklist-form').data('id');
-                    const checked = $(this).is(':checked');
-                    const title = $(this).closest('.form-check').find('.checklist-title');
+            // ☑ تغییر وضعیت تیک
+            $(document).on('change', '.checklist-checkbox', function () {
+                const id = $(this).closest('.checklist-form').data('id');
+                const checked = $(this).is(':checked');
+                const title = $(this).closest('.form-check').find('.checklist-title');
 
-                    const url = "{{ route('dashboard.task.checklist.check', ':id') }}".replace(':id', id);
+                const url = "{{ route('dashboard.task.checklist.check', ':id') }}".replace(':id', id);
 
-                    $.ajax({
-                        url,
-                        type: 'POST',
-                        data: {_token: "{{ csrf_token() }}"},
-                        success: function () {
-                            if (checked)
-                                title.addClass('text-decoration-line-through text-muted');
-                            else
-                                title.removeClass('text-decoration-line-through text-muted');
-                        }
-                    });
+                $.ajax({
+                    url,
+                    type: 'POST',
+                    data: {_token: "{{ csrf_token() }}"},
+                    success: function () {
+                        if (checked)
+                            title.addClass('text-decoration-line-through text-muted');
+                        else
+                            title.removeClass('text-decoration-line-through text-muted');
+                    }
                 });
+            });
 
-                // ✏️ ویرایش عنوان
-                $(document).on('dblclick', '.checklist-title', function () {
-                    const input = $(this);
-                    input.removeAttr('readonly').focus().addClass('border-bottom border-primary');
+            // ✏️ ویرایش عنوان
+            $(document).on('dblclick', '.checklist-title', function () {
+                const input = $(this);
+                input.removeAttr('readonly').focus().addClass('border-bottom border-primary');
+            });
+
+            $(document).on('blur', '.checklist-title', function () {
+                const input = $(this);
+                const form = input.closest('.checklist-form');
+                const id = form.data('id');
+                const newTitle = input.val().trim();
+
+                input.attr('readonly', true).removeClass('border-bottom border-primary');
+
+                const url = "{{ route('dashboard.task.checklist.update', ':id') }}".replace(':id', id);
+
+                $.ajax({
+                    url,
+                    type: 'PUT',
+                    data: {_token: "{{ csrf_token() }}", title: newTitle},
+                    success: function () {
+                        console.log('ویرایش موفق');
+                    }
                 });
-
-                $(document).on('blur', '.checklist-title', function () {
-                    const input = $(this);
-                    const form = input.closest('.checklist-form');
-                    const id = form.data('id');
-                    const newTitle = input.val().trim();
-
-                    input.attr('readonly', true).removeClass('border-bottom border-primary');
-
-                    const url = "{{ route('dashboard.task.checklist.update', ':id') }}".replace(':id', id);
-
-                    $.ajax({
-                        url,
-                        type: 'PUT',
-                        data: {_token: "{{ csrf_token() }}", title: newTitle},
-                        success: function () {
-                            console.log('ویرایش موفق');
-                        }
-                    });
-                });
-            </script>
+            });
+        </script>
 
 
 
 
 
 
-        @endpush
+    @endpush
 </x-layout>
 
