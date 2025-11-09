@@ -17,14 +17,15 @@ class Task extends Model
 
     protected static $logOnlyDirty = true;
 
-
     public function getDescriptionForEvent(string $eventName): string
     {
         return "task has been {$eventName}";
     }
 
     protected $fillable = ['title','description','task_code','status','priority','parent_id','start_date','end_date','project_id','manager_id','duration','manager_verify','manager_check','watcher_id'];
+
     protected $appends = ['TaskStatus', 'TaskPrority'];
+
     public $status_english =[
         '0' => 'pending' ,
         '1' => 'todo' ,
@@ -54,7 +55,6 @@ class Task extends Model
     {
         return $this->priorities[$this->priority] ?? '';
     }
-
 
     public function project()
     {
@@ -112,7 +112,6 @@ class Task extends Model
     {
         return $this->morphMany(Comment::class, 'comments')->where('status', 1);
     }
-
 
     public function getActivitylogOptions(): LogOptions
     {

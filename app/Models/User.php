@@ -4,14 +4,29 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable , HasRoles;
+    use HasFactory, Notifiable , HasRoles , SoftDeletes , LogsActivity;
+
+    protected static $logName = 'User';
+
+    protected static $logAttributes = ['first_name','last_name','mobile','confirm_code','personal_id','status','position_id','photo_id','email','created_at','updated_at','deleted_at'];
+
+    protected static $logOnlyDirty = true;
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        return "task has been {$eventName}";
+    }
+
     protected $appends = ['Name', 'UserStatus'];
     /**
      * The attributes that are mass assignable.
@@ -71,6 +86,15 @@ class User extends Authenticatable
     public function photo()
     {
         return $this->belongsTo(Photo::class,'photo_id');
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->useLogName('User')
+            ->logOnly(['first_name','last_name','mobile','confirm_code','personal_id','status','position_id','photo_id','email','created_at','updated_at','deleted_at'])
+            ->logOnlyDirty()
+            ->setDescriptionForEvent(fn(string $eventName) => "TaskCheckList has been {$eventName}");
     }
 
 }
