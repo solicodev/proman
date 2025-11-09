@@ -4,10 +4,24 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Project extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes , LogsActivity;
+
+    protected static $logName = 'project';
+
+    protected static $logAttributes = ['name','status', 'start_todo_date', 'start_date', 'end_date','manager_id','category_id','department_id','brand_id','project_code','deleted_at','updated_at','created_at'];
+
+    protected static $logOnlyDirty = true;
+
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        return "task has been {$eventName}";
+    }
     protected $fillable = ['project_code', 'name' , 'start_date' , 'end_date' , 'status' , 'manager_id' , 'category_id' , 'department_id' , 'start_todo_date'];
 
 
@@ -78,5 +92,15 @@ class Project extends Model
     public function dependencies() // project dependency for PR->PO->GR
     {
         return $this->hasmany(ProjectDependency::class);
+    }
+
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->useLogName('project')
+            ->logOnly(['name','status', 'start_todo_date', 'start_date', 'end_date','manager_id','category_id','department_id','brand_id','project_code','deleted_at','updated_at','created_at'])
+            ->logOnlyDirty()
+            ->setDescriptionForEvent(fn(string $eventName) => "Task has been {$eventName}");
     }
 }
