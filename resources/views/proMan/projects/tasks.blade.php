@@ -302,10 +302,12 @@
                                     <a href="#" onclick="openShowModal(
                                                            '{{ route('dashboard.task.show', $task->id) }}',
                                                            '{{ route('dashboard.task.update.status', $task->id) }}'
-                                                       )"
+                                                        )"
                                        data-task-id="{{ $task->id }}"
                                        data-task-status="{{ $task->status }}"
-                                       class="btn btn-sm btn-light-info" data-bs-toggle="tooltip" data-bs-placement="top" title="مشاهده"><i class="ki-outline ki-eye fs-6 px-2"></i></a>
+                                       class="btn btn-sm btn-light-info" data-bs-toggle="tooltip" data-bs-placement="top" title="مشاهده">
+                                        <i class="ki-outline ki-eye fs-6 px-2"></i>
+                                    </a>
                                     <a href="#" class="btn btn-light-primary btn-sm"
                                        onclick="openEditModal('{{ route('dashboard.task.subtasks.store', $task->id) }}',
                                                     JSON.stringify({title:'{{ $task->title }}'}))">

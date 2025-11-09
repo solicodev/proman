@@ -53,7 +53,7 @@ class TaskController extends Controller
     public function store(TaskStoreRequest $request)
     {
         try {
-//            DB::beginTransaction();
+            DB::beginTransaction();
             $this->taskPanelService->store($request->all());
             return redirect()->back()->with('flash_message', ' با موفقیت ایجاد شد :)');
             DB::commit();
@@ -96,7 +96,6 @@ class TaskController extends Controller
     // data for modal task show
     public function show($id)
     {
-        Activity::all();
         $task = Task::with(['assigners.photo', 'photos','comments','manager'])->findOrFail($id);
         $task_comments = $task->comments()->orderBy('created_at', 'desc')->get();
         $taskCheck = '';
