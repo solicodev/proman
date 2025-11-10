@@ -1510,12 +1510,12 @@
                                                 <a class="text-active-danger">{{role_name($user->getRoleNames()->first())}}</a>
                                             </div>
                                         </div>
-                                        <button
-                                            type="button"
+                                        <a href="{{ route('home') }}/{{$file['path']}}"
+                                            type="button" download
                                             class="btn btn-clean btn-sm btn-icon btn-icon-primary btn-active-light-primary ms-auto"
                                             data-bs-toggle="tooltip" data-bs-placement="top" title="دانلود فایل">
                                             <i class="ki-outline ki-cloud-download fs-3"></i>
-                                        </button>
+                                        </a>
                                     </div>
                                 @endforeach
                             </div>
@@ -1531,7 +1531,7 @@
                             <div class="card-title flex-column">
                                 <h3 class="fw-bold mb-1">آخرین کامنت های پروژه</h3>
 
-                                <div class="fs-6 text-gray-500">تعداد کل کامنت ها</div>
+                                <div class="fs-6 text-gray-500">تعداد کل کامنت ها </div>
                             </div>
                             <div class="card-toolbar">
                                 <a href="#" class="btn btn-bg-light btn-active-color-primary btn-sm">مشاهده همه<i class="ki-outline ki-eye fs-5 ps-3"></i></a>
@@ -1684,7 +1684,7 @@
                         </div>
                         <div class="d-flex align-items-center position-relative my-1">
                             <i class="ki-outline ki-magnifier fs-3 position-absolute ms-3"></i>
-                            <input type="text" id="kt_filter_search" class="form-control form-control-solid form-select-sm w-150px ps-9" placeholder="Search Order" />
+                            <input type="text" id="kt_filter_search" class="form-control form-control-solid form-select-sm w-150px ps-9" placeholder="جستجو" />
                         </div>
                     </div>
                 </div>

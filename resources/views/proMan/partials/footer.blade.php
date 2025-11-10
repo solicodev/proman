@@ -7,21 +7,20 @@
     <!--begin::Copyright-->
     <div class="text-gray-900 order-2 order-md-1">
         <span class="text-muted fw-semibold me-1"><span id="current-year"></span>&copy;</span>
-        <a href="" target="_blank"
+        <a href="https://www.solico-group.com/" target="_blank"
            class="text-gray-800 text-hover-primary">Solico Group</a>
     </div>
     <!--end::Copyright-->
 
     <!--begin::Menu-->
     <ul class="menu menu-gray-600 menu-hover-primary fw-semibold order-1">
-        <li class="menu-item"><a href="https://keenthemes.com/" target="_blank"
-                                 class="menu-link px-2">About</a></li>
+        <li class="menu-item"><a href="https://www.solico-group.com/history/" target="_blank"
+                                 class="menu-link px-2">درباره ما</a></li>
 
-        <li class="menu-item"><a href="https://devs.keenthemes.com/" target="_blank"
-                                 class="menu-link px-2">Support</a></li>
+        <li class="menu-item"><a href="https://www.solico-group.com/contact/" target="_blank"
+                                 class="menu-link px-2">پشتیبانی</a></li>
 
-        <li class="menu-item"><a href="https://1.envato.market/EA4JP" target="_blank"
-                                 class="menu-link px-2">Purchase</a></li>
+
     </ul>
     <!--end::Menu-->
 </div>

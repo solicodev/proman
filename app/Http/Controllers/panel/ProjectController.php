@@ -111,7 +111,8 @@ class ProjectController extends Controller
 
     public function activity(Project $project)
     {
-        $activities = Activity::whereIn('subject_type',[Project::class,Task::class])->paginate(12);
+        $tasks = Task::with('project')->where('id',$project->id)->pluck('id')->all();
+        $activities = Activity::whereIn('subject_type',[Project::class,Task::class])->whereIn('subject_id',$tasks)->paginate(12);
         return view('proMan.projects.activity',get_defined_vars());
     }
 
