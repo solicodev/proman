@@ -18,6 +18,7 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
         Route::get('/tasks/{project}', [ProjectController::class, 'task'])->name('task');
         Route::get('/files/{project}', [ProjectController::class, 'file'])->name('file');
         Route::get('/members/{project}', [ProjectController::class, 'member'])->name('member');
+        Route::get('/activity/{project}', [ProjectController::class, 'activity'])->name('activity');
         Route::get('/dependencies/{project}', [ProjectController::class, 'dependency'])->name('dependency');
 
         Route::get('/create', [ProjectController::class, 'create'])->name('create');

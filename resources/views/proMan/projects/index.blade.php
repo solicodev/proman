@@ -375,8 +375,8 @@
                                                     <img alt="Pic" src="{{ route('home') }}/{{ $member->photo?->path }}" />
                                                 @else
                                                     <span class="symbol-label bg-info text-inverse-primary fw-bold text-info symbol-style">
-                            {{ mb_substr($member->Name, 0, 1) }}
-                        </span>
+                                                        {{ mb_substr($member->Name, 0, 1) }}
+                                                    </span>
                                                 @endif
                                             </div>
                                         @endforeach

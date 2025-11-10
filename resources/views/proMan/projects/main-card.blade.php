@@ -248,13 +248,13 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-active-primary py-5 me-6 " href="activity.html">
+                        <a class="nav-link text-active-primary py-5 me-6 " href="{{route('dashboard.project.activity',$project->id)}}">
                             فعالیت ها
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-active-primary py-5 me-6 " href="settings.html">
-                            تنظیمات
+                        <a class="nav-link text-active-primary py-5 me-6 " href="">
+                            دسترسی ها
                         </a>
                     </li>
                     <li class="nav-item">

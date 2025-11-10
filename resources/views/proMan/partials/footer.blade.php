@@ -6,9 +6,9 @@
 
     <!--begin::Copyright-->
     <div class="text-gray-900 order-2 order-md-1">
-        <span class="text-muted fw-semibold me-1">2025&copy;</span>
-        <a href="https://keenthemes.com/" target="_blank"
-           class="text-gray-800 text-hover-primary">Keenthemes</a>
+        <span class="text-muted fw-semibold me-1"><span id="current-year"></span>&copy;</span>
+        <a href="" target="_blank"
+           class="text-gray-800 text-hover-primary">Solico Group</a>
     </div>
     <!--end::Copyright-->
 

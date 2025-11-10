@@ -19,7 +19,6 @@ class TaskObserver
      */
     public function updated(Task $task): void
     {
-        // فقط زمانی که تاریخ‌ها تغییر کرده باشن
         if ($task->isDirty(['start_date', 'end_date'])) {
             foreach ($task->successors as $dep) {
                 $this->scheduler->updateSuccessorDates($dep);

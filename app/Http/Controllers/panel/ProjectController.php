@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Spatie\Activitylog\Models\Activity;
 
 class ProjectController extends Controller
 {
@@ -103,9 +104,15 @@ class ProjectController extends Controller
         $members = User::whereHas('roles', function ($query) use ($memberRoles) {
             $query->whereIn('name', $memberRoles);
         })->whereStatus('1')->latest()->get();
-
+        $project_members = $project->members()->paginate(9);
         return view('proMan.projects.members',get_defined_vars());
 
+    }
+
+    public function activity(Project $project)
+    {
+        $activities = Activity::whereIn('subject_type',[Project::class,Task::class])->paginate(12);
+        return view('proMan.projects.activity',get_defined_vars());
     }
 
     public function dependency(Project $project)
