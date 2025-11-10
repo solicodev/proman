@@ -67,7 +67,7 @@
                                         <a href="#" class="btn btn-sm btn-bg-light btn-active-color-primary me-3" data-bs-toggle="modal" data-bs-target="#kt_modal_users_search">
                                             اطلاع رسانی به اعضای پروژه<i class="ki-outline ki-notification-on fs-5 ps-3"></i>
                                         </a>
-                                        <a href="{{route('dashboard.project.edit',$project->id)}}" class="btn btn-sm btn-bg-light btn-active-color-primary me-3" data-bs-toggle="modal" data-bs-target="#kt_modal_users_search">
+                                        <a href="{{route('dashboard.project.edit',$project->id)}}" class="btn btn-sm btn-bg-light btn-active-color-primary me-3" >
                                             ویرایش <i class="ki-outline ki-pencil fs-5 ps-3"></i>
                                         </a>
                                         <a href="{{route('dashboard.project.destroy',$project->id)}}"

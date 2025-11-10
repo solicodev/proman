@@ -18,32 +18,32 @@
             <div class="card card-flush mt-6 mt-xl-9">
                 <div class="card-header mt-5">
                     <div class="card-title flex-column">
-                        <h3 class="fw-bold mb-1">لیست تمام تسک ها</h3>
+                        <h3 class="fw-bold mb-1">لیست آپشن ها</h3>
 
                         <div class="fs-6 text-gray-500"></div>
                     </div>
                     <div class="card-toolbar my-1">
                         <div class="me-6 my-1">
                             <select id="kt_filter_year" name="year" data-control="select2" data-hide-search="true" class="w-125px form-select form-select-solid form-select-sm">
-                                <option value="All" selected>All time</option>
-                                <option value="thisyear">This year</option>
-                                <option value="thismonth">This month</option>
-                                <option value="lastmonth">Last month</option>
-                                <option value="last90days">Last 90 days</option>
+                                <option value="All" selected>همه زمان ها</option>
+                                <option value="thisyear">امسال</option>
+                                <option value="thismonth">این ماه</option>
+                                <option value="lastmonth">اخرین ماه</option>
+                                <option value="last90days">90 روز گذشته</option>
                             </select>
                         </div>
                         <div class="me-4 my-1">
                             <select id="kt_filter_orders" name="orders" data-control="select2" data-hide-search="true" class="w-125px form-select form-select-solid form-select-sm">
-                                <option value="All" selected>All Orders</option>
-                                <option value="Approved">Approved</option>
-                                <option value="Declined">Declined</option>
-                                <option value="In Progress">In Progress</option>
-                                <option value="In Transit">In Transit</option>
+                                <option value="All" selected>همه</option>
+                                <option value="Approved">درحال بررسی</option>
+                                <option value="Declined">برای انجام</option>
+                                <option value="In Progress">در حال انجام</option>
+                                <option value="In Transit">انجام شد</option>
                             </select>
                         </div>
                         <div class="d-flex align-items-center position-relative my-1">
                             <i class="ki-outline ki-magnifier fs-3 position-absolute ms-3"></i>
-                            <input type="text" id="kt_filter_search" class="form-control form-control-solid form-select-sm w-150px ps-9" placeholder="Search Order" />
+                            <input type="text" id="kt_filter_search" class="form-control form-control-solid form-select-sm w-150px ps-9" placeholder="جستجو" />
                         </div>
                     </div>
                 </div>

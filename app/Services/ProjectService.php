@@ -81,13 +81,15 @@ class ProjectService
     {
         if (isset($param['title_dependencies'])) {
             foreach ($param['title_dependencies'] as $key => $dependency) {
+                $description = $param['description_dependencies'][$key] ?? null;
                 if (isset($project->dependencies[$key])){
                     $project->dependencies[$key]->title = $dependency;
-                    $project->dependencies[$key]->description = $dependency;
+                    $project->dependencies[$key]->description = $description;
                     $project->dependencies[$key]->save();
                 }else {
                     $project_dependency = new ProjectDependency();
                     $project_dependency->title = $dependency;
+                    $project_dependency->description = $description;
                     $project_dependency->project_id  = $project->id;
                     $project->dependencies()->save($project_dependency);
                 }

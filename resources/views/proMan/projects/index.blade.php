@@ -87,15 +87,15 @@
                     <!--begin::Card body-->
                     <div class="card-body p-9">
                         <!--begin::Heading-->
-                        <div class="fs-2hx fw-bold">{{count($projects)}}</div>
+                        <div class="fs-2hx fw-bold">{{count($user_projects)}}</div>
                         <div class="fs-4 fw-semibold text-gray-500 mb-7">تعداد کل پروژه ها</div>
                         <!--end::Heading-->
                         @php
-                            $pendingCount = $projects->where('status', 0)->count();
-                            $in_progressCount = $projects->where('status', 1)->count();
-                            $completedCount = $projects->where('status', 2)->count();
-                            $on_holdCount = $projects->where('status', 3)->count();
-                            $canceledCount = $projects->where('status', 4)->count();
+                            $pendingCount = $user_projects->where('status', 0)->count();
+                            $in_progressCount = $user_projects->where('status', 1)->count();
+                            $completedCount = $user_projects->where('status', 2)->count();
+                            $on_holdCount = $user_projects->where('status', 3)->count();
+                            $canceledCount = $user_projects->where('status', 4)->count();
 
                         @endphp
 

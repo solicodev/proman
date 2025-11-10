@@ -120,7 +120,7 @@
 
                                                 <div class="fv-row mb-10">
                                                     <label class="form-label required">نام پروژه</label>
-                                                    <input name="name" value="{{ old('name') }}" class="form-control form-control-lg form-control-solid"
+                                                    <input name="name" value="{{ $project->name }}" class="form-control form-control-lg form-control-solid"
                                                            placeholder="نام پروژه" required>
                                                 </div>
 
@@ -135,7 +135,7 @@
                                                                    data-jdp
                                                                    placeholder="تاریخ شروع پروژه"
                                                                    autocomplete="off"
-                                                                   value="{{ old('start_date') }}"
+                                                                   value="{{ $project->start_date }}"
                                                                    required />
                                                         </div>
                                                     </div>
@@ -149,7 +149,7 @@
                                                                    data-jdp
                                                                    placeholder="تاریخ پایان پروژه"
                                                                    autocomplete="off"
-                                                                   value="{{ old('end_date') }}"
+                                                                   value="{{ $project->end_date }}"
                                                                    required />
                                                         </div>
                                                     </div>
@@ -161,7 +161,7 @@
                                                             data-placeholder="برند را انتخاب کنید" name="brand_id" required>
                                                         <option></option>
                                                         @foreach($brands as $brand)
-                                                            <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                                            <option value="{{ $brand->id }}" @if($project->brand_id == $brand->id) selected @endif>{{ $brand->name }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -197,7 +197,7 @@
                                                             multiple name="members[]" data-placeholder="اعضای پروژه را انتخاب کنید" required>
                                                         <option></option>
                                                         @foreach($members as $member)
-                                                            <option value="{{ $member->id }}">{{ $member->Name }}</option>
+                                                            <option value="{{ $member->id }}" @if($project->members->contains('id', $member->id)) selected @endif>{{ $member->Name }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -209,7 +209,7 @@
                                                                     data-placeholder="دپارتمان را انتخاب کنید" name="department_id" required>
                                                                 <option></option>
                                                                 @foreach($departments as $department)
-                                                                    <option value="{{ $department->id }}">{{ $department->name }}</option>
+                                                                    <option value="{{ $department->id }}" @if($project->department_id == $department->id) selected @endif>{{ $department->name }}</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
@@ -221,7 +221,7 @@
                                                                 data-placeholder="دپارتمان را انتخاب کنید" name="category_id" required>
                                                             <option></option>
                                                             @foreach($categories as $category)
-                                                                <option value="{{$category->id}}">{{$category->title}} </option>
+                                                                <option value="{{$category->id}}" @if($project->category_id == $category->id) selected @endif>{{$category->title}} </option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -230,7 +230,7 @@
                                                 <div class="fv-row mb-10">
                                                     <label class="form-label">توضیحات پروژه</label>
                                                     <textarea name="description" class="form-control form-control-lg form-control-solid"
-                                                              rows="3">{{ old('description') }}</textarea>
+                                                              rows="3">{{ $project->description }}</textarea>
                                                 </div>
 
 
@@ -258,13 +258,28 @@
                                                     {{--                                        </div>--}}
                                                     <div class="fv-row mb-8">
                                                         <div class="row g-3 images">
-                                                            <div class="col-12 d-flex image align-items-center">
-                                                                <input class='form-control form-control-lg form-control-solid' type="file" name="photos[]" accept="image/*">
-                                                                <button type="button" class="btn btn-link text-danger ms-2" title='حذف'
-                                                                        onclick='removeImage(this)'>
-                                                                    <i class="ki-outline ki-trash fs-1"></i>
-                                                                </button>
-                                                            </div>
+                                                            @if(count($project->photos) > 0)
+                                                                @foreach($project->photos as $photo)
+                                                                    <div class="col-12 d-flex image align-items-center">
+                                                                        <input class='form-control form-control-lg form-control-solid' type="file" name="photos[]" accept="image/*">
+                                                                        <button type="button" class="btn btn-link text-danger ms-2" title='حذف'
+                                                                                onclick='removeImage(this)'>
+                                                                            <i class="ki-outline ki-trash fs-1"></i>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="col-md-2 d-flex image">
+                                                                        <img src="{{ url($photo->path) }}" class="img-fluid">
+                                                                    </div>
+                                                                @endforeach
+                                                            @else
+                                                                <div class="col-12 d-flex image align-items-center">
+                                                                    <input class='form-control form-control-lg form-control-solid' type="file" name="photos[]" accept="image/*">
+                                                                    <button type="button" class="btn btn-link text-danger ms-2" title='حذف'
+                                                                            onclick='removeImage(this)'>
+                                                                        <i class="ki-outline ki-trash fs-1"></i>
+                                                                    </button>
+                                                                </div>
+                                                            @endif
                                                         </div>
                                                         <div class="d-flex justify-content-end mt-3">
                                                             <button type="button" class="btn btn-sm btn-bg-light btn-active-color-primary" onclick='addImage()'>
@@ -329,9 +344,8 @@
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <div class="d-flex justify-content-end mt-5">
-                                            <button type="submit" class="btn btn-primary">ذخیره تغییرات پروژه</button>
+                                        <div class="d-flex justify-content-end">
+                                            <button type="submit" class="btn btn-primary btn-sm"> ذخیره تغییرات پروژه<i class="ki-outline ki-plus-square fs-3 px-2"></i></button>
                                         </div>
                                     </form>
                                 </div>
@@ -347,63 +361,88 @@
                                         <h4 class="fw-bold mb-4 text-gray-900">آپشن‌ها و جزئیات پروژه</h4>
 
                                         <div class="fv-row mb-8">
-                                            <div class="row g-3 dependencies">
-                                                <div class="form-group col-4 depndency align-items-center">
-{{--                                                    <div class="dep">--}}
-{{--                                                        <div class="form-check form-check-custom form-check-solid mt-2 mt-md-11">--}}
-{{--                                                            <div class="mb-10">--}}
-{{--                                                                <input class="form-check-input" type="radio" value="Pr" name="radio2">--}}
-{{--                                                                <label class="form-check-label">Pr</label>--}}
-{{--                                                            </div>--}}
-{{--                                                            <div class="mb-10">--}}
-{{--                                                                <input class="form-check-input" type="radio" value="Po" name="radio2">--}}
-{{--                                                                <label class="form-check-label">Po</label>--}}
-{{--                                                            </div>--}}
-{{--                                                            <div class="mb-10">--}}
-{{--                                                                <input class="form-check-input" type="radio" value="Gr" name="radio2">--}}
-{{--                                                                <label class="form-check-label">Gr</label>--}}
-{{--                                                            </div>--}}
-{{--                                                        </div>--}}
-{{--                                                    </div>--}}
 
-                                                    <div class="form-group">
-                                                        <label class="form-label">آپشن:</label>
-                                                        <input class='form-control form-control-lg form-control-solid mx-1' type="text"
-                                                               name="title_dependencies[]" placeholder="مثال : PR code">
-                                                    </div>
+                                            @if(count($project->dependencies)>0)
+                                                <div class="row g-3 dependencies">
+                                                    @foreach($project->dependencies as $dependency)
+                                                        <div class="form-group col-4 depndency align-items-center">
+                                                            {{--                                                    <div class="dep">--}}
+                                                            {{--                                                        <div class="form-check form-check-custom form-check-solid mt-2 mt-md-11">--}}
+                                                            {{--                                                            <div class="mb-10">--}}
+                                                            {{--                                                                <input class="form-check-input" type="radio" value="Pr" name="radio2">--}}
+                                                            {{--                                                                <label class="form-check-label">Pr</label>--}}
+                                                            {{--                                                            </div>--}}
+                                                            {{--                                                            <div class="mb-10">--}}
+                                                            {{--                                                                <input class="form-check-input" type="radio" value="Po" name="radio2">--}}
+                                                            {{--                                                                <label class="form-check-label">Po</label>--}}
+                                                            {{--                                                            </div>--}}
+                                                            {{--                                                            <div class="mb-10">--}}
+                                                            {{--                                                                <input class="form-check-input" type="radio" value="Gr" name="radio2">--}}
+                                                            {{--                                                                <label class="form-check-label">Gr</label>--}}
+                                                            {{--                                                            </div>--}}
+                                                            {{--                                                        </div>--}}
+                                                            {{--                                                    </div>--}}
 
-                                                    <div class="form-group">
-                                                        <label class="form-label">جزییات:</label>
-                                                        <textarea class='form-control form-control-lg form-control-solid'
-                                                                  rows="1" name="description_dependencies[]"
-                                                                  placeholder="جزییات آپشن مربوط به پروژه"></textarea>
-                                                    </div>
+                                                            <div class="form-group">
+                                                                <label class="form-label">آپشن:</label>
+                                                                <input class='form-control form-control-lg form-control-solid mx-1' type="text"
+                                                                       name="title_dependencies[]" value="{{ $dependency->title ?? null }}" placeholder="مثال : PR code">
+                                                            </div>
 
-                                                    <div class="d-flex justify-content-end">
-                                                        <button type="button" class="btn btn-link text-danger ms-2" title='حذف'
-                                                                onclick='removeDependency(this)'>
-                                                            <i class="ki-outline ki-trash fs-1"></i>
-                                                        </button>
+                                                            <div class="form-group">
+                                                                <label class="form-label">جزییات:</label>
+                                                                <textarea class='form-control form-control-lg form-control-solid'
+                                                                          rows="1" name="description_dependencies[]"
+                                                                          placeholder="جزییات آپشن مربوط به پروژه">{{ $dependency->description ?? null }}</textarea>
+                                                            </div>
+
+                                                            <div class="d-flex justify-content-end">
+                                                                <button type="button" class="btn btn-link text-danger ms-2" title='حذف'
+                                                                        onclick='removeDependency(this)'>
+                                                                    <i class="ki-outline ki-trash fs-1"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                            @else
+                                                <div class="row g-3 dependencies">
+                                                    <div class="form-group col-4 depndency align-items-center">
+                                                        <div class="form-group">
+                                                            <label class="form-label">آپشن:</label>
+                                                            <input class='form-control form-control-lg form-control-solid mx-1' type="text"
+                                                                   name="title_dependencies[]"  placeholder="مثال : PR code">
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="form-label">جزییات:</label>
+                                                            <textarea class='form-control form-control-lg form-control-solid'
+                                                                      rows="1" name="description_dependencies[]"
+                                                                      placeholder="جزییات آپشن مربوط به پروژه"></textarea>
+                                                        </div>
+
+                                                        <div class="d-flex justify-content-end">
+                                                            <button type="button" class="btn btn-link text-danger ms-2" title='حذف'
+                                                                    onclick='removeDependency(this)'>
+                                                                <i class="ki-outline ki-trash fs-1"></i>
+                                                            </button>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-
+                                            @endif
                                             <div class="d-flex justify-content-end mt-3">
                                                 <button type="button" class="btn btn-sm btn-bg-light btn-active-color-primary" onclick='addDependency()'>
                                                     افزودن آپشن جدید <i class="ki-outline ki-plus-square fs-3 px-2"></i>
                                                 </button>
                                             </div>
                                         </div>
-
-                                        <div class="d-flex justify-content-end mt-5">
-                                            <button type="submit" class="btn btn-sm btn-primary">ذخیره جزئیات<i class="ki-outline ki-plus fs-3"></i></button>
+                                        <div class="d-flex justify-content-end">
+                                            <button type="submit" class="btn btn-primary btn-sm"> ذخیره جزئیات<i class="ki-outline ki-plus-square fs-3 px-2"></i></button>
                                         </div>
                                     </form>
                                 </div>
                             </div>
                         </div>
-
-
                         <!--end::Form-->
                     </div>
                     <!--end::Stepper-->

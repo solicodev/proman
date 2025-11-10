@@ -78,7 +78,7 @@ class ProjectController extends Controller
         $task_files = [];
         foreach ($tasks as $task)
         {
-            $task_files = $task->photos->toArray();
+            $task_files = $task->photos?->toArray();
         }
         $files_array = array_merge($task_files , $project->photos->toArray());
 
