@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Services\TaskPanelService;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Spatie\Activitylog\Models\Activity;
 
@@ -22,9 +23,8 @@ class TaskController extends Controller
     {
         $this->taskPanelService = $taskPanelService;
     }
-    public function index(Project $project)
+    public function index()
     {
-        Activity::all();
         $SuperAdminRoles = ['Super Admin'];
         $excludedRoles = ['Manager'];
         $memberRoles = ['Member'];
@@ -37,13 +37,24 @@ class TaskController extends Controller
             $query->whereIn('name', $memberRoles);
         })->whereStatus('1')->latest()->get();
 
-        $projects = Project::get();;
 
         $watchers = User::whereDoesntHave('roles', function ($query) use ($SuperAdminRoles) {
             $query->whereIn('name', $SuperAdminRoles);
         })->whereStatus('1')->latest()->get();
-        $tasks = Task::with(['project','manager','watcher','assigners','photos','predecessors','successors'])->where('project_id',$project->id)->paginate(15);
-        return view('proMan.projects.tasks',get_defined_vars());
+
+        $columns = [
+            0 => ['title' => 'در حال بررسی', 'color' => 'warning'],
+            1 => ['title' => 'برای انجام', 'color' => 'primary'],
+            2 => ['title' => 'در حال انجام', 'color' => 'success'],
+            3 => ['title' => 'انجام شد', 'color' => 'secondary'],
+        ];
+
+        $projects = Project::with('manager','category','department','brand','members','photos','dependencies','comments')->where('manager_id',Auth::id())->pluck('id')->all();;
+
+        $tasks = Task::with(['project','manager','watcher','assigners','photos','predecessors','successors'])->whereNull('parent_id')->whereIn('project_id',$projects)->get()->groupBy('status');
+        $tb_tasks = Task::with(['children'=>with(['assigners' => with(['photo'])])],['project','manager','watcher','assigners','photos','parent'])->whereNull('parent_id')->whereIn('project_id',$projects)->get();
+
+        return view('proMan.tasks.tasks',get_defined_vars());
     }
 
     public function create(Project $project)

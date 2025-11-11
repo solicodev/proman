@@ -56796,11 +56796,12 @@ router-outlet {
 }
 
 [data-bs-theme=light] {
-    --bs-header-bg: linear-gradient(90deg, rgb(228, 239, 249) 0%, rgb(228, 239, 249) 100%)
+    --bs-header-bg: linear-gradient(360deg, rgb(247 247 247) 0%, #bbc4dcd4 100%)
+
 }
 
 [data-bs-theme=dark] {
-    --bs-header-bg: rgb(228, 239, 249)
+    --bs-header-bg: linear-gradient(360deg, rgb(15 16 20) 0%, #1c2845 100%)
 }
 
 body {

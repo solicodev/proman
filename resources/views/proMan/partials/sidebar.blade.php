@@ -60,7 +60,8 @@
                            data-kt-button="true">
                             <!--begin::Icon-->
                             <span class="mb-2">
-                                                    <i class="ki-outline ki-calendar fs-1"></i> </span>
+                                <i class="ki-outline ki-chart-line-star fs-1"></i>
+                            </span>
                             <!--end::Icon-->
 
                             <!--begin::Label-->
@@ -73,12 +74,13 @@
                     <!--begin::Col-->
                     <div class="col-6">
                         <!--begin::Link-->
-                        <a href="apps/support-center/licenses.html"
+                        <a href="{{route('dashboard.task.index')}}"
                            class="btn btn-icon btn-outline btn-bg-light btn-active-light-primary btn-flex flex-column flex-center w-100px h-100px border-gray-200"
                            data-kt-button="true">
                             <!--begin::Icon-->
                             <span class="mb-2">
-                                                    <i class="ki-outline ki-tablet-book fs-1"></i> </span>
+                                <i class="ki-outline ki-tablet-book fs-1"></i>
+                            </span>
                             <!--end::Icon-->
 
                             <!--begin::Label-->
@@ -91,138 +93,45 @@
                     <!--begin::Col-->
                     <div class="col-6">
                         <!--begin::Link-->
-                        <a href="apps/support-center/overview.html"
+                        <a href=""
                            class="btn btn-icon btn-outline btn-bg-light btn-active-light-primary btn-flex flex-column flex-center w-100px h-100px border-gray-200"
                            data-kt-button="true">
                             <!--begin::Icon-->
                             <span class="mb-2">
-                                                    <i class="ki-outline ki-wifi-home fs-1"></i> </span>
+                                    <i class="ki-outline ki-message-minus fs-1"></i>
+                            </span>
                             <!--end::Icon-->
 
                             <!--begin::Label-->
-                            <span class="fs-7 fw-bold">تیکت</span>
+                            <span class="fs-7 fw-bold">تیکت ها</span>
                             <!--end::Label-->
                         </a>
                         <!--end::Link-->
                     </div>
-                    <!--end::Col-->
-                    <!--begin::Col-->
                     <div class="col-6">
                         <!--begin::Link-->
-                        <a href="apps/projects/list.html"
+                        <a href=""
                            class="btn btn-icon btn-outline btn-bg-light btn-active-light-primary btn-flex flex-column flex-center w-100px h-100px border-gray-200"
                            data-kt-button="true">
                             <!--begin::Icon-->
                             <span class="mb-2">
-                                                    <i class="ki-outline ki-medal-star fs-1"></i> </span>
+                                    <i class="ki-outline ki-receipt-square fs-1"></i>
+                            </span>
                             <!--end::Icon-->
 
                             <!--begin::Label-->
-                            <span class="fs-7 fw-bold">Hospitality</span>
+                            <span class="fs-7 fw-bold">گزارشات</span>
                             <!--end::Label-->
                         </a>
                         <!--end::Link-->
                     </div>
                     <!--end::Col-->
-                    <!--begin::Col-->
-                    <div class="col-6">
-                        <!--begin::Link-->
-                        <a href="apps/file-manager/folders.html"
-                           class="btn btn-icon btn-outline btn-bg-light btn-active-light-primary btn-flex flex-column flex-center w-100px h-100px border-gray-200"
-                           data-kt-button="true">
-                            <!--begin::Icon-->
-                            <span class="mb-2">
-                                                    <i class="ki-outline ki-setting-2 fs-1"></i> </span>
-                            <!--end::Icon-->
 
-                            <!--begin::Label-->
-                            <span class="fs-7 fw-bold">Utilities</span>
-                            <!--end::Label-->
-                        </a>
-                        <!--end::Link-->
-                    </div>
-                    <!--end::Col-->
-                    <!--begin::Col-->
-                    <div class="col-6">
-                        <!--begin::Link-->
-                        <a href="apps/file-manager/settings.html"
-                           class="btn btn-icon btn-outline btn-bg-light btn-active-light-primary btn-flex flex-column flex-center w-100px h-100px active border-primary border-dashed"
-                           data-kt-button="true">
-                            <!--begin::Icon-->
-                            <span class="mb-2">
-                                                    <i class="ki-outline ki-plus fs-1"></i> </span>
-                            <!--end::Icon-->
-
-                            <!--begin::Label-->
-                            <span class="fs-7 fw-bold">Add New</span>
-                            <!--end::Label-->
-                        </a>
-                        <!--end::Link-->
-                    </div>
-                    <!--end::Col-->
                 </div>
                 <!--end::Row-->
             </div>
             <!--end::Links-->
-
-{{--            <div id="kt_app_settings_content" class="position-relative mt-auto"--}}
-{{--                 data-kt-scroll="true" data-kt-scroll-wrappers="#kt_app_layout_builder_body"--}}
-{{--                 data-kt-scroll-dependencies="#kt_app_layout_builder_header, #kt_app_layout_builder_footer"--}}
-{{--                 data-kt-scroll-offset="5px">--}}
-{{--                <div class="separator separator-dashed my-5"></div>--}}
-
-
-{{--                <form method="POST" action="{{ route('change-theme') }}" class="form"--}}
-{{--                      id="kt_app_layout_builder_form">--}}
-{{--                    @csrf--}}
-{{--                    <input type="hidden" id="kt_app_layout_builder_action"--}}
-{{--                           name="layout-builder[action]" />--}}
-{{--                    <div class="card-body p-0">--}}
-{{--                        <div class="form-group">--}}
-{{--                            <div class="row" data-kt-buttons="true"--}}
-{{--                                 data-kt-buttons-target=".form-check-image,.form-check-input">--}}
-
-{{--                                <div class="col-6">--}}
-{{--                                    <label class="form-check-image form-check-success">--}}
-{{--                                        <div--}}
-{{--                                            class="form-check form-check-custom form-check-solid form-check-sm form-check-success">--}}
-{{--                                            <input class="change-theme-input form-check-input"--}}
-{{--                                                   type="radio" value="light" name="theme_mode"--}}
-{{--                                                   id="kt_layout_builder_theme_mode_light" />--}}
-
-{{--                                            <div class="form-check-label text-gray-700">--}}
-{{--                                                روشن--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                    </label>--}}
-{{--                                </div>--}}
-{{--                                <div class="col-6">--}}
-{{--                                    <label class="form-check-image form-check-success">--}}
-{{--                                        <div--}}
-{{--                                            class="form-check form-check-custom form-check-solid form-check-sm form-check-success">--}}
-{{--                                            <input class="change-theme-input form-check-input"--}}
-{{--                                                   type="radio" value="dark" name="theme_mode"--}}
-{{--                                                   id="kt_layout_builder_theme_mode_dark" />--}}
-
-{{--                                            <div class="form-check-label text-gray-700">--}}
-{{--                                                تیره--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                    </label>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </form>--}}
-{{--            </div>--}}
         </div>
-        <!--end::Nav wrapper-->
     </div>
-    <!--end::Sidebar nav-->
-
-
-
-
-
 </div>
 <!--end::Sidebar-->
