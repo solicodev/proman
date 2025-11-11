@@ -11,18 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tickets', function (Blueprint $table) {
+        Schema::create('ticket_messages', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('ticket_id')->nullable();
+            $table->foreign('ticket_id')->references('id')->on('tickets')->onDelete('cascade');
+
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
-            $table->unsignedBigInteger('department_id')->nullable();
-            $table->foreign('department_id')->references('id')->on('ticket_departments')->onDelete('cascade');
-
-
-            $table->string('subject')->nullable();
-            $table->enum('priority', ['low', 'medium', 'high'])->default('low');
-            $table->enum('status', ['new', 'pending', 'answered', 'waiting', 'closed'])->default('new');
+            $table->text('message')->nullable();
             $table->timestamps();
         });
     }
@@ -32,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tickets');
+        Schema::dropIfExists('ticket_messages');
     }
 };

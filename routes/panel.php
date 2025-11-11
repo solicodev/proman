@@ -4,6 +4,7 @@ use App\Http\Controllers\panel\PanelController;
 use App\Http\Controllers\panel\ProjectController;
 use App\Http\Controllers\panel\TaskChecklistController;
 use App\Http\Controllers\panel\TaskController;
+use App\Http\Controllers\panel\TicketController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(function () {
@@ -53,6 +54,18 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
         Route::put('/tasks/{task}/status', [TaskController::class, 'updateStatus'])->name('update.status');
 
     });
+
+
+    Route::prefix('ticket')->name('ticket.')->group(function () {
+        Route::get('/', [TicketController::class, 'index'])->name('index');
+        Route::get('/create', [TicketController::class, 'create'])->name('create');
+        Route::post('/store', [TicketController::class, 'store'])->name('store');
+        Route::get('/edit/{ticket}', [TicketController::class, 'edit'])->name('edit');
+        Route::put('/update/{ticket}', [TicketController::class, 'update'])->name('update');
+        Route::put('/option/{ticket}', [TicketController::class, 'option'])->name('options');
+        Route::get('/delete/{ticket}', [TicketController::class, 'destroy'])->name('destroy');
+    });
+
 
 });
 

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\panel;
 
-use App\Models\Ticket;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class TicketController extends Controller
+class TicketDepartmentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class TicketController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Ticket $ticket)
+    public function show(string $id)
     {
         //
     }
@@ -42,7 +42,7 @@ class TicketController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Ticket $ticket)
+    public function edit(string $id)
     {
         //
     }
@@ -50,7 +50,7 @@ class TicketController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Ticket $ticket)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -58,7 +58,7 @@ class TicketController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Ticket $ticket)
+    public function destroy(string $id)
     {
         //
     }
