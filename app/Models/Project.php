@@ -94,6 +94,10 @@ class Project extends Model
         return $this->hasmany(ProjectDependency::class);
     }
 
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'comments');
+    }
 
     public function getActivitylogOptions(): LogOptions
     {

@@ -1531,125 +1531,40 @@
                             <div class="card-title flex-column">
                                 <h3 class="fw-bold mb-1">آخرین کامنت های پروژه</h3>
 
-                                <div class="fs-6 text-gray-500">تعداد کل کامنت ها </div>
+                                <div class="fs-6 text-gray-500">تعداد کل کامنت ها {{$total_comments}} </div>
                             </div>
                             <div class="card-toolbar">
-                                <a href="#" class="btn btn-bg-light btn-active-color-primary btn-sm">مشاهده همه<i class="ki-outline ki-eye fs-5 ps-3"></i></a>
+                                <a href="{{route('dashboard.project.comment',$project->id)}}" class="btn btn-bg-light btn-active-color-primary btn-sm">مشاهده همه<i class="ki-outline ki-eye fs-5 ps-3"></i></a>
                             </div>
                         </div>
                         <div class="card-body d-flex flex-column p-9 pt-3 mb-9">
+                            @foreach($comment_collection as $comment)
                             <div class="d-flex align-items-center mb-5">
                                 <div class="me-5 position-relative">
                                     <div class="symbol symbol-35px symbol-circle">
-                                        <img alt="Pic" src="{{url('panel/assets/media/avatars/300-6.jpg')}}" />
+                                        @if($comment['user']['photo_id'])
+                                        <img alt="Pic" src="{{route('home')}}/{{$comment['user']['photo']['path']}}" />
+                                        @else
+                                        <span class="symbol-label bg-light-danger text-danger fw-semibold">{{ mb_substr($comment['user']['Name'], 0, 1) }}</span>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="fw-semibold">
-                                    <a href="#" class="fs-5 fw-bold text-gray-900 text-hover-primary">محمد علی ناصحی</a>
+
+                                    <a href="#" class="fs-5 fw-bold text-gray-900 text-hover-primary">{{$comment['user']['Name']}}</a>
 
                                     <div class="text-gray-500">
-                                       لورم ایپسوم
+                                       {{$comment['text']}}
                                     </div>
                                 </div>
                                 <!--end::Details-->
 
                                 <!--begin::Badge-->
-                                <div class="badge badge-light ms-auto">5</div>
+{{--                                <div class="badge badge-light ms-auto">5</div>--}}
                                 <!--end::Badge-->
                             </div>
-                            <div class="d-flex align-items-center mb-5">
-                                <!--begin::Avatar-->
-                                <div class="me-5 position-relative">
-                                    <!--begin::Image-->
-                                    <div class="symbol symbol-35px symbol-circle">
-                                                    <span class="symbol-label bg-light-danger text-danger fw-semibold">
-                                M                            </span>
-                                    </div>
-                                    <!--end::Image-->
+                            @endforeach
 
-                                    <!--begin::Online-->
-                                    <div class="bg-success position-absolute h-8px w-8px rounded-circle translate-middle start-100 top-100 ms-n1 mt-n1"></div>
-                                    <!--end::Online-->
-                                </div>
-                                <!--end::Avatar-->
-
-                                <!--begin::Details-->
-                                <div class="fw-semibold">
-                                    <a href="#" class="fs-5 fw-bold text-gray-900 text-hover-primary">مهسا امامی</a>
-
-                                    <div class="text-gray-500">
-                                        لورم ایپسوم
-                                    </div>
-                                </div>
-                                <!--end::Details-->
-
-                                <!--begin::Badge-->
-                                <div class="badge badge-light ms-auto">8</div>
-                                <!--end::Badge-->
-                            </div>
-                            <div class="d-flex align-items-center mb-5">
-                                <!--begin::Avatar-->
-                                <div class="me-5 position-relative">
-                                    <!--begin::Image-->
-                                    <div class="symbol symbol-35px symbol-circle">
-                                        <img alt="Pic" src="{{url('panel/assets/media/avatars/300-1.jpg')}}" />
-                                    </div>
-                                    <!--end::Image-->
-
-                                </div>
-                                <!--end::Avatar-->
-
-                                <!--begin::Details-->
-                                <div class="fw-semibold">
-                                    <a href="#" class="fs-5 fw-bold text-gray-900 text-hover-primary">مینا دمیرچی</a>
-
-                                    <div class="text-gray-500">
-                                      لورم ایپسوم
-                                    </div>
-                                </div>
-                                <!--end::Details-->
-
-                                <!--begin::Badge-->
-                                <div class="badge badge-light ms-auto">9</div>
-                                <!--end::Badge-->
-                            </div>
-                            <div class="d-flex align-items-center mb-5">
-                                <!--begin::Avatar-->
-                                <div class="me-5 position-relative">
-                                    <!--begin::Image-->
-                                    <div class="symbol symbol-35px symbol-circle">
-                                        <img alt="Pic" src="{{url('panel/assets/media/avatars/300-5.jpg')}}" />
-                                    </div>
-                                    <!--end::Image-->
-
-                                </div>
-                                <!--end::Avatar-->
-
-                                <!--begin::Details-->
-                                <div class="fw-semibold">
-                                    <a href="#" class="fs-5 fw-bold text-gray-900 text-hover-primary">فرتاش آذرسینا</a>
-
-                                    <div class="text-gray-500">
-                                    لورم ایپسوم
-                                    </div>
-                                </div>
-                                <div class="badge badge-light ms-auto">3</div>
-                            </div>
-                            <div class="d-flex align-items-center ">
-                                <div class="me-5 position-relative">
-                                    <div class="symbol symbol-35px symbol-circle">
-                                        <img alt="Pic" src="{{url('panel/assets/media/avatars/300-25.jpg')}}" />
-                                    </div>
-                                </div>
-                                <div class="fw-semibold">
-                                    <a href="#" class="fs-5 fw-bold text-gray-900 text-hover-primary">سینا آذرینا</a>
-
-                                    <div class="text-gray-500">
-                                       لورم ایپسوم
-                                    </div>
-                                </div>
-                                <div class="badge badge-light ms-auto">4</div>
-                            </div>
                         </div>
                     </div>
                 </div>

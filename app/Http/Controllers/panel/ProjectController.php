@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ProjectStoreRequest;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Department;
 use App\Models\Photo;
 use App\Models\Project;
@@ -122,6 +123,35 @@ class ProjectController extends Controller
         return view('proMan.projects.projectDependency',get_defined_vars());
     }
 
+    public function comment(Project $project)
+    {
+        $tasks = Task::with(['photos','project','comments.user.photo'])->where('project_id',$project->id)->get();
+        $task_comments = [];
+        foreach ($tasks as $key => $task_comment)
+        {
+            $task_comments = $task_comment->comments?->toArray();
+        }
+
+        $comments_array = array_merge($task_comments , $project->comments?->toArray());
+        $comment_collection = collect($comments_array);
+        $total_comments = collect($comments_array)->count();
+
+
+        $currentPage = request()->get('page', 1);
+        $perPage = 10;
+
+        $currentPageItems = $comment_collection->slice(($currentPage - 1) * $perPage, $perPage)->values();
+
+        $resultComments = new LengthAwarePaginator(
+            $currentPageItems,
+            $comment_collection->count(),
+            $perPage,
+            $currentPage,
+            ['path' => request()->url(), 'query' => request()->query()]
+        );
+
+        return view('proMan.projects.comments',get_defined_vars());
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -168,19 +198,27 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        $tasks = Task::with(['photos','project'])->where('project_id',$project->id)->get();
+        $tasks = Task::with(['photos','project','comments.user.photo'])->where('project_id',$project->id)->get();
         $task_files = [];
         foreach ($tasks as $task)
         {
-            $task_files = $task->photos->toArray();
+            $task_files = $task->photos?->toArray();
         }
         $files_array = array_merge($task_files , $project->photos->toArray());
         $file_collection = collect($files_array)->take(5);
         $total_files = collect($files_array)->count();
 
 
-        $tasks = Task::with(['project','manager','watcher','assigners','photos','predecessors','successors'])->where('project_id',$project->id)->paginate(15);
+        $task_comments = [];
+        foreach ($tasks as $key => $task_comment)
+        {
+            $task_comments = $task_comment->comments?->toArray();
+        }
 
+        $comments_array = array_merge($task_comments , $project->comments?->toArray());
+        $comment_collection = collect($comments_array)->take(5);
+        $total_comments = collect($comments_array)->count();
+        $tasks = Task::with(['project','manager','watcher','assigners','photos','predecessors','successors'])->where('project_id',$project->id)->paginate(15);
         return view('proMan.projects.show',get_defined_vars());
     }
 

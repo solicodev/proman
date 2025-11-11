@@ -14,12 +14,13 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
         Route::get('/', [ProjectController::class, 'index'])->name('index');
 
         Route::get('/redirect/{project}', [ProjectController::class, 'redirect'])->name('redirect');
-        Route::get('/project/{project}', [ProjectController::class, 'show'])->name('show');
+        Route::get('/show/{project}', [ProjectController::class, 'show'])->name('show');
         Route::get('/tasks/{project}', [ProjectController::class, 'task'])->name('task');
         Route::get('/files/{project}', [ProjectController::class, 'file'])->name('file');
         Route::get('/members/{project}', [ProjectController::class, 'member'])->name('member');
         Route::get('/activity/{project}', [ProjectController::class, 'activity'])->name('activity');
         Route::get('/dependencies/{project}', [ProjectController::class, 'dependency'])->name('dependency');
+        Route::get('/comments/{project}', [ProjectController::class, 'comment'])->name('comment');
 
         Route::get('/create', [ProjectController::class, 'create'])->name('create');
         Route::post('/store', [ProjectController::class, 'store'])->name('store');

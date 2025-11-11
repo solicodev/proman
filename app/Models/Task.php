@@ -110,7 +110,7 @@ class Task extends Model
 
     public function comments()
     {
-        return $this->morphMany(Comment::class, 'comments')->where('status', 1);
+        return $this->morphMany(Comment::class, 'comments');
     }
 
     public function getActivitylogOptions(): LogOptions

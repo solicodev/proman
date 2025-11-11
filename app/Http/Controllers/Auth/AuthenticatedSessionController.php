@@ -37,7 +37,7 @@ class AuthenticatedSessionController extends Controller
         $user->update();
 
         //ToDO
-        // sendSms($request->mobile, $otp);
+         sendSms($request->mobile, $otp);
 
         return response()->json([
             'status' => true,
