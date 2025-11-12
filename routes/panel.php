@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\panel\PanelController;
+use App\Http\Controllers\panel\PhotoController;
 use App\Http\Controllers\panel\ProjectController;
 use App\Http\Controllers\panel\TaskChecklistController;
 use App\Http\Controllers\panel\TaskController;
@@ -52,7 +53,6 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
 
         Route::post('/tasks/{task}/comments', [TaskController::class, 'addComment'])->name('comment.add');
         Route::put('/tasks/{task}/status', [TaskController::class, 'updateStatus'])->name('update.status');
-
     });
 
 
@@ -66,6 +66,6 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
         Route::get('/delete/{ticket}', [TicketController::class, 'destroy'])->name('destroy');
     });
 
-
+    Route::post('/upload' , [PhotoController::class,'upload'])->name('upload');
 });
 

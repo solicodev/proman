@@ -14,13 +14,11 @@ class PhotoController extends Controller
         $file = $request->file('file');
 
         $photo = new Photo();
-        $photo->path = file_store($file, 'uploads/projects/', '');
+        $photo->path = file_store($file, 'uploads/', '');
         $photo->name = $file;
         $photo->user_id = Auth::id();
         $photo->save();
+        return response()->json(['path' => $photo->path]);
 
-        return response()->json([
-            'photos' =>$photo->id
-        ]);
     }
 }

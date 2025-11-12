@@ -16,6 +16,7 @@
     <link href="{{url('panel/assets/plugins/custom/datatables/datatables.bundle.rtl.css')}}" rel="stylesheet"
           type="text/css"/>
     <!--end::Vendor Stylesheets-->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
 
     <!--begin::Global Stylesheets Bundle(mandatory for all pages)-->

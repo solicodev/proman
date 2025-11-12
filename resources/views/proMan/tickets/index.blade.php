@@ -1,6 +1,5 @@
 <x-layout>
  @include('layouts.message')
-
     <div class="d-flex flex-column flex-column-fluid">
         <div id="kt_app_toolbar" class="app-toolbar  d-flex pb-3 pb-lg-5 ">
             <div class="d-flex flex-stack flex-row-fluid">
@@ -10,7 +9,6 @@
                             <span>لیست تیکت ها</span>
                         </h1>
                     </div>
-
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold mb-3 fs-7">
                         <li class="breadcrumb-item text-gray-700 fw-bold lh-1">
                             <a href="{{route('dashboard.index')}}" class="text-white text-hover-primary">
@@ -56,34 +54,19 @@
                             <li class="nav-item my-1">
                                 <a class="btn btn-color-gray-600 btn-active-secondary btn-active-color-primary fw-bolder fs-8 fs-lg-base nav-link px-3 px-lg-8 mx-1 text-uppercase
                                     " href="">
-
                                     سوالات متداول (FAQ)
                                 </a>
                             </li>
                         </ul>
-                        <!--end::Nav-->
-
-                        <!--begin::Action-->
-                        <!--end::Action-->
                     </div>
-                    <!--end::Hero nav-->
                 </div>
-                <!--end::Hero body-->
             </div>
-            <!--end::Hero card-->
-
-            <!--begin::Card-->
             <div class="card">
-                <!--begin::Card body-->
                 <div class="card-body">
-                    <!--begin::Layout-->
                     <div class="d-flex flex-column flex-xl-row p-7">
-                        <!--begin::Content-->
                         <div class="flex-lg-row-fluid me-xl-15 mb-20 mb-xl-0">
-
                             <div class="card-body pt-0">
                                 <div class="table-responsive">
-                                    <!--begin::Table-->
                                     <table id="kt_profile_overview_table" class="table table-row-bordered table-row-dashed gy-4 align-middle fw-bold text-start">
                                         <thead class="fs-7 text-gray-500 text-uppercase text-start">
                                         <tr>
@@ -114,19 +97,13 @@
                                                 <td class="text-start"></td>
                                                 <td class="text-start"></td>
                                                 <td class="text-start"></td>
-
                                             </tr>
                                         @endforeach
                                         </tbody>
                                     </table>
-                                    <!--end::Table-->
                                 </div>
-                                <!--end::Table container-->
                             </div>
                         </div>
-                        <!--end::Content-->
-
-                        <!--begin::Sidebar-->
                         <div class="flex-column flex-lg-row-auto w-100 mw-lg-300px mw-xxl-350px">
 
 
@@ -377,240 +354,93 @@
 
 
                         </div>
-                        <!--end::Sidebar-->
                     </div>
-                    <!--end::Layout-->
                 </div>
-                <!--end::Card body-->
             </div>
-            <!--end::Card-->
 
 
             <!--begin::Modal - Support Center - Create Ticket-->
             <div class="modal fade" id="kt_modal_new_ticket" tabindex="-1" aria-hidden="true">
-                <!--begin::Modal dialog-->
                 <div class="modal-dialog modal-dialog-centered mw-750px">
-                    <!--begin::Modal content-->
                     <div class="modal-content rounded">
-                        <!--begin::Modal header-->
                         <div class="modal-header pb-0 border-0 justify-content-end">
-                            <!--begin::Close-->
                             <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
                                 <i class="ki-outline ki-cross fs-1"></i>                </div>
-                            <!--end::Close-->
                         </div>
-                        <!--begin::Modal header-->
-
-                        <!--begin::Modal body-->
                         <div class="modal-body scroll-y px-10 px-lg-15 pt-0 pb-15">
-                            <!--begin:Form-->
-                            <form id="kt_modal_new_ticket_form" class="form" action="#">
-                                <!--begin::Heading-->
+                            <form id="kt_modal_new_ticket_form" class="form" action="{{route('dashboard.ticket.store')}}" method="post" enctype="multipart/form-data">
+                                @csrf
                                 <div class="mb-13 text-center">
-                                    <!--begin::Title-->
-                                    <h1 class="mb-3">Create Ticket</h1>
-                                    <!--end::Title-->
-
-                                    <!--begin::Description-->
-                                    <div class="text-gray-500 fw-semibold fs-5">
-                                        If you need more info, please check <a href="#" class="fw-bold link-primary">Support Guidelines</a>.
-                                    </div>
-                                    <!--end::Description-->
+                                    <h1 class="mb-3">ثبت تیکت جدید</h1>
                                 </div>
-                                <!--end::Heading-->
-
-                                <!--begin::Input group-->
                                 <div class="d-flex flex-column mb-8 fv-row">
-                                    <!--begin::Label-->
                                     <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                                        <span class="required">Subject</span>
-
-                                        <span class="ms-2" data-bs-toggle="tooltip" title="Specify a subject for your issue">
-                                <i class="ki-outline ki-information fs-7"></i>                            </span>
+                                        <span class="required">موضوع تیکت</span>
+                                        <span class="ms-2" data-bs-toggle="tooltip" title="یک موضوع برای درخواست خود بنویسید">
+                                            <i class="ki-outline ki-information fs-7"></i>
+                                        </span>
                                     </label>
-                                    <!--end::Label-->
-
-                                    <input type="text" class="form-control form-control-solid" placeholder="Enter your ticket subject" name="subject"/>
+                                    <input type="text" class="form-control form-control-solid" placeholder="عنوان تیکت" value="{{old('subject')}}" name="subject"/>
                                 </div>
-                                <!--end::Input group-->
-
-                                <!--begin::Input group-->
                                 <div class="row g-9 mb-8">
-                                    <!--begin::Col-->
                                     <div class="col-md-6 fv-row">
-                                        <label class="required fs-6 fw-semibold mb-2">Product</label>
+                                        <label class="required fs-6 fw-semibold mb-2">دپارتمان</label>
 
-                                        <select class="form-select form-select-solid" data-control="select2" data-hide-search="true" data-placeholder="Select a product" name="product">
-                                            <option value="">Select a product...</option>
-                                            <option value="1">HTML Theme</option>
-                                            <option value="1">Angular App</option>
-                                            <option value="1">Vue App</option>
-                                            <option value="1">React Theme</option>
-                                            <option value="1">Figma UI Kit</option>
-                                            <option value="3">Laravel App</option>
-                                            <option value="4">Blazor App</option>
-                                            <option value="5">Django App</option>
+                                        <select class="form-select form-select-solid" data-control="select2" data-hide-search="true" data-placeholder="دپارتمان مورد نظر را انتخاب کنید" name="department_id">
+                                            <option></option>
+                                            @foreach($departments as $department)
+                                            <option value="{{$department->id}}">{{$department->title}}</option>
+                                            @endforeach
                                         </select>
                                     </div>
-                                    <!--end::Col-->
-
-                                    <!--begin::Col-->
                                     <div class="col-md-6 fv-row">
-                                        <label class="required fs-6 fw-semibold mb-2">Assign</label>
+                                        <label class="required fs-6 fw-semibold mb-2">اولویت</label>
 
-                                        <select class="form-select form-select-solid" data-control="select2" data-hide-search="true" data-placeholder="Select a Team Member" name="user">
-                                            <option value="">Select a user...</option>
-                                            <option value="1">Karina Clark</option>
-                                            <option value="2">Robert Doe</option>
-                                            <option value="3">Niel Owen</option>
-                                            <option value="4">Olivia Wild</option>
-                                            <option value="5">Sean Bean</option>
+                                        <select class="form-select form-select-solid" data-control="select2" data-placeholder="اولویت رسیدگی به تیکت را تعیین کنید" data-hide-search="true">
+                                            <option></option>
+                                            <option value="low">کم</option>
+                                            <option value="medium">متوسط</option>
+                                            <option value="high">زیاد</option>
                                         </select>
                                     </div>
-                                    <!--end::Col-->
                                 </div>
-                                <!--end::Input group-->
-
-                                <!--begin::Input group-->
-                                <div class="row g-9 mb-8">
-                                    <!--begin::Col-->
-                                    <div class="col-md-6 fv-row">
-                                        <label class="required fs-6 fw-semibold mb-2">Status</label>
-
-                                        <select class="form-select form-select-solid" data-control="select2" data-placeholder="Open" data-hide-search="true">
-                                            <option value=""></option>
-                                            <option value="1" selected>Open</option>
-                                            <option value="2">Pending</option>
-                                            <option value="3">Resolved</option>
-                                            <option value="3">Closed</option>
-                                        </select>
-                                    </div>
-                                    <!--end::Col-->
-
-                                    <!--begin::Col-->
-                                    <div class="col-md-6 fv-row">
-                                        <label class="required fs-6 fw-semibold mb-2">Due Date</label>
-
-                                        <!--begin::Input-->
-                                        <div class="position-relative d-flex align-items-center">
-                                            <!--begin::Icon-->
-                                            <div class="symbol symbol-20px me-4 position-absolute ms-4">
-                                    <span class="symbol-label bg-secondary">
-                                        <i class="ki-outline ki-element-11"></i>                                    </span>
-                                            </div>
-                                            <!--end::Icon-->
-
-                                            <!--begin::Datepicker-->
-                                            <input class="form-control form-control-solid ps-12" placeholder="Select a date" name="due_date"/>
-                                            <!--end::Datepicker-->
-                                        </div>
-                                        <!--end::Input-->
-                                    </div>
-                                    <!--end::Col-->
-                                </div>
-                                <!--end::Input group-->
-
-                                <!--begin::Input group-->
                                 <div class="d-flex flex-column mb-8 fv-row">
-                                    <label class="fs-6 fw-semibold mb-2">Description</label>
-
-                                    <textarea class="form-control form-control-solid" rows="4" name="description" placeholder="Type your ticket description">
-                        </textarea>
+                                    <label class="fs-6 fw-semibold mb-2">متن تیکت</label>
+                                    <textarea class="form-control form-control-solid" rows="4" name="message" placeholder="درخواست خود را شرح دهید">
+                                        {{old('message')}}
+                                    </textarea>
                                 </div>
-                                <!--end::Input group-->
-
-                                <!--begin::Input group-->
                                 <div class="fv-row mb-8">
-                                    <label class="fs-6 fw-semibold mb-2">Attachments</label>
-
-                                    <!--begin::Dropzone-->
+                                    <label class="fs-6 fw-semibold mb-2">فایل</label>
                                     <div class="dropzone" id="kt_modal_create_ticket_attachments">
-                                        <!--begin::Message-->
                                         <div class="dz-message needsclick align-items-center">
-                                            <!--begin::Icon-->
-                                            <i class="ki-outline ki-file-up fs-3hx text-primary"></i>                                <!--end::Icon-->
-
-                                            <!--begin::Info-->
+                                            <i class="ki-outline ki-file-up fs-3hx text-primary"></i>
                                             <div class="ms-4">
-                                                <h3 class="fs-5 fw-bold text-gray-900 mb-1">Drop files here or click to upload.</h3>
-                                                <span class="fw-semibold fs-7 text-gray-500">Upload up to 10 files</span>
+                                                <h3 class="fs-5 fw-bold text-gray-900 mb-1">فایل های مربوط به تیکت خود را آپلود کنید</h3>
+                                                <span class="fw-semibold fs-7 text-gray-500">حداکثر 10 فایل</span>
                                             </div>
-                                            <!--end::Info-->
                                         </div>
                                     </div>
-                                    <!--end::Dropzone-->
                                 </div>
-                                <!--end::Input group-->
 
-                                <!--begin::Input group-->
-                                <div class="mb-15 fv-row">
-                                    <!--begin::Wrapper-->
-                                    <div class="d-flex flex-stack">
-                                        <!--begin::Label-->
-                                        <div class="fw-semibold me-5">
-                                            <label class="fs-6">Notifications</label>
-
-                                            <div class="fs-7 text-gray-500">Allow Notifications by Phone or Email</div>
-                                        </div>
-                                        <!--end::Label-->
-
-                                        <!--begin::Checkboxes-->
-                                        <div class="d-flex align-items-center">
-                                            <!--begin::Checkbox-->
-                                            <label class="form-check form-check-custom form-check-solid me-10">
-                                                <input class="form-check-input h-20px w-20px" type="checkbox" name="notifications[]" value="email" checked="checked"/>
-
-                                                <span class="form-check-label fw-semibold">
-                                        Email
-                                    </span>
-                                            </label>
-                                            <!--end::Checkbox-->
-
-                                            <!--begin::Checkbox-->
-                                            <label class="form-check form-check-custom form-check-solid">
-                                                <input class="form-check-input h-20px w-20px" type="checkbox" name="notifications[]" value="phone"/>
-
-                                                <span class="form-check-label fw-semibold">
-                                        Phone
-                                    </span>
-                                            </label>
-                                            <!--end::Checkbox-->
-                                        </div>
-                                        <!--end::Checkboxes-->
-                                    </div>
-                                    <!--end::Wrapper-->
-                                </div>
-                                <!--end::Input group-->
-
-                                <!--begin::Actions-->
                                 <div class="text-center">
-                                    <button type="reset" id="kt_modal_new_ticket_cancel" class="btn btn-light me-3">
-                                        Cancel
-                                    </button>
-
-                                    <button type="submit" id="kt_modal_new_ticket_submit" class="btn btn-primary">
-                            <span class="indicator-label">
-                                Submit
-                            </span>
-                                        <span class="indicator-progress">
-                                Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                            </span>
+                                    <button type="submit"  class="btn btn-sm btn-light-primary">
+                                        <span class="indicator-label">
+                                            ثبت تیکت
+                                        </span>
                                     </button>
                                 </div>
-                                <!--end::Actions-->
                             </form>
-                            <!--end:Form-->
                         </div>
-                        <!--end::Modal body-->
                     </div>
-                    <!--end::Modal content-->
                 </div>
-                <!--end::Modal dialog-->
             </div>
-            <!--end::Modal - Support Center - Create Ticket-->
         </div>
-        <!--end::Content-->
-
     </div>
-
+@push('scripts')
+        <script>
+            const uploadUrl = "{{ route('dashboard.upload') }}";
+        </script>
+    <script src="{{asset('panel/assets/js/custom/apps/support-center/tickets/create.js')}}"></script>
+@endpush
 </x-layout>
