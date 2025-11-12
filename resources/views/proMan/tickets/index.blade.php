@@ -1,5 +1,66 @@
 <x-layout>
     @include('layouts.message')
+
+    <div id="kt_app_toolbar" class="app-toolbar  d-flex pb-3 pb-lg-5 ">
+
+        <!--begin::Toolbar container-->
+        <div class="d-flex flex-stack flex-row-fluid">
+            <!--begin::Toolbar container-->
+            <div class="d-flex flex-column flex-row-fluid">
+                <!--begin::Toolbar wrapper-->
+
+                <!--begin::Page title-->
+                <div class="page-title d-flex align-items-center me-3">
+                    <!--begin::Title-->
+                    <h1 class="page-heading d-flex flex-column justify-content-center text-gray-900 fw-bold fs-lg-2x gap-2">
+                        <span>تیکت های من</span>
+
+                    </h1>
+                    <!--end::Title-->
+                </div>
+                <!--end::Page title-->
+
+
+                <!--begin::Breadcrumb-->
+                <ul class="breadcrumb breadcrumb-separatorless fw-semibold mb-3 fs-7">
+
+                    <!--begin::Item-->
+                    <li class="breadcrumb-item text-gray-700 fw-bold lh-1">
+                        <a href="{{route('dashboard.index')}}" class="text-hover-primary">
+                            <i class="ki-outline ki-home text-gray-700 fs-6"></i> </a>
+                    </li>
+                    <!--end::Item-->
+
+                    <!--begin::Item-->
+                    <li class="breadcrumb-item">
+                        <i class="ki-outline ki-left fs-7 text-gray-700 mx-n1"></i></li>
+                    <!--end::Item-->
+
+
+                    <!--begin::Item-->
+                    <li class="breadcrumb-item text-gray-700 fw-bold lh-1">
+                        تیکت های من
+                    </li>
+                    <!--end::Item-->
+
+
+                </ul>
+                <!--end::Breadcrumb-->
+
+            </div>
+            <!--end::Toolbar container-->
+
+            <!--begin::Actions-->
+            <div class="d-flex align-self-center flex-center flex-shrink-0">
+                <a href="{{route('dashboard.ticket.create')}}" class="btn btn-sm btn-light-success d-flex flex-center ms-3 px-4 py-3" data-bs-toggle="modal" data-bs-target="#kt_modal_new_ticket">
+                    ایجاد تیکت<i class="ki-outline ki-plus-square fs-2 ps-5"></i>
+                </a>
+            </div>
+            <!--end::Actions-->
+        </div>
+        <!--end::Toolbar container-->
+    </div>
+
     <div class="card card-flush mt-6 mt-xl-9">
         <div class="card-header mt-5">
         <div class="card-title flex-column">
@@ -46,6 +107,7 @@
                         <th class="text-start">وضعیت</th>
                         <th class="text-start">متن تیکت</th>
                         <th class="text-start">تاریخ</th>
+                        <th class="text-start">عملیات</th>
                     </tr>
                     </thead>
                     <tbody class="fs-6">
@@ -71,6 +133,11 @@
                             <td class="text-start">{!! $ticket->HtmlStatus !!}</td>
                             <td class="text-start">{{$ticket->messages?->first()->message}}</td>
                             <td class="text-start">{{verta($ticket->created_at)->format('Y/m/d')}}</td>
+                            <td class="text-start">
+                                <a href="{{route('dashboard.ticket.show',$ticket->id)}}" class="btn btn-light-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="مشاهده">
+                                    <i class="ki-outline ki-eye fs-6 px-2"></i>
+                                </a>
+                            </td>
                         </tr>
                     @endforeach
                     </tbody>
@@ -78,15 +145,14 @@
             </div>
         </div>
     </div>
-
-
-            <!--begin::Modal - Support Center - Create Ticket-->
-            <div class="modal fade" id="kt_modal_new_ticket" tabindex="-1" aria-hidden="true">
+    <!--begin::Modal - Support Center - Create Ticket-->
+    <div class="modal fade" id="kt_modal_new_ticket" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered mw-750px">
                     <div class="modal-content rounded">
                         <div class="modal-header pb-0 border-0 justify-content-end">
                             <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
-                                <i class="ki-outline ki-cross fs-1"></i>                </div>
+                                <i class="ki-outline ki-cross fs-1"></i>
+                            </div>
                         </div>
                         <div class="modal-body scroll-y px-10 px-lg-15 pt-0 pb-15">
                             <form id="kt_modal_new_ticket_form" class="form" action="{{route('dashboard.ticket.store')}}" method="post" enctype="multipart/form-data">
@@ -116,8 +182,7 @@
                                     </div>
                                     <div class="col-md-6 fv-row">
                                         <label class="required fs-6 fw-semibold mb-2">اولویت</label>
-
-                                        <select class="form-select form-select-solid" data-control="select2" data-placeholder="اولویت رسیدگی به تیکت را تعیین کنید" data-hide-search="true">
+                                        <select class="form-select form-select-solid" data-control="select2" name="priority" data-placeholder="اولویت رسیدگی به تیکت را تعیین کنید" data-hide-search="true">
                                             <option></option>
                                             <option value="low">کم</option>
                                             <option value="medium">متوسط</option>
@@ -156,8 +221,7 @@
                     </div>
                 </div>
             </div>
-    </div>
-    </div>
+
     @push('scripts')
         <script>
             const uploadUrl = "{{ route('dashboard.upload') }}";

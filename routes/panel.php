@@ -60,10 +60,11 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
         Route::get('/', [TicketController::class, 'index'])->name('index');
         Route::get('/create', [TicketController::class, 'create'])->name('create');
         Route::post('/store', [TicketController::class, 'store'])->name('store');
+        Route::get('/show/{ticket}', [TicketController::class, 'show'])->name('show');
         Route::get('/edit/{ticket}', [TicketController::class, 'edit'])->name('edit');
         Route::put('/update/{ticket}', [TicketController::class, 'update'])->name('update');
-        Route::put('/option/{ticket}', [TicketController::class, 'option'])->name('options');
-        Route::get('/delete/{ticket}', [TicketController::class, 'destroy'])->name('destroy');
+        Route::post('/reply/{ticket}', [TicketController::class, 'reply'])->name('reply');
+        Route::post('/status/{ticket}', [TicketController::class, 'status'])->name('close');
     });
 
     Route::post('/upload' , [PhotoController::class,'upload'])->name('upload');

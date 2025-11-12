@@ -25,4 +25,10 @@ class TicketMessage extends Model
     public function attachments() {
         return $this->hasMany(TicketAttachment::class, 'ticket_message_id', 'id');
     }
+
+
+    public function seen()
+    {
+        return $this->morphMany(Seen::class, 'seenable');
+    }
 }

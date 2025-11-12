@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\panel;
 
 use App\Http\Controllers\Controller;
+use App\Models\Seen;
 use App\Models\Ticket;
 use App\Models\TicketAttachment;
 use App\Models\TicketDepartment;
@@ -38,7 +39,7 @@ class TicketController extends Controller
      */
     public function store(Request $request)
     {
-
+        try {
             $ticket = Ticket::create([
                 'user_id' => Auth::id(),
                 'department_id' => $request->department_id,
@@ -59,7 +60,7 @@ class TicketController extends Controller
                     ]);
                 }
             }
-        try {
+
             return redirect()->back()->with('flash_message', 'با موفقیت ثبت شد');
         }catch (\Exception $e){
             return redirect()->back()->withInput()->with('err_message', 'خطایی رخ داده است، لطفا مجددا تلاش نمایید');
@@ -71,7 +72,18 @@ class TicketController extends Controller
      */
     public function show(Ticket $ticket)
     {
-        //
+        $messages = $ticket->messages()->whereDoesntHave('seen', function ($query2) {
+            $query2->where('user_id', Auth::id());
+        })->get();
+
+        foreach ($messages as $message){
+            $seen = new Seen();
+            $seen->user_id = Auth::id();
+            $message->seen()->save($seen);
+        }
+        $users = User::all();
+        $departments = TicketDepartment::all();
+        return view('proMan.tickets.show',get_defined_vars());
     }
 
 
@@ -97,6 +109,18 @@ class TicketController extends Controller
             $ticket->save();
 
             return redirect()->back()->with('flash_message', 'با موفقیت ثبت شد');
+        }catch (\Exception $e){
+            return redirect()->back()->with('err_message', 'خطایی رخ داده است، لطفا مجددا تلاش نمایید');
+        }
+    }
+
+    public function status(Request $request, Ticket $ticket)
+    {
+        try {
+            $ticket->status = $request->status;
+            $ticket->save();
+
+            return redirect()->back()->with('flash_message', ' انجام شد');
         }catch (\Exception $e){
             return redirect()->back()->with('err_message', 'خطایی رخ داده است، لطفا مجددا تلاش نمایید');
         }
