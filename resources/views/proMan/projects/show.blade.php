@@ -1570,7 +1570,6 @@
                 </div>
             </div>
 
-            <!--begin::Table-->
             <div class="card card-flush mt-6 mt-xl-9">
                 <div class="card-header mt-5">
                     <div class="card-title flex-column">
