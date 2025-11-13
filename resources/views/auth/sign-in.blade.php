@@ -69,7 +69,7 @@
                         <!--begin::Heading-->
 
                         <div class="separator separator-content my-14">
-                            <span class="w-125px text-gray-500 fw-semibold fs-7">یا با ایمیل</span>
+                            <span class="w-225px text-gray-500 fw-semibold fs-7">ورود با کد یک بار مصرف</span>
                         </div>
 
                         <div class="fv-row mb-8">

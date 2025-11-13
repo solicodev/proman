@@ -230,4 +230,23 @@ class TaskController extends Controller
             ],500);
         }
     }
+
+    public function dependency(Task $task , Request $request)
+    {
+
+        try {
+            return response()->json([
+                'success' => true,
+                'flash_message' => 'وضعیت با موفقیت بروزرسانی شد',
+                'status'  => $task->status,
+            ],201);
+        }
+        catch (Exception $exception) {
+            return response()->json([
+                'success' => true,
+                'err_message' => 'خطایی رخ داده است' . $exception->getMessage(),
+            ],500);
+        }
+    }
+
 }

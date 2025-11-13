@@ -310,6 +310,12 @@
                                         ساخت زیر تسک جدید
                                         <i class="ki-outline ki-plus-square fs-6 px-2"></i>
                                     </a>
+                                    <a href="#" class="btn btn-light-warning btn-sm"
+                                       onclick="openDependencyModal('{{ route('dashboard.task.dependency', $task->id) }}',
+                                                    JSON.stringify({title:'{{ $task->title }}'}))">
+                                       تعریف وابستگی تسک
+                                        <i class="ki-outline ki-plus-square fs-6 px-2"></i>
+                                    </a>
                                 </td>
                                 <td>
                                     <button type="button" class="btn btn-sm btn-icon btn-light btn-active-light-primary  toggle h-25px w-25px"
@@ -982,7 +988,64 @@
         <!--end::Modal dialog-->
     </div>
 
+        <div class="modal fade" id="kt_modal_dependency" tabindex="-1" aria-hidden="true">
+            <!--begin::Modal dialog-->
+            <div class="modal-dialog modal-dialog-centered mw-900px" >
+                <!--begin::Modal content-->
+                <div class="modal-content rounded">
+                    <!--begin::Modal header-->
+                    <div class="modal-header pb-0 border-0 justify-content-end">
+                        <!--begin::Close-->
+                        <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                            <i class="ki-outline ki-cross fs-1"></i>
+                        </div>
+                        <!--end::Close-->
+                    </div>
+                    <!--begin::Modal header-->
 
+                    <!--begin::Modal body-->
+                    <div class="modal-body scroll-y px-5 ">
+                        <!--begin:Form-->
+                        <div class="stepper stepper-links d-flex flex-column pt-15 between" id="kt_create_account_stepper" data-kt-stepper="true" data-select2-id="select2-data-kt_create_account_stepper" >
+                            <form method="POST" id="dependencyForm"
+                                  data-url="{{ route('dashboard.task.update.status', $task->id) }}"
+                                  data-parent-id="{{ $task->parent_id }}"
+                                  class="">
+                                @csrf
+                                <div class="fv-row mb-8">
+                                    <label for="predecessor_task_id" class="form-label required">تسک وابسته</label>
+                                    <select class="form-select form-select-solid" data-control="select2"
+                                            data-placeholder="تسک وابسته را انتخاب کنید" name="predecessor_task_id" required>
+                                        <option></option>
+                                        @foreach($tb_tasks as $task_item)
+                                            <option value="{{ $task_item->id }}">{{ $task_item->title }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="fv-row mb-8">
+                                    <label for="relation_type" class="form-label required">نوع وابستگی </label>
+                                    <select class="form-select form-select-solid" data-control="select2"
+                                            data-placeholder="نوع وابستگی را انتخاب کنید" name="relation_type" required>
+                                        <option></option>
+                                        <option value="FS">Finish to Start (تسک فعلی بعد از اتمام قبلی شروع می‌شود)</option>
+                                        <option value="FF">Finish to Finish (تسک فعلی تا اتمام قبلی نمی‌تواند تمام شود)</option>
+                                        <option value="SS">Start to Start (شروع هر دو باید هم‌زمان باشد)</option>
+                                        <option value="SF">Start to Finish (تسک فعلی تا شروع قبلی نمی‌تواند تمام شود)</option>
+                                    </select>
+                                </div>
+
+
+                            </form>
+                        </div>
+                        <!--end:Form-->
+                    </div>
+                    <!--end::Modal body-->
+                </div>
+                <!--end::Modal content-->
+            </div>
+            <!--end::Modal dialog-->
+        </div>
 
     </div>
     </div>
@@ -1192,6 +1255,19 @@
                 $('#editForm').attr('action', url);
 
                 var modal = new bootstrap.Modal(document.getElementById('kt_modal_new_target_sub'));
+                modal.show();
+            }
+
+            function openDependencyModal(url, currentData) {
+                let data = JSON.parse(currentData);
+
+                $('#modalTitle').text(`ایجاد وابستگی برای "${data.title}"`);
+
+                $('#dependencyForm #title').val(data.title);
+
+                $('#dependencyForm').attr('action', url);
+
+                var modal = new bootstrap.Modal(document.getElementById('kt_modal_dependency'));
                 modal.show();
             }
 
