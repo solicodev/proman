@@ -40,6 +40,7 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
         Route::post('/store', [TaskController::class, 'store'])->name('store');
         Route::post('/tasks/{task}/subtasks', [TaskController::class, 'storeSubtask'])->name('subtasks.store');
         Route::post('/tasks/{task}/dependency', [TaskController::class, 'dependency'])->name('dependency');
+        Route::get('/tasks/{task}/related-tasks', [TaskController::class, 'relatedTasks'])->name('related-tasks');
         Route::get('/edit/{task}', [TaskController::class, 'edit'])->name('edit');
         Route::put('/update/{task}', [TaskController::class, 'update'])->name('update');
         Route::get('/delete/{task}', [TaskController::class, 'destroy'])->name('destroy');

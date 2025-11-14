@@ -7,6 +7,7 @@ use App\Http\Requests\SubTaskStoreRequest;
 use App\Http\Requests\TaskStoreRequest;
 use App\Models\Project;
 use App\Models\Task;
+use App\Models\TaskDependency;
 use App\Models\User;
 use App\Services\TaskPanelService;
 use Exception;
@@ -233,20 +234,42 @@ class TaskController extends Controller
 
     public function dependency(Task $task , Request $request)
     {
+        $exists = TaskDependency::where('successor_id', $task->id)
+            ->where('predecessor_id', $request->predecessor_task_id)
+            ->exists();
 
-        try {
+        if ($exists) {
             return response()->json([
-                'success' => true,
-                'flash_message' => 'وضعیت با موفقیت بروزرسانی شد',
-                'status'  => $task->status,
-            ],201);
+                'success' => false,
+                'err_message' => 'این وابستگی قبلاً ثبت شده است.'
+            ], 409);
         }
-        catch (Exception $exception) {
-            return response()->json([
-                'success' => true,
-                'err_message' => 'خطایی رخ داده است' . $exception->getMessage(),
-            ],500);
-        }
+
+        $task->predecessors()->attach($request->predecessor_task_id, [
+            'relation_type' => $request->relation_type,
+            'lag' => $request->lag
+        ]);
+        return response()->json([
+            'success' => true,
+            'flash_message' => 'وابستگی با موفقیت ثبت شد',
+        ],201);
     }
+
+    public function relatedTasks(Task $task)
+    {
+        $parentId = $task->parent_id;
+
+        $relatedTasks = Task::where('id', '!=', $task->id)
+            ->when($parentId, function($query) use ($parentId) {
+                $query->where('parent_id', $parentId);
+            })
+            ->orWhere('id', $parentId)
+            ->get();
+
+        return response()->json(
+            $relatedTasks->map(fn($t) => ['id' => $t->id, 'text' => $t->title])
+        );
+    }
+
 
 }

@@ -36,7 +36,7 @@
         <!--begin::Heading-->
         <h3 class="fw-bold my-2">
             تسک های پروژه
-{{--            <span class="fs-6 text-gray-500 fw-semibold ms-1">آپدیت بر اساس ↓</span>--}}
+            {{--            <span class="fs-6 text-gray-500 fw-semibold ms-1">آپدیت بر اساس ↓</span>--}}
         </h3>
         <!--end::Heading-->
         <div class="d-flex flex-wrap my-1">
@@ -170,9 +170,9 @@
                                                                 @endif
                                                                 <div class="d-flex justify-content-end">
                                                                     <a href="#" onclick="openShowModal(
-                                                                                           '{{ route('dashboard.task.show', $subtask->id) }}',
-                                                                                           '{{ route('dashboard.task.update.status', $subtask->id) }}'
-                                                                                       )"
+                                                                        '{{ route('dashboard.task.show', $subtask->id) }}',
+                                                                        '{{ route('dashboard.task.update.status', $subtask->id) }}'
+                                                                        )"
                                                                        data-task-id="{{ $subtask->id }}"
                                                                        data-task-status="{{ $subtask->status }}"
                                                                        class="btn btn-sm btn-light-info p-1" data-bs-toggle="tooltip" data-bs-placement="top" title="مشاهده"><i class="ki-outline ki-eye fs-6 px-2"></i></a>
@@ -181,9 +181,9 @@
                                                         </div>
                                                     @endforeach
                                                 </div>
-                                            @endif
+                                        @endif
 
-                                            <!-- پایان زیرتسک‌ها -->
+                                        <!-- پایان زیرتسک‌ها -->
 
                                         </div>
 
@@ -191,14 +191,14 @@
                                         <div class="card-footer text-center py-3">
                                             <a href="#" class="btn btn-light-primary btn-sm"
                                                onclick="openEditModal('{{ route('dashboard.task.subtasks.store', $task->id) }}',
-                                                    JSON.stringify({title:'{{ $task->title }}'}))">
+                                                   JSON.stringify({title:'{{ $task->title }}'}))">
                                                 ساخت زیر تسک جدید
                                                 <i class="ki-outline ki-plus-square fs-6 px-2"></i>
                                             </a>
                                             <a href="#" onclick="openShowModal(
-                                                           '{{ route('dashboard.task.show', $task->id) }}',
-                                                           '{{ route('dashboard.task.update.status', $task->id) }}'
-                                                       )"
+                                                '{{ route('dashboard.task.show', $task->id) }}',
+                                                '{{ route('dashboard.task.update.status', $task->id) }}'
+                                                )"
                                                data-task-id="{{ $task->id }}"
                                                data-task-status="{{ $task->status }}"
                                                class="btn btn-sm btn-light-info" data-bs-toggle="tooltip" data-bs-placement="top" title="مشاهده"><i class="ki-outline ki-eye fs-6 px-2"></i></a>
@@ -210,8 +210,8 @@
                                             <span>تسکی در این وضعیت وجود ندارد!</span>
                                         </div>
                                     </div>
-                                @endforelse
-                                <!--end::Tasks Loop-->
+                            @endforelse
+                            <!--end::Tasks Loop-->
                             </div>
                         @endforeach
                     @endif
@@ -296,9 +296,9 @@
                                 <!--begin::Actions-->
                                 <td>
                                     <a href="#" onclick="openShowModal(
-                                                           '{{ route('dashboard.task.show', $task->id) }}',
-                                                           '{{ route('dashboard.task.update.status', $task->id) }}'
-                                                        )"
+                                        '{{ route('dashboard.task.show', $task->id) }}',
+                                        '{{ route('dashboard.task.update.status', $task->id) }}'
+                                        )"
                                        data-task-id="{{ $task->id }}"
                                        data-task-status="{{ $task->status }}"
                                        class="btn btn-sm btn-light-info" data-bs-toggle="tooltip" data-bs-placement="top" title="مشاهده">
@@ -306,14 +306,14 @@
                                     </a>
                                     <a href="#" class="btn btn-light-primary btn-sm"
                                        onclick="openEditModal('{{ route('dashboard.task.subtasks.store', $task->id) }}',
-                                                    JSON.stringify({title:'{{ $task->title }}'}))">
+                                           JSON.stringify({title:'{{ $task->title }}'}))">
                                         ساخت زیر تسک جدید
                                         <i class="ki-outline ki-plus-square fs-6 px-2"></i>
                                     </a>
                                     <a href="#" class="btn btn-light-warning btn-sm"
                                        onclick="openDependencyModal('{{ route('dashboard.task.dependency', $task->id) }}',
-                                                    JSON.stringify({title:'{{ $task->title }}'}))">
-                                       تعریف وابستگی تسک
+                                           JSON.stringify({id: '{{ $task->id }}', title: '{{ $task->title }}'}))">
+                                        تعریف وابستگی تسک
                                         <i class="ki-outline ki-plus-square fs-6 px-2"></i>
                                     </a>
                                 </td>
@@ -545,8 +545,8 @@
                     <div class="stepper stepper-links d-flex flex-column pt-15 between" id="kt_create_account_stepper" data-kt-stepper="true" data-select2-id="select2-data-kt_create_account_stepper" >
                         <form action=""  method="post" id="editForm" class="form mx-auto mw-100 w-100 pt-15 pb-10 fv-plugins-bootstrap5 fv-plugins-framework needs-validation"
                               enctype="multipart/form-data">
-                            @csrf
-                            <!--begin::Heading-->
+                        @csrf
+                        <!--begin::Heading-->
                             <div class="mb-13 text-center">
                                 <!--begin::Title-->
                                 <h1 class="mb-3">افزودن زیرتسک</h1>
@@ -554,8 +554,7 @@
                                 <input type="hidden" value="{{$project->id}}" name="project_id">
                                 <!--begin::Description-->
                                 <div class="text-muted fw-semibold fs-5">
-                                    برای پروژه
-                                    <a href="#" class="fw-bold link-primary">{{$project->name}} - {{$project->project_code}}</a>.
+                                    <a href="#" class="fw-bold link-primary"></a>
                                 </div>
                                 <!--end::Description-->
                             </div>
@@ -685,18 +684,14 @@
 
                             <!--begin::Actions-->
                             <div class="text-center">
-                                <button type="reset" id="kt_modal_new_target_cancel" class="btn btn-light me-3">
+                                <button type="reset" id="kt_modal_new_target_cancel" class="btn btn-sm btn-light me-3">
                                     انصراف
                                 </button>
 
-                                <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary">
-                            <span class="indicator-label">
-                                ثبت تسک
-                            </span>
-                                    <span class="indicator-progress">
-                                کمی صبر کنید ...
-                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                                </span>
+                                <button type="submit" id="kt_modal_new_target_submit" class="btn btn-sm btn-light-primary">
+                                    <span class="indicator-label">
+                                        ثبت تسک
+                                    </span>
                                 </button>
                             </div>
                             <!--end::Actions-->
@@ -988,64 +983,91 @@
         <!--end::Modal dialog-->
     </div>
 
-        <div class="modal fade" id="kt_modal_dependency" tabindex="-1" aria-hidden="true">
-            <!--begin::Modal dialog-->
-            <div class="modal-dialog modal-dialog-centered mw-900px" >
-                <!--begin::Modal content-->
-                <div class="modal-content rounded">
-                    <!--begin::Modal header-->
-                    <div class="modal-header pb-0 border-0 justify-content-end">
-                        <!--begin::Close-->
-                        <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
-                            <i class="ki-outline ki-cross fs-1"></i>
-                        </div>
-                        <!--end::Close-->
+    <div class="modal fade" id="kt_modal_dependency" tabindex="-1" aria-hidden="true">
+        <!--begin::Modal dialog-->
+        <div class="modal-dialog modal-dialog-centered mw-900px" >
+            <!--begin::Modal content-->
+            <div class="modal-content rounded">
+                <!--begin::Modal header-->
+                <div class="modal-header pb-0 border-0 justify-content-end" id="modalTitle">
+                    <!--begin::Close-->
+                    <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                        <i class="ki-outline ki-cross fs-1"></i>
                     </div>
-                    <!--begin::Modal header-->
-
-                    <!--begin::Modal body-->
-                    <div class="modal-body scroll-y px-5 ">
-                        <!--begin:Form-->
-                        <div class="stepper stepper-links d-flex flex-column pt-15 between" id="kt_create_account_stepper" data-kt-stepper="true" data-select2-id="select2-data-kt_create_account_stepper" >
-                            <form method="POST" id="dependencyForm"
-                                  data-url="{{ route('dashboard.task.update.status', $task->id) }}"
-                                  data-parent-id="{{ $task->parent_id }}"
-                                  class="">
-                                @csrf
-                                <div class="fv-row mb-8">
-                                    <label for="predecessor_task_id" class="form-label required">تسک وابسته</label>
-                                    <select class="form-select form-select-solid" data-control="select2"
-                                            data-placeholder="تسک وابسته را انتخاب کنید" name="predecessor_task_id" required>
-                                        <option></option>
-                                        @foreach($tb_tasks as $task_item)
-                                            <option value="{{ $task_item->id }}">{{ $task_item->title }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                <div class="fv-row mb-8">
-                                    <label for="relation_type" class="form-label required">نوع وابستگی </label>
-                                    <select class="form-select form-select-solid" data-control="select2"
-                                            data-placeholder="نوع وابستگی را انتخاب کنید" name="relation_type" required>
-                                        <option></option>
-                                        <option value="FS">Finish to Start (تسک فعلی بعد از اتمام قبلی شروع می‌شود)</option>
-                                        <option value="FF">Finish to Finish (تسک فعلی تا اتمام قبلی نمی‌تواند تمام شود)</option>
-                                        <option value="SS">Start to Start (شروع هر دو باید هم‌زمان باشد)</option>
-                                        <option value="SF">Start to Finish (تسک فعلی تا شروع قبلی نمی‌تواند تمام شود)</option>
-                                    </select>
-                                </div>
-
-
-                            </form>
-                        </div>
-                        <!--end:Form-->
-                    </div>
-                    <!--end::Modal body-->
+                    <!--end::Close-->
                 </div>
-                <!--end::Modal content-->
+                <!--begin::Modal header-->
+
+                <!--begin::Modal body-->
+                <div class="modal-body scroll-y px-5 ">
+                    <!--begin:Form-->
+                    <div class="stepper stepper-links d-flex flex-column pt-15 between" id="kt_create_account_stepper" data-kt-stepper="true" data-select2-id="select2-data-kt_create_account_stepper" >
+                        <form method="POST" action="{{ route('dashboard.task.dependency', $task->id) }}" id="dependencyForm">
+                            @csrf
+                            <div class="mb-13 text-center">
+                                <!--begin::Title-->
+                                <h1 class="mb-3">افزودن وابستگی</h1>
+                                <!--end::Title-->
+                                <!--begin::Description-->
+                                <div class="text-muted fw-semibold fs-5">
+                                    <a href="#" class="fw-bold link-primary" id="modalTitle"></a>
+                                </div>
+                                <!--end::Description-->
+                            </div>
+                            <div class="fv-row mb-8">
+                                <label for="predecessor_task_id" class="form-label required">تسک وابسته</label>
+                                <select class="form-select form-select-solid" data-control="select2" id="predecessor_task_id"
+                                        data-ajax-route="{{ route('dashboard.task.related-tasks', ['task' => ':id']) }}"
+                                        data-placeholder="تسک وابسته را انتخاب کنید" name="predecessor_task_id" required>
+                                    <option></option>
+{{--                                    @foreach($tb_tasks as $task_item)--}}
+{{--                                        <option value="{{ $task_item->id }}">{{ $task_item->title }}</option>--}}
+{{--                                    @endforeach--}}
+                                </select>
+                            </div>
+
+                            <div class="fv-row mb-8">
+                                <label for="relation_type" class="form-label required">نوع وابستگی </label>
+                                <select class="form-select form-select-solid" data-control="select2"
+                                        data-placeholder="نوع وابستگی را انتخاب کنید" name="relation_type" required>
+                                    <option></option>
+                                    <option value="FS">Finish to Start (تسک فعلی بعد از اتمام قبلی شروع می‌شود)</option>
+                                    <option value="FF">Finish to Finish (تسک فعلی تا اتمام قبلی نمی‌تواند تمام شود)</option>
+                                    <option value="SS">Start to Start (شروع هر دو باید هم‌زمان باشد)</option>
+                                    <option value="SF">Start to Finish (تسک فعلی تا شروع قبلی نمی‌تواند تمام شود)</option>
+                                </select>
+                            </div>
+                            <div class="fv-row mb-8">
+                                <label class="form-label">Lag / Lead</label>
+                                <input type="number" name="lag" class="form-control form-control-solid" value="{{old('lag')}}"
+                                    placeholder="مثلاً +2 یا -1"
+                                >
+                                <small class="text-muted">
+                                    عدد مثبت = لگ (تاخیر)، عدد منفی = لید (شروع زودتر)
+                                </small>
+                            </div>
+
+                            <div class="text-center">
+                                <button type="reset" id="kt_modal_new_target_cancel" class="btn btn-sm btn-light me-3">
+                                    انصراف
+                                </button>
+
+                                <button type="submit" id="kt_modal_new_target_submit" class="btn btn-sm btn-light-primary">
+                                    <span class="indicator-label">
+                                        ثبت وابستگی
+                                    </span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <!--end:Form-->
+                </div>
+                <!--end::Modal body-->
             </div>
-            <!--end::Modal dialog-->
+            <!--end::Modal content-->
         </div>
+        <!--end::Modal dialog-->
+    </div>
 
     </div>
     </div>
@@ -1258,18 +1280,7 @@
                 modal.show();
             }
 
-            function openDependencyModal(url, currentData) {
-                let data = JSON.parse(currentData);
 
-                $('#modalTitle').text(`ایجاد وابستگی برای "${data.title}"`);
-
-                $('#dependencyForm #title').val(data.title);
-
-                $('#dependencyForm').attr('action', url);
-
-                var modal = new bootstrap.Modal(document.getElementById('kt_modal_dependency'));
-                modal.show();
-            }
 
 
             // task show modal
@@ -1636,18 +1647,34 @@
                         const routeTemplate = document.getElementById('datatable-template').dataset.showRoute;
                         const updateStatusTemplate = document.getElementById('datatable-template').dataset.updateStatusRoute;
 
-                        if (actionsNode && routeTemplate  && updateStatusTemplate) {
+                        if (actionsNode && routeTemplate && updateStatusTemplate) {
                             const route = routeTemplate.replace(':id', d.id ?? 0);
                             const updateRoute = updateStatusTemplate.replace(':id', d.id ?? 0);
-                            actionsNode.innerHTML = `
-                            <a href="#" onclick="openShowModal('${route}', '${updateRoute}')"
-                               class="btn btn-sm btn-light-info"
-                               data-bs-toggle="tooltip"
-                               data-bs-placement="top"
-                               title="مشاهده">
-                                <i class="ki-outline ki-eye fs-6 px-2"></i>
-                            </a>`;
+
+                            // دکمه مشاهده
+                            let showBtn = `
+        <a href="#" onclick="openShowModal('${route}', '${updateRoute}')"
+           class="btn btn-sm btn-light-info"
+           data-bs-toggle="tooltip"
+           data-bs-placement="top"
+           title="مشاهده">
+            <i class="ki-outline ki-eye fs-6 px-2"></i>
+        </a>
+    `;
+
+                            // دکمه تعریف وابستگی
+                            const depRoute = '{{ route("dashboard.task.dependency", ":id") }}'.replace(':id', d.id ?? 0);
+                            let depBtn = `
+        <a href="#" class="btn btn-light-warning btn-sm"
+           onclick="openDependencyModal('${depRoute}', JSON.stringify({title:'${d.title}'}))">
+            تعریف وابستگی تسک
+            <i class="ki-outline ki-plus-square fs-6 px-2"></i>
+        </a>
+    `;
+
+                            actionsNode.innerHTML = showBtn + depBtn;
                         }
+
 
 
 
@@ -1690,8 +1717,6 @@
                 });
             });
         </script>
-
-
 
         {{--          checklist CURD--}}
         <script>
@@ -1850,12 +1875,88 @@
                 });
             });
         </script>
+        <script>
+
+            function openDependencyModal(url, currentData) {
+                let data = JSON.parse(currentData);
+
+                $('#modalTitle').text(`ایجاد وابستگی برای "${data.title}"`);
+                $('#dependencyForm #title').val(data.title);
+                $('#dependencyForm').attr('action', url);
+
+                loadPredecessorTasks(data.id); // <-- اینجا undefined می‌شود
+
+                var modal = new bootstrap.Modal(document.getElementById('kt_modal_dependency'));
+                modal.show();
+            }
+
+
+            function loadPredecessorTasks(taskId) {
+                const $select = $('#predecessor_task_id');
+
+                // مسیر AJAX داینامیک
+                const ajaxRouteTemplate = $select.data('ajax-route'); // data-ajax-route در select
+                const ajaxRoute = $select.data('ajax-route').replace(':id', taskId);
+
+
+                $select.select2({
+                    placeholder: 'تسک وابسته را انتخاب کنید',
+                    allowClear: true,
+                    ajax: {
+                        url: ajaxRoute,
+                        dataType: 'json',
+                        delay: 250,
+                        processResults: function(data) {
+                            return { results: data }; // [{id,text}, ...]
+                        },
+                        cache: true
+                    }
+                });
+            }
 
 
 
+            // ایجاد وابستگی
+            $(document).on('submit', '#dependencyForm', function (e) {
+                e.preventDefault();
 
+                let form = $(this);
+                let url = form.attr('action');
+                let formData = form.serialize();
 
+                $.ajax({
+                    url: url,
+                    method: 'POST',
+                    data: formData,
+                     success: function (res) {
+                        console.log(res)
+                        $('#kt_modal_dependency').modal('hide');
+                         if (res.success) {
+                             $.jGrowl(res.flash_message, {
+                                 life: 4000,
+                                 position: 'bottom-left',
+                                 theme: 'bg-success'
+                             });
+                         } else {
+                             $.jGrowl(res.err_message, {
+                                 life: 4000,
+                                 position: 'bottom-left',
+                                 theme: 'bg-danger'
+                             });
+                         }
+                    },
+                    error: function (xhr) {
+                        $('#kt_modal_dependency').modal('hide');
+                        $.jGrowl(xhr.responseJSON.err_message, {
+                            life: 4000,
+                            position: 'bottom-left',
+                            theme: 'bg-danger'
+                        });
+                    }
+                });
+            });
 
+        </script>
     @endpush
 </x-layout>
 
