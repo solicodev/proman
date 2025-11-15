@@ -121,4 +121,90 @@ class Task extends Model
             ->logOnlyDirty()
             ->setDescriptionForEvent(fn(string $eventName) => "Task has been {$eventName}");
     }
+
+
+    public function dependencies()
+    {
+        return $this->hasMany(TaskDependency::class, 'task_id');
+    }
+
+    public function parents()
+    {
+        return $this->hasMany(TaskDependency::class, 'dependency_task_id');
+    }
+
+    public function calculateAllowedProgress()
+    {
+        // اگر وابستگی ندارد → پیشرفت کامل آزاد
+        if ($this->dependencies->count() === 0) {
+            return 100;
+        }
+
+        $minAllowed = 100;  // کمترین مقدار مجاز از میان همهٔ وابستگی‌ها
+
+        foreach ($this->dependencies as $dep) {
+            $source = $dep->dependencyTask; // تسک وابسته
+            $type = strtoupper($dep->type);
+            $lag = $dep->lag ?? 0;
+
+            // درصد پیشرفت تسک منبع
+            $sourceProgress = $source->progress_effective ?? $source->progress ?? 0;
+
+            switch ($type) {
+
+                case 'FS': // Finish → Start
+                    // تا A پایان پیدا نکند، B پیشرفت زیادی نمی‌تواند داشته باشد
+                    if ($sourceProgress < 100) {
+                        // اجازه 20 درصد بدیم برای آماده‌سازی
+                        $minAllowed = min($minAllowed, $sourceProgress);
+                    }
+                    break;
+
+                case 'SS': // Start → Start
+                    // تسک بعدی نمی‌تواند بیشتر از میزان شروع تسک قبل باشد
+                    $minAllowed = min($minAllowed, $sourceProgress);
+                    break;
+
+                case 'FF': // Finish → Finish
+                    // پیشرفت تسک بعدی نباید از پیشرفت پایانی تسک قبل جلو بزند
+                    $minAllowed = min($minAllowed, $sourceProgress);
+                    break;
+
+                case 'SF': // Start → Finish
+                    // پیشرفت پایان B وابسته به شروع A
+                    if ($sourceProgress < 10) { // یعنی A هنوز شروع نشده
+                        $minAllowed = min($minAllowed, 10);
+                    }
+                    break;
+            }
+        }
+
+        return max(0, min(100, $minAllowed));
+    }
+    public function getProgressEffectiveAttribute()
+    {
+        $actual = $this->progress ?? 0;
+        $allowed = $this->calculateAllowedProgress();
+
+        return min($actual, $allowed);
+    }
+
+    public function getProgressTreeAttribute()
+    {
+        if ($this->children->count() === 0) {
+            return $this->progress_effective;
+        }
+
+        $total = 0;
+        $count = 0;
+
+        foreach ($this->children as $child) {
+            $total += $child->progress_tree;
+            $count++;
+        }
+
+        return round($total / max(1, $count), 2);
+    }
+
+
 }

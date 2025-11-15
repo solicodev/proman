@@ -286,4 +286,17 @@ class TaskController extends Controller
         ], 200);
     }
 
+    public function taskTimeLine(Project $project)
+    {
+        $task = Task::with(['dependencies.dependencyTask', 'children'])->where('project_id',$project->id)->get();
+
+        return [
+            'actual' => $task->progress,
+            'allowed' => $task->calculateAllowedProgress(),
+            'effective' => $task->progress_effective,
+            'tree_progress' => $task->progress_tree,
+        ];
+
+        return view('proMan.projects.taskTimeLine', get_defined_vars());
+    }
 }

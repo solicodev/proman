@@ -23,6 +23,7 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
         Route::get('/activity/{project}', [ProjectController::class, 'activity'])->name('activity');
         Route::get('/dependencies/{project}', [ProjectController::class, 'dependency'])->name('dependency');
         Route::get('/comments/{project}', [ProjectController::class, 'comment'])->name('comment');
+        Route::get('/timeline/{project}', [TaskController::class, 'taskTimeLine'])->name('taskTimeLine');
 
         Route::get('/create', [ProjectController::class, 'create'])->name('create');
         Route::post('/store', [ProjectController::class, 'store'])->name('store');
@@ -44,6 +45,7 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
         Route::get('/edit/{task}', [TaskController::class, 'edit'])->name('edit');
         Route::put('/update/{task}', [TaskController::class, 'update'])->name('update');
         Route::get('/delete/{task}', [TaskController::class, 'destroy'])->name('destroy');
+
         //        checklist
         Route::post('/tasks/{task}/checklist', [TaskChecklistController::class, 'store'])->name('checklist');
         Route::get('/dashboard/task/{id}/checklists', [TaskController::class, 'getChecklists'])->name('checklists');

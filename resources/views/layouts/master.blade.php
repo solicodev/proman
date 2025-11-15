@@ -38,6 +38,7 @@
     <link rel="stylesheet" href="{{ asset('assets/admin/css/jgrowl.min.css') }}">
 
 
+
     @stack('styles')
 </head>
 <body id="kt_app_body" data-kt-app-sidebar-enabled="true" data-kt-app-sidebar-fixed="true"

@@ -248,7 +248,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-active-primary py-5 me-6 " href="{{route('dashboard.project.activity',$project->id)}}">
+                        <a class="nav-link text-active-primary py-5 me-6 @if(request()->getUri() == route('dashboard.project.activity', $project->id)) active @endif" href="{{route('dashboard.project.activity',$project->id)}}">
                             فعالیت ها
                         </a>
                     </li>
@@ -258,8 +258,13 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-active-primary py-5 me-6 " href="{{route('dashboard.project.dependency',$project->id)}}">
+                        <a class="nav-link text-active-primary py-5 me-6 @if(request()->getUri() == route('dashboard.project.dependency', $project->id)) active @endif" href="{{route('dashboard.project.dependency',$project->id)}}">
                             آپشن | جزییات پروژه
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-active-primary py-5 me-6 @if(request()->getUri() == route('dashboard.project.taskTimeLine', $project->id)) active @endif" href="{{route('dashboard.project.taskTimeLine',$project->id)}}">
+                            گزارش تسک های پروژه
                         </a>
                     </li>
                 </ul>
