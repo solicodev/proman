@@ -257,19 +257,33 @@ class TaskController extends Controller
 
     public function relatedTasks(Task $task)
     {
+        if (!$task->parent_id) {
+            $result = Task::where('parent_id',$task->id)->get()->map(fn($t) => [
+                'id' => $t->id,
+                'text' => $t->title,
+            ]);
+            return response()->json([
+                'related' => $result
+            ], 200);
+        }
+
         $parentId = $task->parent_id;
 
-        $relatedTasks = Task::where('id', '!=', $task->id)
-            ->when($parentId, function($query) use ($parentId) {
-                $query->where('parent_id', $parentId);
-            })
-            ->orWhere('id', $parentId)
-            ->get();
+        $related = Task::where(function ($query) use ($task, $parentId) {
+            $query->where('parent_id', $parentId)
+                ->orWhere('id', $parentId);
+        })
+            ->where('id', '!=', $task->id)
+            ->select(['id', 'title'])
+            ->get()
+            ->map(fn($t) => [
+                'id' => $t->id,
+                'text' => $t->title,
+            ]);
 
-        return response()->json(
-            $relatedTasks->map(fn($t) => ['id' => $t->id, 'text' => $t->title])
-        );
+        return response()->json([
+            'related' => $related
+        ], 200);
     }
-
 
 }

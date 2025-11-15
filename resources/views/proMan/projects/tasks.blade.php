@@ -181,9 +181,9 @@
                                                         </div>
                                                     @endforeach
                                                 </div>
-                                        @endif
+                                            @endif
 
-                                        <!-- پایان زیرتسک‌ها -->
+                                            <!-- پایان زیرتسک‌ها -->
 
                                         </div>
 
@@ -210,8 +210,8 @@
                                             <span>تسکی در این وضعیت وجود ندارد!</span>
                                         </div>
                                     </div>
-                            @endforelse
-                            <!--end::Tasks Loop-->
+                                @endforelse
+                                <!--end::Tasks Loop-->
                             </div>
                         @endforeach
                     @endif
@@ -545,8 +545,8 @@
                     <div class="stepper stepper-links d-flex flex-column pt-15 between" id="kt_create_account_stepper" data-kt-stepper="true" data-select2-id="select2-data-kt_create_account_stepper" >
                         <form action=""  method="post" id="editForm" class="form mx-auto mw-100 w-100 pt-15 pb-10 fv-plugins-bootstrap5 fv-plugins-framework needs-validation"
                               enctype="multipart/form-data">
-                        @csrf
-                        <!--begin::Heading-->
+                            @csrf
+                            <!--begin::Heading-->
                             <div class="mb-13 text-center">
                                 <!--begin::Title-->
                                 <h1 class="mb-3">افزودن زیرتسک</h1>
@@ -1017,12 +1017,12 @@
                             <div class="fv-row mb-8">
                                 <label for="predecessor_task_id" class="form-label required">تسک وابسته</label>
                                 <select class="form-select form-select-solid" data-control="select2" id="predecessor_task_id"
-                                        data-ajax-route="{{ route('dashboard.task.related-tasks', ['task' => ':id']) }}"
+                                        data-ajax-route="{{ route('dashboard.task.related-tasks', ':id') }}"
                                         data-placeholder="تسک وابسته را انتخاب کنید" name="predecessor_task_id" required>
                                     <option></option>
-{{--                                    @foreach($tb_tasks as $task_item)--}}
-{{--                                        <option value="{{ $task_item->id }}">{{ $task_item->title }}</option>--}}
-{{--                                    @endforeach--}}
+                                    {{--                                    @foreach($tb_tasks as $task_item)--}}
+                                    {{--                                        <option value="{{ $task_item->id }}">{{ $task_item->title }}</option>--}}
+                                    {{--                                    @endforeach--}}
                                 </select>
                             </div>
 
@@ -1040,7 +1040,7 @@
                             <div class="fv-row mb-8">
                                 <label class="form-label">Lag / Lead</label>
                                 <input type="number" name="lag" class="form-control form-control-solid" value="{{old('lag')}}"
-                                    placeholder="مثلاً +2 یا -1"
+                                       placeholder="مثلاً +2 یا -1"
                                 >
                                 <small class="text-muted">
                                     عدد مثبت = لگ (تاخیر)، عدد منفی = لید (شروع زودتر)
@@ -1665,12 +1665,13 @@
                             // دکمه تعریف وابستگی
                             const depRoute = '{{ route("dashboard.task.dependency", ":id") }}'.replace(':id', d.id ?? 0);
                             let depBtn = `
-        <a href="#" class="btn btn-light-warning btn-sm"
-           onclick="openDependencyModal('${depRoute}', JSON.stringify({title:'${d.title}'}))">
-            تعریف وابستگی تسک
-            <i class="ki-outline ki-plus-square fs-6 px-2"></i>
-        </a>
-    `;
+    <a href="#" class="btn btn-light-warning btn-sm"
+       onclick="openDependencyModal('${depRoute}', JSON.stringify({id:'${d.id}', title:'${d.title}'}))">
+        تعریف وابستگی تسک
+        <i class="ki-outline ki-plus-square fs-6 px-2"></i>
+    </a>
+`;
+
 
                             actionsNode.innerHTML = showBtn + depBtn;
                         }
@@ -1884,20 +1885,16 @@
                 $('#dependencyForm #title').val(data.title);
                 $('#dependencyForm').attr('action', url);
 
-                loadPredecessorTasks(data.id); // <-- اینجا undefined می‌شود
+                loadPredecessorTasks(data.id);
 
                 var modal = new bootstrap.Modal(document.getElementById('kt_modal_dependency'));
                 modal.show();
             }
 
-
             function loadPredecessorTasks(taskId) {
                 const $select = $('#predecessor_task_id');
 
-                // مسیر AJAX داینامیک
-                const ajaxRouteTemplate = $select.data('ajax-route'); // data-ajax-route در select
                 const ajaxRoute = $select.data('ajax-route').replace(':id', taskId);
-
 
                 $select.select2({
                     placeholder: 'تسک وابسته را انتخاب کنید',
@@ -1906,13 +1903,15 @@
                         url: ajaxRoute,
                         dataType: 'json',
                         delay: 250,
-                        processResults: function(data) {
-                            return { results: data }; // [{id,text}, ...]
+                        processResults: function (data) {
+                            console.log(data)
+                            return { results: data.related ?? [] };
                         },
                         cache: true
                     }
                 });
             }
+
 
 
 
@@ -1928,22 +1927,22 @@
                     url: url,
                     method: 'POST',
                     data: formData,
-                     success: function (res) {
+                    success: function (res) {
                         console.log(res)
                         $('#kt_modal_dependency').modal('hide');
-                         if (res.success) {
-                             $.jGrowl(res.flash_message, {
-                                 life: 4000,
-                                 position: 'bottom-left',
-                                 theme: 'bg-success'
-                             });
-                         } else {
-                             $.jGrowl(res.err_message, {
-                                 life: 4000,
-                                 position: 'bottom-left',
-                                 theme: 'bg-danger'
-                             });
-                         }
+                        if (res.success) {
+                            $.jGrowl(res.flash_message, {
+                                life: 4000,
+                                position: 'bottom-left',
+                                theme: 'bg-success'
+                            });
+                        } else {
+                            $.jGrowl(res.err_message, {
+                                life: 4000,
+                                position: 'bottom-left',
+                                theme: 'bg-danger'
+                            });
+                        }
                     },
                     error: function (xhr) {
                         $('#kt_modal_dependency').modal('hide');
