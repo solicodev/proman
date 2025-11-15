@@ -241,7 +241,7 @@ class TaskController extends Controller
         if ($exists) {
             return response()->json([
                 'success' => false,
-                'err_message' => 'این وابستگی قبلاً ثبت شده است.'
+                'err_message' => 'قبلا وابستگی ثبت شده است! نمیتوانید مجددا وابستگی تعریف کنید!'
             ], 409);
         }
 
