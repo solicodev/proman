@@ -96,7 +96,7 @@
         <div class="card-body pt-0">
             <div class="table-responsive">
                 <!--begin::Table-->
-                <table id="kt_profile_overview_table" class="table table-row-bordered table-row-dashed gy-4 align-middle fw-bold text-start">
+                <table  class="kt_profile_overview_table table table-row-bordered table-row-dashed gy-4 align-middle fw-bold text-start">
                     <thead class="fs-7 text-gray-500 text-uppercase text-start">
                     <tr>
                         <th class="text-start">ردیف</th>

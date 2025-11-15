@@ -225,9 +225,40 @@
         <!--begin::Tab pane-->
         <div id="kt_project_targets_table_pane" class="tab-pane fade active show">
             <div class="card  card-flush ">
+                <div class="card-header mt-5">
+                    <div class="card-title flex-column">
+                        <h3 class="fw-bold mb-1">لیست تمام تیکت ها</h3>
+
+                        <div class="fs-6 text-gray-500"></div>
+                    </div>
+                    <div class="card-toolbar my-1">
+                        <div class="me-6 my-1">
+                            <select id="kt_filter_year" name="year" data-control="select2" data-hide-search="true" class="w-125px form-select form-select-solid form-select-sm">
+                                <option value="All" selected>همه زمان ها</option>
+                                <option value="thisyear">امسال</option>
+                                <option value="thismonth">این ماه</option>
+                                <option value="lastmonth">اخرین ماه</option>
+                                <option value="last90days">90 روز گذشته</option>
+                            </select>
+                        </div>
+                        <div class="me-4 my-1">
+                            <select id="kt_filter_orders" name="orders" data-control="select2" data-hide-search="true" class="w-125px form-select form-select-solid form-select-sm">
+                                <option value="All" selected>همه</option>
+                                <option value="Approved">درحال بررسی</option>
+                                <option value="Declined">برای انجام</option>
+                                <option value="In Progress">در حال انجام</option>
+                                <option value="In Transit">انجام شد</option>
+                            </select>
+                        </div>
+                        <div class="d-flex align-items-center position-relative my-1">
+                            <i class="ki-outline ki-magnifier fs-3 position-absolute ms-3"></i>
+                            <input type="text" id="kt_filter_search" class="form-control form-control-solid form-select-sm w-150px ps-9" placeholder="جستجو" />
+                        </div>
+                    </div>
+                </div>
                 <div class="card-body pt-3">
                     <!--begin::Table-->
-                    <table class="table align-middle table-row-dashed fs-6 gy-4" id="kt_docs_datatable_subtable">
+                    <table class="kt_profile_overview_table table align-middle table-row-dashed fs-6 gy-4" id="kt_docs_datatable_subtable">
                         <!--begin::Table head-->
                         <thead>
                         <!--begin::Table row-->
@@ -267,6 +298,7 @@
                             <td data-kt-docs-datatable-subtable="template_status"></td>
                             <td data-kt-docs-datatable-subtable="template_members"></td>
                             <td data-kt-docs-datatable-subtable="template_actions"></td>
+                            <td data-kt-docs-datatable-subtable="template"></td>
                         </tr>
                         <!--end::SubTable template-->
 
@@ -314,6 +346,7 @@
                                        onclick="openDependencyModal('{{ route('dashboard.task.dependency', $task->id) }}',
                                            JSON.stringify({id: '{{ $task->id }}', title: '{{ $task->title }}'}))">
                                         تعریف وابستگی تسک
+
                                         <i class="ki-outline ki-plus-square fs-6 px-2"></i>
                                     </a>
                                 </td>
@@ -1911,8 +1944,6 @@
                     }
                 });
             }
-
-
 
 
             // ایجاد وابستگی

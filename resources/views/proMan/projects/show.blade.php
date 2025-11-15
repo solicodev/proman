@@ -1570,112 +1570,112 @@
                 </div>
             </div>
 
-            <div class="card card-flush mt-6 mt-xl-9">
-                <div class="card-header mt-5">
-                    <div class="card-title flex-column">
-                        <h3 class="fw-bold mb-1">لیست تمام تسک ها</h3>
+{{--            <div class="card card-flush mt-6 mt-xl-9">--}}
+{{--                <div class="card-header mt-5">--}}
+{{--                    <div class="card-title flex-column">--}}
+{{--                        <h3 class="fw-bold mb-1">لیست تمام تسک ها</h3>--}}
 
-                        <div class="fs-6 text-gray-500"></div>
-                    </div>
-                    <div class="card-toolbar my-1">
-                        <div class="me-6 my-1">
-                            <select id="kt_filter_year" name="year" data-control="select2" data-hide-search="true" class="w-125px form-select form-select-solid form-select-sm">
-                                <option value="All" selected>همه زمان ها</option>
-                                <option value="thisyear">امسال</option>
-                                <option value="thismonth">این ماه</option>
-                                <option value="lastmonth">اخرین ماه</option>
-                                <option value="last90days">90 روز گذشته</option>
-                            </select>
-                        </div>
-                        <div class="me-4 my-1">
-                            <select id="kt_filter_orders" name="orders" data-control="select2" data-hide-search="true" class="w-125px form-select form-select-solid form-select-sm">
-                                <option value="All" selected>همه</option>
-                                <option value="Approved">درحال بررسی</option>
-                                <option value="Declined">برای انجام</option>
-                                <option value="In Progress">در حال انجام</option>
-                                <option value="In Transit">انجام شد</option>
-                            </select>
-                        </div>
-                        <div class="d-flex align-items-center position-relative my-1">
-                            <i class="ki-outline ki-magnifier fs-3 position-absolute ms-3"></i>
-                            <input type="text" id="kt_filter_search" class="form-control form-control-solid form-select-sm w-150px ps-9" placeholder="جستجو" />
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body pt-0">
-                    <div class="table-responsive">
-                        <!--begin::Table-->
-                        <table id="kt_profile_overview_table" class="table table-row-bordered table-row-dashed gy-4 align-middle fw-bold text-start">
-                            <thead class="fs-7 text-gray-500 text-uppercase text-start">
-                            <tr>
-                                <th class="text-start">ردیف</th>
-                                <th class="text-start">ناظر تسک</th>
-                                <th class="text-start">عنوان تسک</th>
-                                <th class="text-start">تاریخ شروع تخمینی</th>
-                                <th class="text-start">تاریخ پایان تخمینی</th>
-                                <th class="text-start">تاریخ شروع واقعی</th>
-                                <th class="text-start">وضعیت</th>
-                                <th class="text-start">جزییات</th>
-                            </tr>
-                            </thead>
-                            <tbody class="fs-6">
-                            @foreach($tasks as $task)
-                            <tr>
-                                <td>{{$loop->iteration}}</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="me-5 position-relative">
-                                            <div class="symbol symbol-35px symbol-circle">
-                                                @if($task->watcher?->photo_id)
-                                                <img alt="Pic" src="{{route('home')}}/{{$task->watcher?->photo?->path}}" />
-                                                @else
-                                                    <i class="ki-outline ki-profile-user fs-3"></i>
-                                                @endif
-                                            </div>
+{{--                        <div class="fs-6 text-gray-500"></div>--}}
+{{--                    </div>--}}
+{{--                    <div class="card-toolbar my-1">--}}
+{{--                        <div class="me-6 my-1">--}}
+{{--                            <select id="kt_filter_year" name="year" data-control="select2" data-hide-search="true" class="w-125px form-select form-select-solid form-select-sm">--}}
+{{--                                <option value="All" selected>همه زمان ها</option>--}}
+{{--                                <option value="thisyear">امسال</option>--}}
+{{--                                <option value="thismonth">این ماه</option>--}}
+{{--                                <option value="lastmonth">اخرین ماه</option>--}}
+{{--                                <option value="last90days">90 روز گذشته</option>--}}
+{{--                            </select>--}}
+{{--                        </div>--}}
+{{--                        <div class="me-4 my-1">--}}
+{{--                            <select id="kt_filter_orders" name="orders" data-control="select2" data-hide-search="true" class="w-125px form-select form-select-solid form-select-sm">--}}
+{{--                                <option value="All" selected>همه</option>--}}
+{{--                                <option value="Approved">درحال بررسی</option>--}}
+{{--                                <option value="Declined">برای انجام</option>--}}
+{{--                                <option value="In Progress">در حال انجام</option>--}}
+{{--                                <option value="In Transit">انجام شد</option>--}}
+{{--                            </select>--}}
+{{--                        </div>--}}
+{{--                        <div class="d-flex align-items-center position-relative my-1">--}}
+{{--                            <i class="ki-outline ki-magnifier fs-3 position-absolute ms-3"></i>--}}
+{{--                            <input type="text" id="kt_filter_search" class="form-control form-control-solid form-select-sm w-150px ps-9" placeholder="جستجو" />--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--                <div class="card-body pt-0">--}}
+{{--                    <div class="table-responsive">--}}
+{{--                        <!--begin::Table-->--}}
+{{--                        <table id="kt_profile_overview_table" class="table table-row-bordered table-row-dashed gy-4 align-middle fw-bold text-start">--}}
+{{--                            <thead class="fs-7 text-gray-500 text-uppercase text-start">--}}
+{{--                            <tr>--}}
+{{--                                <th class="text-start">ردیف</th>--}}
+{{--                                <th class="text-start">ناظر تسک</th>--}}
+{{--                                <th class="text-start">عنوان تسک</th>--}}
+{{--                                <th class="text-start">تاریخ شروع تخمینی</th>--}}
+{{--                                <th class="text-start">تاریخ پایان تخمینی</th>--}}
+{{--                                <th class="text-start">تاریخ شروع واقعی</th>--}}
+{{--                                <th class="text-start">وضعیت</th>--}}
+{{--                                <th class="text-start">جزییات</th>--}}
+{{--                            </tr>--}}
+{{--                            </thead>--}}
+{{--                            <tbody class="fs-6">--}}
+{{--                            @foreach($tasks as $task)--}}
+{{--                            <tr>--}}
+{{--                                <td>{{$loop->iteration}}</td>--}}
+{{--                                <td>--}}
+{{--                                    <div class="d-flex align-items-center">--}}
+{{--                                        <div class="me-5 position-relative">--}}
+{{--                                            <div class="symbol symbol-35px symbol-circle">--}}
+{{--                                                @if($task->watcher?->photo_id)--}}
+{{--                                                <img alt="Pic" src="{{route('home')}}/{{$task->watcher?->photo?->path}}" />--}}
+{{--                                                @else--}}
+{{--                                                    <i class="ki-outline ki-profile-user fs-3"></i>--}}
+{{--                                                @endif--}}
+{{--                                            </div>--}}
 
-                                        </div>
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <a href="#" class="fs-6 text-gray-800 text-hover-primary">{{$task->watcher?->Name}}</a>
+{{--                                        </div>--}}
+{{--                                        <div class="d-flex flex-column justify-content-center">--}}
+{{--                                            <a href="#" class="fs-6 text-gray-800 text-hover-primary">{{$task->watcher?->Name}}</a>--}}
 
-                                            <div class="fw-semibold text-gray-500">{{$task->watcher?->email}} - {{role_name($task->watcher?->getRoleNames()->first())}}</div>
-                                        </div>
-                                    </div>
-                                </td>
+{{--                                            <div class="fw-semibold text-gray-500">{{$task->watcher?->email}} - {{role_name($task->watcher?->getRoleNames()->first())}}</div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </td>--}}
 
-                                <td class="text-start">{{$task->title}}</td>
-                                <td class="text-start">{{\Carbon\Carbon::parse($task->start_date)->format('Y/m/d')}}</td>
-                                <td class="text-start">@if($task->end_date) {{\Carbon\Carbon::parse($task->end_date)->format('Y/m/d')}}@endif</td>
-                                <td class="text-start">{{\Carbon\Carbon::parse($task->start_date)->format('Y/m/d')}}</td>
-                                <td class="text-start">
-                                    {!! $task->TaskStatus !!}
+{{--                                <td class="text-start">{{$task->title}}</td>--}}
+{{--                                <td class="text-start">{{\Carbon\Carbon::parse($task->start_date)->format('Y/m/d')}}</td>--}}
+{{--                                <td class="text-start">@if($task->end_date) {{\Carbon\Carbon::parse($task->end_date)->format('Y/m/d')}}@endif</td>--}}
+{{--                                <td class="text-start">{{\Carbon\Carbon::parse($task->start_date)->format('Y/m/d')}}</td>--}}
+{{--                                <td class="text-start">--}}
+{{--                                    {!! $task->TaskStatus !!}--}}
 {{--                                <span class="badge badge-light-success fw-bold px-4 py-3">--}}
 {{--                                    Approved                                --}}
 {{--                                </span>--}}
-                                </td>
-                                <td class="text-start">
-                                    <a href="{{route('dashboard.task.show',$task->id)}}"
-                                        type="button"
-                                        class="btn btn-clean btn-sm btn-icon btn-icon-primary btn-active-light-primary ms-auto"
-                                        data-bs-toggle="tooltip" data-bs-placement="top" title="مشاهده جزییات تسک">
-                                        <i class="ki-outline ki-eye fs-3"></i>
-                                    </a>
-                                    <a href="{{route('dashboard.task.show',$task->id)}}"
-                                       type="button"
-                                       class="btn btn-clean btn-sm btn-icon btn-icon-secondary btn-active-light-warning ms-auto"
-                                       data-bs-toggle="tooltip" data-bs-placement="top" title="آرشیو کردن تسک">
-                                        <i class="ki-outline ki-archive fs-3"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
-                        <!--end::Table-->
-                    </div>
-                    <!--end::Table container-->
-                </div>
-                <!--end::Card body-->
-            </div>
+{{--                                </td>--}}
+{{--                                <td class="text-start">--}}
+{{--                                    <a href="{{route('dashboard.task.show',$task->id)}}"--}}
+{{--                                        type="button"--}}
+{{--                                        class="btn btn-clean btn-sm btn-icon btn-icon-primary btn-active-light-primary ms-auto"--}}
+{{--                                        data-bs-toggle="tooltip" data-bs-placement="top" title="مشاهده جزییات تسک">--}}
+{{--                                        <i class="ki-outline ki-eye fs-3"></i>--}}
+{{--                                    </a>--}}
+{{--                                    <a href="{{route('dashboard.task.show',$task->id)}}"--}}
+{{--                                       type="button"--}}
+{{--                                       class="btn btn-clean btn-sm btn-icon btn-icon-secondary btn-active-light-warning ms-auto"--}}
+{{--                                       data-bs-toggle="tooltip" data-bs-placement="top" title="آرشیو کردن تسک">--}}
+{{--                                        <i class="ki-outline ki-archive fs-3"></i>--}}
+{{--                                    </a>--}}
+{{--                                </td>--}}
+{{--                            </tr>--}}
+{{--                            @endforeach--}}
+{{--                            </tbody>--}}
+{{--                        </table>--}}
+{{--                        <!--end::Table-->--}}
+{{--                    </div>--}}
+{{--                    <!--end::Table container-->--}}
+{{--                </div>--}}
+{{--                <!--end::Card body-->--}}
+{{--            </div>--}}
             <!--end::Table-->
         </div>
     </div>

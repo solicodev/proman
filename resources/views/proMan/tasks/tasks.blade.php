@@ -188,12 +188,12 @@
 
                                         <!-- دکمه زیر تسک -->
                                         <div class="card-footer text-center py-3">
-                                            <a href="#" class="btn btn-light-primary btn-sm"
-                                               onclick="openEditModal('{{ route('dashboard.task.subtasks.store', $task->id) }}',
-                                                    JSON.stringify({title:'{{ $task->title }}'}))">
-                                                ساخت زیر تسک جدید
-                                                <i class="ki-outline ki-plus-square fs-6 px-2"></i>
-                                            </a>
+{{--                                            <a href="#" class="btn btn-light-primary btn-sm"--}}
+{{--                                               onclick="openEditModal('{{ route('dashboard.task.subtasks.store', $task->id) }}',--}}
+{{--                                                    JSON.stringify({title:'{{ $task->title }}'}))">--}}
+{{--                                                ساخت زیر تسک جدید--}}
+{{--                                                <i class="ki-outline ki-plus-square fs-6 px-2"></i>--}}
+{{--                                            </a>--}}
                                             <a href="#" onclick="openShowModal(
                                                            '{{ route('dashboard.task.show', $task->id) }}',
                                                            '{{ route('dashboard.task.update.status', $task->id) }}'
@@ -224,9 +224,41 @@
         <!--begin::Tab pane-->
         <div id="kt_project_targets_table_pane" class="tab-pane fade active show">
             <div class="card  card-flush ">
+                <div class="card-header mt-5">
+                    <div class="card-title flex-column">
+                        <h3 class="fw-bold mb-1">لیست تمام تیکت ها</h3>
+
+                        <div class="fs-6 text-gray-500"></div>
+                    </div>
+                    <div class="card-toolbar my-1">
+                        <div class="me-6 my-1">
+                            <select id="kt_filter_year" name="year" data-control="select2" data-hide-search="true" class="w-125px form-select form-select-solid form-select-sm">
+                                <option value="All" selected>همه زمان ها</option>
+                                <option value="thisyear">امسال</option>
+                                <option value="thismonth">این ماه</option>
+                                <option value="lastmonth">اخرین ماه</option>
+                                <option value="last90days">90 روز گذشته</option>
+                            </select>
+                        </div>
+                        <div class="me-4 my-1">
+                            <select id="kt_filter_orders" name="orders" data-control="select2" data-hide-search="true" class="w-125px form-select form-select-solid form-select-sm">
+                                <option value="All" selected>همه</option>
+                                <option value="Approved">درحال بررسی</option>
+                                <option value="Declined">برای انجام</option>
+                                <option value="In Progress">در حال انجام</option>
+                                <option value="In Transit">انجام شد</option>
+                            </select>
+                        </div>
+                        <div class="d-flex align-items-center position-relative my-1">
+                            <i class="ki-outline ki-magnifier fs-3 position-absolute ms-3"></i>
+                            <input type="text" id="kt_filter_search" class="form-control form-control-solid form-select-sm w-150px ps-9" placeholder="جستجو" />
+                        </div>
+                    </div>
+                </div>
                 <div class="card-body pt-3">
+                    <div class="table-responsive">
                     <!--begin::Table-->
-                    <table class="table align-middle table-row-dashed fs-6 gy-4" id="kt_docs_datatable_subtable">
+                    <table  class="kt_profile_overview_table table align-middle table-row-dashed fs-6 gy-4" id="kt_docs_datatable_subtable">
                         <!--begin::Table head-->
                         <thead>
                         <!--begin::Table row-->
@@ -303,10 +335,16 @@
                                        class="btn btn-sm btn-light-info" data-bs-toggle="tooltip" data-bs-placement="top" title="مشاهده">
                                         <i class="ki-outline ki-eye fs-6 px-2"></i>
                                     </a>
-                                    <a href="#" class="btn btn-light-primary btn-sm"
-                                       onclick="openEditModal('{{ route('dashboard.task.subtasks.store', $task->id) }}',
-                                                    JSON.stringify({title:'{{ $task->title }}'}))">
-                                        ساخت زیر تسک جدید
+{{--                                    <a href="#" class="btn btn-light-primary btn-sm"--}}
+{{--                                       onclick="openEditModal('{{ route('dashboard.task.subtasks.store', $task->id) }}',--}}
+{{--                                                    JSON.stringify({title:'{{ $task->title }}'}))">--}}
+{{--                                        ساخت زیر تسک جدید--}}
+{{--                                        <i class="ki-outline ki-plus-square fs-6 px-2"></i>--}}
+{{--                                    </a>--}}
+                                    <a href="#" class="btn btn-light-warning btn-sm"
+                                       onclick="openDependencyModal('{{ route('dashboard.task.dependency', $task->id) }}',
+                                           JSON.stringify({id: '{{ $task->id }}', title: '{{ $task->title }}'}))">
+                                        تعریف وابستگی تسک
                                         <i class="ki-outline ki-plus-square fs-6 px-2"></i>
                                     </a>
                                 </td>
@@ -325,6 +363,7 @@
                         <!--end::Table body-->
                     </table>
                     <!--end::Table-->
+                    </div>
                 </div>
             </div>
         </div>
@@ -332,409 +371,493 @@
     </div>
     <!--end::Tab Content-->
 
-    <div class="modal fade" id="kt_modal_task_show" tabindex="-1" aria-hidden="true">
-        <!--begin::Modal dialog-->
-        <div class="modal-dialog modal-dialog-centered mw-1024px modal-xl" >
-            <!--begin::Modal content-->
-            <div class="modal-content border-0 shadow-lg hover-scroll-y h-700px">
-                <div class="modal-header bg-light">
-                    <h5 class="modal-title fw-bold" id="modalTitle">
-                        <i class="bi bi-check me-2 text-primary"></i>
-                    </h5>
-                    <h6 id="taskCode"></h6>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="بستن"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="d-flex justify-content-between mb-3">
-                        <span id="taskManager"></span>
-                        <span id="taskManagerCheck"></span>
-                        <span id="managerCheckVerify"></span>
-                        <span id="watcher"></span>
-                        <span id="taskStatus"></span>
-                        <span id="TaskPrority"></span>
-                        <small id="task-deadline" class="text-muted">مهلت: ۱۴۰۴/۰۸/۲۰</small>
+        <div class="modal fade" id="kt_modal_task_show" tabindex="-1" aria-hidden="true">
+            <!--begin::Modal dialog-->
+            <div class="modal-dialog modal-dialog-centered mw-1024px modal-xl" >
+                <!--begin::Modal content-->
+                <div class="modal-content border-0 shadow-lg hover-scroll-y h-700px">
+                    <div class="modal-header bg-light">
+                        <h5 class="modal-title fw-bold" id="modalTitle">
+                            <i class="bi bi-check me-2 text-primary"></i>
+                        </h5>
+                        <h6 id="taskCode"></h6>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="بستن"></button>
                     </div>
-                    <div class="d-flex align-items-center flex-wrap gap-2 mb-4">
-
-                        <!-- Input تاریخ -->
-                        <div>
-                            <input name="start_date"
-                                   id="start_date"
-                                   class="result form-control form-control-solid ps-12"
-                                   type="text"
-                                   data-jdp
-                                   placeholder="انتخاب تاریخ انجام تسک"
-                                   autocomplete="off"
-                                   required />
+                    <div class="modal-body">
+                        <div class="d-flex justify-content-between mb-3">
+                            <span id="taskManager"></span>
+                            <span id="taskManagerCheck"></span>
+                            <span id="managerCheckVerify"></span>
+                            <span id="watcher"></span>
+                            <span id="taskStatus"></span>
+                            <span id="TaskPrority"></span>
+                            <small id="task-deadline" class="text-muted">مهلت: ۱۴۰۴/۰۸/۲۰</small>
                         </div>
-                        <div class="dropdown">
-                            <button class="btn btn-sm btn-light-primary rotate"
-                                    data-kt-menu-trigger="click"
-                                    data-kt-menu-placement="bottom-start"
-                                    data-kt-menu-offset="30px, 30px">
-                                چک‌لیست
-                                <span class="svg-icon fs-3 rotate-180 ms-3 me-0">
+                        <div class="d-flex align-items-center flex-wrap gap-2 mb-4">
+
+                            <!-- Input تاریخ -->
+                            <div>
+                                <input name="start_date"
+                                       id="start_date"
+                                       class="result form-control form-control-solid ps-12"
+                                       type="text"
+                                       data-jdp
+                                       placeholder="انتخاب تاریخ انجام تسک"
+                                       autocomplete="off"
+                                       required />
+                            </div>
+                            <div class="dropdown">
+                                <button class="btn btn-sm btn-light-primary rotate"
+                                        data-kt-menu-trigger="click"
+                                        data-kt-menu-placement="bottom-start"
+                                        data-kt-menu-offset="30px, 30px">
+                                    چک‌لیست
+                                    <span class="svg-icon fs-3 rotate-180 ms-3 me-0">
                                     <i class="ki-outline ki-down fs-6"></i>
                                 </span>
-                            </button>
-                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800
+                                </button>
+                                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800
                              menu-state-bg-light-primary fw-semibold w-auto min-w-200 mw-300px"
-                                 data-kt-menu="true">
+                                     data-kt-menu="true">
 
-                                <div class="menu-item px-3">
-                                    <div class="menu-content fs-6 text-gray-900 fw-bold px-3 py-4">افزودن چک لیست</div>
-                                </div>
-                                <div class="separator mb-3 opacity-75"></div>
-                                <form action="{{ route('dashboard.task.checklist',$task->id) }}" method="post" enctype="multipart/form-data"
-                                      class="mx-auto mw-100 w-100 fv-plugins-bootstrap5 fv-plugins-framework needs-validation"
-                                      novalidate id="kt_docs_formvalidation_text" autocomplete="off">
-                                    @csrf
-
-                                    <div class="shadow-sm p-4">
-
-                                        <div class="fv-row mb-10">
-                                            <label class="form-label required">چک لیست</label>
-                                            <input name="title" value="{{ old('title') }}" class="form-control form-control-lg"
-                                                   placeholder="چک لیست" required>
-                                        </div>
+                                    <div class="menu-item px-3">
+                                        <div class="menu-content fs-6 text-gray-900 fw-bold px-3 py-4">افزودن چک لیست</div>
                                     </div>
-
-                                    <div class="menu-item d-flex justify-content-end px-3">
-                                        <div class="menu-content  px-3 py-3">
-                                            <button class="btn btn-light-primary btn-sm px-4">افزودن<i class="ki-outline ki-plus-square fs-3 px-2"></i></button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="dropdown">
-                            <button class="btn btn-sm btn-light-primary rotate"
-                                    data-kt-menu-trigger="click"
-                                    data-kt-menu-placement="bottom-start"
-                                    data-kt-menu-offset="30px, 30px">
-                                اعضا
-                                <span class="svg-icon fs-3 rotate-180 ms-3 me-0">
-                                    <i class="ki-outline ki-down fs-6"></i>
-                                </span>
-                            </button>
-                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800
-                             menu-state-bg-light-primary fw-semibold w-auto min-w-200 mw-300px p-5"
-                                 data-kt-menu="true">
-
-                                <div class="menu-item px-3">
-                                    <div class="menu-content fs-6 text-gray-900 fw-bold px-3 py-4">اعضای تسک</div>
-                                </div>
-                                <div class="separator mb-3 opacity-75"></div>
-
-                                <div class="symbol-group symbol-hover flex-nowrap" id="taskMembers">
-                                    {{--                                    @foreach($task->assigners as $assigner)--}}
-                                    {{--                                        <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" data-bs-original-title="{{$assigner->Name}}" >--}}
-                                    {{--                                            @if($assigner->photo_id)--}}
-                                    {{--                                                <img alt="Pic" src="{{ route('home') }}/{{$assigner->photo?->path}}">--}}
-                                    {{--                                            @else--}}
-                                    {{--                                                <span class="symbol-label bg-warning text-inverse-warning fw-bold">{{ mb_substr($assigner->Name, 0, 1) }}</span>--}}
-                                    {{--                                            @endif--}}
-                                    {{--                                        </div>--}}
-                                    {{--                                    @endforeach--}}
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="dropdown">
-                            <button class="btn btn-sm btn-light-primary rotate"
-                                    data-kt-menu-trigger="click"
-                                    data-kt-menu-placement="bottom-start"
-                                    data-kt-menu-offset="30px, 30px">
-                                فایل ها
-                                <span class="svg-icon fs-3 rotate-180 ms-3 me-0">
-                                    <i class="ki-outline ki-down fs-6"></i>
-                                </span>
-                            </button>
-                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800
-                             menu-state-bg-light-primary fw-semibold w-auto min-w-200 mw-300px p-5"
-                                 data-kt-menu="true">
-
-                                <div class="menu-item px-3">
-                                    <div class="menu-content fs-6 text-gray-900 fw-bold px-3 py-4">فایل های مربوط به تسک</div>
-                                </div>
-                                <div class="separator mb-3 opacity-75"></div>
-
-                                <ul class="list-unstyled mb-0" id="taskFiles">
-                                    @foreach($task->photos as $file)
-                                        @php
-                                            $explode_file = explode('.',$file['path']);
-                                            $user = \App\Models\User::with('photo')->where('id',$file['user_id'])->first();
-                                        @endphp
-                                        <div class="d-flex align-items-center mb-5">
-                                            <div class="symbol symbol-30px me-5">
-                                                @if($explode_file[1] == 'pdf')
-                                                    <img alt="Icon" src="{{url('panel/assets/media/svg/files/pdf.svg')}}" />
-                                                @elseif($explode_file[1] == 'doc')
-                                                    <img alt="Icon" src="{{url('panel/assets/media/svg/files/doc.svg')}}" />
-                                                @elseif($explode_file[1] == 'css')
-                                                    <img alt="Icon" src="{{url('panel/assets/media/svg/files/css.svg')}}" />
-                                                @else
-                                                    <img alt="Icon" src="{{url('panel/assets/media/svg/files/ai.svg')}}" />
-                                                @endif
-                                            </div>
-                                            <div class="fw-semibold">
-                                                <a class="fs-6 fw-bold text-gray-900 text-hover-primary">{{$user->Name}} </a>
-
-                                                <div class="text-gray-500">
-                                                    {{verta($file['created_at'])->formatDifference()}}
-                                                    <a class="text-active-danger">{{role_name($user->getRoleNames()->first())}}</a>
-                                                </div>
-                                            </div>
-                                            <a href="{{ route('home') }}/{{$file['path']}}"
-                                               type="button" download
-                                               class="btn btn-clean btn-sm btn-icon btn-icon-primary btn-active-light-primary ms-auto"
-                                               data-bs-toggle="tooltip" data-bs-placement="top" title="دانلود فایل">
-                                                <i class="ki-outline ki-cloud-download fs-3"></i>
-                                            </a>
-                                        </div>
-                                    @endforeach
-                                    {{--                                    <li><a href="#" class="text-primary text-decoration-none">UI-Dashboard.png</a></li>--}}
-                                    {{--                                    <li><a href="#" class="text-primary text-decoration-none">requirements.docx</a></li>--}}
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="dropdown">
-                            <button class="btn btn-sm btn-light-primary rotate"
-                                    data-kt-menu-trigger="click"
-                                    data-kt-menu-placement="bottom-start"
-                                    data-kt-menu-offset="30px, 30px">
-                                عملیات
-                                <span class="svg-icon fs-3 rotate-180 ms-3 me-0">
-                                    <i class="ki-outline ki-down fs-6"></i>
-                                </span>
-                            </button>
-                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800
-                             menu-state-bg-light-primary fw-semibold w-auto min-w-200 mw-500px p-5"
-                                 data-kt-menu="true">
-
-                                <div class="menu-item px-3">
-                                    <div class="menu-content fs-6 text-gray-900 fw-bold px-3 py-4">تغییر وضعیت تسک</div>
-                                </div>
-                                <div class="separator mb-3 opacity-75"></div>
-                                <form method="POST" id="taskStatusForm"
-                                      data-url="{{ route('dashboard.task.update.status', $task->id) }}"
-                                      data-parent-id="{{ $task->parent_id }}"
-                                      class="d-flex align-items-center">
-                                    @csrf
-                                    <label class="form-check-label text-warning me-3">
-                                        <input type="radio" name="status" value="0" class="form-check-input"
-                                               @if($task->status == 0) checked @endif>
-                                        در حال بررسی
-                                    </label>
-                                    <label class="form-check-label text-info me-3">
-                                        <input type="radio" name="status" value="1" class="form-check-input"
-                                               @if($task->status == 1) checked @endif>
-                                        برای انجام
-                                    </label>
-                                    <label class="form-check-label me-3">
-                                        <input type="radio" name="status" value="2" class="form-check-input"
-                                               @if($task->status == 2) checked @endif>
-                                        در حال انجام
-                                    </label>
-                                    <label class="form-check-label">
-                                        <input type="radio" name="status" value="3" class="form-check-input"
-                                               @if($task->status == 3) checked @endif>
-                                        انجام شد
-                                    </label>
-                                </form>
-
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="d-flex">
-                        <div class="col-8">
-                            <!-- توضیحات -->
-                            <div class="mb-4">
-                                <h6 class="fw-semibold mb-2">توضیحات</h6>
-                                <p id="task-desc" class="text-muted mb-0">
-
-                                </p>
-                            </div>
-                            <div class="m-4">
-                                <div id="taskChecklistContainer" class="mb-3" data-task-id="">
-                                    <div class="text-center text-muted py-3">در حال بارگذاری چک‌لیست‌ها...</div>
-                                </div>
-
-                                <div id="new-checklist-container" class="mt-3">
-                                    {{--                                    <button type="button" id="add-checklist-btn" class="btn btn-sm btn-light-primary">--}}
-                                    {{--                                        <i class="ki-outline ki-plus fs-5"></i> افزودن آیتم به چک لیست--}}
-                                    {{--                                    </button>--}}
-
-                                    <form action="" method="post" class="mt-2 d-none" id="new-checklist-form">
+                                    <div class="separator mb-3 opacity-75"></div>
+                                    <form action="{{ route('dashboard.task.checklist',$task->id) }}" method="post" enctype="multipart/form-data"
+                                          class="mx-auto mw-100 w-100 fv-plugins-bootstrap5 fv-plugins-framework needs-validation"
+                                          novalidate id="kt_docs_formvalidation_text" autocomplete="off">
                                         @csrf
-                                        <div class="input-group">
-                                            <input type="text" name="title" class="form-control" placeholder="عنوان چک‌لیست جدید..." required>
-                                            <button type="submit" class="btn btn-light-primary">افزودن</button>
+
+                                        <div class="shadow-sm p-4">
+
+                                            <div class="fv-row mb-10">
+                                                <label class="form-label required">چک لیست</label>
+                                                <input name="title" value="{{ old('title') }}" class="form-control form-control-lg"
+                                                       placeholder="چک لیست" required>
+                                            </div>
+                                        </div>
+
+                                        <div class="menu-item d-flex justify-content-end px-3">
+                                            <div class="menu-content  px-3 py-3">
+                                                <button class="btn btn-light-primary btn-sm px-4">افزودن<i class="ki-outline ki-plus-square fs-3 px-2"></i></button>
+                                            </div>
                                         </div>
                                     </form>
                                 </div>
                             </div>
-                        </div>
-                        <!-- کامنت‌ها -->
-                        <div class="col-4">
-                            <div id="taskComments" class="hover-scroll-y h-400px">
-                                <h6 class="fw-semibold mb-2">کامنت‌ها</h6>
+                            <div class="dropdown">
+                                <button class="btn btn-sm btn-light-primary rotate"
+                                        data-kt-menu-trigger="click"
+                                        data-kt-menu-placement="bottom-start"
+                                        data-kt-menu-offset="30px, 30px">
+                                    اعضا
+                                    <span class="svg-icon fs-3 rotate-180 ms-3 me-0">
+                                    <i class="ki-outline ki-down fs-6"></i>
+                                </span>
+                                </button>
+                                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800
+                             menu-state-bg-light-primary fw-semibold w-auto min-w-200 mw-300px p-5"
+                                     data-kt-menu="true">
 
-                                <div id="commentsList"></div>
-                            </div>
-                            <div>
-                                <form method="POST" id="commentForm" class="mt-4" data-url="{{ route('dashboard.task.comment.add', $task->id) }}">
-                                    @csrf
-                                    <textarea name="text" class="form-control mb-2" placeholder="افزودن کامنت جدید..." required></textarea>
-                                    <div class="d-flex justify-content-end">
-                                        <button type="submit" class="btn btn-sm btn-light-primary">ارسال</button>
+                                    <div class="menu-item px-3">
+                                        <div class="menu-content fs-6 text-gray-900 fw-bold px-3 py-4">اعضای تسک</div>
                                     </div>
-                                </form>
+                                    <div class="separator mb-3 opacity-75"></div>
+
+                                    <div class="symbol-group symbol-hover flex-nowrap" id="taskMembers">
+                                        {{--                                    @foreach($task->assigners as $assigner)--}}
+                                        {{--                                        <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" data-bs-original-title="{{$assigner->Name}}" >--}}
+                                        {{--                                            @if($assigner->photo_id)--}}
+                                        {{--                                                <img alt="Pic" src="{{ route('home') }}/{{$assigner->photo?->path}}">--}}
+                                        {{--                                            @else--}}
+                                        {{--                                                <span class="symbol-label bg-warning text-inverse-warning fw-bold">{{ mb_substr($assigner->Name, 0, 1) }}</span>--}}
+                                        {{--                                            @endif--}}
+                                        {{--                                        </div>--}}
+                                        {{--                                    @endforeach--}}
+                                    </div>
+                                </div>
+
                             </div>
+                            <div class="dropdown">
+                                <button class="btn btn-sm btn-light-primary rotate"
+                                        data-kt-menu-trigger="click"
+                                        data-kt-menu-placement="bottom-start"
+                                        data-kt-menu-offset="30px, 30px">
+                                    فایل ها
+                                    <span class="svg-icon fs-3 rotate-180 ms-3 me-0">
+                                    <i class="ki-outline ki-down fs-6"></i>
+                                </span>
+                                </button>
+                                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800
+                             menu-state-bg-light-primary fw-semibold w-auto min-w-200 mw-300px p-5"
+                                     data-kt-menu="true">
 
-                            <input type="hidden" id="taskId" value="{{ $task->id }}">
+                                    <div class="menu-item px-3">
+                                        <div class="menu-content fs-6 text-gray-900 fw-bold px-3 py-4">فایل های مربوط به تسک</div>
+                                    </div>
+                                    <div class="separator mb-3 opacity-75"></div>
 
+                                    <ul class="list-unstyled mb-0" id="taskFiles">
+                                        @foreach($task->photos as $file)
+                                            @php
+                                                $explode_file = explode('.',$file['path']);
+                                                $user = \App\Models\User::with('photo')->where('id',$file['user_id'])->first();
+                                            @endphp
+                                            <div class="d-flex align-items-center mb-5">
+                                                <div class="symbol symbol-30px me-5">
+                                                    @if($explode_file[1] == 'pdf')
+                                                        <img alt="Icon" src="{{url('panel/assets/media/svg/files/pdf.svg')}}" />
+                                                    @elseif($explode_file[1] == 'doc')
+                                                        <img alt="Icon" src="{{url('panel/assets/media/svg/files/doc.svg')}}" />
+                                                    @elseif($explode_file[1] == 'css')
+                                                        <img alt="Icon" src="{{url('panel/assets/media/svg/files/css.svg')}}" />
+                                                    @else
+                                                        <img alt="Icon" src="{{url('panel/assets/media/svg/files/ai.svg')}}" />
+                                                    @endif
+                                                </div>
+                                                <div class="fw-semibold">
+                                                    <a class="fs-6 fw-bold text-gray-900 text-hover-primary">{{$user->Name}} </a>
+
+                                                    <div class="text-gray-500">
+                                                        {{verta($file['created_at'])->formatDifference()}}
+                                                        <a class="text-active-danger">{{role_name($user->getRoleNames()->first())}}</a>
+                                                    </div>
+                                                </div>
+                                                <a href="{{ route('home') }}/{{$file['path']}}"
+                                                   type="button" download
+                                                   class="btn btn-clean btn-sm btn-icon btn-icon-primary btn-active-light-primary ms-auto"
+                                                   data-bs-toggle="tooltip" data-bs-placement="top" title="دانلود فایل">
+                                                    <i class="ki-outline ki-cloud-download fs-3"></i>
+                                                </a>
+                                            </div>
+                                        @endforeach
+                                        {{--                                    <li><a href="#" class="text-primary text-decoration-none">UI-Dashboard.png</a></li>--}}
+                                        {{--                                    <li><a href="#" class="text-primary text-decoration-none">requirements.docx</a></li>--}}
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="dropdown">
+                                <button class="btn btn-sm btn-light-primary rotate"
+                                        data-kt-menu-trigger="click"
+                                        data-kt-menu-placement="bottom-start"
+                                        data-kt-menu-offset="30px, 30px">
+                                    عملیات
+                                    <span class="svg-icon fs-3 rotate-180 ms-3 me-0">
+                                    <i class="ki-outline ki-down fs-6"></i>
+                                </span>
+                                </button>
+                                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800
+                             menu-state-bg-light-primary fw-semibold w-auto min-w-200 mw-500px p-5"
+                                     data-kt-menu="true">
+
+                                    <div class="menu-item px-3">
+                                        <div class="menu-content fs-6 text-gray-900 fw-bold px-3 py-4">تغییر وضعیت تسک</div>
+                                    </div>
+                                    <div class="separator mb-3 opacity-75"></div>
+                                    <form method="POST" id="taskStatusForm"
+                                          data-url="{{ route('dashboard.task.update.status', $task->id) }}"
+                                          data-parent-id="{{ $task->parent_id }}"
+                                          class="d-flex align-items-center">
+                                        @csrf
+                                        <label class="form-check-label text-warning me-3">
+                                            <input type="radio" name="status" value="0" class="form-check-input"
+                                                   @if($task->status == 0) checked @endif>
+                                            در حال بررسی
+                                        </label>
+                                        <label class="form-check-label text-info me-3">
+                                            <input type="radio" name="status" value="1" class="form-check-input"
+                                                   @if($task->status == 1) checked @endif>
+                                            برای انجام
+                                        </label>
+                                        <label class="form-check-label me-3">
+                                            <input type="radio" name="status" value="2" class="form-check-input"
+                                                   @if($task->status == 2) checked @endif>
+                                            در حال انجام
+                                        </label>
+                                        <label class="form-check-label">
+                                            <input type="radio" name="status" value="3" class="form-check-input"
+                                                   @if($task->status == 3) checked @endif>
+                                            انجام شد
+                                        </label>
+                                    </form>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="d-flex">
+                            <div class="col-8">
+                                <!-- توضیحات -->
+                                <div class="mb-4">
+                                    <h6 class="fw-semibold mb-2">توضیحات</h6>
+                                    <p id="task-desc" class="text-muted mb-0">
+
+                                    </p>
+                                </div>
+                                <div class="m-4">
+                                    <div id="taskChecklistContainer" class="mb-3" data-task-id="">
+                                        <div class="text-center text-muted py-3">در حال بارگذاری چک‌لیست‌ها...</div>
+                                    </div>
+
+                                    <div id="new-checklist-container" class="mt-3">
+                                        {{--                                    <button type="button" id="add-checklist-btn" class="btn btn-sm btn-light-primary">--}}
+                                        {{--                                        <i class="ki-outline ki-plus fs-5"></i> افزودن آیتم به چک لیست--}}
+                                        {{--                                    </button>--}}
+
+                                        <form action="" method="post" class="mt-2 d-none" id="new-checklist-form">
+                                            @csrf
+                                            <div class="input-group">
+                                                <input type="text" name="title" class="form-control" placeholder="عنوان چک‌لیست جدید..." required>
+                                                <button type="submit" class="btn btn-light-primary">افزودن</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- کامنت‌ها -->
+                            <div class="col-4">
+                                <div id="taskComments" class="hover-scroll-y h-400px">
+                                    <h6 class="fw-semibold mb-2">کامنت‌ها</h6>
+
+                                    <div id="commentsList"></div>
+                                </div>
+                                <div>
+                                    <form method="POST" id="commentForm" class="mt-4" data-url="{{ route('dashboard.task.comment.add', $task->id) }}">
+                                        @csrf
+                                        <textarea name="text" class="form-control mb-2" placeholder="افزودن کامنت جدید..." required></textarea>
+                                        <div class="d-flex justify-content-end">
+                                            <button type="submit" class="btn btn-sm btn-light-primary">ارسال</button>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <input type="hidden" id="taskId" value="{{ $task->id }}">
+
+                            </div>
                         </div>
                     </div>
+
+                    {{--                <div class="modal-footer bg-light">--}}
+                    {{--                    <button type="button" class="btn btn-primary">ذخیره تغییرات</button>--}}
+                    {{--                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">بستن</button>--}}
+                    {{--                </div>--}}
                 </div>
-
-                {{--                <div class="modal-footer bg-light">--}}
-                {{--                    <button type="button" class="btn btn-primary">ذخیره تغییرات</button>--}}
-                {{--                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">بستن</button>--}}
-                {{--                </div>--}}
+                <!--end::Modal content-->
             </div>
-            <!--end::Modal content-->
+            <!--end::Modal dialog-->
         </div>
-        <!--end::Modal dialog-->
+
+        <div class="modal fade" id="kt_modal_dependency" tabindex="-1" aria-hidden="true">
+            <!--begin::Modal dialog-->
+            <div class="modal-dialog modal-dialog-centered mw-900px" >
+                <!--begin::Modal content-->
+                <div class="modal-content rounded">
+                    <!--begin::Modal header-->
+                    <div class="modal-header pb-0 border-0 justify-content-end" id="modalTitle">
+                        <!--begin::Close-->
+                        <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                            <i class="ki-outline ki-cross fs-1"></i>
+                        </div>
+                        <!--end::Close-->
+                    </div>
+                    <!--begin::Modal header-->
+
+                    <!--begin::Modal body-->
+                    <div class="modal-body scroll-y px-5 ">
+                        <!--begin:Form-->
+                        <div class="stepper stepper-links d-flex flex-column pt-15 between" id="kt_create_account_stepper" data-kt-stepper="true" data-select2-id="select2-data-kt_create_account_stepper" >
+                            <form method="POST" action="{{ route('dashboard.task.dependency', $task->id) }}" id="dependencyForm">
+                                @csrf
+                                <div class="mb-13 text-center">
+                                    <!--begin::Title-->
+                                    <h1 class="mb-3">افزودن وابستگی</h1>
+                                    <!--end::Title-->
+                                    <!--begin::Description-->
+                                    <div class="text-muted fw-semibold fs-5">
+                                        <a href="#" class="fw-bold link-primary" id="modalTitle"></a>
+                                    </div>
+                                    <!--end::Description-->
+                                </div>
+                                <div class="fv-row mb-8">
+                                    <label for="predecessor_task_id" class="form-label required">تسک وابسته</label>
+                                    <select class="form-select form-select-solid" data-control="select2" id="predecessor_task_id"
+                                            data-ajax-route="{{ route('dashboard.task.related-tasks', ':id') }}"
+                                            data-placeholder="تسک وابسته را انتخاب کنید" name="predecessor_task_id" required>
+                                        <option></option>
+                                        {{--                                    @foreach($tb_tasks as $task_item)--}}
+                                        {{--                                        <option value="{{ $task_item->id }}">{{ $task_item->title }}</option>--}}
+                                        {{--                                    @endforeach--}}
+                                    </select>
+                                </div>
+
+                                <div class="fv-row mb-8">
+                                    <label for="relation_type" class="form-label required">نوع وابستگی </label>
+                                    <select class="form-select form-select-solid" data-control="select2"
+                                            data-placeholder="نوع وابستگی را انتخاب کنید" name="relation_type" required>
+                                        <option></option>
+                                        <option value="FS">Finish to Start (تسک فعلی بعد از اتمام قبلی شروع می‌شود)</option>
+                                        <option value="FF">Finish to Finish (تسک فعلی تا اتمام قبلی نمی‌تواند تمام شود)</option>
+                                        <option value="SS">Start to Start (شروع هر دو باید هم‌زمان باشد)</option>
+                                        <option value="SF">Start to Finish (تسک فعلی تا شروع قبلی نمی‌تواند تمام شود)</option>
+                                    </select>
+                                </div>
+                                <div class="fv-row mb-8">
+                                    <label class="form-label">Lag / Lead</label>
+                                    <input type="number" name="lag" class="form-control form-control-solid" value="{{old('lag')}}"
+                                           placeholder="مثلاً +2 یا -1"
+                                    >
+                                    <small class="text-muted">
+                                        عدد مثبت = لگ (تاخیر)، عدد منفی = لید (شروع زودتر)
+                                    </small>
+                                </div>
+
+                                <div class="text-center">
+                                    <button type="reset" id="kt_modal_new_target_cancel" class="btn btn-sm btn-light me-3">
+                                        انصراف
+                                    </button>
+
+                                    <button type="submit" id="kt_modal_new_target_submit" class="btn btn-sm btn-light-primary">
+                                    <span class="indicator-label">
+                                        ثبت وابستگی
+                                    </span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <!--end:Form-->
+                    </div>
+                    <!--end::Modal body-->
+                </div>
+                <!--end::Modal content-->
+            </div>
+            <!--end::Modal dialog-->
+        </div>
+
+        </div>
     </div>
 
+        @push('scripts')
 
-
-    </div>
-    </div>
-
-    @push('scripts')
-
-        <script src="{{ asset('assets/panel/plugins/custom/formrepeater/formrepeater.bundle.js') }}"></script>
-        <script>
-            jalaliDatepicker.startWatch({
-                showTodayBtn: true,
-                showEmptyBtn: true,
-                time: true,
-                topSpace: 10,
-                bottomSpace: 30,
-                dayRendering(opt, input) {
-                    return {
-                        isHollyDay: opt.day == 1,
-                    };
-                },
-            });
-
-        </script>
-        <script>
-            $(".datepicker").pickadate({
-                selectMonths: true,
-                selectYears: true,
-            }),
-                $(".timepicker").pickatime();
-        </script>
-        <script>
-            $(function () {
-                $("#date-time").bootstrapMaterialDatePicker({
-                    format: "YYYY-MM-DD HH:mm",
-                });
-                $("#date").bootstrapMaterialDatePicker({
-                    time: false,
-                });
-                $("#time").bootstrapMaterialDatePicker({
-                    date: false,
-                    format: "HH:mm",
-                    cancelText: "انصراف",
-                    okText: "خب",
-                });
-            });
-            $("#kt_datepicker_3").flatpickr({
-                enableTime: true,
-                dateFormat: "Y-m-d H:i",
-            });
-        </script>
-        <script>
-
-            // Define form element
-            const form = document.getElementById('kt_docs_formvalidation_text');
-
-            var validator = FormValidation.formValidation(
-                form,
-                {
-                    fields: {
-                        'text_input': {
-                            validators: {
-                                notEmpty: {
-                                    message: 'Text input is required'
-                                }
-                            }
-                        },
+            <script src="{{ asset('assets/panel/plugins/custom/formrepeater/formrepeater.bundle.js') }}"></script>
+            <script>
+                jalaliDatepicker.startWatch({
+                    showTodayBtn: true,
+                    showEmptyBtn: true,
+                    time: true,
+                    topSpace: 10,
+                    bottomSpace: 30,
+                    dayRendering(opt, input) {
+                        return {
+                            isHollyDay: opt.day == 1,
+                        };
                     },
+                });
 
-                    plugins: {
-                        trigger: new FormValidation.plugins.Trigger(),
-                        bootstrap: new FormValidation.plugins.Bootstrap5({
-                            rowSelector: '.fv-row',
-                            eleInvalidClass: '',
-                            eleValidClass: ''
-                        })
-                    }
-                }
-            );
-
-            // Submit button handler
-            const submitButton = document.getElementById('kt_docs_formvalidation_text_submit');
-            submitButton.addEventListener('click', function (e) {
-                // Prevent default button action
-                e.preventDefault();
-
-                // Validate form before submit
-                if (validator) {
-                    validator.validate().then(function (status) {
-                        console.log('validated!');
-
-                        if (status == 'Valid') {
-                            // Show loading indication
-                            submitButton.setAttribute('data-kt-indicator', 'on');
-
-                            // Disable button to avoid multiple click
-                            submitButton.disabled = true;
-
-                            // Simulate form submission. For more info check the plugin's official documentation: https://sweetalert2.github.io/
-                            setTimeout(function () {
-                                // Remove loading indication
-                                submitButton.removeAttribute('data-kt-indicator');
-
-                                // Enable button
-                                submitButton.disabled = false;
-
-                                // Show popup confirmation
-                                Swal.fire({
-                                    text: "Form has been successfully submitted!",
-                                    icon: "success",
-                                    buttonsStyling: false,
-                                    confirmButtonText: "Ok, got it!",
-                                    customClass: {
-                                        confirmButton: "btn btn-primary"
-                                    }
-                                });
-
-                                //form.submit(); // Submit form
-                            }, 2000);
-                        }
+            </script>
+            <script>
+                $(".datepicker").pickadate({
+                    selectMonths: true,
+                    selectYears: true,
+                }),
+                    $(".timepicker").pickatime();
+            </script>
+            <script>
+                $(function () {
+                    $("#date-time").bootstrapMaterialDatePicker({
+                        format: "YYYY-MM-DD HH:mm",
                     });
-                }
-            });
+                    $("#date").bootstrapMaterialDatePicker({
+                        time: false,
+                    });
+                    $("#time").bootstrapMaterialDatePicker({
+                        date: false,
+                        format: "HH:mm",
+                        cancelText: "انصراف",
+                        okText: "خب",
+                    });
+                });
+                $("#kt_datepicker_3").flatpickr({
+                    enableTime: true,
+                    dateFormat: "Y-m-d H:i",
+                });
+            </script>
+            <script>
 
-            function addImage() {
-                $('.images').append(`
+                // Define form element
+                const form = document.getElementById('kt_docs_formvalidation_text');
+
+                var validator = FormValidation.formValidation(
+                    form,
+                    {
+                        fields: {
+                            'text_input': {
+                                validators: {
+                                    notEmpty: {
+                                        message: 'Text input is required'
+                                    }
+                                }
+                            },
+                        },
+
+                        plugins: {
+                            trigger: new FormValidation.plugins.Trigger(),
+                            bootstrap: new FormValidation.plugins.Bootstrap5({
+                                rowSelector: '.fv-row',
+                                eleInvalidClass: '',
+                                eleValidClass: ''
+                            })
+                        }
+                    }
+                );
+
+                // Submit button handler
+                const submitButton = document.getElementById('kt_docs_formvalidation_text_submit');
+                submitButton.addEventListener('click', function (e) {
+                    // Prevent default button action
+                    e.preventDefault();
+
+                    // Validate form before submit
+                    if (validator) {
+                        validator.validate().then(function (status) {
+                            console.log('validated!');
+
+                            if (status == 'Valid') {
+                                // Show loading indication
+                                submitButton.setAttribute('data-kt-indicator', 'on');
+
+                                // Disable button to avoid multiple click
+                                submitButton.disabled = true;
+
+                                // Simulate form submission. For more info check the plugin's official documentation: https://sweetalert2.github.io/
+                                setTimeout(function () {
+                                    // Remove loading indication
+                                    submitButton.removeAttribute('data-kt-indicator');
+
+                                    // Enable button
+                                    submitButton.disabled = false;
+
+                                    // Show popup confirmation
+                                    Swal.fire({
+                                        text: "Form has been successfully submitted!",
+                                        icon: "success",
+                                        buttonsStyling: false,
+                                        confirmButtonText: "Ok, got it!",
+                                        customClass: {
+                                            confirmButton: "btn btn-primary"
+                                        }
+                                    });
+
+                                    //form.submit(); // Submit form
+                                }, 2000);
+                            }
+                        });
+                    }
+                });
+
+                function addImage() {
+                    $('.images').append(`
                 <div class="col-md-4 d-flex image">
                     <input class='form-control' type="file" name="photos[]" accept="image/*">
                     <button type="button" class="btn btn-link text-danger" title='حذف '
@@ -743,143 +866,145 @@
                     </button>
                 </div>
             `);
-            }
-
-            function removeImage(el) {
-                $(el).closest('.image').remove();
-            }
-        </script>
-        <script>
-            FilePond.create(document.querySelector('#featureImage'), {
-                ...options,
-                name: 'photo',
-                server: {
-                    process: (fieldName, file, metadata, load, error, progress, abort) => {
-                        const fileURL = URL.createObjectURL(file);
-                        fetch(fileURL).then(res => res.blob()).then(myBlob => {
-                            load(myBlob);
-                            showCropModal('featureImage', fileURL, 27 / 40);
-                        })
-                    }
                 }
-            });
 
-            FilePond.create(document.querySelector('#innerImage'), {
-                ...options,
-                name: 'large_photo',
-                server: {
-                    process: (fieldName, file, metadata, load, error, progress, abort) => {
-                        const fileURL = URL.createObjectURL(file);
-                        fetch(fileURL).then(res => res.blob()).then(myBlob => {
-                            load(myBlob);
-                            showCropModal('innerImage', fileURL, 16 / 11);
-                        })
-                    }
+                function removeImage(el) {
+                    $(el).closest('.image').remove();
                 }
-            });
-
-            FilePond.create(document.querySelector('#gallery'), {
-                ...options,
-                storeAsFile: true,
-                allowImagePreview: false
-            });
-        </script>
-        <script src="{{url('panel/assets/js/custom/widgets.js')}}"></script>
-        <script>
-            $(document).ready(function() {
-                $('select[name="manager_id"]').closest('.fv-row').hide();
-
-                $('#flexCheckDefault').on('change', function() {
-                    if ($(this).is(':checked')) {
-                        $('select[name="manager_id"]').closest('.fv-row').show();
-                    } else {
-                        $('select[name="manager_id"]').closest('.fv-row').hide();
-                    }
-                });
-            });
-            $(document).ready(function() {
-                $('select[name="sub_manager_id"]').closest('.fv-row').hide();
-
-                $('#sub_flexCheckDefault').on('change', function() {
-                    if ($(this).is(':checked')) {
-                        $('select[name="sub_manager_id"]').closest('.fv-row').show();
-                    } else {
-                        $('select[name="sub_manager_id"]').closest('.fv-row').hide();
-                    }
-                });
-            });
-
-
-            function openEditModal(url, currentData) {
-                let data = JSON.parse(currentData);
-
-                $('#modalTitle').text(`ایجاد زیر تسک برای "${data.title}"`);
-
-                $('#editForm #title').val(data.title);
-
-                $('#editForm').attr('action', url);
-
-                var modal = new bootstrap.Modal(document.getElementById('kt_modal_new_target_sub'));
-                modal.show();
-            }
-
-
-            // task show modal
-            function openShowModal(showUrl, updateUrl) {
-                $.ajax({
-                    url: showUrl,
-                    type: 'GET',
-                    success: function (data) {
-
-                        // task data from json controller
-                        $('#modalTitle').text(` مشاهده: ${data.title}`);
-                        $('#taskCode').text(`  ${data.code}`);
-                        if (data.manager) {
-                            $('#taskManager').show().text(`مدیر تایید کننده: ${data.manager}`);
-                            $('#taskManagerCheck').show().text(`آیا تسک توسط مدیر تایید شود؟ ${data.managerCheck}`);
-                            $('#managerCheckVerify').show().text(` تایید شده توسط مدیر : ${data.managerCheckVerify}`);
-                        } else {
-                            $('#taskManager').hide();
-                            $('#taskManagerCheck').hide();
-                            $('#managerCheckVerify').hide();
+            </script>
+            <script>
+                FilePond.create(document.querySelector('#featureImage'), {
+                    ...options,
+                    name: 'photo',
+                    server: {
+                        process: (fieldName, file, metadata, load, error, progress, abort) => {
+                            const fileURL = URL.createObjectURL(file);
+                            fetch(fileURL).then(res => res.blob()).then(myBlob => {
+                                load(myBlob);
+                                showCropModal('featureImage', fileURL, 27 / 40);
+                            })
                         }
-                        $('#watcher').text(` ناظر تسک : ${data.watcher}`);
+                    }
+                });
 
-                        $('#taskStatus').html(`وضعیت: ${data.status}`);
-                        $('#TaskPrority').html(`اولویت: ${data.priority}`);
-                        $('#task-deadline').text(`مهلت: ${data.deadline}`);
-                        $('#task-desc').text(data.description ?? '-');
+                FilePond.create(document.querySelector('#innerImage'), {
+                    ...options,
+                    name: 'large_photo',
+                    server: {
+                        process: (fieldName, file, metadata, load, error, progress, abort) => {
+                            const fileURL = URL.createObjectURL(file);
+                            fetch(fileURL).then(res => res.blob()).then(myBlob => {
+                                load(myBlob);
+                                showCropModal('innerImage', fileURL, 16 / 11);
+                            })
+                        }
+                    }
+                });
 
-                        // اعضا
-                        let membersHTML = '';
-                        data.assigners.forEach(a => {
-                            if (a.photo) {
-                                membersHTML += `
+                FilePond.create(document.querySelector('#gallery'), {
+                    ...options,
+                    storeAsFile: true,
+                    allowImagePreview: false
+                });
+            </script>
+            <script src="{{url('panel/assets/js/custom/widgets.js')}}"></script>
+            <script>
+                $(document).ready(function() {
+                    $('select[name="manager_id"]').closest('.fv-row').hide();
+
+                    $('#flexCheckDefault').on('change', function() {
+                        if ($(this).is(':checked')) {
+                            $('select[name="manager_id"]').closest('.fv-row').show();
+                        } else {
+                            $('select[name="manager_id"]').closest('.fv-row').hide();
+                        }
+                    });
+                });
+                $(document).ready(function() {
+                    $('select[name="sub_manager_id"]').closest('.fv-row').hide();
+
+                    $('#sub_flexCheckDefault').on('change', function() {
+                        if ($(this).is(':checked')) {
+                            $('select[name="sub_manager_id"]').closest('.fv-row').show();
+                        } else {
+                            $('select[name="sub_manager_id"]').closest('.fv-row').hide();
+                        }
+                    });
+                });
+
+
+                function openEditModal(url, currentData) {
+                    let data = JSON.parse(currentData);
+
+                    $('#modalTitle').text(`ایجاد زیر تسک برای "${data.title}"`);
+
+                    $('#editForm #title').val(data.title);
+
+                    $('#editForm').attr('action', url);
+
+                    var modal = new bootstrap.Modal(document.getElementById('kt_modal_new_target_sub'));
+                    modal.show();
+                }
+
+
+
+
+                // task show modal
+                function openShowModal(showUrl, updateUrl) {
+                    $.ajax({
+                        url: showUrl,
+                        type: 'GET',
+                        success: function (data) {
+
+                            // task data from json controller
+                            $('#modalTitle').text(` مشاهده: ${data.title}`);
+                            $('#taskCode').text(`  ${data.code}`);
+                            if (data.manager) {
+                                $('#taskManager').show().text(`مدیر تایید کننده: ${data.manager}`);
+                                $('#taskManagerCheck').show().text(`آیا تسک توسط مدیر تایید شود؟ ${data.managerCheck}`);
+                                $('#managerCheckVerify').show().text(` تایید شده توسط مدیر : ${data.managerCheckVerify}`);
+                            } else {
+                                $('#taskManager').hide();
+                                $('#taskManagerCheck').hide();
+                                $('#managerCheckVerify').hide();
+                            }
+                            $('#watcher').text(` ناظر تسک : ${data.watcher}`);
+
+                            $('#taskStatus').html(`وضعیت: ${data.status}`);
+                            $('#TaskPrority').html(`اولویت: ${data.priority}`);
+                            $('#task-deadline').text(`مهلت: ${data.deadline}`);
+                            $('#task-desc').text(data.description ?? '-');
+
+                            // اعضا
+                            let membersHTML = '';
+                            data.assigners.forEach(a => {
+                                if (a.photo) {
+                                    membersHTML += `
                         <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="${a.name}">
                             <img src="${window.location.origin}/${a.photo}" alt="${a.name}">
                         </div>`;
-                            } else {
-                                membersHTML += `
+                                } else {
+                                    membersHTML += `
                         <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" data-bs-original-title="${a.name}">
                             <span class="symbol-label bg-warning text-inverse-warning fw-bold" title="${a.name}">
                             ${a.name.charAt(0)}
                              </span>
                         </div>`;
-                            }
-                        });
-                        $('#taskMembers').html(membersHTML);
+                                }
+                            });
+                            $('#taskMembers').html(membersHTML);
 
-                        // فایل‌ها
-                        let filesHTML = '';
-                        data.files.forEach(f => {
-                            // نوع فایل رو تشخیص می‌دیم برای انتخاب آیکون مناسب
-                            const ext = f.path.split('.').pop().toLowerCase();
-                            let icon = 'ai.svg';
-                            if (ext === 'pdf') icon = 'pdf.svg';
-                            else if (ext === 'doc' || ext === 'docx') icon = 'doc.svg';
-                            else if (ext === 'css') icon = 'css.svg';
+                            // فایل‌ها
+                            let filesHTML = '';
+                            data.files.forEach(f => {
+                                // نوع فایل رو تشخیص می‌دیم برای انتخاب آیکون مناسب
+                                const ext = f.path.split('.').pop().toLowerCase();
+                                let icon = 'ai.svg';
+                                if (ext === 'pdf') icon = 'pdf.svg';
+                                else if (ext === 'doc' || ext === 'docx') icon = 'doc.svg';
+                                else if (ext === 'css') icon = 'css.svg';
 
-                            filesHTML += `
+                                filesHTML += `
                             <div class="d-flex align-items-center mb-5">
                                 <div class="symbol symbol-30px me-5">
                                     <img alt="Icon" src="${window.location.origin}/panel/assets/media/svg/files/${icon}" />
@@ -899,22 +1024,22 @@
                                 </a>
                             </div>
                         `;
-                        });
+                            });
 
-                        $('#taskFiles').html(filesHTML);
+                            $('#taskFiles').html(filesHTML);
 
 
 
-                        // comment store
-                        let commentsHTML = '';
+                            // comment store
+                            let commentsHTML = '';
 
-                        data.comments.forEach(c => {
-                            // مسیر عکس — اگر کاربر عکس نداشت، عکس پیش‌فرض
-                            const userPhoto = c.photo
-                                ? `${window.location.origin}/${c.photo}`
-                                : `${window.location.origin}/panel/assets/media/svg/avatars/blank.svg`;
+                            data.comments.forEach(c => {
+                                // مسیر عکس — اگر کاربر عکس نداشت، عکس پیش‌فرض
+                                const userPhoto = c.photo
+                                    ? `${window.location.origin}/${c.photo}`
+                                    : `${window.location.origin}/panel/assets/media/svg/avatars/blank.svg`;
 
-                            commentsHTML += `
+                                commentsHTML += `
                             <div class="d-flex align-items-center mb-4">
                                 <div class="symbol symbol-35px symbol-circle">
                                     <img alt="Pic" src="${userPhoto}">
@@ -926,36 +1051,36 @@
                                 </div>
                             </div>
                         `;
-                        });
+                            });
 
-                        // show
-                        $('#taskComments').html(`
+                            // show
+                            $('#taskComments').html(`
                         <h6 class="fw-semibold mb-2">کامنت‌ها</h6>
                         ${commentsHTML}
                     `);
 
-                        // comments store
+                            // comments store
 
-                        $.ajaxSetup({
-                            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
-                        });
+                            $.ajaxSetup({
+                                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
+                            });
 
-                        $(document).on('submit', '#commentForm', function(e) {
-                            e.preventDefault();
-                            const form = $(this);
+                            $(document).on('submit', '#commentForm', function(e) {
+                                e.preventDefault();
+                                const form = $(this);
 
-                            $.ajax({
-                                url: form.data('url'),
-                                type: 'POST',
-                                data: form.serialize(),
-                                success: function(res) {
-                                    if (res.status) {
-                                        const c = res.comment;
-                                        const userPhoto = c.photo ? `${window.location.origin}/${c.photo}` :
-                                            `${window.location.origin}/panel/assets/media/avatars/blank.png`;
+                                $.ajax({
+                                    url: form.data('url'),
+                                    type: 'POST',
+                                    data: form.serialize(),
+                                    success: function(res) {
+                                        if (res.status) {
+                                            const c = res.comment;
+                                            const userPhoto = c.photo ? `${window.location.origin}/${c.photo}` :
+                                                `${window.location.origin}/panel/assets/media/avatars/blank.png`;
 
-                                        // اضافه کردن کامنت جدید به ابتدای لیست
-                                        $('#commentsList').prepend(`
+                                            // اضافه کردن کامنت جدید به ابتدای لیست
+                                            $('#commentsList').prepend(`
                                             <div class="d-flex align-items-center mb-4">
                                                 <div class="symbol symbol-35px symbol-circle">
                                                     <img alt="Pic" src="${userPhoto}">
@@ -968,304 +1093,319 @@
                                             </div>
                                         `);
 
-                                        // پاک کردن textarea بعد از ارسال
-                                        form.trigger('reset');
+                                            // پاک کردن textarea بعد از ارسال
+                                            form.trigger('reset');
+                                        }
+                                    },
+                                    error: function(xhr) {
+                                        alert('خطا در ارسال کامنت. لطفاً دوباره تلاش کنید.');
                                     }
-                                },
-                                error: function(xhr) {
-                                    alert('خطا در ارسال کامنت. لطفاً دوباره تلاش کنید.');
-                                }
+                                });
                             });
-                        });
 
-                        $('#taskStatusForm').attr('data-url', updateUrl);
+                            $('#taskStatusForm').attr('data-url', updateUrl);
 
-                        $(document).off('change', '#taskStatusForm input[name="status"]').on('change', '#taskStatusForm input[name="status"]', function() {
-                            const form = $('#taskStatusForm');
-                            const url = form.data('url');
-                            $.ajax({
-                                type: 'PUT',
-                                url: url,
-                                data: form.serialize(),
-                                success: function(res) {
-                                    if (res.success) {
-                                        $.jGrowl(res.flash_message, {
-                                            life: 4000,
-                                            position: 'bottom-left',
-                                            theme: 'bg-success'
-                                        });
+                            $(document).off('change', '#taskStatusForm input[name="status"]').on('change', '#taskStatusForm input[name="status"]', function() {
+                                const form = $('#taskStatusForm');
+                                const url = form.data('url');
+                                $.ajax({
+                                    type: 'PUT',
+                                    url: url,
+                                    data: form.serialize(),
+                                    success: function(res) {
+                                        if (res.success) {
+                                            $.jGrowl(res.flash_message, {
+                                                life: 4000,
+                                                position: 'bottom-left',
+                                                theme: 'bg-success'
+                                            });
+                                        }
+                                    },
+                                    error: function() {
+                                        toastr.error('خطا در بروزرسانی وضعیت');
                                     }
-                                },
-                                error: function() {
-                                    toastr.error('خطا در بروزرسانی وضعیت');
-                                }
+                                });
                             });
-                        });
 
-                        const modal = new bootstrap.Modal(document.getElementById('kt_modal_task_show'));
-                        modal.show();
+                            const modal = new bootstrap.Modal(document.getElementById('kt_modal_task_show'));
+                            modal.show();
 
-                        loadTaskChecklists(data.id);
-                    },
-                    error: function () {
-                        toastr.error('دریافت اطلاعات تسک با خطا مواجه شد');
-                    }
-                });
-            }
-            // checklist fetch
-
-
-        </script>
-        <script>
-            "use strict";
-
-            var KTDocsDatatableSubtable = (function () {
-                let table;
-                let datatable;
-                let templateNode = null;
-
-                const initDatatable = () => {
-                    table = document.querySelector('#kt_docs_datatable_subtable');
-                    if (!table) {
-                        console.error('KTDocsDatatableSubtable: جدول پیدا نشد (#kt_docs_datatable_subtable).');
-                        return;
-                    }
-
-                    const templateEl = document.querySelector('[data-kt-docs-datatable-subtable="subtable_template"]');
-                    if (!templateEl) {
-                        console.error('KTDocsDatatableSubtable: template با selector [data-kt-docs-datatable-subtable="subtable_template"] پیدا نشد.');
-                        return;
-                    }
-
-                    templateNode = templateEl.cloneNode(true);
-                    templateNode.classList.remove('d-none');
-
-                    templateEl.parentNode.removeChild(templateEl);
-
-                    datatable = $(table).DataTable({
-                        info: false,
-                        ordering: false,
-                        paging: false,
-                        lengthChange: false,
-                        pageLength: 6,
-                        columnDefs: [
-                            { orderable: false, targets: [0, 6] }
-                        ]
+                            loadTaskChecklists(data.id);
+                        },
+                        error: function () {
+                            toastr.error('دریافت اطلاعات تسک با خطا مواجه شد');
+                        }
                     });
+                }
+                // checklist fetch
 
-                    datatable.on('draw', function () {
-                        resetSubtable();
-                        handleActionButton();
-                    });
-                };
 
-                const handleActionButton = () => {
-                    const buttons = document.querySelectorAll('[data-kt-docs-datatable-subtable="expand_row"]');
+            </script>
+            <script>
+                "use strict";
 
-                    buttons.forEach((button) => {
-                        // remove previous handlers to avoid double-binding
-                        button.removeEventListener && button.removeEventListener('click', button._kt_subtask_handler);
-                        const handler = (e) => {
-                            e.preventDefault();
-                            e.stopImmediatePropagation();
+                var KTDocsDatatableSubtable = (function () {
+                    let table;
+                    let datatable;
+                    let templateNode = null;
 
-                            const row = button.closest('tr');
-                            const rowClasses = ['isOpen', 'border-bottom-0'];
-
-                            // subtasks باید از data attribute بیاد (Blade: data-subtasks='@json($task->children)')
-                            let subtasks = [];
-                            try {
-                                subtasks = JSON.parse(row.dataset.subtasks || '[]');
-                            } catch (err) {
-                                console.error('خطا JSON subtasks برای ردیف:', err, row.dataset.subtasks);
-                                subtasks = [];
-                            }
-
-                            if (row.classList.contains('isOpen')) {
-                                while (row.nextSibling && row.nextSibling.getAttribute && row.nextSibling.getAttribute('data-kt-docs-datatable-subtable') === 'subtable_template') {
-                                    row.nextSibling.parentNode.removeChild(row.nextSibling);
-                                }
-                                row.classList.remove(...rowClasses);
-                                button.classList.remove('active');
-                                return;
-                            }
-
-                            if (!templateNode) {
-                                console.error('KTDocsDatatableSubtable: templateNode موجود نیست — clone ممکن نیست.');
-                                return;
-                            }
-
-                            if (subtasks.length > 0) {
-                                populateTemplate(subtasks, row);
-                            } else {
-                                const emptyRow = templateNode.cloneNode(true);
-                                emptyRow.querySelector('[data-kt-docs-datatable-subtable="template_title"]').innerText = 'زیرتسکی یافت نشد';
-                                const tbody = table.querySelector('tbody');
-                                tbody.insertBefore(emptyRow, row.nextSibling);
-                            }
-
-                            row.classList.add(...rowClasses);
-                            button.classList.add('active');
-                        };
-
-                        button.addEventListener('click', handler);
-                        button._kt_subtask_handler = handler;
-                    });
-                };
-
-                const populateTemplate = (data, target) => {
-
-                    const tbody = table.querySelector('tbody');
-
-                    data.forEach((d, index) => {
-                        if (!templateNode) {
-                            console.error('populateTemplate: templateNode نال است.');
+                    const initDatatable = () => {
+                        table = document.querySelector('#kt_docs_datatable_subtable');
+                        if (!table) {
+                            console.error('KTDocsDatatableSubtable: جدول پیدا نشد (#kt_docs_datatable_subtable).');
                             return;
                         }
-                        const newTemplate = templateNode.cloneNode(true);
-                        newTemplate.setAttribute('data-kt-docs-datatable-subtable', 'subtable_template');
-                        newTemplate.classList.remove('d-none');
 
-                        const safe = (v) => (v === null || v === undefined ? '-' : v);
+                        const templateEl = document.querySelector('[data-kt-docs-datatable-subtable="subtable_template"]');
+                        if (!templateEl) {
+                            console.error('KTDocsDatatableSubtable: template با selector [data-kt-docs-datatable-subtable="subtable_template"] پیدا نشد.');
+                            return;
+                        }
 
-                        const idxNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_index"]');
-                        if (idxNode) idxNode.innerText = index + 1;
+                        templateNode = templateEl.cloneNode(true);
+                        templateNode.classList.remove('d-none');
 
-                        const idNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_id"]');
-                        if (idNode) idNode.innerText = safe(d.task_code ?? '-');
+                        templateEl.parentNode.removeChild(templateEl);
 
-                        const titleNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_title"]');
-                        if (titleNode) titleNode.innerText = safe(d.title);
+                        datatable = $(table).DataTable({
+                            info: false,
+                            ordering: false,
+                            paging: false,
+                            lengthChange: false,
+                            pageLength: 6,
+                            columnDefs: [
+                                { orderable: false, targets: [0, 6] }
+                            ]
+                        });
 
-                        const sdNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_start_date"]');
-                        if (sdNode) sdNode.innerText = safe(d.start_date);
+                        datatable.on('draw', function () {
+                            resetSubtable();
+                            handleActionButton();
+                        });
+                    };
 
-                        const edNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_end_date"]');
-                        if (edNode) edNode.innerText = safe(d.end_date);
+                    const handleActionButton = () => {
+                        const buttons = document.querySelectorAll('[data-kt-docs-datatable-subtable="expand_row"]');
 
-                        const prNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_priority"]');
-                        if (prNode) prNode.innerHTML = safe(d.TaskPrority);
+                        buttons.forEach((button) => {
+                            // remove previous handlers to avoid double-binding
+                            button.removeEventListener && button.removeEventListener('click', button._kt_subtask_handler);
+                            const handler = (e) => {
+                                e.preventDefault();
+                                e.stopImmediatePropagation();
 
-                        const stNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_status"]');
-                        if (stNode) stNode.innerHTML = safe(d.TaskStatus);
+                                const row = button.closest('tr');
+                                const rowClasses = ['isOpen', 'border-bottom-0'];
 
-                        const membersNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_members"]');
-                        if (membersNode) {
-                            membersNode.innerHTML = ''; // خالی کن قبل از پر کردن
+                                // subtasks باید از data attribute بیاد (Blade: data-subtasks='@json($task->children)')
+                                let subtasks = [];
+                                try {
+                                    subtasks = JSON.parse(row.dataset.subtasks || '[]');
+                                } catch (err) {
+                                    console.error('خطا JSON subtasks برای ردیف:', err, row.dataset.subtasks);
+                                    subtasks = [];
+                                }
 
-                            if (Array.isArray(d.assigners) && d.assigners.length) {
-                                const container = document.createElement('div');
-                                container.className = 'symbol-group symbol-hover fs-8';
-
-                                d.assigners.forEach(a => {
-                                    const symbol = document.createElement('div');
-                                    symbol.className = 'symbol symbol-25px symbol-circle';
-                                    symbol.setAttribute('data-bs-toggle', 'tooltip');
-                                    symbol.setAttribute('title', a.Name ?? a.name ?? '-');
-                                    if (a.photo && a.photo.path) {
-                                        const img = document.createElement('img');
-                                        img.alt = 'Pic';
-                                        img.src = `{{ route('home') }}/${a.photo.path}`;
-                                        symbol.appendChild(img);
-                                    } else {
-                                        const span = document.createElement('span');
-                                        span.className = 'symbol-label bg-primary text-inverse-primary fw-bold';
-                                        span.innerText = (a.Name ?? a.name ?? '?').substring(0, 1);
-                                        symbol.appendChild(span);
+                                if (row.classList.contains('isOpen')) {
+                                    while (row.nextSibling && row.nextSibling.getAttribute && row.nextSibling.getAttribute('data-kt-docs-datatable-subtable') === 'subtable_template') {
+                                        row.nextSibling.parentNode.removeChild(row.nextSibling);
                                     }
+                                    row.classList.remove(...rowClasses);
+                                    button.classList.remove('active');
+                                    return;
+                                }
 
-                                    container.appendChild(symbol);
-                                });
+                                if (!templateNode) {
+                                    console.error('KTDocsDatatableSubtable: templateNode موجود نیست — clone ممکن نیست.');
+                                    return;
+                                }
 
-                                membersNode.appendChild(container);
-                            } else {
-                                membersNode.innerHTML = '<span class="text-muted fs-8">بدون عضو</span>';
+                                if (subtasks.length > 0) {
+                                    populateTemplate(subtasks, row);
+                                } else {
+                                    const emptyRow = templateNode.cloneNode(true);
+                                    emptyRow.querySelector('[data-kt-docs-datatable-subtable="template_title"]').innerText = 'زیرتسکی یافت نشد';
+                                    const tbody = table.querySelector('tbody');
+                                    tbody.insertBefore(emptyRow, row.nextSibling);
+                                }
+
+                                row.classList.add(...rowClasses);
+                                button.classList.add('active');
+                            };
+
+                            button.addEventListener('click', handler);
+                            button._kt_subtask_handler = handler;
+                        });
+                    };
+
+                    const populateTemplate = (data, target) => {
+
+                        const tbody = table.querySelector('tbody');
+
+                        data.forEach((d, index) => {
+                            if (!templateNode) {
+                                console.error('populateTemplate: templateNode نال است.');
+                                return;
                             }
+                            const newTemplate = templateNode.cloneNode(true);
+                            newTemplate.setAttribute('data-kt-docs-datatable-subtable', 'subtable_template');
+                            newTemplate.classList.remove('d-none');
+
+                            const safe = (v) => (v === null || v === undefined ? '-' : v);
+
+                            const idxNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_index"]');
+                            if (idxNode) idxNode.innerText = index + 1;
+
+                            const idNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_id"]');
+                            if (idNode) idNode.innerText = safe(d.task_code ?? '-');
+
+                            const titleNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_title"]');
+                            if (titleNode) titleNode.innerText = safe(d.title);
+
+                            const sdNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_start_date"]');
+                            if (sdNode) sdNode.innerText = safe(d.start_date);
+
+                            const edNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_end_date"]');
+                            if (edNode) edNode.innerText = safe(d.end_date);
+
+                            const prNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_priority"]');
+                            if (prNode) prNode.innerHTML = safe(d.TaskPrority);
+
+                            const stNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_status"]');
+                            if (stNode) stNode.innerHTML = safe(d.TaskStatus);
+
+                            const membersNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_members"]');
+                            if (membersNode) {
+                                membersNode.innerHTML = ''; // خالی کن قبل از پر کردن
+
+                                if (Array.isArray(d.assigners) && d.assigners.length) {
+                                    const container = document.createElement('div');
+                                    container.className = 'symbol-group symbol-hover fs-8';
+
+                                    d.assigners.forEach(a => {
+                                        const symbol = document.createElement('div');
+                                        symbol.className = 'symbol symbol-25px symbol-circle';
+                                        symbol.setAttribute('data-bs-toggle', 'tooltip');
+                                        symbol.setAttribute('title', a.Name ?? a.name ?? '-');
+                                        if (a.photo && a.photo.path) {
+                                            const img = document.createElement('img');
+                                            img.alt = 'Pic';
+                                            img.src = `{{ route('home') }}/${a.photo.path}`;
+                                            symbol.appendChild(img);
+                                        } else {
+                                            const span = document.createElement('span');
+                                            span.className = 'symbol-label bg-primary text-inverse-primary fw-bold';
+                                            span.innerText = (a.Name ?? a.name ?? '?').substring(0, 1);
+                                            symbol.appendChild(span);
+                                        }
+
+                                        container.appendChild(symbol);
+                                    });
+
+                                    membersNode.appendChild(container);
+                                } else {
+                                    membersNode.innerHTML = '<span class="text-muted fs-8">بدون عضو</span>';
+                                }
+                            }
+
+
+                            const actionsNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_actions"]');
+                            const routeTemplate = document.getElementById('datatable-template').dataset.showRoute;
+                            const updateStatusTemplate = document.getElementById('datatable-template').dataset.updateStatusRoute;
+
+                            if (actionsNode && routeTemplate && updateStatusTemplate) {
+                                const route = routeTemplate.replace(':id', d.id ?? 0);
+                                const updateRoute = updateStatusTemplate.replace(':id', d.id ?? 0);
+
+                                // دکمه مشاهده
+                                let showBtn = `
+        <a href="#" onclick="openShowModal('${route}', '${updateRoute}')"
+           class="btn btn-sm btn-light-info"
+           data-bs-toggle="tooltip"
+           data-bs-placement="top"
+           title="مشاهده">
+            <i class="ki-outline ki-eye fs-6 px-2"></i>
+        </a>
+    `;
+
+                                // دکمه تعریف وابستگی
+                                const depRoute = '{{ route("dashboard.task.dependency", ":id") }}'.replace(':id', d.id ?? 0);
+                                let depBtn = `
+    <a href="#" class="btn btn-light-warning btn-sm"
+       onclick="openDependencyModal('${depRoute}', JSON.stringify({id:'${d.id}', title:'${d.title}'}))">
+        تعریف وابستگی تسک
+        <i class="ki-outline ki-plus-square fs-6 px-2"></i>
+    </a>
+`;
+
+
+                                actionsNode.innerHTML = showBtn + depBtn;
+                            }
+
+
+
+
+                            tbody.insertBefore(newTemplate, target.nextSibling);
+                        });
+                    };
+
+
+                    const resetSubtable = () => {
+                        const subtables = document.querySelectorAll('[data-kt-docs-datatable-subtable="subtable_template"]');
+                        subtables.forEach((st) => st.parentNode.removeChild(st));
+
+                        const rows = table.querySelectorAll('tbody tr');
+                        rows.forEach((r) => {
+                            r.classList.remove('isOpen');
+                            const toggle = r.querySelector('[data-kt-docs-datatable-subtable="expand_row"]');
+                            if (toggle) toggle.classList.remove('active');
+                        });
+                    };
+
+                    return {
+                        init: function () {
+                            initDatatable();
+                            handleActionButton();
                         }
+                    };
+                })();
 
-
-                        const actionsNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_actions"]');
-                        const routeTemplate = document.getElementById('datatable-template').dataset.showRoute;
-                        const updateStatusTemplate = document.getElementById('datatable-template').dataset.updateStatusRoute;
-
-                        if (actionsNode && routeTemplate  && updateStatusTemplate) {
-                            const route = routeTemplate.replace(':id', d.id ?? 0);
-                            const updateRoute = updateStatusTemplate.replace(':id', d.id ?? 0);
-                            actionsNode.innerHTML = `
-                            <a href="#" onclick="openShowModal('${route}', '${updateRoute}')"
-                               class="btn btn-sm btn-light-info"
-                               data-bs-toggle="tooltip"
-                               data-bs-placement="top"
-                               title="مشاهده">
-                                <i class="ki-outline ki-eye fs-6 px-2"></i>
-                            </a>`;
-                        }
-
-
-
-                        tbody.insertBefore(newTemplate, target.nextSibling);
-                    });
-                };
-
-
-                const resetSubtable = () => {
-                    const subtables = document.querySelectorAll('[data-kt-docs-datatable-subtable="subtable_template"]');
-                    subtables.forEach((st) => st.parentNode.removeChild(st));
-
-                    const rows = table.querySelectorAll('tbody tr');
-                    rows.forEach((r) => {
-                        r.classList.remove('isOpen');
-                        const toggle = r.querySelector('[data-kt-docs-datatable-subtable="expand_row"]');
-                        if (toggle) toggle.classList.remove('active');
-                    });
-                };
-
-                return {
-                    init: function () {
-                        initDatatable();
-                        handleActionButton();
-                    }
-                };
-            })();
-
-            KTUtil.onDOMContentLoaded(function () {
-                KTDocsDatatableSubtable.init();
-            });
-        </script>
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                const menu = document.querySelector('#dateDropdownMenu');
-                menu.addEventListener('shown.bs.dropdown', function () {
-                    setTimeout(() => {
-                        jalaliDatepicker.show(document.getElementById('start_date'));
-                    }, 100);
+                KTUtil.onDOMContentLoaded(function () {
+                    KTDocsDatatableSubtable.init();
                 });
-            });
-        </script>
+            </script>
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    const menu = document.querySelector('#dateDropdownMenu');
+                    menu.addEventListener('shown.bs.dropdown', function () {
+                        setTimeout(() => {
+                            jalaliDatepicker.show(document.getElementById('start_date'));
+                        }, 100);
+                    });
+                });
+            </script>
 
+            {{--          checklist CURD--}}
+            <script>
+                // ✅ گرفتن چک‌لیست‌ها و ساخت HTML
+                function loadTaskChecklists(taskId) {
+                    window.currentTaskId = taskId; // آیدی تسک رو نگه داریم
+                    const container = $('#taskChecklistContainer');
+                    container.html('<div class="text-center text-muted py-3">در حال بارگذاری...</div>');
 
+                    let url = "{{ route('dashboard.task.checklists', ':id') }}".replace(':id', taskId);
 
-        {{--          checklist CURD--}}
-        <script>
-            // ✅ گرفتن چک‌لیست‌ها و ساخت HTML
-            function loadTaskChecklists(taskId) {
-                window.currentTaskId = taskId; // آیدی تسک رو نگه داریم
-                const container = $('#taskChecklistContainer');
-                container.html('<div class="text-center text-muted py-3">در حال بارگذاری...</div>');
+                    $.ajax({
+                        url,
+                        type: 'GET',
+                        success: function (checklists) {
+                            let html = '';
 
-                let url = "{{ route('dashboard.task.checklists', ':id') }}".replace(':id', taskId);
-
-                $.ajax({
-                    url,
-                    type: 'GET',
-                    success: function (checklists) {
-                        let html = '';
-
-                        if (!checklists.length) {
-                            html = '<div class="text-muted mb-3">هیچ آیتمی وجود ندارد.</div>';
-                        } else {
-                            checklists.forEach(c => {
-                                html += `
+                            if (!checklists.length) {
+                                html = '<div class="text-muted mb-3">هیچ آیتمی وجود ندارد.</div>';
+                            } else {
+                                checklists.forEach(c => {
+                                    html += `
                             <form class="checklist-form mb-2 p-2 border rounded" data-id="${c.id}">
                                 <div class="form-check d-flex align-items-center">
                                     <input class="form-check-input checklist-checkbox me-2" type="checkbox" ${c.check == 1 ? 'checked' : ''}>
@@ -1275,11 +1415,11 @@
                                     </button>
                                 </div>
                             </form>`;
-                            });
-                        }
+                                });
+                            }
 
-                        // ✅ دکمه افزودن فقط یکی ساخته میشه
-                        html += `
+                            // ✅ دکمه افزودن فقط یکی ساخته میشه
+                            html += `
                     <div class="mt-3">
                         <button type="button" id="add-checklist-btn" class="btn btn-sm btn-light-primary w-100">
                             <i class="ki-outline ki-plus fs-5"></i> افزودن آیتم
@@ -1293,121 +1433,195 @@
                     </div>
                 `;
 
-                        container.html(html);
-                    },
-                    error: function () {
-                        container.html('<div class="text-danger">خطا در بارگذاری چک‌لیست‌ها.</div>');
-                    }
+                            container.html(html);
+                        },
+                        error: function () {
+                            container.html('<div class="text-danger">خطا در بارگذاری چک‌لیست‌ها.</div>');
+                        }
+                    });
+                }
+
+                // 🟢 نمایش فرم افزودن فقط یک بار
+                $(document).on('click', '#add-checklist-btn', function () {
+                    $(this).addClass('d-none');
+                    $('.add-checklist-form').removeClass('d-none').find('.new-checklist-title').focus();
                 });
-            }
 
-            // 🟢 نمایش فرم افزودن فقط یک بار
-            $(document).on('click', '#add-checklist-btn', function () {
-                $(this).addClass('d-none');
-                $('.add-checklist-form').removeClass('d-none').find('.new-checklist-title').focus();
-            });
+                // ➕ افزودن آیتم جدید
+                $(document).on('submit', '.add-checklist-form', function (e) {
+                    e.preventDefault();
+                    const form = $(this);
+                    const title = form.find('.new-checklist-title').val().trim();
+                    const taskId = window.currentTaskId;
 
-            // ➕ افزودن آیتم جدید
-            $(document).on('submit', '.add-checklist-form', function (e) {
-                e.preventDefault();
-                const form = $(this);
-                const title = form.find('.new-checklist-title').val().trim();
-                const taskId = window.currentTaskId;
+                    if (!title) return;
 
-                if (!title) return;
+                    const url = "{{ route('dashboard.task.add.checklist', ':id') }}".replace(':id', taskId);
 
-                const url = "{{ route('dashboard.task.add.checklist', ':id') }}".replace(':id', taskId);
-
-                $.ajax({
-                    url,
-                    type: 'POST',
-                    data: {
-                        _token: "{{ csrf_token() }}",
-                        title
-                    },
-                    success: function () {
-                        form.find('.new-checklist-title').val('');
-                        loadTaskChecklists(taskId); // فقط لیست رو رفرش کن، نه صفحه
-                    },
-                    error: function () {
-                        alert('خطا در افزودن چک‌لیست');
-                    }
+                    $.ajax({
+                        url,
+                        type: 'POST',
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            title
+                        },
+                        success: function () {
+                            form.find('.new-checklist-title').val('');
+                            loadTaskChecklists(taskId); // فقط لیست رو رفرش کن، نه صفحه
+                        },
+                        error: function () {
+                            alert('خطا در افزودن چک‌لیست');
+                        }
+                    });
                 });
-            });
 
-            // 🗑 حذف آیتم
-            $(document).on('click', '.delete-checklist', function () {
-                const id = $(this).data('id');
-                const taskId = window.currentTaskId;
+                // 🗑 حذف آیتم
+                $(document).on('click', '.delete-checklist', function () {
+                    const id = $(this).data('id');
+                    const taskId = window.currentTaskId;
 
-                const url = "{{ route('dashboard.task.checklist.delete', ':id') }}".replace(':id', id);
+                    const url = "{{ route('dashboard.task.checklist.delete', ':id') }}".replace(':id', id);
 
-                $.ajax({
-                    url,
-                    type: 'DELETE',
-                    data: {_token: "{{ csrf_token() }}"},
-                    success: function () {
-                        loadTaskChecklists(taskId);
-                    },
-                    error: function () {
-                        alert('خطا در حذف آیتم');
-                    }
+                    $.ajax({
+                        url,
+                        type: 'DELETE',
+                        data: {_token: "{{ csrf_token() }}"},
+                        success: function () {
+                            loadTaskChecklists(taskId);
+                        },
+                        error: function () {
+                            alert('خطا در حذف آیتم');
+                        }
+                    });
                 });
-            });
 
-            // ☑ تغییر وضعیت تیک
-            $(document).on('change', '.checklist-checkbox', function () {
-                const id = $(this).closest('.checklist-form').data('id');
-                const checked = $(this).is(':checked');
-                const title = $(this).closest('.form-check').find('.checklist-title');
+                // ☑ تغییر وضعیت تیک
+                $(document).on('change', '.checklist-checkbox', function () {
+                    const id = $(this).closest('.checklist-form').data('id');
+                    const checked = $(this).is(':checked');
+                    const title = $(this).closest('.form-check').find('.checklist-title');
 
-                const url = "{{ route('dashboard.task.checklist.check', ':id') }}".replace(':id', id);
+                    const url = "{{ route('dashboard.task.checklist.check', ':id') }}".replace(':id', id);
 
-                $.ajax({
-                    url,
-                    type: 'POST',
-                    data: {_token: "{{ csrf_token() }}"},
-                    success: function () {
-                        if (checked)
-                            title.addClass('text-decoration-line-through text-muted');
-                        else
-                            title.removeClass('text-decoration-line-through text-muted');
-                    }
+                    $.ajax({
+                        url,
+                        type: 'POST',
+                        data: {_token: "{{ csrf_token() }}"},
+                        success: function () {
+                            if (checked)
+                                title.addClass('text-decoration-line-through text-muted');
+                            else
+                                title.removeClass('text-decoration-line-through text-muted');
+                        }
+                    });
                 });
-            });
 
-            // ✏️ ویرایش عنوان
-            $(document).on('dblclick', '.checklist-title', function () {
-                const input = $(this);
-                input.removeAttr('readonly').focus().addClass('border-bottom border-primary');
-            });
-
-            $(document).on('blur', '.checklist-title', function () {
-                const input = $(this);
-                const form = input.closest('.checklist-form');
-                const id = form.data('id');
-                const newTitle = input.val().trim();
-
-                input.attr('readonly', true).removeClass('border-bottom border-primary');
-
-                const url = "{{ route('dashboard.task.checklist.update', ':id') }}".replace(':id', id);
-
-                $.ajax({
-                    url,
-                    type: 'PUT',
-                    data: {_token: "{{ csrf_token() }}", title: newTitle},
-                    success: function () {
-                        console.log('ویرایش موفق');
-                    }
+                // ✏️ ویرایش عنوان
+                $(document).on('dblclick', '.checklist-title', function () {
+                    const input = $(this);
+                    input.removeAttr('readonly').focus().addClass('border-bottom border-primary');
                 });
-            });
-        </script>
+
+                $(document).on('blur', '.checklist-title', function () {
+                    const input = $(this);
+                    const form = input.closest('.checklist-form');
+                    const id = form.data('id');
+                    const newTitle = input.val().trim();
+
+                    input.attr('readonly', true).removeClass('border-bottom border-primary');
+
+                    const url = "{{ route('dashboard.task.checklist.update', ':id') }}".replace(':id', id);
+
+                    $.ajax({
+                        url,
+                        type: 'PUT',
+                        data: {_token: "{{ csrf_token() }}", title: newTitle},
+                        success: function () {
+                            console.log('ویرایش موفق');
+                        }
+                    });
+                });
+            </script>
+            <script>
+
+                function openDependencyModal(url, currentData) {
+                    let data = JSON.parse(currentData);
+
+                    $('#modalTitle').text(`ایجاد وابستگی برای "${data.title}"`);
+                    $('#dependencyForm #title').val(data.title);
+                    $('#dependencyForm').attr('action', url);
+
+                    loadPredecessorTasks(data.id);
+
+                    var modal = new bootstrap.Modal(document.getElementById('kt_modal_dependency'));
+                    modal.show();
+                }
+
+                function loadPredecessorTasks(taskId) {
+                    const $select = $('#predecessor_task_id');
+
+                    const ajaxRoute = $select.data('ajax-route').replace(':id', taskId);
+
+                    $select.select2({
+                        placeholder: 'تسک وابسته را انتخاب کنید',
+                        allowClear: true,
+                        ajax: {
+                            url: ajaxRoute,
+                            dataType: 'json',
+                            delay: 250,
+                            processResults: function (data) {
+                                console.log(data)
+                                return { results: data.related ?? [] };
+                            },
+                            cache: true
+                        }
+                    });
+                }
 
 
 
 
+                // ایجاد وابستگی
+                $(document).on('submit', '#dependencyForm', function (e) {
+                    e.preventDefault();
 
+                    let form = $(this);
+                    let url = form.attr('action');
+                    let formData = form.serialize();
 
-    @endpush
+                    $.ajax({
+                        url: url,
+                        method: 'POST',
+                        data: formData,
+                        success: function (res) {
+                            console.log(res)
+                            $('#kt_modal_dependency').modal('hide');
+                            if (res.success) {
+                                $.jGrowl(res.flash_message, {
+                                    life: 4000,
+                                    position: 'bottom-left',
+                                    theme: 'bg-success'
+                                });
+                            } else {
+                                $.jGrowl(res.err_message, {
+                                    life: 4000,
+                                    position: 'bottom-left',
+                                    theme: 'bg-danger'
+                                });
+                            }
+                        },
+                        error: function (xhr) {
+                            $('#kt_modal_dependency').modal('hide');
+                            $.jGrowl(xhr.responseJSON.err_message, {
+                                life: 4000,
+                                position: 'bottom-left',
+                                theme: 'bg-danger'
+                            });
+                        }
+                    });
+                });
+
+            </script>
+        @endpush
 </x-layout>
 

@@ -79,7 +79,7 @@ var KTProjectOverview = function () {
                 grid: {borderColor: o, strokeDashArray: 4, yaxis: {lines: {show: !0}}},
                 markers: {colors: [e, r], strokeColor: [t, a], strokeWidth: 3}
             }).render(), function () {
-                var t = document.querySelector("#kt_profile_overview_table");
+                var t = document.querySelector(".kt_profile_overview_table");
                 if (!t) return;
                 t.querySelectorAll("tbody tr").forEach((t => {
                     const e = t.querySelectorAll("td"), a = moment(e[1].innerHTML, "MMM D, YYYY").format();
