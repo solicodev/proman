@@ -292,31 +292,33 @@ class TaskController extends Controller
     {
         $tasks = Task::with(['dependencies', 'children'])->where('project_id', $project->id)->get();
 
-        // گروه‌ها یا همان lanes
+
         $groups = [];
         $items  = [];
 
         foreach ($tasks as $task) {
-
-            // گروه بر اساس والد یا خودش
             $groups[] = [
                 'id'      => $task->id,
-                'content' => $task->title,
+                'content' => $task->title . $task->task_code,
             ];
 
-            // فرمت تاریخ‌ها برای vis
             $start = $task->start_date ? Carbon::parse($task->start_date)->toIso8601String() : null;
             $end   = $task->end_date   ? Carbon::parse($task->end_date)->toIso8601String() : null;
 
-            // Vis نیاز دارد:
-            // id, content, start, end, group, type
+            $type = 'box'; // پیش‌فرض
+            if ($start && $end) {
+                $type = 'range';
+            } elseif ($start && !$end) {
+                $type = 'point'; // یا 'box' بسته به نیاز
+            }
+
             $items[] = [
                 'id'      => $task->id,
                 'group'   => $task->id,
                 'content' => $task->title,
                 'start'   => $start,
                 'end'     => $end,
-                'type'    => 'range',
+                'type'    => $type,
                 'progress'=> intval($task->progress ?? 0),
                 'allowed' => intval($task->calculateAllowedProgress() ?? 100),
                 'effective'=> intval($task->progress_effective ?? ($task->progress ?? 0)),
@@ -324,15 +326,16 @@ class TaskController extends Controller
             ];
         }
 
-        // وابستگی‌ها برای metronic-version
+
         $dependencies = [];
 
         foreach ($tasks as $task) {
             foreach ($task->dependencies as $dep) {
+
                 $dependencies[] = [
                     'from' => $dep->predecessor_id,
                     'to'   => $dep->successor_id,
-                    'type' => $dep->relation_type,
+                    'type' => $dep->relation_Type,
                     'lag'  => intval($dep->lag ?? 0),
                 ];
             }
