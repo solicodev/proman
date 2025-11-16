@@ -179,15 +179,20 @@
                             <!--end::Info-->
 
                             <!--begin::Progress-->
-                            <div class="h-4px w-100 bg-light mb-5" data-bs-toggle="tooltip"
-                                 title="This project 50% completed">
+                            <div class="h-10px w-100 bg-light mb-5" data-bs-toggle="tooltip"
+                                @if($project->progress > 0)
+                                 title="این پروژه {{ round($project->progress) }}% تکمیل شد "
+                                @endif>
                                 <div class="@if($project->status == 0) bg-danger
                                     @elseif($project->status == 1) bg-primary
                                     @elseif($project->status == 2) bg-success
                                     @elseif($project->status == 3) bg-light-secondary
                                     @elseif($project->status == 4) badge-light
-                                 @endif  rounded h-4px" role="progressbar" style="width: 50%"
-                                     aria-valuenow=" 50" aria-valuemin="0" aria-valuemax="100"></div>
+                                 @endif  rounded h-10px" role="progressbar" style="width: {{ $project->progress }}%"
+                                     aria-valuenow=" {{ round($project->progress) }}%" aria-valuemin="0" aria-valuemax="100">
+
+
+                                </div>
                             </div>
                             <!--end::Progress-->
 

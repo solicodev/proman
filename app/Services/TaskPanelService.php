@@ -84,8 +84,8 @@ class TaskPanelService
 
         if ($param['sub_manager_check'])
         {
-            $task->sub_manager_check = $param['sub_manager_check'] ?? null;
-            $task->sub_manager_id = $param['sub_manager_id'] ?? null;
+            $task->manager_check = $param['sub_manager_check'] ?? null;
+            $task->manager_id = $param['sub_manager_id'] ?? null;
 
             $manager = User::where('id', $param['sub_manager_id'])->first();
             //TODO

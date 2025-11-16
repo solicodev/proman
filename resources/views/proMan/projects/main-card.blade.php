@@ -253,7 +253,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-active-primary py-5 me-6 " href="">
+                        <a class="nav-link text-active-primary py-5 me-6 @if(request()->getUri() == route('dashboard.project.access',$project->id)) active @endif"  href="{{route('dashboard.project.access',$project->id)}}">
                             دسترسی ها
                         </a>
                     </li>

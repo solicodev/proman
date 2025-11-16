@@ -24,6 +24,7 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
         Route::get('/dependencies/{project}', [ProjectController::class, 'dependency'])->name('dependency');
         Route::get('/comments/{project}', [ProjectController::class, 'comment'])->name('comment');
         Route::get('/timeline/{project}', [TaskController::class, 'taskTimeLine'])->name('taskTimeLine');
+        Route::get('/access/{project}', [ProjectController::class, 'access'])->name('access');
 
         Route::get('/create', [ProjectController::class, 'create'])->name('create');
         Route::post('/store', [ProjectController::class, 'store'])->name('store');

@@ -85,6 +85,7 @@ class TaskController extends Controller
 
             DB::commit();
             return redirect()->back()->with('flash_message', 'زیرتسک با موفقیت ایجاد شد :)');
+
         } catch (Exception $exception) {
             DB::rollBack();
             return redirect()->back()->with('err_message', 'خطایی رخ داد :('.$exception->getMessage());
@@ -299,7 +300,7 @@ class TaskController extends Controller
         foreach ($tasks as $task) {
             $groups[] = [
                 'id'      => $task->id,
-                'content' => $task->title . $task->task_code,
+                'content' => $task->title .'.('. $task->task_code .')',
             ];
 
             $start = $task->start_date ? Carbon::parse($task->start_date)->toIso8601String() : null;
@@ -331,7 +332,6 @@ class TaskController extends Controller
 
         foreach ($tasks as $task) {
             foreach ($task->dependencies as $dep) {
-
                 $dependencies[] = [
                     'from' => $dep->predecessor_id,
                     'to'   => $dep->successor_id,
@@ -350,4 +350,6 @@ class TaskController extends Controller
 
 
     }
+
+
 }

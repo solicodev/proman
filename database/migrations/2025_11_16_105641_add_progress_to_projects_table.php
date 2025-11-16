@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('tasks', function (Blueprint $table) {
-            $table->integer('progress')->default(0)->after('watcher_id');
+        Schema::table('projects', function (Blueprint $table) {
+            $table->integer('progress')->default(0)->after('description');
 
         });
     }
@@ -22,7 +22,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('tasks', function (Blueprint $table) {
+        Schema::table('projects', function (Blueprint $table) {
             $table->dropColumn('progress');
         });
     }

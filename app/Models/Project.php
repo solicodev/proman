@@ -107,4 +107,28 @@ class Project extends Model
             ->logOnlyDirty()
             ->setDescriptionForEvent(fn(string $eventName) => "Task has been {$eventName}");
     }
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class , 'project_id');
+    }
+    public function getProgressAttribute()
+    {
+        $progressItems = [];
+
+        foreach ($this->tasks as $task) {
+
+            $progressItems[] = $task->progress;
+            foreach ($task->children as $sub) {
+                $progressItems[] = $sub->progress;
+            }
+        }
+
+        if (count($progressItems) === 0) {
+            return 0;
+        }
+
+        return array_sum($progressItems) / count($progressItems);
+    }
+
 }

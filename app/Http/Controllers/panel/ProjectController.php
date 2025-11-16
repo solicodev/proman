@@ -20,6 +20,8 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Spatie\Activitylog\Models\Activity;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class ProjectController extends Controller
 {
@@ -33,7 +35,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::with(['manager','category','department','members','photos','brand'])->where('manager_id',Auth::id())->paginate(6);
+        $projects = Project::with(['manager','category','department','members','photos','brand'])->where('manager_id',Auth::id())->paginate(9);
         $last_projects = Project::with(['manager','category','department','members','photos','brand'])->where('manager_id',Auth::id())->take(3)->latest()->get();
 
         return view('proMan.projects.index',get_defined_vars());
@@ -219,6 +221,9 @@ class ProjectController extends Controller
         $comment_collection = collect($comments_array)->take(5);
         $total_comments = collect($comments_array)->count();
         $tasks = Task::with(['project','manager','watcher','assigners','photos','predecessors','successors'])->where('project_id',$project->id)->paginate(15);
+
+
+
         return view('proMan.projects.show',get_defined_vars());
     }
 
@@ -280,6 +285,15 @@ class ProjectController extends Controller
             return redirect()->back()->with('err_message', 'خطایی رخ داد مجددا تلاش کنید');
         }
     }
+
+    public function access(Project $project)
+    {
+        $users = $project->members;
+        $roles = Role::all();
+        $permissions = Permission::all();
+        return view('proMan.projects.access',get_defined_vars());
+    }
+
 
 
 }
