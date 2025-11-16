@@ -28,102 +28,83 @@
                 </div>
             </div>
         </div>
-        <div class="card-body pt-0">
-            <button type="button" class="btn btn-primary mb-5" id="kt_docs_vistimeline_group_button">Show current visible items</button>
-            <div class="mb-5">
-                <div class="fw-bold mb-5">Visible groups: <span id="visibleGroupsContainer" class="fw-normal"></span></div>
-
-                (Scroll with the mouse and see the items being focus automatically on the timeline)
-            </div>
-
-            <div id="kt_docs_vistimeline_group"></div>
+        <div class="card-body">
+            <div id="task-timeline"></div>
         </div>
     </div>
-@push('scripts')
-   <script src="{{url('panel/assets/plugins/custom/vis-timeline/vis-timeline.bundle.js')}}"></script>
+    @push('scripts')
+        <script src="{{url('panel/assets/plugins/custom/vis-timeline/vis-timeline.bundle.js')}}"></script>
 
-    <script>
-        var now = Date.now();
+        <script>
+            const groups = {!! $groupsJson !!};
+            const items  = {!! $itemsJson !!};
+            const deps   = {!! $depsJson !!};
 
-        var options = {
-            stack: true,
-            maxHeight: 640,
-            horizontalScroll: false,
-            verticalScroll: true,
-            zoomKey: "ctrlKey",
-            start: Date.now() - 1000 * 60 * 60 * 24 * 3, // minus 3 days
-            end: Date.now() + 1000 * 60 * 60 * 24 * 21, // plus 1 months aprox.
-            orientation: {
-                axis: "both",
-                item: "top",
-            },
-        };
-        var groups = new vis.DataSet();
-        var items = new vis.DataSet();
+            document.addEventListener("DOMContentLoaded", () => {
 
-        var count = 300;
+                const container = document.getElementById("task-timeline");
 
-        for (var i = 0; i < count; i++) {
-            var start = now + 1000 * 60 * 60 * 24 * (i + Math.floor(Math.random() * 7));
-            var end = start + 1000 * 60 * 60 * 24 * (1 + Math.floor(Math.random() * 5));
+                const options = {
+                    stack: false,
+                    orientation: 'top',
+                    selectable: true,
+                    zoomKey: 'ctrlKey',
+                    margin: {
+                        item: 10,
+                        axis: 20
+                    }
+                };
 
-            groups.add({
-                id: i,
-                content: "Task " + i,
-                order: i,
+                const tlGroups = new vis.DataSet(groups);
+                const tlItems  = new vis.DataSet(items);
+
+                const timeline = new vis.Timeline(container, tlItems, tlGroups, options);
+
+                drawDependencies(timeline, deps);
+
+                timeline.on('rangechange', () => drawDependencies(timeline, deps));
+                // timeline.on('changed', () => drawDependencies(timeline, deps));
+
             });
 
-            items.add({
-                id: i,
-                group: i,
-                start: start,
-                end: end,
-                type: "range",
-                content: "Item " + i,
-            });
-        }
-
-        // create a Timeline
-        var container = document.getElementById("kt_docs_vistimeline_group");
-        var timeline = new vis.Timeline(container, items, groups, options);
-        //timeline = new vis.Timeline(container, null, options);
-        timeline.setGroups(groups);
-        timeline.setItems(items);
-
-        function debounce(func, wait = 100) {
-            let timeout;
-            return function (...args) {
-                clearTimeout(timeout);
-                timeout = setTimeout(() => {
-                    func.apply(this, args);
-                }, wait);
-            };
-        }
-
-        let groupFocus = (e) => {
-            let vGroups = timeline.getVisibleGroups();
-            let vItems = vGroups.reduce((res, groupId) => {
-                let group = timeline.itemSet.groups[groupId];
-                if (group.items) {
-                    res = res.concat(Object.keys(group.items));
+            function drawDependencies(timeline, deps) {
+                // SVG container
+                let svg = document.getElementById('deps-svg');
+                if (!svg) {
+                    svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+                    svg.setAttribute("id", "deps-svg");
+                    svg.style.position = "absolute";
+                    svg.style.top = "0";
+                    svg.style.left = "0";
+                    svg.style.width = "100%";
+                    svg.style.height = "100%";
+                    svg.style.pointerEvents = "none";
+                    timeline.el.appendChild(svg);
                 }
-                return res;
-            }, []);
-            timeline.focus(vItems);
-        };
-        timeline.on("scroll", debounce(groupFocus, 200));
-        // Enabling the next line leads to a continuous since calling focus might scroll vertically even if it shouldn't
-        // this.timeline.on("scrollSide", debounce(groupFocus, 200))
 
-        // Handle button click
-        const button = document.getElementById('kt_docs_vistimeline_group_button');
-        button.addEventListener('click', e => {
-            e.preventDefault();
+                svg.innerHTML = '';
 
-            var a = timeline.getVisibleGroups();
-            document.getElementById("visibleGroupsContainer").innerHTML = "";
-            document.getElementById("visibleGroupsContainer").innerHTML += a;
-        });
-    </script>
-@endpush
+                deps.forEach(dep => {
+                    const fromItem = timeline.itemsData.get(dep.from);
+                    const toItem   = timeline.itemsData.get(dep.to);
+                    if (!fromItem || !toItem) return;
+
+                    const fromX = timeline.timeToScreen(fromItem.end);
+                    const toX   = timeline.timeToScreen(toItem.start);
+                    const fromY = timeline.itemSet.items[fromItem.id].top + timeline.itemSet.items[fromItem.id].height / 2;
+                    const toY   = timeline.itemSet.items[toItem.id].top + timeline.itemSet.items[toItem.id].height / 2;
+
+                    const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                    line.setAttribute("x1", fromX);
+                    line.setAttribute("y1", fromY);
+                    line.setAttribute("x2", toX);
+                    line.setAttribute("y2", toY);
+                    line.setAttribute("stroke", "red");
+                    line.setAttribute("stroke-width", "2");
+                    svg.appendChild(line);
+                });
+            }
+
+        </script>
+    @endpush
 </x-layout>

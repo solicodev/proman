@@ -10,6 +10,8 @@ use App\Models\Task;
 use App\Models\TaskDependency;
 use App\Models\User;
 use App\Services\TaskPanelService;
+use App\Services\TaskScheduler;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -288,15 +290,61 @@ class TaskController extends Controller
 
     public function taskTimeLine(Project $project)
     {
-        $task = Task::with(['dependencies.dependencyTask', 'children'])->where('project_id',$project->id)->get();
+        $tasks = Task::with(['dependencies', 'children'])->where('project_id', $project->id)->get();
 
-        return [
-            'actual' => $task->progress,
-            'allowed' => $task->calculateAllowedProgress(),
-            'effective' => $task->progress_effective,
-            'tree_progress' => $task->progress_tree,
-        ];
+        // گروه‌ها یا همان lanes
+        $groups = [];
+        $items  = [];
 
-        return view('proMan.projects.taskTimeLine', get_defined_vars());
+        foreach ($tasks as $task) {
+
+            // گروه بر اساس والد یا خودش
+            $groups[] = [
+                'id'      => $task->id,
+                'content' => $task->title,
+            ];
+
+            // فرمت تاریخ‌ها برای vis
+            $start = $task->start_date ? Carbon::parse($task->start_date)->toIso8601String() : null;
+            $end   = $task->end_date   ? Carbon::parse($task->end_date)->toIso8601String() : null;
+
+            // Vis نیاز دارد:
+            // id, content, start, end, group, type
+            $items[] = [
+                'id'      => $task->id,
+                'group'   => $task->id,
+                'content' => $task->title,
+                'start'   => $start,
+                'end'     => $end,
+                'type'    => 'range',
+                'progress'=> intval($task->progress ?? 0),
+                'allowed' => intval($task->calculateAllowedProgress() ?? 100),
+                'effective'=> intval($task->progress_effective ?? ($task->progress ?? 0)),
+                'tree_progress' => intval($task->progress_tree ?? 0),
+            ];
+        }
+
+        // وابستگی‌ها برای metronic-version
+        $dependencies = [];
+
+        foreach ($tasks as $task) {
+            foreach ($task->dependencies as $dep) {
+                $dependencies[] = [
+                    'from' => $dep->predecessor_id,
+                    'to'   => $dep->successor_id,
+                    'type' => $dep->relation_type,
+                    'lag'  => intval($dep->lag ?? 0),
+                ];
+            }
+        }
+
+        return view('proMan.projects.taskTimeLine', [
+            'project'      => $project,
+            'groupsJson'   => json_encode($groups, JSON_UNESCAPED_UNICODE),
+            'itemsJson'    => json_encode($items, JSON_UNESCAPED_UNICODE),
+            'depsJson'     => json_encode($dependencies, JSON_UNESCAPED_UNICODE),
+        ]);
+
+
     }
 }

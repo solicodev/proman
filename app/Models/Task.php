@@ -125,7 +125,7 @@ class Task extends Model
 
     public function dependencies()
     {
-        return $this->hasMany(TaskDependency::class, 'task_id');
+        return $this->hasMany(TaskDependency::class, 'successor_id');
     }
 
     public function parents()
@@ -135,19 +135,18 @@ class Task extends Model
 
     public function calculateAllowedProgress()
     {
-        // اگر وابستگی ندارد → پیشرفت کامل آزاد
         if ($this->dependencies->count() === 0) {
             return 100;
         }
 
-        $minAllowed = 100;  // کمترین مقدار مجاز از میان همهٔ وابستگی‌ها
+        $minAllowed = 100;
 
         foreach ($this->dependencies as $dep) {
-            $source = $dep->dependencyTask; // تسک وابسته
+            $source = $dep->dependencyTask;
             $type = strtoupper($dep->type);
             $lag = $dep->lag ?? 0;
 
-            // درصد پیشرفت تسک منبع
+
             $sourceProgress = $source->progress_effective ?? $source->progress ?? 0;
 
             switch ($type) {
@@ -155,7 +154,6 @@ class Task extends Model
                 case 'FS': // Finish → Start
                     // تا A پایان پیدا نکند، B پیشرفت زیادی نمی‌تواند داشته باشد
                     if ($sourceProgress < 100) {
-                        // اجازه 20 درصد بدیم برای آماده‌سازی
                         $minAllowed = min($minAllowed, $sourceProgress);
                     }
                     break;
@@ -172,7 +170,7 @@ class Task extends Model
 
                 case 'SF': // Start → Finish
                     // پیشرفت پایان B وابسته به شروع A
-                    if ($sourceProgress < 10) { // یعنی A هنوز شروع نشده
+                    if ($sourceProgress < 10) {
                         $minAllowed = min($minAllowed, 10);
                     }
                     break;
@@ -205,6 +203,8 @@ class Task extends Model
 
         return round($total / max(1, $count), 2);
     }
+
+
 
 
 }
