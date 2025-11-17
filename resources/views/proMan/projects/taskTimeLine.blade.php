@@ -7,7 +7,7 @@
     <div class="card card-flush mt-6 mt-xl-9">
         <div class="card-header mt-5">
             <div class="card-title flex-column">
-                <h3 class="fw-bold mb-1">لیست فعالیت ها</h3>
+                <h3 class="fw-bold mb-1">گزارش وضعیت تسک ها</h3>
 
                 <div class="fs-6 text-gray-500"></div>
             </div>

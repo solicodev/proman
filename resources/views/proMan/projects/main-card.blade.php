@@ -267,6 +267,11 @@
                             گزارش تسک های پروژه
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-active-primary py-5 me-6 @if(request()->getUri() == route('dashboard.project.comment', $project->id)) active @endif" href="{{route('dashboard.project.comment',$project->id)}}">
+                           کامنت ها
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>

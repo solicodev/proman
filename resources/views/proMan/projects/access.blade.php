@@ -47,47 +47,6 @@
                             <td class="text-start">{{$user->description}}</td>
                             <td class="text-start">{{$user->email}}</td>
                             <td class="text-start">
-
-                                <form action="{{ route('project.permissions.update', [$project->id, $user->id]) }}" method="POST">
-                                    @csrf
-
-                                    <div class="card p-4">
-
-                                        <h3>مدیریت نقش و دسترسی‌های {{ $user->name }}</h3>
-
-                                        {{-- نقش --}}
-                                        <div class="mt-3">
-                                            <label class="form-label fw-bold">نقش کاربر</label>
-                                            <select name="role" class="form-select">
-                                                @foreach($roles as $role)
-                                                    <option value="{{ $role->name }}"
-                                                            @if($user->hasRole($role->name)) selected @endif>
-                                                        {{ $role->name }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-
-                                        {{-- دسترسی‌ها --}}
-                                        <div class="mt-4">
-                                            <h5 class="fw-bold">دسترسی‌ها</h5>
-                                            @foreach($permissions as $permission)
-                                                <div class="form-check mb-1">
-                                                    <input class="form-check-input"
-                                                           type="checkbox"
-                                                           name="permissions[]"
-                                                           value="{{ $permission->name }}"
-                                                           @if($user->hasPermissionTo($permission->name)) checked @endif>
-                                                    <label class="form-check-label">{{ $permission->name }}</label>
-                                                </div>
-                                            @endforeach
-                                        </div>
-
-                                        <button class="btn btn-primary mt-3">ذخیره</button>
-                                    </div>
-                                </form>
-
-
                             </td>
                         </tr>
                     @endforeach

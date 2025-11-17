@@ -15,9 +15,10 @@
                     <tr>
                         <th></th>
                         <th>شناسه پروژه</th>
+                        <th>شناسه تسک</th>
                         <th>عنوان تسک</th>
+                        <th>مهلت تسک</th>
                         <th>تاریخ شروع تعیین شده</th>
-                        <th>تاریخ شروع واقعی</th>
                         <th>تاریخ پایان تسک</th>
                         <th>مدیر تایید کننده</th>
                         <th>ناظر تسک</th>
@@ -30,9 +31,10 @@
                         <tr>
                             <td>{{$loop->iteration}}</td>
                             <td style="direction: ltr; text-align: left"> {{ $task->project?->project_code }}</td>
+                            <td style="direction: ltr; text-align: left"> {{ $task->task_code }}</td>
                             <td> {{ $task->title }}</td>
+                            <td> {{ $task->duration }}</td>
                             <td> {{ $task->start_date }}</td>
-                            <td> {{ $task->start_todo_date }}</td>
                             <td> {{ $task->end_date }}</td>
                             <td> {{ $task->manager?->Name }}</td>
                             <td> {{ $task->watcher?->Name }}</td>
