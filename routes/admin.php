@@ -8,6 +8,7 @@ use App\Http\Controllers\admin\PhotoController;
 use App\Http\Controllers\admin\PositionController;
 use App\Http\Controllers\admin\ProjectController;
 use App\Http\Controllers\admin\TaskController;
+use App\Http\Controllers\admin\TicketController;
 use App\Http\Controllers\admin\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -86,5 +87,17 @@ Route::prefix('admin')->name('admin.')->middleware(['auth','SuperAdminCheck'])->
         Route::put('/update/{task}', [TaskController::class , 'update'])->name('update');
         Route::post('/status/{task}', [TaskController::class , 'status'])->name('status');
         Route::get('/delete/{task}', [TaskController::class , 'destroy'])->name('destroy');
+    });
+
+    Route::prefix('ticket')->name('ticket.')->group(function () {
+        Route::get('/', [TicketController::class , 'index'])->name('index');
+        Route::get('/show/{ticket}', [TicketController::class , 'show'])->name('show');
+        Route::get('/create', [TicketController::class , 'create'])->name('create');
+        Route::post('/store', [TicketController::class , 'store'])->name('store');
+        Route::post('/reply/{ticket}', [TicketController::class , 'reply'])->name('reply');
+        Route::get('/edit/{ticket}', [TicketController::class , 'edit'])->name('edit');
+        Route::put('/update/{ticket}', [TicketController::class , 'update'])->name('update');
+        Route::post('/status/{ticket}', [TicketController::class , 'status'])->name('status');
+        Route::get('/delete/{ticket}', [TicketController::class , 'destroy'])->name('destroy');
     });
 });

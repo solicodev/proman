@@ -1,12 +1,14 @@
-@extends('layouts.admin')
-
+@extends('admin.index')
 @section('content')
+    <h6 class="mb-0 text-uppercase">لیست پرسنل</h6>
+    <hr />
+    @include('layouts.message')
     <!-- CONTAINER -->
     <div class="main-container container-fluid">
 
 
         <!-- PAGE-HEADER -->
-        @include('tickets::partial.header')
+        @include('admin.tickets.partial.header')
         <!-- PAGE-HEADER END -->
 
         <!-- Row -->
@@ -52,8 +54,8 @@
                                         </td>
                                         <td dir="ltr">{{ verta($item->created_at)->format('Y/m/d H:i') }}</td>
                                         <td>
-                                            <a href="{{ route('tickets.show', $item->id) }}" class="btn btn-info fs-14 text-white edit-icn" title="مشاهده">
-                                                <i class="fe fe-eye"></i>
+                                            <a href="{{ route('admin.ticket.show', $item->id) }}" class="text-warning" title="مشاهده">
+                                                <i class="bx bxs-edit"></i>
                                             </a>
 {{--                                            <a href="{{ route('tickets.edit', $item->id) }}" class="btn btn-primary fs-14 text-white edit-icn" title="ویرایش">--}}
 {{--                                                <i class="fe fe-edit"></i>--}}
@@ -73,7 +75,7 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <a href="{{ route('tickets.create') }}" class="btn btn-primary">افزودن تیکت</a>
+                        <a href="{{ route('admin.ticket.create') }}" class="btn btn-primary">افزودن تیکت</a>
                     </div>
                 </div>
             </div>

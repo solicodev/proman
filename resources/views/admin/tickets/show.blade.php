@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('admin.index')
 @push('stylesheets')
     <style>
         .text-left {
@@ -14,7 +14,7 @@
 
 
         <!-- PAGE-HEADER -->
-        @include('tickets::partial.header')
+        @include('admin.tickets.partial.header')
         <!-- PAGE-HEADER END -->
 
         <!-- Row -->
@@ -22,7 +22,7 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header border-bottom">
-                        <h3 class="card-title">مشاهده تیکت  شماره {{ $ticket->number }}</h3>
+                        <h3 class="card-title">مشاهده تیکت  شماره {{ $ticket->id }}</h3>
                     </div>
                     <div class="card-body">
 
@@ -31,7 +31,7 @@
                                 <h3 class="card-title">تغییر وضعیت تیکت</h3>
                             </div>
                             <div class="card-body">
-                                <form action="{{ route('tickets.status', $ticket->id) }}" method="post" enctype="multipart/form-data" class="row g-3 needs-validation" novalidate>
+                                <form action="{{ route('admin.ticket.status', $ticket->id) }}" method="post" enctype="multipart/form-data" class="row g-3 needs-validation" novalidate>
                                     <div class="col-md-12">
                                         <label for="status" class="form-label">وضعیت</label>
                                         <select name="status" class="form-control">
@@ -54,7 +54,7 @@
                                 <h3 class="card-title">ارسال پاسخ</h3>
                             </div>
                             <div class="card-body">
-                                <form action="{{ route('tickets.reply', $ticket->id) }}" method="post" enctype="multipart/form-data" class="row g-3 needs-validation" novalidate>
+                                <form action="{{ route('admin.ticket.reply', $ticket->id) }}" method="post" enctype="multipart/form-data" class="row g-3 needs-validation" novalidate>
                                     <div class="col-md-12">
                                         <label for="message" class="form-label">متن تیکت</label>
                                         <textarea name="message" class="form-control" required rows="7">{{ old('message') }}</textarea>
@@ -108,7 +108,7 @@
         </div>
         <!-- End Row -->
     </div>
-
+@endsection
     @push('scripts')
         <script>
             $('.add-attach').click(function (){
@@ -120,4 +120,3 @@
             });
         </script>
     @endpush
-@endsection

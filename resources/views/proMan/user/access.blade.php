@@ -3,7 +3,7 @@
     <div class="card card-flush mt-6 mt-xl-9">
         <div class="card-header mt-5">
             <div class="card-title flex-column">
-                <h3 class="fw-bold mb-1">لیست دسترسی ها</h3>
+                <h3 class="fw-bold mb-1">لیست تمام تیکت ها</h3>
 
                 <div class="fs-6 text-gray-500"></div>
             </div>
@@ -17,7 +17,15 @@
                         <option value="last90days">90 روز گذشته</option>
                     </select>
                 </div>
-
+                <div class="me-4 my-1">
+                    <select id="kt_filter_orders" name="orders" data-control="select2" data-hide-search="true" class="w-125px form-select form-select-solid form-select-sm">
+                        <option value="All" selected>همه</option>
+                        <option value="Approved">درحال بررسی</option>
+                        <option value="Declined">برای انجام</option>
+                        <option value="In Progress">در حال انجام</option>
+                        <option value="In Transit">انجام شد</option>
+                    </select>
+                </div>
                 <div class="d-flex align-items-center position-relative my-1">
                     <i class="ki-outline ki-magnifier fs-3 position-absolute ms-3"></i>
                     <input type="text" id="kt_filter_search" class="form-control form-control-solid form-select-sm w-150px ps-9" placeholder="جستجو" />
@@ -26,32 +34,36 @@
         </div>
         <div class="card-body pt-0">
             <div class="table-responsive">
-                <table id="kt_profile_overview_table" class="table table-row-bordered table-row-dashed gy-4 align-middle fw-bold text-start">
+                <table  class="kt_profile_overview_table table table-row-bordered table-row-dashed gy-4 align-middle fw-bold text-start">
                     <thead class="fs-7 text-gray-500 text-uppercase text-start">
                     <tr>
                         <th class="text-start">ردیف</th>
-                        <th class="text-start">کاربر</th>
-                        <th class="text-start">نوع فعالیت</th>
-                        <th class="text-start">توضیحات</th>
-                        <th class="text-start">جزییات</th>
-                        <th class="text-start">تاریخ</th>
+                        <th class="text-start">نام و نام خانوادگی</th>
+                        <th class="text-start">کد پرسنلی</th>
+                        <th class="text-start">شماره موبایل</th>
+                        <th class="text-start">ایمیل</th>
+                        <th class="text-start">نقش کاربر</th>
                         <th class="text-start">سطح دسترسی</th>
                     </tr>
                     </thead>
                     <tbody class="fs-6">
                     @foreach($users as $user)
+                        @php
+                            $role = $user->getRoleNames()->first();
+                        @endphp
                         <tr>
                             <td>{{$loop->iteration}}</td>
                             <td class="text-start">{{$user->Name}}</td>
-                            <td class="text-start">{{$user->log_name}}</td>
-                            <td class="text-start">{{$user->description}}</td>
-                            <td class="text-start">{{$user->email}}</td>
+                            <td  class="text-start"> {{ $user->personal_id }}</td>
+                            <td  class="text-start"> {{ $user->mobile }}</td>
+                            <td  class="text-start"> {{ $user->email }}</td>
+                            <td  class="text-start"> {{ role_name($role) }}</td>
                             <td class="text-start">
                                 <a href="#"
                                    onclick="openEditModal('{{ route('dashboard.access.update',$user->id) }}', JSON.stringify({name:'{{ $user->Name }}', permission: @json($user->permissions->pluck('id')) }))">
-   <span class="badge bg-info text-black">
-       <i class="bx bxs-edit"></i> ویرایش سطوح دسترسی
-   </span>
+                                   <span class="btn btn-sm btn-light-primary">
+                                        ویرایش سطوح دسترسی<i class="ki-outline ki-pencil fs-3 px-2"></i>
+                                   </span>
                                 </a>
                             </td>
                         </tr>

@@ -36,20 +36,15 @@
                             <td> {{ $user->mobile }}</td>
                             <td> {{ $user->email }}</td>
                             <td> {{ role_name($role) }}</td>
-                            {{--                            @dd(json_encode($user->permissions->select('id', 'guard_name', 'name')) , count($user->permissions->select('id', 'guard_name', 'name')));--}}
-
                             <td>
                                 <a href="#"
                                    onclick="openEditModal('{{ route('admin.user.permission',$user->id) }}', JSON.stringify({name:'{{ $user->Name }}', permission: @json($user->permissions->pluck('id')) }))">
-   <span class="badge bg-info text-black">
-       <i class="bx bxs-edit"></i> ویرایش سطوح دسترسی
-   </span>
+                                   <span class="badge bg-info text-black">
+                                       <i class="bx bxs-edit"></i> ویرایش سطوح دسترسی
+                                   </span>
                                 </a>
-
-{{--                                <a href="#" onclick="openEditModal('{{ route('admin.user.permission',$user->id) }}', JSON.stringify({name:'{{ $user->Name }}' , permission:'{{$user->permissions}}'}))"><span class="badge bg-info text-black">  <i class="bx bxs-edit"></i> ویرایش سطوح دسترسی</span></a>--}}
                             </td>
                             <td>
-                                {{--                                {!! $user->UserStatus !!}--}}
                                 <form action="{{ route('admin.user.status', $user->id) }}" method="post" class="d-flex align-items-center gap-3">
                                     @csrf
                                     <label class="form-check-label text-warning">
@@ -70,17 +65,6 @@
                                         تعلیق
                                     </label>
                                 </form>
-
-
-                                {{--                                <form action="{{ route('admin.user.status', $user->id) }}" method="post">--}}
-                                {{--                                    <select name="status" class="form-select" onchange="this.form.submit();">--}}
-                                {{--                                        <option value="0" @if($user->status == 0) selected @endif>غیر فعال</option>--}}
-                                {{--                                        <option value="1" @if($user->status == 1) selected @endif>فعال</option>--}}
-                                {{--                                        <option value="2" @if($user->status == 2) selected @endif>تعلیق</option>--}}
-                                {{--                                    </select>--}}
-                                {{--                                    @csrf--}}
-                                {{--                                </form>--}}
-
                             </td>
                             <td>
                                 <div class="d-flex">

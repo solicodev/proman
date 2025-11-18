@@ -88,7 +88,7 @@ class PanelController extends Controller
         $roles = Role::all();
         $permissions = Permission::all();
 
-        $permission_lists = Permission::whereNot('name','Like','dep_%')->get();
+        $permission_lists = Permission::get();
         $groupedPermissions = collect($permission_lists)->groupBy(function($permission) {
             return explode('_', $permission->name)[0];
         });

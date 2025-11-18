@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Project;
+use App\Models\Task;
+use App\Models\Ticket;
 use Illuminate\Http\Request;
 
 class adminController extends Controller
@@ -12,7 +15,14 @@ class adminController extends Controller
      */
     public function index()
     {
-        return view('admin.main');
+        $projects = Project::take(15)->latest()->get();
+        $tasks = Task::take(15)->latest()->get();
+
+        $total_projects = Project::get();
+        $total_tasks = Task::get();
+        $total_tickets = Ticket::get();
+
+        return view('admin.main',get_defined_vars());
     }
 
     /**
