@@ -67,15 +67,19 @@
                                         <a href="#" class="btn btn-sm btn-bg-light btn-active-color-primary me-3" data-bs-toggle="modal" data-bs-target="#kt_modal_users_search">
                                             اطلاع رسانی به اعضای پروژه<i class="ki-outline ki-notification-on fs-5 ps-3"></i>
                                         </a>
+                                        @can('manager_projectEdit')
                                         <a href="{{route('dashboard.project.edit',$project->id)}}" class="btn btn-sm btn-bg-light btn-active-color-primary me-3" >
                                             ویرایش <i class="ki-outline ki-pencil fs-5 ps-3"></i>
                                         </a>
+                                        @endcan
+                                        @can('manager_projectDelete')
                                         <a href="{{route('dashboard.project.destroy',$project->id)}}"
                                            type="button"
                                            class="btn btn-clean btn-sm btn-icon btn-icon-danger btn-active-light-primary ms-auto mx-2"
                                            data-bs-toggle="tooltip" data-bs-placement="top" title="حذف" onclick="return confirm('اطمینان دارید پروژه حذف شود؟');">
                                             <i class="ki-outline ki-trash fs-3"></i>
                                         </a>
+                                        @endcan
 
                                         <div class="me-0">
                                             <button class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
@@ -226,52 +230,67 @@
                 </div>
                 <div class="separator"></div>
                 <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold">
+                    @canany(['manager_projectTotalInfo','member_projectTotalInfo'])
                     <li class="nav-item">
                         <a class="nav-link text-active-primary py-5 me-6 @if(request()->getUri() == route('dashboard.project.show' , $project->id)) active @endif " href="{{route('dashboard.project.show' , $project->id)}}">
                             اطلاعات کلی
                         </a>
                     </li>
+                    @endcanany
                     <li class="nav-item">
                         <a class="nav-link text-active-primary py-5 me-6 @if(request()->getUri() == route('dashboard.project.task' , $project->id)) active @endif " href="{{route('dashboard.project.task', $project->id)}}">
                             تسک ها
                         </a>
                     </li>
-
+                    @canany(['manager_members' , 'member_members'])
                     <li class="nav-item">
                         <a class="nav-link text-active-primary py-5 me-6 @if(request()->getUri() == route('dashboard.project.member' , $project->id)) active @endif" href="{{route('dashboard.project.member', $project->id)}}">
                             اعضای پروژه
                         </a>
                     </li>
+                    @endcanany
+                    @can('manager_files')
                     <li class="nav-item">
                         <a class="nav-link text-active-primary py-5 me-6 @if(request()->getUri() == route('dashboard.project.file', $project->id)) active @endif " href="{{route('dashboard.project.file', $project->id)}}">
                             فایل ها
                         </a>
                     </li>
+                    @endcan
+                    @if(auth()->user()->hasrole('manager'))
                     <li class="nav-item">
                         <a class="nav-link text-active-primary py-5 me-6 @if(request()->getUri() == route('dashboard.project.activity', $project->id)) active @endif" href="{{route('dashboard.project.activity',$project->id)}}">
                             فعالیت ها
                         </a>
                     </li>
+                    @endif
+                    @can('manager_access')
                     <li class="nav-item">
                         <a class="nav-link text-active-primary py-5 me-6 @if(request()->getUri() == route('dashboard.project.access',$project->id)) active @endif"  href="{{route('dashboard.project.access',$project->id)}}">
                             دسترسی ها
                         </a>
                     </li>
+                    @endcan
+                    @can('manager_projectOptions')
                     <li class="nav-item">
                         <a class="nav-link text-active-primary py-5 me-6 @if(request()->getUri() == route('dashboard.project.dependency', $project->id)) active @endif" href="{{route('dashboard.project.dependency',$project->id)}}">
                             آپشن | جزییات پروژه
                         </a>
                     </li>
+                    @endcan
+                    @can('manager_TaskTimeLine')
                     <li class="nav-item">
                         <a class="nav-link text-active-primary py-5 me-6 @if(request()->getUri() == route('dashboard.project.taskTimeLine', $project->id)) active @endif" href="{{route('dashboard.project.taskTimeLine',$project->id)}}">
                             گزارش تسک های پروژه
                         </a>
                     </li>
+                    @endcan
+                    @canany(['manager_comments','member_comments','assign_comments'])
                     <li class="nav-item">
                         <a class="nav-link text-active-primary py-5 me-6 @if(request()->getUri() == route('dashboard.project.comment', $project->id)) active @endif" href="{{route('dashboard.project.comment',$project->id)}}">
                            کامنت ها
                         </a>
                     </li>
+                    @endcan
                 </ul>
             </div>
         </div>

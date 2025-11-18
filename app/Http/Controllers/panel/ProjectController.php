@@ -36,8 +36,11 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = Project::with(['manager','category','department','members','photos','brand'])->where('manager_id',Auth::id())->paginate(9);
+        $project_id = Project::with(['manager','category','department','members','photos','brand'])->where('manager_id',Auth::id())->pluck('id')->toArray();
         $last_projects = Project::with(['manager','category','department','members','photos','brand'])->where('manager_id',Auth::id())->take(3)->latest()->get();
-        dd(Auth::user(),Auth::user()->permissions ,Auth::user()->roles );
+
+
+
         return view('proMan.projects.index',get_defined_vars());
     }
 
@@ -223,6 +226,11 @@ class ProjectController extends Controller
         $tasks = Task::with(['project','manager','watcher','assigners','photos','predecessors','successors'])->where('project_id',$project->id)->paginate(15);
 
 
+        $total = $project->tasks?->count();
+        $pending = $project->tasks?->where('status', 0)->count();
+        $todo = $project->tasks?->where('status', 1)->count();
+        $in_progress = $project->tasks?->where('status', 2)->count();
+        $Done = $project->tasks?->where('status', 3)->count();
 
         return view('proMan.projects.show',get_defined_vars());
     }

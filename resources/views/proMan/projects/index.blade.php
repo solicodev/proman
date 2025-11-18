@@ -61,10 +61,12 @@
 
             <!--begin::Actions-->
             <div class="d-flex align-self-center flex-center flex-shrink-0">
+{{--                @dd( auth()->user(), auth()->user()->roles()->pluck('name')->first() , auth()->user()->permissions->pluck('name')->contains('manager_projectAdd') ,auth()->user()->can('manager_projectAdd') )--}}
+                @can('manager_projectAdd')
                 <a href="{{route('dashboard.project.create')}}" class="btn btn-sm btn-light-success d-flex flex-center ms-3 px-4 py-3" >
                     ایجاد پروژه<i class="ki-outline ki-plus-square fs-2 ps-5"></i>
                 </a>
-
+                @endcan
                 {{--                <a href="#" class="btn btn-sm btn-dark ms-3 px-4 py-3" data-bs-toggle="modal"--}}
                 {{--                   data-bs-target="#kt_modal_new_target">--}}
                 {{--                    Create <span class="d-none d-sm-inline">Target</span>--}}
@@ -146,11 +148,13 @@
                         <!--begin:: Card body-->
                         <div class="card-body p-9">
                             <!--begin::Name-->
+                            @canany(['manager_projectShow' , 'member_projectShow'])
                             <a href="{{route('dashboard.project.show',$project->id)}}">
                                 <div class="fs-3 fw-bold text-light-primary-900 ">
                                     {{$project->name}} <i class="ki-outline ki-eye fs-5 ps-3 text-primary"></i>
                                 </div>
                             </a>
+                            @endcanany
 
                             <!--end::Name-->
 
@@ -218,18 +222,22 @@
                                 </div>
 
                                 <div class="d-flex gap-2">
+                                    @can('manager_projectEdit')
                                     <a href="{{route('dashboard.project.edit',$project->id)}}"
                                        class="btn btn-sm  btn-light-primary">
                                         ویرایش<i class="ki-outline ki-pencil fs-3 ps-3"></i>
                                     </a>
-
+                                    @endcan
+                                    @can('manager_projectDelete')
                                     <a href="{{route('dashboard.project.destroy',$project->id)}}"
                                        class="btn btn-sm btn-icon btn-icon-danger"
                                        data-bs-toggle="tooltip" data-bs-placement="top" title="حذف"
                                        onclick="return confirm('اطمینان دارید پروژه حذف شود؟');">
                                         <i class="ki-outline ki-trash fs-3 ps-3"></i>
                                     </a>
+                                    @endcan
                                 </div>
+
                             </div>
 
 

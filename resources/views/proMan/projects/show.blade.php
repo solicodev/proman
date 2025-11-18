@@ -56,13 +56,16 @@
                             <!--begin::Wrapper-->
                             <div class="d-flex flex-wrap">
                                 <!--begin::Chart-->
-                                <div class="position-relative d-flex flex-center h-175px w-175px me-15 mb-7">
+                                <div class="position-relative d-flex flex-center h-375px w-375px me-15 mb-7">
                                     <div class="position-absolute translate-middle start-50 top-50 d-flex flex-column flex-center">
-                                        <span class="fs-2qx fw-bold">237</span>
+                                        <span class="fs-2qx fw-bold">{{$total}}</span>
                                         <span class="fs-8 fw-semibold text-gray-500 ">تعداد کل تسک ها</span>
                                     </div>
 
                                     <canvas id="project_overview_chart"></canvas>
+
+
+                                    {{--                                    <canvas id="project_overview_chart"></canvas>--}}
                                 </div>
                                 <!--end::Chart-->
 
@@ -71,32 +74,32 @@
                                     <!--begin::Label-->
                                     <div class="d-flex fs-6 fw-semibold align-items-center mb-3">
                                         <div class="bullet bg-primary me-3"></div>
-                                        <div class="text-gray-500">Active</div>
-                                        <div class="ms-auto fw-bold text-gray-700">30</div>
+                                        <div class="text-gray-500">درحال بررسی</div>
+                                        <div class="ms-auto fw-bold text-gray-700">{{$pending}}</div>
                                     </div>
                                     <!--end::Label-->
 
                                     <!--begin::Label-->
                                     <div class="d-flex fs-6 fw-semibold align-items-center mb-3">
                                         <div class="bullet bg-success me-3"></div>
-                                        <div class="text-gray-500">Completed</div>
-                                        <div class="ms-auto fw-bold text-gray-700">45</div>
+                                        <div class="text-gray-500">برای انجام</div>
+                                        <div class="ms-auto fw-bold text-gray-700">{{$todo}}</div>
                                     </div>
                                     <!--end::Label-->
 
                                     <!--begin::Label-->
                                     <div class="d-flex fs-6 fw-semibold align-items-center mb-3">
                                         <div class="bullet bg-danger me-3"></div>
-                                        <div class="text-gray-500">Overdue</div>
-                                        <div class="ms-auto fw-bold text-gray-700">0</div>
+                                        <div class="text-gray-500">درحال انجام</div>
+                                        <div class="ms-auto fw-bold text-gray-700">{{$in_progress}}</div>
                                     </div>
                                     <!--end::Label-->
 
                                     <!--begin::Label-->
                                     <div class="d-flex fs-6 fw-semibold align-items-center">
                                         <div class="bullet bg-gray-300 me-3"></div>
-                                        <div class="text-gray-500">Yet to start</div>
-                                        <div class="ms-auto fw-bold text-gray-700">25</div>
+                                        <div class="text-gray-500">تکمیل شد</div>
+                                        <div class="ms-auto fw-bold text-gray-700">{{$Done}}</div>
                                     </div>
                                     <!--end::Label-->
                                 </div>
@@ -106,20 +109,20 @@
 
 
                             <!--begin::Notice-->
-                            <div class="notice d-flex bg-light-primary rounded border-primary border border-dashed  p-6">
+{{--                            <div class="notice d-flex bg-light-primary rounded border-primary border border-dashed  p-6">--}}
 
-                                <!--begin::Wrapper-->
-                                <div class="d-flex flex-stack flex-grow-1 ">
-                                    <!--begin::Content-->
-                                    <div class=" fw-semibold">
+{{--                                <!--begin::Wrapper-->--}}
+{{--                                <div class="d-flex flex-stack flex-grow-1 ">--}}
+{{--                                    <!--begin::Content-->--}}
+{{--                                    <div class=" fw-semibold">--}}
 
 {{--                                        <div class="fs-6 text-gray-700 "><a href="#" class="fw-bold me-1">Invite New .NET Collaborators</a> to create great outstanding business to business .jsp modutr class scripts</div>--}}
-                                    </div>
-                                    <!--end::Content-->
+{{--                                    </div>--}}
+{{--                                    <!--end::Content-->--}}
 
-                                </div>
-                                <!--end::Wrapper-->
-                            </div>
+{{--                                </div>--}}
+{{--                                <!--end::Wrapper-->--}}
+{{--                            </div>--}}
                             <!--end::Notice-->
                         </div>
                         <!--end::Card body-->
@@ -407,13 +410,15 @@
                                                 16:30 - 17:30
 
                                                 <span class="fs-7 text-gray-500 text-uppercase">
-                                        pm                                    </span>
+                                        pm
+                                                </span>
                                             </div>
                                             <!--end::Time-->
 
                                             <!--begin::Title-->
                                             <a href="#" class="fs-5 fw-bold text-gray-800 text-hover-primary mb-2">
-                                                Sales Pitch Proposal                                </a>
+                                                Sales Pitch Proposal
+                                            </a>
                                             <!--end::Title-->
 
                                             <!--begin::User-->
@@ -477,13 +482,15 @@
                                                 12:00 - 13:00
 
                                                 <span class="fs-7 text-gray-500 text-uppercase">
-                                        pm                                    </span>
+                                        pm
+                                                </span>
                                             </div>
                                             <!--end::Time-->
 
                                             <!--begin::Title-->
                                             <a href="#" class="fs-5 fw-bold text-gray-800 text-hover-primary mb-2">
-                                                Lunch & Learn Catch Up                                </a>
+                                                Lunch & Learn Catch Up
+                                            </a>
                                             <!--end::Title-->
 
                                             <!--begin::User-->
@@ -1378,7 +1385,9 @@
                         </div>
                         <!--end::Card body-->
                     </div>
-                    <!--end::Card-->    </div>
+                    <!--end::Card-->
+                </div>
+                @can('manager_files')
                 <div class="col-lg-6 my-5">
                     <div class="card card-flush h-lg-100">
                         <div class="card-body p-9 pt-3">
@@ -1429,6 +1438,8 @@
                     </div>
                     <!--end::Card-->
                 </div>
+                @endcan
+                @canany(['manager_comments','member_comments','assign_comments'])
                 <div class="col-lg-6 my-5">
                     <div class="card  card-flush h-lg-100">
                         <div class="card-header mt-6">
@@ -1472,6 +1483,7 @@
                         </div>
                     </div>
                 </div>
+                @endcanany
             </div>
 
 {{--            <div class="card card-flush mt-6 mt-xl-9">--}}
@@ -1583,4 +1595,35 @@
             <!--end::Table-->
         </div>
     </div>
+    @push('scripts')
+        <script>
+            const projectChartData = {
+                total: {{ $total }},
+                Pending: {{ $pending }},
+                Todo: {{ $todo }},
+                In_progress: {{ $in_progress }},
+                Done: {{ $Done }},
+            };
+        </script>
+        <script>
+            const ctx = document.getElementById('project_overview_chart');
+
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Pending', 'Todo', 'In_progress', 'Done'],
+                    datasets: [{
+                        data: [
+                            projectChartData.Pending,
+                            projectChartData.Todo,
+                            projectChartData.In_progress,
+                            projectChartData.Done
+                        ],
+                    }]
+                }
+            });
+
+        </script>
+
+        @endpush
 </x-layout>

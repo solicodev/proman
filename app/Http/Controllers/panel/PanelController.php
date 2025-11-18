@@ -3,7 +3,12 @@
 namespace App\Http\Controllers\panel;
 
 use App\Http\Controllers\Controller;
+use App\Models\Project;
+use App\Models\Task;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PanelController extends Controller
 {
@@ -12,7 +17,38 @@ class PanelController extends Controller
      */
     public function index()
     {
-        return view('proMan.index');
+        $project_id = Project::with(['manager','category','department','members','photos','brand'])->where('manager_id',Auth::id())->pluck('id')->toArray();
+
+        $tasks = Task::with(['project','manager','watcher','assigners','photos','predecessors','successors'])->whereIn('project_id',$project_id)->get();
+        $total = $tasks->count();
+        $pending = $tasks->where('status', 0)->count();
+        $todo = $tasks->where('status', 1)->count();
+        $in_progress = $tasks->where('status', 2)->count();
+        $Done = $tasks->where('status', 3)->count();
+
+        $projects = Project::with(['manager','category','department','members','photos','brand'])->where('manager_id',Auth::id())->get();
+
+        $members = Project::with('members')->get()->pluck('members')->flatten()->unique('id');
+
+
+
+        $days = [];
+
+        for ($i = 0; $i < 10; $i++) {
+            $date = Carbon::today()->addDays($i);
+
+            $tasks = Task::whereDate('start_date', $date->format('Y-m-d'))
+                ->get();
+
+            $days[] = [
+                'date' => $date,
+                'weekday' => $date->format('D'),
+                'tasks' => $tasks
+            ];
+        }
+
+
+        return view('proMan.index',get_defined_vars());
     }
 
     /**
