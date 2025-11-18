@@ -81,16 +81,12 @@ class PanelController extends Controller
 
     public function access()
     {
-//        $users = $project->members;
+
+        $projects = Project::with('members')->where('manager_id',Auth::id())->get();
+
+        $users =  $projects->pluck('members')->flatten()->unique('id');
         $roles = Role::all();
         $permissions = Permission::all();
-
-
-        $excludedRoles = ['Super Admin'];
-
-        $users = User::whereDoesntHave('roles', function ($query) use ($excludedRoles) {
-            $query->whereIn('name', $excludedRoles);
-        })->latest()->get();
 
         $permission_lists = Permission::whereNot('name','Like','dep_%')->get();
         $groupedPermissions = collect($permission_lists)->groupBy(function($permission) {
