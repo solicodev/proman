@@ -311,13 +311,7 @@ class ProjectController extends Controller
         }
     }
 
-    public function access(Project $project)
-    {
-        $users = $project->members;
-        $roles = Role::all();
-        $permissions = Permission::all();
-        return view('proMan.projects.access',get_defined_vars());
-    }
+
 
 
 

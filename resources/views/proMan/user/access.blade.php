@@ -1,6 +1,5 @@
 <x-layout>
     @include('layouts.message')
-    @include('proMan.projects.main-card')
     <div class="card card-flush mt-6 mt-xl-9">
         <div class="card-header mt-5">
             <div class="card-title flex-column">
@@ -36,6 +35,7 @@
                         <th class="text-start">توضیحات</th>
                         <th class="text-start">جزییات</th>
                         <th class="text-start">تاریخ</th>
+                        <th class="text-start">سطح دسترسی</th>
                     </tr>
                     </thead>
                     <tbody class="fs-6">
@@ -47,55 +47,110 @@
                             <td class="text-start">{{$user->description}}</td>
                             <td class="text-start">{{$user->email}}</td>
                             <td class="text-start">
-
-                                <form action="{{ route('project.permissions.update', [$project->id, $user->id]) }}" method="POST">
-                                    @csrf
-
-                                    <div class="card p-4">
-
-                                        <h3>مدیریت نقش و دسترسی‌های {{ $user->name }}</h3>
-
-                                        {{-- نقش --}}
-                                        <div class="mt-3">
-                                            <label class="form-label fw-bold">نقش کاربر</label>
-                                            <select name="role" class="form-select">
-                                                @foreach($roles as $role)
-                                                    <option value="{{ $role->name }}"
-                                                            @if($user->hasRole($role->name)) selected @endif>
-                                                        {{ $role->name }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-
-                                        {{-- دسترسی‌ها --}}
-                                        <div class="mt-4">
-                                            <h5 class="fw-bold">دسترسی‌ها</h5>
-                                            @foreach($permissions as $permission)
-                                                <div class="form-check mb-1">
-                                                    <input class="form-check-input"
-                                                           type="checkbox"
-                                                           name="permissions[]"
-                                                           value="{{ $permission->name }}"
-                                                           @if($user->hasPermissionTo($permission->name)) checked @endif>
-                                                    <label class="form-check-label">{{ $permission->name }}</label>
-                                                </div>
-                                            @endforeach
-                                        </div>
-
-                                        <button class="btn btn-primary mt-3">ذخیره</button>
-                                    </div>
-                                </form>
-
-
+                                <a href="#"
+                                   onclick="openEditModal('{{ route('dashboard.access.update',$user->id) }}', JSON.stringify({name:'{{ $user->Name }}', permission: @json($user->permissions->pluck('id')) }))">
+   <span class="badge bg-info text-black">
+       <i class="bx bxs-edit"></i> ویرایش سطوح دسترسی
+   </span>
+                                </a>
                             </td>
                         </tr>
                     @endforeach
                     </tbody>
                 </table>
 {{--                {{$users->links("pagination::bootstrap-5")}}--}}
-                <!--end::Table-->
+
             </div>
         </div>
     </div>
+
+
+
+    <div class="modal fade" id="permissionModal" tabindex="-1" aria-labelledby="permissionModalLabel" aria-hidden="true">
+        <!--begin::Modal dialog-->
+        <div class="modal-dialog modal-dialog-centered mw-900px">
+            <!--begin::Modal content-->
+            <div class="modal-content rounded">
+                <!--begin::Modal header-->
+                <div class="modal-header pb-0 border-0 justify-content-end">
+                    <!--begin::Close-->
+                    <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                        <i class="ki-outline ki-cross fs-1"></i>
+                    </div>
+                    <!--end::Close-->
+                </div>
+                <!--begin::Modal header-->
+
+                <!--begin::Modal body-->
+                <div class="modal-body scroll-y px-10 px-lg-15 pt-0 pb-15">
+                    <!--begin:Form-->
+                    <form id="EditAccessForm" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+                        @csrf
+                        @method('put')
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold mb-2">دسترسی‌ها</label>
+                            <div class="row g-3">
+                                @php
+                                    $groupTitles = [
+                                        'manager' => 'دسترسی‌های مدیر پروژه',
+                                        'member' => 'دسترسی‌های اعضای پروژه',
+                                        'assign' => 'دسترسی‌های مسئول انجام پروژه',
+                                        'dep' => 'دسترسی‌های دپارتمان',
+                                    ];
+                                @endphp
+
+                                @foreach($groupedPermissions as $group => $permissions)
+                                    <div class="col-12 mt-3">
+                                        <h6 class="fw-bold border-bottom pb-1 mb-2">{{ $groupTitles[$group] ?? 'سایر دسترسی‌ها' }}</h6>
+                                    </div>
+
+                                    @foreach($permissions as $permission)
+                                        <div class="col-md-4 col-sm-6">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="permissions[]" value="{{ $permission->id }}" id="perm{{ $permission->id }}">
+                                                <label class="form-check-label" for="perm{{ $permission->id }}">
+                                                    {{ permission_name($permission->name) }}
+                                                </label>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                @endforeach
+
+
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn btn-primary px-4">ذخیره</button>
+                            <button type="button" class="btn btn-secondary ms-2" data-bs-dismiss="modal">انصراف</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+@push('scripts')
+    <script>
+        function openEditModal(url, currentData) {
+            let data = JSON.parse(currentData);
+
+            $('#permissionModalLabel').text(`ویرایش سطوح دسترسی "${data.name}"`);
+            $('#editForm #name').val(data.name);
+            $('#EditAccessForm').attr('action', url);
+
+            $('input[name="permissions[]"]').prop('checked', false);
+
+            // old permission for user
+            if (Array.isArray(data.permission)) {
+                data.permission.forEach(function (permId) {
+                    $('#perm' + permId).prop('checked', true);
+                });
+            }
+
+            $('#permissionModal').modal('show');
+        }
+    </script>
+@endpush
 </x-layout>

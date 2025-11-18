@@ -245,7 +245,7 @@
                     @canany(['manager_members' , 'member_members'])
                     <li class="nav-item">
                         <a class="nav-link text-active-primary py-5 me-6 @if(request()->getUri() == route('dashboard.project.member' , $project->id)) active @endif" href="{{route('dashboard.project.member', $project->id)}}">
-                            اعضای پروژه
+                             اعضای پروژه
                         </a>
                     </li>
                     @endcanany
@@ -263,13 +263,13 @@
                         </a>
                     </li>
                     @endif
-                    @can('manager_access')
-                    <li class="nav-item">
-                        <a class="nav-link text-active-primary py-5 me-6 @if(request()->getUri() == route('dashboard.project.access',$project->id)) active @endif"  href="{{route('dashboard.project.access',$project->id)}}">
-                            دسترسی ها
-                        </a>
-                    </li>
-                    @endcan
+{{--                    @can('manager_access')--}}
+{{--                    <li class="nav-item">--}}
+{{--                        <a class="nav-link text-active-primary py-5 me-6 @if(request()->getUri() == route('dashboard.project.access',$project->id)) active @endif"  href="{{route('dashboard.project.access',$project->id)}}">--}}
+{{--                            دسترسی ها--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
+{{--                    @endcan--}}
                     @can('manager_projectOptions')
                     <li class="nav-item">
                         <a class="nav-link text-active-primary py-5 me-6 @if(request()->getUri() == route('dashboard.project.dependency', $project->id)) active @endif" href="{{route('dashboard.project.dependency',$project->id)}}">

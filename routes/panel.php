@@ -73,5 +73,9 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
     });
 
     Route::post('/upload' , [PhotoController::class,'upload'])->name('upload');
+    Route::get('/access' , [PanelController::class,'access'])->name('access');
+    Route::put('/access/update/{user}' , [PanelController::class,'accessUpdate'])->name('access.update');
+
+
 });
 

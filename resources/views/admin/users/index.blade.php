@@ -203,7 +203,6 @@
             $('#editForm #name').val(data.name);
             $('#EditAccessForm').attr('action', url);
 
-            // پاک‌کردن تیک‌های قبلی
             $('input[name="permissions[]"]').prop('checked', false);
 
             // old permission for user

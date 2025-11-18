@@ -7,10 +7,13 @@ use App\Models\Project;
 use App\Models\Task;
 use App\Models\User;
 use Carbon\Carbon;
+use Exception;
 use Hekmatinasser\Verta\Verta;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class PanelController extends Controller
 {
@@ -73,6 +76,39 @@ class PanelController extends Controller
 //        );
 
         return view('proMan.index',get_defined_vars());
+    }
+
+
+    public function access()
+    {
+//        $users = $project->members;
+        $roles = Role::all();
+        $permissions = Permission::all();
+
+
+        $excludedRoles = ['Super Admin'];
+
+        $users = User::whereDoesntHave('roles', function ($query) use ($excludedRoles) {
+            $query->whereIn('name', $excludedRoles);
+        })->latest()->get();
+
+        $permission_lists = Permission::whereNot('name','Like','dep_%')->get();
+        $groupedPermissions = collect($permission_lists)->groupBy(function($permission) {
+            return explode('_', $permission->name)[0];
+        });
+
+
+        return view('proMan.user.access',get_defined_vars());
+    }
+
+    public function accessUpdate(User $user,Request $request)
+    {
+        try {
+            $user->permissions()->sync($request->permissions);
+            return redirect(route('dashboard.access'))->with('flash_message', ' تغییرات اعمال شد');
+        } catch (Exception $exception) {
+            return redirect()->back()->with('err_message', 'خطایی رخ داد مجددا تلاش کنید');
+        }
     }
 
     /**
