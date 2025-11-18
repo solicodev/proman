@@ -14,6 +14,7 @@ use App\Models\ProjectDependency;
 use App\Models\Task;
 use App\Models\User;
 use App\Services\ProjectService;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -232,6 +233,19 @@ class ProjectController extends Controller
         $in_progress = $project->tasks?->where('status', 2)->count();
         $Done = $project->tasks?->where('status', 3)->count();
 
+        $days = [];
+
+        for ($i = 0; $i < 10; $i++) {
+            $date = Carbon::today()->addDays($i);
+            $tasks = Task::whereDate('start_date', verta($date)->format('Y/m/d'))
+                ->get();
+
+            $days[] = [
+                'date' => verta($date),
+                'weekday' => verta($date)->format('D'),
+                'tasks' => $tasks
+            ];
+        }
         return view('proMan.projects.show',get_defined_vars());
     }
 

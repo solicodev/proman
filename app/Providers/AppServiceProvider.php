@@ -33,11 +33,12 @@ class AppServiceProvider extends ServiceProvider
             }
 //            $files_array = array_merge($item_members , );
 
-            $last_projects = Project::with(['manager','category','department','members','photos','brand'])->where('manager_id',Auth::id())->take(3)->latest()->get();
+
+
 
             $view->with('user_projects', $user_projects);
             $view->with('user_tasks', $user_tasks);
-            $view->with('last_projects', $last_projects);
+
         });
     }
 

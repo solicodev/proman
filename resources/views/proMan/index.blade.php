@@ -28,15 +28,15 @@
             </div>
             <div class="d-flex align-self-center flex-center flex-shrink-0">
                 @can('manager_projectAdd')
-                <a href="{{route('dashboard.project.create')}}" class="btn btn-sm btn-light-success d-flex flex-center ms-3 px-4 py-3" >
-                    ایجاد پروژه<i class="ki-outline ki-plus-square fs-2 ps-5"></i>
-                </a>
+                    <a href="{{route('dashboard.project.create')}}" class="btn btn-sm btn-light-success d-flex flex-center ms-3 px-4 py-3" >
+                        ایجاد پروژه<i class="ki-outline ki-plus-square fs-2 ps-5"></i>
+                    </a>
                 @endcan
                 @if(auth()->user()->hasrole('Manager'))
-                <a href="{{route('dashboard.project.index')}}" target="_blank" class="btn btn-sm btn-light-dark ms-3 px-4 py-3">
-                    پروژه ها
-                    <i class="ki-outline ki-chart-line-star fs-2 ps-5"></i>
-                </a>
+                    <a href="{{route('dashboard.project.index')}}" target="_blank" class="btn btn-sm btn-light-dark ms-3 px-4 py-3">
+                        پروژه ها
+                        <i class="ki-outline ki-chart-line-star fs-2 ps-5"></i>
+                    </a>
                 @endif
             </div>
         </div>
@@ -116,46 +116,34 @@
                 <!--end::Card-->
             </div>
             <div class="col-lg-6 col-xxl-4">
-                <!--begin::Budget-->
-                <div class="card  h-100">
+                <div class="card h-100">
                     <div class="card-body p-9">
-                        <div class="fs-2hx fw-bold">160 ساعت</div>
-                        <div class="fs-4 fw-semibold text-gray-500 mb-7">زمان باقی مانده تکمیل 3 پروژه اخیر</div>
+
+                        <div class="fs-2hx fw-bold">
+                            {{ $last_projects->sum('remaining_hours') }} ساعت
+                        </div>
+
+                        <div class="fs-4 fw-semibold text-gray-500 mb-7">
+                            زمان باقی مانده تکمیل {{ $last_projects->count() }} پروژه اخیر
+                        </div>
+
                         @foreach($last_projects as $last)
-                            @php
-                                $explode = explode(' ',$last->end_date);
-                            @endphp
                             <div class="fs-6 d-flex justify-content-between mb-4">
-                                <div class="fw-semibold">{{$last->name}}</div>
+                                <div class="fw-semibold">{{ $last->name }}</div>
+
                                 <div class="d-flex fw-bold">
-                                    <i class="ki-outline ki-arrow-up-right fs-3 me-1 text-success"></i> {{$explode[0]}}
+                                    <i class="ki-outline ki-arrow-up-right fs-3 me-1 text-success"></i>
+                                    {{ verta($last->end_date_only)->format('Y/m/d') }}
                                 </div>
                             </div>
+
                             <div class="separator separator-dashed"></div>
                         @endforeach
 
-
-                        {{--                        <div class="fs-6 d-flex justify-content-between my-4">--}}
-                        {{--                            <div class="fw-semibold">Lowest Project Check</div>--}}
-
-                        {{--                            <div class="d-flex fw-bold">--}}
-                        {{--                                <i class="ki-outline ki-arrow-down-left fs-3 me-1 text-danger"></i> $408--}}
-                        {{--                            </div>--}}
-                        {{--                        </div>--}}
-
-                        {{--                        <div class="separator separator-dashed"></div>--}}
-
-                        {{--                        <div class="fs-6 d-flex justify-content-between mt-4">--}}
-                        {{--                            <div class="fw-semibold">Ambassador Page</div>--}}
-
-                        {{--                            <div class="d-flex fw-bold">--}}
-                        {{--                                <i class="ki-outline ki-arrow-up-right fs-3 me-1 text-success"></i> $920--}}
-                        {{--                            </div>--}}
-                        {{--                        </div>--}}
                     </div>
                 </div>
-                <!--end::Budget-->
             </div>
+
             <div class="col-lg-6 col-xxl-4">
 
                 <!--begin::Clients-->
@@ -169,28 +157,28 @@
                         <!--begin::Users group-->
                         <div class="symbol-group symbol-hover mb-9">
                             @foreach($members as $member)
-                            <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="{{$member->Name}}">
-                                @if($member->photo_id)
-                                <img alt="Pic" src="{{ route('home') }}/{{ $member->photo?->path }}"/>
-                                @else
-                                <span class="symbol-label bg-warning text-inverse-warning fw-bold">{{ mb_substr($member->Name, 0, 1) }}</span>
-                                @endif
-                            </div>
+                                <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="{{$member->Name}}">
+                                    @if($member->photo_id)
+                                        <img alt="Pic" src="{{ route('home') }}/{{ $member->photo?->path }}"/>
+                                    @else
+                                        <span class="symbol-label bg-warning text-inverse-warning fw-bold">{{ mb_substr($member->Name, 0, 1) }}</span>
+                                    @endif
+                                </div>
                             @endforeach
-{{--                            <a href="#" class="symbol symbol-35px symbol-circle" data-bs-toggle="modal"--}}
-{{--                               data-bs-target="#kt_modal_view_users">--}}
-{{--                                <span class="symbol-label bg-dark text-gray-300 fs-8 fw-bold">+42</span>--}}
-{{--                            </a>--}}
+                            {{--                            <a href="#" class="symbol symbol-35px symbol-circle" data-bs-toggle="modal"--}}
+                            {{--                               data-bs-target="#kt_modal_view_users">--}}
+                            {{--                                <span class="symbol-label bg-dark text-gray-300 fs-8 fw-bold">+42</span>--}}
+                            {{--                            </a>--}}
                         </div>
                         <!--end::Users group-->
 
                         <!--begin::Actions-->
-{{--                        <div class="d-flex">--}}
-{{--                            <a href="#" class="btn btn-primary btn-sm me-3" data-bs-toggle="modal"--}}
-{{--                               data-bs-target="#kt_modal_view_users">همه اعضا</a>--}}
-{{--                            <a href="#" class="btn btn-light btn-sm" data-bs-toggle="modal"--}}
-{{--                               data-bs-target="#kt_modal_users_search">اعضای آخرین پروژه</a>--}}
-{{--                        </div>--}}
+                        {{--                        <div class="d-flex">--}}
+                        {{--                            <a href="#" class="btn btn-primary btn-sm me-3" data-bs-toggle="modal"--}}
+                        {{--                               data-bs-target="#kt_modal_view_users">همه اعضا</a>--}}
+                        {{--                            <a href="#" class="btn btn-light btn-sm" data-bs-toggle="modal"--}}
+                        {{--                               data-bs-target="#kt_modal_users_search">اعضای آخرین پروژه</a>--}}
+                        {{--                        </div>--}}
                         <!--end::Actions-->
                     </div>
                 </div>
@@ -206,7 +194,7 @@
                     <div class="card-header mt-6">
                         <!--begin::Card title-->
                         <div class="card-title flex-column">
-                            <h3 class="fw-bold mb-1">گزارش اخیر</h3>
+                            <h3 class="fw-bold mb-1">گزارش کل اخیر</h3>
 
                             <div class="fs-6 fw-semibold text-gray-500">{{verta(\Carbon\Carbon::today())->format('Y/m/d')}}</div>
                         </div>
@@ -282,14 +270,6 @@
                             <h3 class="fw-bold mb-1">امروز چه کاری باید انجام بشه؟</h3>
                             <div class="fs-6 text-gray-500">تعداد </div>
                         </div>
-                        <div class="card-toolbar">
-                            <select name="status" data-control="select2" data-hide-search="true" class="form-select form-select-solid form-select-sm fw-bold w-100px">
-                                <option value="1" selected>Options</option>
-                                <option value="2">Option 1</option>
-                                <option value="3">Option 2</option>
-                                <option value="4">Option 3</option>
-                            </select>
-                        </div>
                     </div>
                     <div class="card-body p-9 pt-4">
                         <ul class="nav nav-pills d-flex flex-nowrap hover-scroll-x py-2">
@@ -298,14 +278,12 @@
                                     <a class="nav-link btn d-flex flex-column flex-center rounded-pill min-w-45px me-2 py-4 px-3 btn-active-primary @if($index==0) active @endif"
                                        data-bs-toggle="tab"
                                        href="#kt_schedule_day_{{ $index }}">
-
-                <span class="opacity-50 fs-7 fw-semibold">
-                    {{ $day['date']->format('D') }}
-                </span>
+                                        <span class="opacity-50 fs-7 fw-semibold">
+                                            {{ $day['date']->format('D') }}
+                                        </span>
                                         <span class="fs-6 fw-bold">
-                    {{ $day['date']->format('d') }}
-                </span>
-
+                                            {{ $day['date']->format('d') }}
+                                        </span>
                                     </a>
                                 </li>
                             @endforeach
@@ -314,7 +292,6 @@
                         <div class="tab-content">
                             @foreach($days as $index => $day)
                                 <div id="kt_schedule_day_{{ $index }}" class="tab-pane fade show @if($index==0) active @endif">
-
                                     @forelse($day['tasks'] as $task)
                                         <div class="d-flex flex-stack position-relative mt-8">
                                             <div class="position-absolute h-100 w-4px bg-secondary rounded top-0 start-0"></div>
@@ -326,22 +303,22 @@
                                                     {{ verta($task->end_date)->format('H:i') }}
 
                                                     <span class="fs-7 text-gray-500 text-uppercase">
-                                {{ verta($task->start_date)->format('a') }}
-                            </span>
+                                                        {{ verta($task->start_date)->format('a') }}
+                                                    </span>
                                                 </div>
 
                                                 <a href="{{ route('dashboard.task.show', $task->id) }}" class="fs-5 fw-bold text-gray-800 text-hover-primary mb-2">
-                                                    {{ $task->title }}
+                                                    {{ $task->title }}  - {{$task->task_code}}
                                                 </a>
 
                                                 <div class="text-gray-500">
-                                                    Lead by <a href="#">{{ $task->user->name ?? '---' }}</a>
+                                                    assign to: <a href="#">@foreach($task->assigners as $key=>$assign) @if($key) - @endif  {{ $assign->Name ?? '---' }} @endforeach</a>
                                                 </div>
                                             </div>
 
-                                            <a href="{{ route('dashboard.task.show', $task->id) }}" class="btn btn-bg-light btn-active-color-primary btn-sm">
-                                                View
-                                            </a>
+{{--                                            <a href="{{ route('dashboard.task.show', $task->id) }}" class="btn btn-bg-light btn-light-primary btn-sm">--}}
+{{--                                                مشاهده تسک<i class="ki-outline ki-eye fs-5 ps-3"></i>--}}
+{{--                                            </a>--}}
                                         </div>
                                     @empty
                                         <div class="text-center text-gray-500 mt-10">تسکی برای این روز وجود ندارد</div>
@@ -350,7 +327,7 @@
                                 </div>
                             @endforeach
                         </div>
-
+{{--                        {{$daysPaginated->links("pagination::bootstrap-5")}}--}}
                     </div>
                 </div>
             </div>
