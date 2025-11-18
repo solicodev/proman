@@ -38,7 +38,6 @@ if (!function_exists('permission_name')) {
             'manager_notification' => 'نوتیفیکیشن',
 
 
-
             'member_projectShow' => 'نمایش پروژه',
             'member_projectTotalInfo' => 'اطلاعات کلی پروژه',
             'member_tasks' => 'تسک ها',
@@ -56,7 +55,6 @@ if (!function_exists('permission_name')) {
             'assign_tickets' => 'پشتیبانی',
             'assign_comments' => 'کامنت ها',
             'assign_profile' => 'پروفایل',
-
         ];
         return $permissions[$permission];
     }

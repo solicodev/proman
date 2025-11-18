@@ -53,6 +53,7 @@
                 <div class="row g-5" data-kt-buttons="true"
                      data-kt-buttons-target="[data-kt-button]">
                     <!--begin::Col-->
+                    @if(auth()->user()->hasAnyRole(['Manager' , 'Member', 'Super Admin']))
                     <div class="col-6">
                         <!--begin::Link-->
                         <a href="{{route('dashboard.project.index')}}"
@@ -70,8 +71,10 @@
                         </a>
                         <!--end::Link-->
                     </div>
+                    @endif
                     <!--end::Col-->
                     <!--begin::Col-->
+                    @if(auth()->user()->hasAnyRole(['Manager' , 'Member' , 'Assignee' , 'Super Admin']))
                     <div class="col-6">
                         <!--begin::Link-->
                         <a href="{{route('dashboard.task.index')}}"
@@ -89,6 +92,7 @@
                         </a>
                         <!--end::Link-->
                     </div>
+                    @endif
                     <!--end::Col-->
                     <!--begin::Col-->
                     <div class="col-6">

@@ -84,32 +84,32 @@
 
 
         <!--begin::Toolbar-->
-        <div class="d-flex flex-wrap flex-stack my-5">
-            <!--begin::Heading-->
-            <h2 class="fs-2 fw-semibold my-2">
-                پروژه های
-                <span class="fs-6 text-gray-500 ms-1">براساس وضعیت</span>
-            </h2>
-            <!--end::Heading-->
+{{--        <div class="d-flex flex-wrap flex-stack my-5">--}}
+{{--            <!--begin::Heading-->--}}
+{{--            <h2 class="fs-2 fw-semibold my-2">--}}
+{{--                پروژه های--}}
+{{--                <span class="fs-6 text-gray-500 ms-1">براساس وضعیت</span>--}}
+{{--            </h2>--}}
+{{--            <!--end::Heading-->--}}
 
-            <!--begin::Controls-->
-            <div class="d-flex flex-wrap my-1">
-                <!--begin::Select wrapper-->
-                <div class="m-0">
-                    <!--begin::Select-->
-                    <select name="status" data-control="select2" data-hide-search="true"
-                            class="form-select form-select-sm bg-body border-body fw-bold w-125px">
-                        <option value="Active" selected>درحال بررسی</option>
-                        <option value="Approved">برای انجام</option>
-                        <option value="Declined">درحال انجام</option>
-                        <option value="In Progress">انجام شده</option>
-                    </select>
-                    <!--end::Select-->
-                </div>
-                <!--end::Select wrapper-->
-            </div>
-            <!--end::Controls-->
-        </div>
+{{--            <!--begin::Controls-->--}}
+{{--            <div class="d-flex flex-wrap my-1">--}}
+{{--                <!--begin::Select wrapper-->--}}
+{{--                <div class="m-0">--}}
+{{--                    <!--begin::Select-->--}}
+{{--                    <select name="status" data-control="select2" data-hide-search="true"--}}
+{{--                            class="form-select form-select-sm bg-body border-body fw-bold w-125px">--}}
+{{--                        <option value="Active" selected>درحال بررسی</option>--}}
+{{--                        <option value="Approved">برای انجام</option>--}}
+{{--                        <option value="Declined">درحال انجام</option>--}}
+{{--                        <option value="In Progress">انجام شده</option>--}}
+{{--                    </select>--}}
+{{--                    <!--end::Select-->--}}
+{{--                </div>--}}
+{{--                <!--end::Select wrapper-->--}}
+{{--            </div>--}}
+{{--            <!--end::Controls-->--}}
+{{--        </div>--}}
         <!--end::Toolbar-->
 
         <!--begin::Row-->

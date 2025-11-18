@@ -256,7 +256,7 @@
                         </a>
                     </li>
                     @endcan
-                    @if(auth()->user()->hasrole('manager'))
+                    @if(auth()->user()->hasAnyRole(['manager','Super Admin']))
                     <li class="nav-item">
                         <a class="nav-link text-active-primary py-5 me-6 @if(request()->getUri() == route('dashboard.project.activity', $project->id)) active @endif" href="{{route('dashboard.project.activity',$project->id)}}">
                             فعالیت ها

@@ -40,7 +40,9 @@
         </h3>
         <!--end::Heading-->
         <div class="d-flex flex-wrap my-1">
-            <a href="#" class="btn btn-sm btn-primary er w-100 fs-6 px-8 py-4"  data-bs-toggle="modal" data-bs-target="#kt_modal_new_target">ایجاد تسک<i class="ki-outline ki-plus-square fs-6 px-2"></i> </a>
+            @can('manager_taskAdd')
+                <a href="#" class="btn btn-sm btn-primary er w-100 fs-6 px-8 py-4"  data-bs-toggle="modal" data-bs-target="#kt_modal_new_target">ایجاد تسک<i class="ki-outline ki-plus-square fs-6 px-2"></i> </a>
+            @endcan
         </div>
         <!--begin::Controls-->
         <div class="d-flex flex-wrap my-1">
@@ -189,12 +191,15 @@
 
                                         <!-- دکمه زیر تسک -->
                                         <div class="card-footer text-center py-3">
+                                            @can('manager_taskSubTaskAdd')
                                             <a href="#" class="btn btn-light-primary btn-sm"
                                                onclick="openEditModal('{{ route('dashboard.task.subtasks.store', $task->id) }}',
                                                    JSON.stringify({title:'{{ $task->title }}'}))">
                                                 ساخت زیر تسک جدید
                                                 <i class="ki-outline ki-plus-square fs-6 px-2"></i>
                                             </a>
+                                            @endcan
+                                            @canany(['manager_taskShow','member_taskShow','assign_taskShow'])
                                             <a href="#" onclick="openShowModal(
                                                 '{{ route('dashboard.task.show', $task->id) }}',
                                                 '{{ route('dashboard.task.update.status', $task->id) }}'
@@ -202,6 +207,7 @@
                                                data-task-id="{{ $task->id }}"
                                                data-task-status="{{ $task->status }}"
                                                class="btn btn-sm btn-light-info" data-bs-toggle="tooltip" data-bs-placement="top" title="مشاهده"><i class="ki-outline ki-eye fs-6 px-2"></i></a>
+                                            @endcanany
                                         </div>
                                     </div>
                                 @empty
@@ -327,6 +333,7 @@
                                 </td>
                                 <!--begin::Actions-->
                                 <td>
+                                    @canany(['manager_taskShow','member_taskShow','assign_taskShow'])
                                     <a href="#" onclick="openShowModal(
                                         '{{ route('dashboard.task.show', $task->id) }}',
                                         '{{ route('dashboard.task.update.status', $task->id) }}'
@@ -336,19 +343,23 @@
                                        class="btn btn-sm btn-light-info" data-bs-toggle="tooltip" data-bs-placement="top" title="مشاهده">
                                         <i class="ki-outline ki-eye fs-6 px-2"></i>
                                     </a>
+                                    @endcanany
+                                    @can('manager_taskSubTaskAdd')
                                     <a href="#" class="btn btn-light-primary btn-sm"
                                        onclick="openEditModal('{{ route('dashboard.task.subtasks.store', $task->id) }}',
                                            JSON.stringify({title:'{{ $task->title }}'}))">
                                         ساخت زیر تسک جدید
                                         <i class="ki-outline ki-plus-square fs-6 px-2"></i>
                                     </a>
+                                    @endcan
+                                    @can('manager_taskDependency')
                                     <a href="#" class="btn btn-light-warning btn-sm"
                                        onclick="openDependencyModal('{{ route('dashboard.task.dependency', $task->id) }}',
                                            JSON.stringify({id: '{{ $task->id }}', title: '{{ $task->title }}'}))">
                                         تعریف وابستگی تسک
-
                                         <i class="ki-outline ki-plus-square fs-6 px-2"></i>
                                     </a>
+                                    @endcan
                                 </td>
                                 <td>
                                     <button type="button" class="btn btn-sm btn-icon btn-light btn-active-light-primary  toggle h-25px w-25px"
@@ -357,7 +368,6 @@
                                         <span class="btn btn-sm btn-light-danger toggle-on"><i class="ki-outline ki-cross"></i></span>
                                     </button>
                                 </td>
-                                <!--end::Actions-->
                             </tr>
                         @endforeach
 
@@ -1684,8 +1694,15 @@
                             const route = routeTemplate.replace(':id', d.id ?? 0);
                             const updateRoute = updateStatusTemplate.replace(':id', d.id ?? 0);
 
+                            let canShow = @json(auth()->user()->canany(['manager_taskShow','member_taskShow','assign_taskShow']));
+                            let canDependency = @json(auth()->user()->can('manager_taskDependency'));
+
+                            let showBtn = '';
+                            let depBtn = '';
+
                             // دکمه مشاهده
-                            let showBtn = `
+                            if (canShow) {
+                                showBtn = `
         <a href="#" onclick="openShowModal('${route}', '${updateRoute}')"
            class="btn btn-sm btn-light-info"
            data-bs-toggle="tooltip"
@@ -1693,19 +1710,22 @@
            title="مشاهده">
             <i class="ki-outline ki-eye fs-6 px-2"></i>
         </a>
-    `;
+        `;
+                            }
 
                             // دکمه تعریف وابستگی
-                            const depRoute = '{{ route("dashboard.task.dependency", ":id") }}'.replace(':id', d.id ?? 0);
-                            let depBtn = `
-    <a href="#" class="btn btn-light-warning btn-sm"
-       onclick="openDependencyModal('${depRoute}', JSON.stringify({id:'${d.id}', title:'${d.title}'}))">
-        تعریف وابستگی تسک
-        <i class="ki-outline ki-plus-square fs-6 px-2"></i>
-    </a>
-`;
+                            if (canDependency) {
+                                const depRoute = '{{ route("dashboard.task.dependency", ":id") }}'.replace(':id', d.id ?? 0);
+                                depBtn = `
+        <a href="#" class="btn btn-light-warning btn-sm"
+           onclick="openDependencyModal('${depRoute}', JSON.stringify({id:'${d.id}', title:'${d.title}'}))">
+            تعریف وابستگی تسک
+            <i class="ki-outline ki-plus-square fs-6 px-2"></i>
+        </a>
+        `;
+                            }
 
-
+                            // اضافه کردن دکمه‌ها به DOM
                             actionsNode.innerHTML = showBtn + depBtn;
                         }
 

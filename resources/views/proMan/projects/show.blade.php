@@ -30,173 +30,57 @@
                     </div>
                     <!--end::Timeline Widget 1-->
                 </div>
-                <div class="col-lg-6 my-5">
-                    <!--begin::Summary-->
+                <div class="col-lg-12 my-5">
                     <div class="card card-flush h-lg-100">
-                        <!--begin::Card header-->
                         <div class="card-header mt-6">
-                            <!--begin::Card title-->
                             <div class="card-title flex-column">
                                 <h3 class="fw-bold mb-1">گزارش تسک های پروژه {{$project->project_code}}</h3>
 
                                 <div class="fs-6 fw-semibold text-gray-500">{{verta(\Carbon\Carbon::today())->format('Y/m/d')}}</div>
                             </div>
-                            <!--end::Card title-->
-
-                            <!--begin::Card toolbar-->
                             <div class="card-toolbar">
                                 <a href="{{route('dashboard.project.task',$project->id)}}" class="btn btn-bg-light btn-active-color-primary btn-sm">مشاهده همه گزارشات پروژه<i class="ki-outline ki-eye fs-5 ps-3"></i></a>
                             </div>
-                            <!--end::Card toolbar-->
                         </div>
-                        <!--end::Card header-->
-
-                        <!--begin::Card body-->
                         <div class="card-body p-9 pt-5">
-                            <!--begin::Wrapper-->
                             <div class="d-flex flex-wrap">
-                                <!--begin::Chart-->
                                 <div class="position-relative d-flex flex-center h-375px w-375px me-15 mb-7">
                                     <div class="position-absolute translate-middle start-50 top-50 d-flex flex-column flex-center">
                                         <span class="fs-2qx fw-bold">{{$total}}</span>
                                         <span class="fs-8 fw-semibold text-gray-500 ">تعداد کل تسک ها</span>
                                     </div>
-
                                     <canvas id="project_overview_chart"></canvas>
-
-
                                     {{--                                    <canvas id="project_overview_chart"></canvas>--}}
                                 </div>
-                                <!--end::Chart-->
-
-                                <!--begin::Labels-->
                                 <div class="d-flex flex-column justify-content-center flex-row-fluid pe-11 mb-5">
-                                    <!--begin::Label-->
                                     <div class="d-flex fs-6 fw-semibold align-items-center mb-3">
                                         <div class="bullet bg-primary me-3"></div>
                                         <div class="text-gray-500">درحال بررسی</div>
                                         <div class="ms-auto fw-bold text-gray-700">{{$pending}}</div>
                                     </div>
-                                    <!--end::Label-->
-
-                                    <!--begin::Label-->
                                     <div class="d-flex fs-6 fw-semibold align-items-center mb-3">
                                         <div class="bullet bg-success me-3"></div>
                                         <div class="text-gray-500">برای انجام</div>
                                         <div class="ms-auto fw-bold text-gray-700">{{$todo}}</div>
                                     </div>
-                                    <!--end::Label-->
-
-                                    <!--begin::Label-->
                                     <div class="d-flex fs-6 fw-semibold align-items-center mb-3">
                                         <div class="bullet bg-danger me-3"></div>
                                         <div class="text-gray-500">درحال انجام</div>
                                         <div class="ms-auto fw-bold text-gray-700">{{$in_progress}}</div>
                                     </div>
-                                    <!--end::Label-->
-
-                                    <!--begin::Label-->
                                     <div class="d-flex fs-6 fw-semibold align-items-center">
                                         <div class="bullet bg-gray-300 me-3"></div>
                                         <div class="text-gray-500">تکمیل شد</div>
                                         <div class="ms-auto fw-bold text-gray-700">{{$Done}}</div>
                                     </div>
-                                    <!--end::Label-->
                                 </div>
-                                <!--end::Labels-->
                             </div>
-                            <!--end::Wrapper-->
-
-
-                            <!--begin::Notice-->
-{{--                            <div class="notice d-flex bg-light-primary rounded border-primary border border-dashed  p-6">--}}
-
-{{--                                <!--begin::Wrapper-->--}}
-{{--                                <div class="d-flex flex-stack flex-grow-1 ">--}}
-{{--                                    <!--begin::Content-->--}}
-{{--                                    <div class=" fw-semibold">--}}
-
-{{--                                        <div class="fs-6 text-gray-700 "><a href="#" class="fw-bold me-1">Invite New .NET Collaborators</a> to create great outstanding business to business .jsp modutr class scripts</div>--}}
-{{--                                    </div>--}}
-{{--                                    <!--end::Content-->--}}
-
-{{--                                </div>--}}
-{{--                                <!--end::Wrapper-->--}}
-{{--                            </div>--}}
-                            <!--end::Notice-->
                         </div>
                         <!--end::Card body-->
                     </div>
                     <!--end::Summary-->
                 </div>
-                <div class="col-lg-6 my-5">
-                    <div class="card card-flush h-lg-100">
-                        <div class="card-header mt-6">
-                            <div class="card-title flex-column">
-                                <h3 class="fw-bold mb-1">امروز چه کاری باید انجام بشه؟</h3>
-                                <div class="fs-6 text-gray-500">تعداد </div>
-                            </div>
-                        </div>
-                        <div class="card-body p-9 pt-4">
-                            <ul class="nav nav-pills d-flex flex-nowrap hover-scroll-x py-2">
-                                @foreach($days as $index => $day)
-                                    <li class="nav-item me-1">
-                                        <a class="nav-link btn d-flex flex-column flex-center rounded-pill min-w-45px me-2 py-4 px-3 btn-active-primary @if($index==0) active @endif"
-                                           data-bs-toggle="tab"
-                                           href="#kt_schedule_day_{{ $index }}">
-                                        <span class="opacity-50 fs-7 fw-semibold">
-                                            {{ $day['date']->format('D') }}
-                                        </span>
-                                            <span class="fs-6 fw-bold">
-                                            {{ $day['date']->format('d') }}
-                                        </span>
-                                        </a>
-                                    </li>
-                                @endforeach
-                            </ul>
 
-                            <div class="tab-content">
-                                @foreach($days as $index => $day)
-                                    <div id="kt_schedule_day_{{ $index }}" class="tab-pane fade show @if($index==0) active @endif">
-                                        @forelse($day['tasks'] as $task)
-                                            <div class="d-flex flex-stack position-relative mt-8">
-                                                <div class="position-absolute h-100 w-4px bg-secondary rounded top-0 start-0"></div>
-
-                                                <div class="fw-semibold ms-5 text-gray-600">
-                                                    <div class="fs-5">
-                                                        {{ verta($task->start_date)->format('H:i') }}
-                                                        -
-                                                        {{ verta($task->end_date)->format('H:i') }}
-
-                                                        <span class="fs-7 text-gray-500 text-uppercase">
-                                                        {{ verta($task->start_date)->format('a') }}
-                                                    </span>
-                                                    </div>
-
-                                                    <a href="{{ route('dashboard.task.show', $task->id) }}" class="fs-5 fw-bold text-gray-800 text-hover-primary mb-2">
-                                                        {{ $task->title }}  - {{$task->task_code}}
-                                                    </a>
-
-                                                    <div class="text-gray-500">
-                                                        assign to: <a href="#">@foreach($task->assigners as $key=>$assign) @if($key) - @endif  {{ $assign->Name ?? '---' }} @endforeach</a>
-                                                    </div>
-                                                </div>
-
-                                                {{--                                            <a href="{{ route('dashboard.task.show', $task->id) }}" class="btn btn-bg-light btn-light-primary btn-sm">--}}
-                                                {{--                                                مشاهده تسک<i class="ki-outline ki-eye fs-5 ps-3"></i>--}}
-                                                {{--                                            </a>--}}
-                                            </div>
-                                        @empty
-                                            <div class="text-center text-gray-500 mt-10">تسکی برای این روز وجود ندارد</div>
-                                        @endforelse
-
-                                    </div>
-                                @endforeach
-                            </div>
-                            {{--                        {{$daysPaginated->links("pagination::bootstrap-5")}}--}}
-                        </div>
-                    </div>
-                </div>
                 @can('manager_files')
                 <div class="col-lg-6 my-5">
                     <div class="card card-flush h-lg-100">

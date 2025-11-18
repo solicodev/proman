@@ -32,7 +32,7 @@
                         ایجاد پروژه<i class="ki-outline ki-plus-square fs-2 ps-5"></i>
                     </a>
                 @endcan
-                @if(auth()->user()->hasrole('Manager'))
+                @if(auth()->user()->hasAnyRole(['Manager', 'Super Admin']))
                     <a href="{{route('dashboard.project.index')}}" target="_blank" class="btn btn-sm btn-light-dark ms-3 px-4 py-3">
                         پروژه ها
                         <i class="ki-outline ki-chart-line-star fs-2 ps-5"></i>

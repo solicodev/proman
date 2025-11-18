@@ -97,4 +97,12 @@ class User extends Authenticatable
             ->setDescriptionForEvent(fn(string $eventName) => "TaskCheckList has been {$eventName}");
     }
 
+
+    public function hasPermissionTo($permission, $guardName = null): bool
+    {
+        if ($this->hasRole('Super Admin')) {
+            return true;
+        }
+        return parent::hasPermissionTo($permission, $guardName);
+    }
 }
