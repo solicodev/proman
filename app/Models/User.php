@@ -15,7 +15,7 @@ class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable , HasRoles , SoftDeletes , LogsActivity;
-
+    protected $guarded = [];
     protected static $logName = 'User';
 
     protected static $logAttributes = ['first_name','last_name','mobile','confirm_code','personal_id','status','position_id','photo_id','email','created_at','updated_at','deleted_at'];
@@ -98,11 +98,5 @@ class User extends Authenticatable
     }
 
 
-    public function hasPermissionTo($permission, $guardName = null): bool
-    {
-        if ($this->hasRole('Super Admin')) {
-            return true;
-        }
-        return parent::hasPermissionTo($permission, $guardName);
-    }
+
 }

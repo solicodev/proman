@@ -224,7 +224,10 @@ class ProjectController extends Controller
         $comments_array = array_merge($task_comments , $project->comments?->toArray());
         $comment_collection = collect($comments_array)->take(5);
         $total_comments = collect($comments_array)->count();
-        $tasks = Task::with(['project','manager','watcher','assigners','photos','predecessors','successors'])->where('project_id',$project->id)->paginate(15);
+
+        $project_id = Project::with(['manager','category','department','members','photos','brand'])->where('manager_id',Auth::id())->pluck('id')->toArray();
+
+//        $tasks = Task::with(['project','manager','watcher','assigners','photos','predecessors','successors'])->where('project_id',$project->id)->paginate(15);
 
 
         $total = $project->tasks?->count();

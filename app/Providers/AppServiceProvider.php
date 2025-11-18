@@ -6,6 +6,7 @@ use App\Models\Project;
 use App\Models\Task;
 use App\Observers\TaskObserver;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
@@ -42,6 +43,7 @@ class AppServiceProvider extends ServiceProvider
         });
     }
 
+
     /**
      * Bootstrap any application services.
      */
@@ -49,5 +51,10 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
         Task::observe(TaskObserver::class);
+
+        Gate::before(function ($user, $ability) {
+            return $user->hasRole('Super Admin') ? true : null;
+        });
     }
+
 }
