@@ -6,6 +6,7 @@ use App\Http\Controllers\panel\ProjectController;
 use App\Http\Controllers\panel\TaskChecklistController;
 use App\Http\Controllers\panel\TaskController;
 use App\Http\Controllers\panel\TicketController;
+use App\Http\Controllers\panel\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(function () {
@@ -75,6 +76,8 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
     Route::post('/upload' , [PhotoController::class,'upload'])->name('upload');
     Route::get('/access' , [PanelController::class,'access'])->name('access');
     Route::put('/access/update/{user}' , [PanelController::class,'accessUpdate'])->name('access.update');
+    Route::get('/profile/{user}' , [UserController::class,'profile'])->name('profile');
+    Route::get('/profile/update/{user}' , [UserController::class,'profileUpdate'])->name('profile.update');
 
 
 });

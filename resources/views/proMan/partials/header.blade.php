@@ -792,7 +792,7 @@
 
                         <!--begin::Menu item-->
                         <div class="menu-item px-5">
-                            <a href="" class="menu-link px-5">
+                            <a href="{{route('dashboard.profile',\Illuminate\Support\Facades\Auth::id())}}" class="menu-link px-5">
                                 پروفایل من
                             </a>
                         </div>
