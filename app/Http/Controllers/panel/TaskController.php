@@ -66,11 +66,12 @@ class TaskController extends Controller
     }
     public function store(TaskStoreRequest $request)
     {
-        try {
+
             DB::beginTransaction();
             $this->taskPanelService->store($request->all());
             return redirect()->back()->with('flash_message', ' با موفقیت ایجاد شد :)');
             DB::commit();
+        try {
         } catch (Exception $exception) {
             DB::rollBack();
             return redirect()->back()->with('err_message', 'خطایی رخ داد :('.$exception->getMessage());

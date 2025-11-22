@@ -233,7 +233,7 @@
             <div class="card  card-flush ">
                 <div class="card-header mt-5">
                     <div class="card-title flex-column">
-                        <h3 class="fw-bold mb-1">لیست تمام تیکت ها</h3>
+                        <h3 class="fw-bold mb-1">لیست تمام تسک ها</h3>
 
                         <div class="fs-6 text-gray-500"></div>
                     </div>
@@ -264,6 +264,10 @@
                 </div>
                 <div class="card-body pt-3">
                     <!--begin::Table-->
+                    <div id="datatable-template"
+                         data-show-route="{{ route('dashboard.task.show', ':id') }}"
+                         data-update-status-route="{{ route('dashboard.task.update.status', ':id') }}">
+                    </div>
                     <table class="kt_profile_overview_table table align-middle table-row-dashed fs-6 gy-4" id="kt_docs_datatable_subtable">
                         <!--begin::Table head-->
                         <thead>
@@ -287,11 +291,7 @@
 
                         <!--begin::Table body-->
                         <tbody class="fw-bold text-gray-600">
-                        <!-- قبل یا بعد از جدول -->
-                        <div id="datatable-template"
-                             data-show-route="{{ route('dashboard.task.show', ':id') }}"
-                             data-update-status-route="{{ route('dashboard.task.update.status', ':id') }}">
-                        </div>
+
 
                         <!--begin::SubTable template-->
                         <tr data-kt-docs-datatable-subtable="subtable_template" class="d-none">
@@ -1025,7 +1025,6 @@
         </div>
         <!--end::Modal dialog-->
     </div>
-
     <div class="modal fade" id="kt_modal_dependency" tabindex="-1" aria-hidden="true">
         <!--begin::Modal dialog-->
         <div class="modal-dialog modal-dialog-centered mw-900px" >
@@ -1555,6 +1554,7 @@
                         ]
                     });
 
+
                     datatable.on('draw', function () {
                         resetSubtable();
                         handleActionButton();
@@ -1755,7 +1755,7 @@
                         handleActionButton();
                     }
                 };
-            })();
+            });
 
             KTUtil.onDOMContentLoaded(function () {
                 KTDocsDatatableSubtable.init();

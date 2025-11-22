@@ -28,7 +28,7 @@ class TaskPanelService
         $task->end_date = $end_date;
         $task->project_id = $param['project_id'] ?? null;
 
-        if ($param['manager_check'])
+        if (isset($param['manager_check']))
         {
             $task->manager_check = $param['manager_check'] ?? null;
             $task->manager_id = $param['manager_id'] ?? null;

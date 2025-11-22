@@ -258,6 +258,10 @@
                 <div class="card-body pt-3">
                     <div class="table-responsive">
                     <!--begin::Table-->
+                        <div id="datatable-template"
+                             data-show-route="{{ route('dashboard.task.show', ':id') }}"
+                             data-update-status-route="{{ route('dashboard.task.update.status', ':id') }}">
+                        </div>
                     <table  class="kt_profile_overview_table table align-middle table-row-dashed fs-6 gy-4" id="kt_docs_datatable_subtable">
                         <!--begin::Table head-->
                         <thead>
@@ -278,14 +282,9 @@
                         </thead>
                         <!--end::Table head-->
 
-
                         <!--begin::Table body-->
                         <tbody class="fw-bold text-gray-600">
-                        <!-- قبل یا بعد از جدول -->
-                        <div id="datatable-template"
-                             data-show-route="{{ route('dashboard.task.show', ':id') }}"
-                             data-update-status-route="{{ route('dashboard.task.update.status', ':id') }}">
-                        </div>
+
 
                         <!--begin::SubTable template-->
                         <tr data-kt-docs-datatable-subtable="subtable_template" class="d-none">
@@ -298,6 +297,7 @@
                             <td data-kt-docs-datatable-subtable="template_status"></td>
                             <td data-kt-docs-datatable-subtable="template_members"></td>
                             <td data-kt-docs-datatable-subtable="template_actions"></td>
+                            <td data-kt-docs-datatable-subtable="template"></td>
                         </tr>
                         <!--end::SubTable template-->
 
@@ -327,11 +327,11 @@
                                 <!--begin::Actions-->
                                 <td>
                                     <a href="#" onclick="openShowModal(
-                                                           '{{ route('dashboard.task.show', $task->id) }}',
-                                                           '{{ route('dashboard.task.update.status', $task->id) }}'
+                                                           '{{ route('dashboard.task.show', $tb_task->id) }}',
+                                                           '{{ route('dashboard.task.update.status', $tb_task->id) }}'
                                                         )"
-                                       data-task-id="{{ $task->id }}"
-                                       data-task-status="{{ $task->status }}"
+                                       data-task-id="{{ $tb_task->id }}"
+                                       data-task-status="{{ $tb_task->status }}"
                                        class="btn btn-sm btn-light-info" data-bs-toggle="tooltip" data-bs-placement="top" title="مشاهده">
                                         <i class="ki-outline ki-eye fs-6 px-2"></i>
                                     </a>
@@ -342,8 +342,8 @@
 {{--                                        <i class="ki-outline ki-plus-square fs-6 px-2"></i>--}}
 {{--                                    </a>--}}
                                     <a href="#" class="btn btn-light-warning btn-sm"
-                                       onclick="openDependencyModal('{{ route('dashboard.task.dependency', $task->id) }}',
-                                           JSON.stringify({id: '{{ $task->id }}', title: '{{ $task->title }}'}))">
+                                       onclick="openDependencyModal('{{ route('dashboard.task.dependency', $tb_task->id) }}',
+                                           JSON.stringify({id: '{{ $tb_task->id }}', title: '{{ $tb_task->title }}'}))">
                                         تعریف وابستگی تسک
                                         <i class="ki-outline ki-plus-square fs-6 px-2"></i>
                                     </a>
@@ -1178,6 +1178,7 @@
                             ]
                         });
 
+
                         datatable.on('draw', function () {
                             resetSubtable();
                             handleActionButton();
@@ -1317,8 +1318,15 @@
                                 const route = routeTemplate.replace(':id', d.id ?? 0);
                                 const updateRoute = updateStatusTemplate.replace(':id', d.id ?? 0);
 
+                                let canShow = @json(auth()->user()->canany(['manager_taskShow','member_taskShow','assign_taskShow']));
+                                let canDependency = @json(auth()->user()->can('manager_taskDependency'));
+
+                                let showBtn = '';
+                                let depBtn = '';
+
                                 // دکمه مشاهده
-                                let showBtn = `
+                                if (canShow) {
+                                    showBtn = `
         <a href="#" onclick="openShowModal('${route}', '${updateRoute}')"
            class="btn btn-sm btn-light-info"
            data-bs-toggle="tooltip"
@@ -1326,19 +1334,22 @@
            title="مشاهده">
             <i class="ki-outline ki-eye fs-6 px-2"></i>
         </a>
-    `;
+        `;
+                                }
 
                                 // دکمه تعریف وابستگی
-                                const depRoute = '{{ route("dashboard.task.dependency", ":id") }}'.replace(':id', d.id ?? 0);
-                                let depBtn = `
-    <a href="#" class="btn btn-light-warning btn-sm"
-       onclick="openDependencyModal('${depRoute}', JSON.stringify({id:'${d.id}', title:'${d.title}'}))">
-        تعریف وابستگی تسک
-        <i class="ki-outline ki-plus-square fs-6 px-2"></i>
-    </a>
-`;
+                                if (canDependency) {
+                                    const depRoute = '{{ route("dashboard.task.dependency", ":id") }}'.replace(':id', d.id ?? 0);
+                                    depBtn = `
+        <a href="#" class="btn btn-light-warning btn-sm"
+           onclick="openDependencyModal('${depRoute}', JSON.stringify({id:'${d.id}', title:'${d.title}'}))">
+            تعریف وابستگی تسک
+            <i class="ki-outline ki-plus-square fs-6 px-2"></i>
+        </a>
+        `;
+                                }
 
-
+                                // اضافه کردن دکمه‌ها به DOM
                                 actionsNode.innerHTML = showBtn + depBtn;
                             }
 
@@ -1368,7 +1379,7 @@
                             handleActionButton();
                         }
                     };
-                })();
+                });
 
                 KTUtil.onDOMContentLoaded(function () {
                     KTDocsDatatableSubtable.init();
