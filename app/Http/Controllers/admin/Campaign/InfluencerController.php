@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\admin\Campaign;
 
+use App\Http\Controllers\Controller;
 use App\Models\Influencer;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,7 @@ class InfluencerController extends Controller
      */
     public function index()
     {
-        //
+
     }
 
     /**

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\adminController;
+use App\Http\Controllers\admin\Campaign\CampaignAgancyController;
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\DepartmentController;
 use App\Http\Controllers\Admin\PermissionController;
@@ -99,5 +100,17 @@ Route::prefix('admin')->name('admin.')->middleware(['auth','SuperAdminCheck'])->
         Route::put('/update/{ticket}', [TicketController::class , 'update'])->name('update');
         Route::post('/status/{ticket}', [TicketController::class , 'status'])->name('status');
         Route::get('/delete/{ticket}', [TicketController::class , 'destroy'])->name('destroy');
+    });
+
+
+
+//    Campaign Routes
+    Route::prefix('campaign')->name('campaign.')->group(function () {
+        Route::prefix('agancy')->name('agancy.')->group(function () {
+            Route::get('/', [CampaignAgancyController::class , 'index'])->name('index');
+            Route::post('/store', [CampaignAgancyController::class , 'store'])->name('store');
+            Route::put('/update/{campaignAgancy}', [CampaignAgancyController::class , 'update'])->name('update');
+            Route::get('/delete/{campaignAgancy}', [CampaignAgancyController::class , 'destroy'])->name('destroy');
+        });
     });
 });
