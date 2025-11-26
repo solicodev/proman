@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\admin\adminController;
 use App\Http\Controllers\admin\Campaign\CampaignAgancyController;
+use App\Http\Controllers\admin\Campaign\CampaignBrandController;
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\DepartmentController;
 use App\Http\Controllers\Admin\PermissionController;
@@ -111,6 +112,12 @@ Route::prefix('admin')->name('admin.')->middleware(['auth','SuperAdminCheck'])->
             Route::post('/store', [CampaignAgancyController::class , 'store'])->name('store');
             Route::put('/update/{campaignAgancy}', [CampaignAgancyController::class , 'update'])->name('update');
             Route::get('/delete/{campaignAgancy}', [CampaignAgancyController::class , 'destroy'])->name('destroy');
+        });
+        Route::prefix('brand')->name('brand.')->group(function () {
+            Route::get('/', [CampaignBrandController::class , 'index'])->name('index');
+            Route::post('/store', [CampaignBrandController::class , 'store'])->name('store');
+            Route::put('/update/{campaignBrand}', [CampaignBrandController::class , 'update'])->name('update');
+            Route::get('/delete/{campaignBrand}', [CampaignBrandController::class , 'destroy'])->name('destroy');
         });
     });
 });
