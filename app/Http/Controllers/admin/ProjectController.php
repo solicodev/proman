@@ -11,13 +11,19 @@ use App\Models\User;
 use App\Services\ProjectService;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
 {
+
     public ProjectService $projectService;
     public function __construct(ProjectService $projectService)
     {
         $this->projectService = new ProjectService();
+        if (!Auth::user()->hasrole('Super Admin'))
+        {
+            return redirect()->back()->with('err_message', 'شما دسترسی به پنل ادمین ندارید!');
+        }
     }
     /**
      * Display a listing of the resource.

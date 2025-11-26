@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Services\TaskService;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class TaskController extends Controller
@@ -17,6 +18,10 @@ class TaskController extends Controller
     public function __construct(TaskService $taskService)
     {
         $this->taskService = $taskService;
+        if (!Auth::user()->hasrole('Super Admin'))
+        {
+            return redirect()->back()->with('err_message', 'شما دسترسی به پنل ادمین ندارید!');
+        }
     }
     /**
      * Display a listing of the resource.

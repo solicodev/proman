@@ -9,15 +9,21 @@ use App\Models\User;
 use App\Services\UserService;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
+
     public UserService $userService;
     public function __construct(UserService $userService)
     {
         $this->userService = $userService;
+        if (!Auth::user()->hasrole('Super Admin'))
+        {
+            return redirect()->back()->with('err_message', 'شما دسترسی به پنل ادمین ندارید!');
+        }
     }
     /**
      * Display a listing of the resource.

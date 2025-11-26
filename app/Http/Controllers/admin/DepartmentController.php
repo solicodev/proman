@@ -6,9 +6,17 @@ use App\Http\Controllers\Controller;
 use App\Models\Department;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DepartmentController extends Controller
 {
+    public function __construct()
+    {
+        if (!Auth::user()->hasrole('Super Admin'))
+        {
+            return redirect()->back()->with('err_message', 'شما دسترسی به پنل ادمین ندارید!');
+        }
+    }
     /**
      * Display a listing of the resource.
      */

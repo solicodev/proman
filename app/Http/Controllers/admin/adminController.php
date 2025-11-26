@@ -7,9 +7,18 @@ use App\Models\Project;
 use App\Models\Task;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class adminController extends Controller
 {
+
+    public function __construct()
+    {
+        if (!Auth::user()->hasrole('Super Admin'))
+        {
+            return redirect()->back()->with('err_message', 'شما دسترسی به پنل ادمین ندارید!');
+        }
+    }
     /**
      * Display a listing of the resource.
      */

@@ -1,21 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Models\Brand;
+use App\Models\CampaignBrand;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class BrandController extends Controller
+class CampaignBrandController extends Controller
 {
-    public function __construct()
-    {
-        if (!Auth::user()->hasrole('Super Admin'))
-        {
-            return redirect()->back()->with('err_message', 'شما دسترسی به پنل ادمین ندارید!');
-        }
-    }
     /**
      * Display a listing of the resource.
      */
@@ -43,7 +34,7 @@ class BrandController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Brand $brand)
+    public function show(CampaignBrand $campaignBrand)
     {
         //
     }
@@ -51,7 +42,7 @@ class BrandController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Brand $brand)
+    public function edit(CampaignBrand $campaignBrand)
     {
         //
     }
@@ -59,7 +50,7 @@ class BrandController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Brand $brand)
+    public function update(Request $request, CampaignBrand $campaignBrand)
     {
         //
     }
@@ -67,7 +58,7 @@ class BrandController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Brand $brand)
+    public function destroy(CampaignBrand $campaignBrand)
     {
         //
     }
