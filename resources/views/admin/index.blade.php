@@ -55,7 +55,7 @@
                 </a>
             </li>
             <li>
-                <a href="{{route('admin.campaign.agancy.index')}}">
+                <a href="{{route('admin.campaign.influencer.index')}}">
                     <div class="parent-icon">
 
                         <i  class='bx bx-list-check'>
