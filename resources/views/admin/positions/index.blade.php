@@ -12,7 +12,7 @@
             </div>
             <hr>
             <div class="table-responsive">
-                <table id="table" class="table table-striped table-bordered">
+                <table class="data_table table table-striped table-bordered">
                     <thead>
                     <tr>
                         <th style='width:50px;'>ردیف</th>

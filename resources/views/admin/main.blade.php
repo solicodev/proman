@@ -79,7 +79,7 @@
             </div>
             <hr />
             <div class="table-responsive">
-                <table id="table" class="table table-striped table-bordered page_speed_944522378">
+                <table  class="data_table table table-striped table-bordered page_speed_944522378">
                     <thead>
                     <tr>
                         <th></th>
@@ -144,7 +144,7 @@
             </div>
             <hr />
             <div class="table-responsive">
-                <table id="table" class="table table-striped table-bordered page_speed_944522378">
+                <table class="data_table table table-striped table-bordered page_speed_944522378">
                     <thead>
                     <tr>
                         <th></th>

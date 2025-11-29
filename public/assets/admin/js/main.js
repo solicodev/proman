@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
 })
 
 $(document).ready(function () {
-    $("#table").DataTable({
+    $(".data_table").DataTable({
         language: {
             emptyTable: "هیچ داده‌ای در جدول وجود ندارد",
             info: "نمایش _START_ تا _END_ از _TOTAL_ ردیف",

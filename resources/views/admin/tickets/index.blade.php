@@ -20,7 +20,7 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-bordered text-nowrap border-bottom w-100" id="responsive-datatable">
+                            <table class="data_table table table-bordered text-nowrap border-bottom w-100" id="responsive-datatable">
                                 <thead>
                                 <tr>
                                     <th class="wd-15p border-bottom-0">شماره تیکت</th>

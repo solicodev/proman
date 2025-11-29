@@ -32,7 +32,7 @@ class CampaignBrandController extends Controller
     public function store(Request $request)
     {
 
-
+        try {
             $campaignBrand = new CampaignBrand();
             $campaignBrand->name = $request->name;
             if (isset($request->color))
@@ -40,9 +40,8 @@ class CampaignBrandController extends Controller
                 $campaignBrand->color = $request->color;
             }
             $campaignBrand->save();
-
             return redirect(route('admin.campaign.brand.index'))->with('flash_message', 'با موفقیت ایجاد شد');
-        try {
+
         } catch (Exception $exception) {
             return redirect()->back()->with('err_message', $exception->getMessage());
         }
