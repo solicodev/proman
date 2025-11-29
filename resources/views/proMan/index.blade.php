@@ -128,12 +128,16 @@
                         </div>
 
                         @foreach($last_projects as $last)
+                            @php
+                                $explode_end_date = explode(' ',$last->end_date);
+                            @endphp
                             <div class="fs-6 d-flex justify-content-between mb-4">
                                 <div class="fw-semibold">{{ $last->name }}</div>
 
                                 <div class="d-flex fw-bold">
-                                    <i class="ki-outline ki-arrow-up-right fs-3 me-1 text-success"></i>
-                                    {{ verta($last->end_date_only)->format('Y/m/d') }}
+{{--                                    <i class="ki-outline ki-arrow-up-right fs-3 me-1 text-success"></i>--}}
+                                    {{ $explode_end_date[0] }}
+{{--                                    {{ verta($last->end_date_only)->format('Y/m/d') }}--}}
                                 </div>
                             </div>
 

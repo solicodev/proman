@@ -192,21 +192,21 @@
                                         <!-- دکمه زیر تسک -->
                                         <div class="card-footer text-center py-3">
                                             @can('manager_taskSubTaskAdd')
-                                            <a href="#" class="btn btn-light-primary btn-sm"
-                                               onclick="openEditModal('{{ route('dashboard.task.subtasks.store', $task->id) }}',
+                                                <a href="#" class="btn btn-light-primary btn-sm"
+                                                   onclick="openEditModal('{{ route('dashboard.task.subtasks.store', $task->id) }}',
                                                    JSON.stringify({title:'{{ $task->title }}'}))">
-                                                ساخت زیر تسک جدید
-                                                <i class="ki-outline ki-plus-square fs-6 px-2"></i>
-                                            </a>
+                                                    ساخت زیر تسک جدید
+                                                    <i class="ki-outline ki-plus-square fs-6 px-2"></i>
+                                                </a>
                                             @endcan
                                             @canany(['manager_taskShow','member_taskShow','assign_taskShow'])
-                                            <a href="#" onclick="openShowModal(
+                                                <a href="#" onclick="openShowModal(
                                                 '{{ route('dashboard.task.show', $task->id) }}',
                                                 '{{ route('dashboard.task.update.status', $task->id) }}'
                                                 )"
-                                               data-task-id="{{ $task->id }}"
-                                               data-task-status="{{ $task->status }}"
-                                               class="btn btn-sm btn-light-info" data-bs-toggle="tooltip" data-bs-placement="top" title="مشاهده"><i class="ki-outline ki-eye fs-6 px-2"></i></a>
+                                                   data-task-id="{{ $task->id }}"
+                                                   data-task-status="{{ $task->status }}"
+                                                   class="btn btn-sm btn-light-info" data-bs-toggle="tooltip" data-bs-placement="top" title="مشاهده"><i class="ki-outline ki-eye fs-6 px-2"></i></a>
                                             @endcanany
                                         </div>
                                     </div>
@@ -334,31 +334,31 @@
                                 <!--begin::Actions-->
                                 <td>
                                     @canany(['manager_taskShow','member_taskShow','assign_taskShow'])
-                                    <a href="#" onclick="openShowModal(
+                                        <a href="#" onclick="openShowModal(
                                         '{{ route('dashboard.task.show', $task->id) }}',
                                         '{{ route('dashboard.task.update.status', $task->id) }}'
                                         )"
-                                       data-task-id="{{ $task->id }}"
-                                       data-task-status="{{ $task->status }}"
-                                       class="btn btn-sm btn-light-info" data-bs-toggle="tooltip" data-bs-placement="top" title="مشاهده">
-                                        <i class="ki-outline ki-eye fs-6 px-2"></i>
-                                    </a>
+                                           data-task-id="{{ $task->id }}"
+                                           data-task-status="{{ $task->status }}"
+                                           class="btn btn-sm btn-light-info" data-bs-toggle="tooltip" data-bs-placement="top" title="مشاهده">
+                                            <i class="ki-outline ki-eye fs-6 px-2"></i>
+                                        </a>
                                     @endcanany
                                     @can('manager_taskSubTaskAdd')
-                                    <a href="#" class="btn btn-light-primary btn-sm"
-                                       onclick="openEditModal('{{ route('dashboard.task.subtasks.store', $task->id) }}',
+                                        <a href="#" class="btn btn-light-primary btn-sm"
+                                           onclick="openEditModal('{{ route('dashboard.task.subtasks.store', $task->id) }}',
                                            JSON.stringify({title:'{{ $task->title }}'}))">
-                                        ساخت زیر تسک جدید
-                                        <i class="ki-outline ki-plus-square fs-6 px-2"></i>
-                                    </a>
+                                            ساخت زیر تسک جدید
+                                            <i class="ki-outline ki-plus-square fs-6 px-2"></i>
+                                        </a>
                                     @endcan
                                     @can('manager_taskDependency')
-                                    <a href="#" class="btn btn-light-warning btn-sm"
-                                       onclick="openDependencyModal('{{ route('dashboard.task.dependency', $task->id) }}',
+                                        <a href="#" class="btn btn-light-warning btn-sm"
+                                           onclick="openDependencyModal('{{ route('dashboard.task.dependency', $task->id) }}',
                                            JSON.stringify({id: '{{ $task->id }}', title: '{{ $task->title }}'}))">
-                                        تعریف وابستگی تسک
-                                        <i class="ki-outline ki-plus-square fs-6 px-2"></i>
-                                    </a>
+                                            تعریف وابستگی تسک
+                                            <i class="ki-outline ki-plus-square fs-6 px-2"></i>
+                                        </a>
                                     @endcan
                                 </td>
                                 <td>
@@ -801,7 +801,7 @@
                                     <div class="menu-content fs-6 text-gray-900 fw-bold px-3 py-4">افزودن چک لیست</div>
                                 </div>
                                 <div class="separator mb-3 opacity-75"></div>
-                                <form action="{{ route('dashboard.task.checklist',$task->id) }}" method="post" enctype="multipart/form-data"
+                                <form action="{{ route('dashboard.task.checklist',$task->id ?? 0) }}" method="post" enctype="multipart/form-data"
                                       class="mx-auto mw-100 w-100 fv-plugins-bootstrap5 fv-plugins-framework needs-validation"
                                       novalidate id="kt_docs_formvalidation_text" autocomplete="off">
                                     @csrf
@@ -874,44 +874,47 @@
                                     <div class="menu-content fs-6 text-gray-900 fw-bold px-3 py-4">فایل های مربوط به تسک</div>
                                 </div>
                                 <div class="separator mb-3 opacity-75"></div>
-
-                                <ul class="list-unstyled mb-0" id="taskFiles">
-                                    @foreach($task->photos as $file)
-                                        @php
-                                            $explode_file = explode('.',$file['path']);
-                                            $user = \App\Models\User::with('photo')->where('id',$file['user_id'])->first();
-                                        @endphp
-                                        <div class="d-flex align-items-center mb-5">
-                                            <div class="symbol symbol-30px me-5">
-                                                @if($explode_file[1] == 'pdf')
-                                                    <img alt="Icon" src="{{url('panel/assets/media/svg/files/pdf.svg')}}" />
-                                                @elseif($explode_file[1] == 'doc')
-                                                    <img alt="Icon" src="{{url('panel/assets/media/svg/files/doc.svg')}}" />
-                                                @elseif($explode_file[1] == 'css')
-                                                    <img alt="Icon" src="{{url('panel/assets/media/svg/files/css.svg')}}" />
-                                                @else
-                                                    <img alt="Icon" src="{{url('panel/assets/media/svg/files/ai.svg')}}" />
-                                                @endif
-                                            </div>
-                                            <div class="fw-semibold">
-                                                <a class="fs-6 fw-bold text-gray-900 text-hover-primary">{{$user->Name}} </a>
-
-                                                <div class="text-gray-500">
-                                                    {{verta($file['created_at'])->formatDifference()}}
-                                                    <a class="text-active-danger">{{role_name($user->getRoleNames()->first())}}</a>
+                                @if(!isset($task))
+                                    <p>تسکی وجود ندارد</p>
+                                @else
+                                    <ul class="list-unstyled mb-0" id="taskFiles">
+                                        @foreach($task->photos as $file)
+                                            @php
+                                                $explode_file = explode('.',$file['path']);
+                                                $user = \App\Models\User::with('photo')->where('id',$file['user_id'])->first();
+                                            @endphp
+                                            <div class="d-flex align-items-center mb-5">
+                                                <div class="symbol symbol-30px me-5">
+                                                    @if($explode_file[1] == 'pdf')
+                                                        <img alt="Icon" src="{{url('panel/assets/media/svg/files/pdf.svg')}}" />
+                                                    @elseif($explode_file[1] == 'doc')
+                                                        <img alt="Icon" src="{{url('panel/assets/media/svg/files/doc.svg')}}" />
+                                                    @elseif($explode_file[1] == 'css')
+                                                        <img alt="Icon" src="{{url('panel/assets/media/svg/files/css.svg')}}" />
+                                                    @else
+                                                        <img alt="Icon" src="{{url('panel/assets/media/svg/files/ai.svg')}}" />
+                                                    @endif
                                                 </div>
+                                                <div class="fw-semibold">
+                                                    <a class="fs-6 fw-bold text-gray-900 text-hover-primary">{{$user->Name}} </a>
+
+                                                    <div class="text-gray-500">
+                                                        {{verta($file['created_at'])->formatDifference()}}
+                                                        <a class="text-active-danger">{{role_name($user->getRoleNames()->first())}}</a>
+                                                    </div>
+                                                </div>
+                                                <a href="{{ route('home') }}/{{$file['path']}}"
+                                                   type="button" download
+                                                   class="btn btn-clean btn-sm btn-icon btn-icon-primary btn-active-light-primary ms-auto"
+                                                   data-bs-toggle="tooltip" data-bs-placement="top" title="دانلود فایل">
+                                                    <i class="ki-outline ki-cloud-download fs-3"></i>
+                                                </a>
                                             </div>
-                                            <a href="{{ route('home') }}/{{$file['path']}}"
-                                               type="button" download
-                                               class="btn btn-clean btn-sm btn-icon btn-icon-primary btn-active-light-primary ms-auto"
-                                               data-bs-toggle="tooltip" data-bs-placement="top" title="دانلود فایل">
-                                                <i class="ki-outline ki-cloud-download fs-3"></i>
-                                            </a>
-                                        </div>
-                                    @endforeach
-                                    {{--                                    <li><a href="#" class="text-primary text-decoration-none">UI-Dashboard.png</a></li>--}}
-                                    {{--                                    <li><a href="#" class="text-primary text-decoration-none">requirements.docx</a></li>--}}
-                                </ul>
+                                        @endforeach
+                                        {{--                                    <li><a href="#" class="text-primary text-decoration-none">UI-Dashboard.png</a></li>--}}
+                                        {{--                                    <li><a href="#" class="text-primary text-decoration-none">requirements.docx</a></li>--}}
+                                    </ul>
+                                @endif
                             </div>
                         </div>
                         <div class="dropdown">
@@ -932,32 +935,34 @@
                                     <div class="menu-content fs-6 text-gray-900 fw-bold px-3 py-4">تغییر وضعیت تسک</div>
                                 </div>
                                 <div class="separator mb-3 opacity-75"></div>
-                                <form method="POST" id="taskStatusForm"
-                                      data-url="{{ route('dashboard.task.update.status', $task->id) }}"
-                                      data-parent-id="{{ $task->parent_id }}"
-                                      class="d-flex align-items-center">
-                                    @csrf
-                                    <label class="form-check-label text-warning me-3">
-                                        <input type="radio" name="status" value="0" class="form-check-input"
-                                               @if($task->status == 0) checked @endif>
-                                        در حال بررسی
-                                    </label>
-                                    <label class="form-check-label text-info me-3">
-                                        <input type="radio" name="status" value="1" class="form-check-input"
-                                               @if($task->status == 1) checked @endif>
-                                        برای انجام
-                                    </label>
-                                    <label class="form-check-label me-3">
-                                        <input type="radio" name="status" value="2" class="form-check-input"
-                                               @if($task->status == 2) checked @endif>
-                                        در حال انجام
-                                    </label>
-                                    <label class="form-check-label">
-                                        <input type="radio" name="status" value="3" class="form-check-input"
-                                               @if($task->status == 3) checked @endif>
-                                        انجام شد
-                                    </label>
-                                </form>
+                                @if(isset($task))
+                                    <form method="POST" id="taskStatusForm"
+                                          data-url="{{ route('dashboard.task.update.status', $task->id ?? 0) }}"
+                                          data-parent-id="{{ $task->parent_id }}"
+                                          class="d-flex align-items-center">
+                                        @csrf
+                                        <label class="form-check-label text-warning me-3">
+                                            <input type="radio" name="status" value="0" class="form-check-input"
+                                                   @if($task->status == 0) checked @endif>
+                                            در حال بررسی
+                                        </label>
+                                        <label class="form-check-label text-info me-3">
+                                            <input type="radio" name="status" value="1" class="form-check-input"
+                                                   @if($task->status == 1) checked @endif>
+                                            برای انجام
+                                        </label>
+                                        <label class="form-check-label me-3">
+                                            <input type="radio" name="status" value="2" class="form-check-input"
+                                                   @if($task->status == 2) checked @endif>
+                                            در حال انجام
+                                        </label>
+                                        <label class="form-check-label">
+                                            <input type="radio" name="status" value="3" class="form-check-input"
+                                                   @if($task->status == 3) checked @endif>
+                                            انجام شد
+                                        </label>
+                                    </form>
+                                @endif
 
                             </div>
 
@@ -1001,7 +1006,7 @@
                                 <div id="commentsList"></div>
                             </div>
                             <div>
-                                <form method="POST" id="commentForm" class="mt-4" data-url="{{ route('dashboard.task.comment.add', $task->id) }}">
+                                <form method="POST" id="commentForm" class="mt-4" data-url="{{ route('dashboard.task.comment.add', $task->id ?? 0) }}">
                                     @csrf
                                     <textarea name="text" class="form-control mb-2" placeholder="افزودن کامنت جدید..." required></textarea>
                                     <div class="d-flex justify-content-end">
@@ -1010,7 +1015,7 @@
                                 </form>
                             </div>
 
-                            <input type="hidden" id="taskId" value="{{ $task->id }}">
+                            <input type="hidden" id="taskId" value="{{ $task->id ?? 0}}">
 
                         </div>
                     </div>
@@ -1044,7 +1049,7 @@
                 <div class="modal-body scroll-y px-5 ">
                     <!--begin:Form-->
                     <div class="stepper stepper-links d-flex flex-column pt-15 between" id="kt_create_account_stepper" data-kt-stepper="true" data-select2-id="select2-data-kt_create_account_stepper" >
-                        <form method="POST" action="{{ route('dashboard.task.dependency', $task->id) }}" id="dependencyForm">
+                        <form method="POST" action="{{ route('dashboard.task.dependency', $task->id ?? 0) }}" id="dependencyForm">
                             @csrf
                             <div class="mb-13 text-center">
                                 <!--begin::Title-->
@@ -1521,228 +1526,202 @@
             "use strict";
 
             var KTDocsDatatableSubtable = (function () {
+
                 let table;
                 let datatable;
                 let templateNode = null;
 
                 const initDatatable = () => {
                     table = document.querySelector('#kt_docs_datatable_subtable');
-                    if (!table) {
-                        console.error('KTDocsDatatableSubtable: جدول پیدا نشد (#kt_docs_datatable_subtable).');
-                        return;
-                    }
+                    if (!table) return;
 
                     const templateEl = document.querySelector('[data-kt-docs-datatable-subtable="subtable_template"]');
-                    if (!templateEl) {
-                        console.error('KTDocsDatatableSubtable: template با selector [data-kt-docs-datatable-subtable="subtable_template"] پیدا نشد.');
-                        return;
-                    }
+                    if (!templateEl) return;
 
                     templateNode = templateEl.cloneNode(true);
-                    templateNode.classList.remove('d-none');
+                    templateNode.classList.add('d-none');
 
-                    templateEl.parentNode.removeChild(templateEl);
+                    // مهم: فقط مخفی کن، حذف نکن
+                    templateEl.classList.add('d-none');
 
-                    datatable = $(table).DataTable({
-                        info: false,
-                        ordering: false,
-                        paging: false,
-                        lengthChange: false,
-                        pageLength: 6,
-                        columnDefs: [
-                            { orderable: false, targets: [0, 6] }
-                        ]
-                    });
-
+                    // ❗ فقط یکبار init — اگر قبلاً ساخته شده، دوباره نساز
+                    if ($.fn.DataTable.isDataTable(table)) {
+                        datatable = $(table).DataTable();
+                    } else {
+                        datatable = $(table).DataTable({
+                            info: false,
+                            ordering: false,
+                            paging: false,
+                            searching: false,
+                            lengthChange: false,
+                            columnDefs: [
+                                { orderable: false, targets: [0, 6] }
+                            ]
+                        });
+                    }
 
                     datatable.on('draw', function () {
                         resetSubtable();
-                        handleActionButton();
+                        bindButtons();
                     });
                 };
 
-                const handleActionButton = () => {
+                const bindButtons = () => {
                     const buttons = document.querySelectorAll('[data-kt-docs-datatable-subtable="expand_row"]');
 
-                    buttons.forEach((button) => {
-                        // remove previous handlers to avoid double-binding
-                        button.removeEventListener && button.removeEventListener('click', button._kt_subtask_handler);
-                        const handler = (e) => {
+                    buttons.forEach(btn => {
+
+                        // جلوگیری از دوبار bind شدن
+                        if (btn._subHandler) {
+                            btn.removeEventListener('click', btn._subHandler);
+                        }
+
+                        btn._subHandler = function (e) {
                             e.preventDefault();
-                            e.stopImmediatePropagation();
 
-                            const row = button.closest('tr');
-                            const rowClasses = ['isOpen', 'border-bottom-0'];
-
-                            // subtasks باید از data attribute بیاد (Blade: data-subtasks='@json($task->children)')
-                            let subtasks = [];
-                            try {
-                                subtasks = JSON.parse(row.dataset.subtasks || '[]');
-                            } catch (err) {
-                                console.error('خطا JSON subtasks برای ردیف:', err, row.dataset.subtasks);
-                                subtasks = [];
-                            }
+                            const row = btn.closest('tr');
 
                             if (row.classList.contains('isOpen')) {
-                                while (row.nextSibling && row.nextSibling.getAttribute && row.nextSibling.getAttribute('data-kt-docs-datatable-subtable') === 'subtable_template') {
-                                    row.nextSibling.parentNode.removeChild(row.nextSibling);
-                                }
-                                row.classList.remove(...rowClasses);
-                                button.classList.remove('active');
+                                closeSubtasks(row, btn);
                                 return;
                             }
 
-                            if (!templateNode) {
-                                console.error('KTDocsDatatableSubtable: templateNode موجود نیست — clone ممکن نیست.');
-                                return;
-                            }
-
-                            if (subtasks.length > 0) {
-                                populateTemplate(subtasks, row);
-                            } else {
-                                const emptyRow = templateNode.cloneNode(true);
-                                emptyRow.querySelector('[data-kt-docs-datatable-subtable="template_title"]').innerText = 'زیرتسکی یافت نشد';
-                                const tbody = table.querySelector('tbody');
-                                tbody.insertBefore(emptyRow, row.nextSibling);
-                            }
-
-                            row.classList.add(...rowClasses);
-                            button.classList.add('active');
+                            openSubtasks(row, btn);
                         };
 
-                        button.addEventListener('click', handler);
-                        button._kt_subtask_handler = handler;
+                        btn.addEventListener('click', btn._subHandler);
                     });
                 };
 
-                const populateTemplate = (data, target) => {
+                const closeSubtasks = (row, btn) => {
+                    while (
+                        row.nextSibling &&
+                        row.nextSibling.dataset.ktDocsDatatableSubtable === "subtable_template"
+                        ) {
+                        row.nextSibling.remove();
+                    }
 
-                    const tbody = table.querySelector('tbody');
+                    row.classList.remove('isOpen');
+                    btn.classList.remove('active');
+                };
 
-                    data.forEach((d, index) => {
-                        if (!templateNode) {
-                            console.error('populateTemplate: templateNode نال است.');
-                            return;
-                        }
-                        const newTemplate = templateNode.cloneNode(true);
-                        newTemplate.setAttribute('data-kt-docs-datatable-subtable', 'subtable_template');
-                        newTemplate.classList.remove('d-none');
+                const openSubtasks = (row, btn) => {
 
-                        const safe = (v) => (v === null || v === undefined ? '-' : v);
+                    const body = table.querySelector('tbody');
 
-                        const idxNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_index"]');
-                        if (idxNode) idxNode.innerText = index + 1;
+                    let subtasks = [];
+                    try {
+                        subtasks = JSON.parse(row.dataset.subtasks || '[]');
+                    } catch (e) {
+                        subtasks = [];
+                    }
 
-                        const idNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_id"]');
-                        if (idNode) idNode.innerText = safe(d.task_code ?? '-');
+                    if (subtasks.length === 0) {
+                        const noRow = templateNode.cloneNode(true);
+                        noRow.classList.remove('d-none');
+                        noRow.querySelector('[data-kt-docs-datatable-subtable="template_title"]').innerText =
+                            'زیرتسکی وجود ندارد';
 
-                        const titleNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_title"]');
-                        if (titleNode) titleNode.innerText = safe(d.title);
+                        body.insertBefore(noRow, row.nextSibling);
+                    } else {
+                        subtasks.forEach((task, i) => {
+                            const newRow = templateNode.cloneNode(true);
+                            newRow.classList.remove('d-none');
+                            newRow.dataset.ktDocsDatatableSubtable = "subtable_template";
 
-                        const sdNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_start_date"]');
-                        if (sdNode) sdNode.innerText = safe(d.start_date);
+                            fillSubtask(newRow, task, i);
 
-                        const edNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_end_date"]');
-                        if (edNode) edNode.innerText = safe(d.end_date);
+                            body.insertBefore(newRow, row.nextSibling);
+                        });
+                    }
 
-                        const prNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_priority"]');
-                        if (prNode) prNode.innerHTML = safe(d.TaskPrority);
+                    row.classList.add('isOpen');
+                    btn.classList.add('active');
+                };
 
-                        const stNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_status"]');
-                        if (stNode) stNode.innerHTML = safe(d.TaskStatus);
+                const fillSubtask = (node, d, i) => {
 
-                        const membersNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_members"]');
-                        if (membersNode) {
-                            membersNode.innerHTML = ''; // خالی کن قبل از پر کردن
+                    const safe = v => (v == null ? '-' : v);
 
-                            if (Array.isArray(d.assigners) && d.assigners.length) {
-                                const container = document.createElement('div');
-                                container.className = 'symbol-group symbol-hover fs-8';
+                    node.querySelector('[data-kt-docs-datatable-subtable="template_index"]').innerText = i + 1;
+                    node.querySelector('[data-kt-docs-datatable-subtable="template_id"]').innerText = safe(d.task_code);
+                    node.querySelector('[data-kt-docs-datatable-subtable="template_title"]').innerText = safe(d.title);
+                    node.querySelector('[data-kt-docs-datatable-subtable="template_start_date"]').innerText = safe(d.start_date);
+                    node.querySelector('[data-kt-docs-datatable-subtable="template_end_date"]').innerText = safe(d.end_date);
+                    node.querySelector('[data-kt-docs-datatable-subtable="template_priority"]').innerHTML = safe(d.TaskPrority);
+                    node.querySelector('[data-kt-docs-datatable-subtable="template_status"]').innerHTML = safe(d.TaskStatus);
 
-                                d.assigners.forEach(a => {
-                                    const symbol = document.createElement('div');
-                                    symbol.className = 'symbol symbol-25px symbol-circle';
-                                    symbol.setAttribute('data-bs-toggle', 'tooltip');
-                                    symbol.setAttribute('title', a.Name ?? a.name ?? '-');
-                                    if (a.photo && a.photo.path) {
-                                        const img = document.createElement('img');
-                                        img.alt = 'Pic';
-                                        img.src = `{{ route('home') }}/${a.photo.path}`;
-                                        symbol.appendChild(img);
-                                    } else {
-                                        const span = document.createElement('span');
-                                        span.className = 'symbol-label bg-primary text-inverse-primary fw-bold';
-                                        span.innerText = (a.Name ?? a.name ?? '?').substring(0, 1);
-                                        symbol.appendChild(span);
-                                    }
+                    // اعضا
+                    const membersNode = node.querySelector('[data-kt-docs-datatable-subtable="template_members"]');
+                    membersNode.innerHTML = '';
 
-                                    container.appendChild(symbol);
-                                });
+                    if (Array.isArray(d.assigners) && d.assigners.length) {
+                        const wrap = document.createElement('div');
+                        wrap.className = "symbol-group symbol-hover fs-8";
 
-                                membersNode.appendChild(container);
+                        d.assigners.forEach(a => {
+                            const block = document.createElement('div');
+                            block.className = "symbol symbol-25px symbol-circle";
+                            block.setAttribute("data-bs-toggle", "tooltip");
+                            block.setAttribute("title", a.Name ?? a.name ?? "-");
+
+                            if (a.photo && a.photo.path) {
+                                const img = document.createElement('img');
+                                img.src = "{{ route('home') }}/" + a.photo.path;
+                                img.alt = "Pic";
+                                block.appendChild(img);
                             } else {
-                                membersNode.innerHTML = '<span class="text-muted fs-8">بدون عضو</span>';
+                                const span = document.createElement('span');
+                                span.className = "symbol-label bg-primary text-inverse-primary fw-bold";
+                                span.innerText = (a.Name ?? a.name ?? '?').substring(0, 1);
+                                block.appendChild(span);
                             }
+
+                            wrap.appendChild(block);
+                        });
+
+                        membersNode.appendChild(wrap);
+                    } else {
+                        membersNode.innerHTML = '<span class="text-muted fs-8">بدون عضو</span>';
+                    }
+
+                    // دکمه‌ها
+                    const actionsNode = node.querySelector('[data-kt-docs-datatable-subtable="template_actions"]');
+                    if (actionsNode) {
+                        const showRouteT = document.getElementById('datatable-template').dataset.showRoute;
+                        const updateRouteT = document.getElementById('datatable-template').dataset.updateStatusRoute;
+
+                        const showRoute = showRouteT.replace(':id', d.id);
+                        const updateRoute = updateRouteT.replace(':id', d.id);
+
+                        let canShow = @json(auth()->user()->canany(['manager_taskShow','member_taskShow','assign_taskShow']));
+                        let canDep  = @json(auth()->user()->can('manager_taskDependency'));
+
+                        let html = "";
+
+                        if (canShow) {
+                            html += `<a href="#" onclick="openShowModal('${showRoute}', '${updateRoute}')" class="btn btn-sm btn-light-info">
+                            <i class="ki-outline ki-eye fs-6 px-2"></i>
+                         </a>`;
                         }
 
-
-                        const actionsNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_actions"]');
-                        const routeTemplate = document.getElementById('datatable-template').dataset.showRoute;
-                        const updateStatusTemplate = document.getElementById('datatable-template').dataset.updateStatusRoute;
-
-                        if (actionsNode && routeTemplate && updateStatusTemplate) {
-                            const route = routeTemplate.replace(':id', d.id ?? 0);
-                            const updateRoute = updateStatusTemplate.replace(':id', d.id ?? 0);
-
-                            let canShow = @json(auth()->user()->canany(['manager_taskShow','member_taskShow','assign_taskShow']));
-                            let canDependency = @json(auth()->user()->can('manager_taskDependency'));
-
-                            let showBtn = '';
-                            let depBtn = '';
-
-                            // دکمه مشاهده
-                            if (canShow) {
-                                showBtn = `
-        <a href="#" onclick="openShowModal('${route}', '${updateRoute}')"
-           class="btn btn-sm btn-light-info"
-           data-bs-toggle="tooltip"
-           data-bs-placement="top"
-           title="مشاهده">
-            <i class="ki-outline ki-eye fs-6 px-2"></i>
-        </a>
-        `;
-                            }
-
-                            // دکمه تعریف وابستگی
-                            if (canDependency) {
-                                const depRoute = '{{ route("dashboard.task.dependency", ":id") }}'.replace(':id', d.id ?? 0);
-                                depBtn = `
-        <a href="#" class="btn btn-light-warning btn-sm"
-           onclick="openDependencyModal('${depRoute}', JSON.stringify({id:'${d.id}', title:'${d.title}'}))">
-            تعریف وابستگی تسک
-            <i class="ki-outline ki-plus-square fs-6 px-2"></i>
-        </a>
-        `;
-                            }
-
-                            // اضافه کردن دکمه‌ها به DOM
-                            actionsNode.innerHTML = showBtn + depBtn;
+                        if (canDep) {
+                            const dep = '{{ route("dashboard.task.dependency", ":id") }}'.replace(':id', d.id);
+                            html += `<a href="#" class="btn btn-light-warning btn-sm"
+                            onclick="openDependencyModal('${dep}', JSON.stringify({id:'${d.id}', title:'${d.title}'}))">
+                            تعریف وابستگی <i class="ki-outline ki-plus-square fs-6 px-2"></i>
+                         </a>`;
                         }
 
-
-
-
-                        tbody.insertBefore(newTemplate, target.nextSibling);
-                    });
+                        actionsNode.innerHTML = html;
+                    }
                 };
-
 
                 const resetSubtable = () => {
-                    const subtables = document.querySelectorAll('[data-kt-docs-datatable-subtable="subtable_template"]');
-                    subtables.forEach((st) => st.parentNode.removeChild(st));
+                    table.querySelectorAll('[data-kt-docs-datatable-subtable="subtable_template"]')
+                        .forEach(el => el.remove());
 
-                    const rows = table.querySelectorAll('tbody tr');
-                    rows.forEach((r) => {
+                    table.querySelectorAll('tbody tr').forEach(r => {
                         r.classList.remove('isOpen');
                         const toggle = r.querySelector('[data-kt-docs-datatable-subtable="expand_row"]');
                         if (toggle) toggle.classList.remove('active');
@@ -1750,17 +1729,19 @@
                 };
 
                 return {
-                    init: function () {
+                    init: () => {
                         initDatatable();
-                        handleActionButton();
+                        bindButtons();
                     }
                 };
-            });
 
-            KTUtil.onDOMContentLoaded(function () {
+            })();
+
+            KTUtil.onDOMContentLoaded(() => {
                 KTDocsDatatableSubtable.init();
             });
         </script>
+
         <script>
             document.addEventListener("DOMContentLoaded", function() {
                 const menu = document.querySelector('#dateDropdownMenu');

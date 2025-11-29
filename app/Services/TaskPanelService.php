@@ -35,7 +35,7 @@ class TaskPanelService
 
             $manager = User::where('id', $param['manager_id'])->first();
             //TODO
-            $message = $manager->Name . ' تسک ' .$task->task_code .' نیاز به تایید دارد لطفا به پنل خود سر بزنید و تیک تایید را بزنید ' ;
+//            $message = $manager->Name . ' تسک ' .$task->task_code .' نیاز به تایید دارد لطفا به پنل خود سر بزنید و تیک تایید را بزنید ' ;
 //            sendSms($manager->mobile, $message);
         }
 
@@ -61,7 +61,7 @@ class TaskPanelService
         {
             $member_item = User::findOrFail($member);
             //TODO
-            $message = $member_item->Name . ' تسک ' .$task->task_code .' برای انجام به شما محول شده است لطفا به پنل خود سر بزنید. مدت زمان انجام این تسک ' . $task->duration . ' روز است';
+//            $message = $member_item->Name . ' تسک ' .$task->task_code .' برای انجام به شما محول شده است لطفا به پنل خود سر بزنید. مدت زمان انجام این تسک ' . $task->duration . ' روز است';
 //            sendSms($member_item->mobile, $message);
         }
 

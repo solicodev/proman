@@ -1145,228 +1145,202 @@
                 "use strict";
 
                 var KTDocsDatatableSubtable = (function () {
+
                     let table;
                     let datatable;
                     let templateNode = null;
 
                     const initDatatable = () => {
                         table = document.querySelector('#kt_docs_datatable_subtable');
-                        if (!table) {
-                            console.error('KTDocsDatatableSubtable: جدول پیدا نشد (#kt_docs_datatable_subtable).');
-                            return;
-                        }
+                        if (!table) return;
 
                         const templateEl = document.querySelector('[data-kt-docs-datatable-subtable="subtable_template"]');
-                        if (!templateEl) {
-                            console.error('KTDocsDatatableSubtable: template با selector [data-kt-docs-datatable-subtable="subtable_template"] پیدا نشد.');
-                            return;
-                        }
+                        if (!templateEl) return;
 
                         templateNode = templateEl.cloneNode(true);
-                        templateNode.classList.remove('d-none');
+                        templateNode.classList.add('d-none');
 
-                        templateEl.parentNode.removeChild(templateEl);
+                        // مهم: فقط مخفی کن، حذف نکن
+                        templateEl.classList.add('d-none');
 
-                        datatable = $(table).DataTable({
-                            info: false,
-                            ordering: false,
-                            paging: false,
-                            lengthChange: false,
-                            pageLength: 6,
-                            columnDefs: [
-                                { orderable: false, targets: [0, 6] }
-                            ]
-                        });
-
+                        // ❗ فقط یکبار init — اگر قبلاً ساخته شده، دوباره نساز
+                        if ($.fn.DataTable.isDataTable(table)) {
+                            datatable = $(table).DataTable();
+                        } else {
+                            datatable = $(table).DataTable({
+                                info: false,
+                                ordering: false,
+                                paging: false,
+                                searching: false,
+                                lengthChange: false,
+                                columnDefs: [
+                                    { orderable: false, targets: [0, 6] }
+                                ]
+                            });
+                        }
 
                         datatable.on('draw', function () {
                             resetSubtable();
-                            handleActionButton();
+                            bindButtons();
                         });
                     };
 
-                    const handleActionButton = () => {
+                    const bindButtons = () => {
                         const buttons = document.querySelectorAll('[data-kt-docs-datatable-subtable="expand_row"]');
 
-                        buttons.forEach((button) => {
-                            // remove previous handlers to avoid double-binding
-                            button.removeEventListener && button.removeEventListener('click', button._kt_subtask_handler);
-                            const handler = (e) => {
+                        buttons.forEach(btn => {
+
+                            // جلوگیری از دوبار bind شدن
+                            if (btn._subHandler) {
+                                btn.removeEventListener('click', btn._subHandler);
+                            }
+
+                            btn._subHandler = function (e) {
                                 e.preventDefault();
-                                e.stopImmediatePropagation();
 
-                                const row = button.closest('tr');
-                                const rowClasses = ['isOpen', 'border-bottom-0'];
-
-                                // subtasks باید از data attribute بیاد (Blade: data-subtasks='@json($task->children)')
-                                let subtasks = [];
-                                try {
-                                    subtasks = JSON.parse(row.dataset.subtasks || '[]');
-                                } catch (err) {
-                                    console.error('خطا JSON subtasks برای ردیف:', err, row.dataset.subtasks);
-                                    subtasks = [];
-                                }
+                                const row = btn.closest('tr');
 
                                 if (row.classList.contains('isOpen')) {
-                                    while (row.nextSibling && row.nextSibling.getAttribute && row.nextSibling.getAttribute('data-kt-docs-datatable-subtable') === 'subtable_template') {
-                                        row.nextSibling.parentNode.removeChild(row.nextSibling);
-                                    }
-                                    row.classList.remove(...rowClasses);
-                                    button.classList.remove('active');
+                                    closeSubtasks(row, btn);
                                     return;
                                 }
 
-                                if (!templateNode) {
-                                    console.error('KTDocsDatatableSubtable: templateNode موجود نیست — clone ممکن نیست.');
-                                    return;
-                                }
-
-                                if (subtasks.length > 0) {
-                                    populateTemplate(subtasks, row);
-                                } else {
-                                    const emptyRow = templateNode.cloneNode(true);
-                                    emptyRow.querySelector('[data-kt-docs-datatable-subtable="template_title"]').innerText = 'زیرتسکی یافت نشد';
-                                    const tbody = table.querySelector('tbody');
-                                    tbody.insertBefore(emptyRow, row.nextSibling);
-                                }
-
-                                row.classList.add(...rowClasses);
-                                button.classList.add('active');
+                                openSubtasks(row, btn);
                             };
 
-                            button.addEventListener('click', handler);
-                            button._kt_subtask_handler = handler;
+                            btn.addEventListener('click', btn._subHandler);
                         });
                     };
 
-                    const populateTemplate = (data, target) => {
+                    const closeSubtasks = (row, btn) => {
+                        while (
+                            row.nextSibling &&
+                            row.nextSibling.dataset.ktDocsDatatableSubtable === "subtable_template"
+                            ) {
+                            row.nextSibling.remove();
+                        }
 
-                        const tbody = table.querySelector('tbody');
+                        row.classList.remove('isOpen');
+                        btn.classList.remove('active');
+                    };
 
-                        data.forEach((d, index) => {
-                            if (!templateNode) {
-                                console.error('populateTemplate: templateNode نال است.');
-                                return;
-                            }
-                            const newTemplate = templateNode.cloneNode(true);
-                            newTemplate.setAttribute('data-kt-docs-datatable-subtable', 'subtable_template');
-                            newTemplate.classList.remove('d-none');
+                    const openSubtasks = (row, btn) => {
 
-                            const safe = (v) => (v === null || v === undefined ? '-' : v);
+                        const body = table.querySelector('tbody');
 
-                            const idxNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_index"]');
-                            if (idxNode) idxNode.innerText = index + 1;
+                        let subtasks = [];
+                        try {
+                            subtasks = JSON.parse(row.dataset.subtasks || '[]');
+                        } catch (e) {
+                            subtasks = [];
+                        }
 
-                            const idNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_id"]');
-                            if (idNode) idNode.innerText = safe(d.task_code ?? '-');
+                        if (subtasks.length === 0) {
+                            const noRow = templateNode.cloneNode(true);
+                            noRow.classList.remove('d-none');
+                            noRow.querySelector('[data-kt-docs-datatable-subtable="template_title"]').innerText =
+                                'زیرتسکی وجود ندارد';
 
-                            const titleNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_title"]');
-                            if (titleNode) titleNode.innerText = safe(d.title);
+                            body.insertBefore(noRow, row.nextSibling);
+                        } else {
+                            subtasks.forEach((task, i) => {
+                                const newRow = templateNode.cloneNode(true);
+                                newRow.classList.remove('d-none');
+                                newRow.dataset.ktDocsDatatableSubtable = "subtable_template";
 
-                            const sdNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_start_date"]');
-                            if (sdNode) sdNode.innerText = safe(d.start_date);
+                                fillSubtask(newRow, task, i);
 
-                            const edNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_end_date"]');
-                            if (edNode) edNode.innerText = safe(d.end_date);
+                                body.insertBefore(newRow, row.nextSibling);
+                            });
+                        }
 
-                            const prNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_priority"]');
-                            if (prNode) prNode.innerHTML = safe(d.TaskPrority);
+                        row.classList.add('isOpen');
+                        btn.classList.add('active');
+                    };
 
-                            const stNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_status"]');
-                            if (stNode) stNode.innerHTML = safe(d.TaskStatus);
+                    const fillSubtask = (node, d, i) => {
 
-                            const membersNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_members"]');
-                            if (membersNode) {
-                                membersNode.innerHTML = ''; // خالی کن قبل از پر کردن
+                        const safe = v => (v == null ? '-' : v);
 
-                                if (Array.isArray(d.assigners) && d.assigners.length) {
-                                    const container = document.createElement('div');
-                                    container.className = 'symbol-group symbol-hover fs-8';
+                        node.querySelector('[data-kt-docs-datatable-subtable="template_index"]').innerText = i + 1;
+                        node.querySelector('[data-kt-docs-datatable-subtable="template_id"]').innerText = safe(d.task_code);
+                        node.querySelector('[data-kt-docs-datatable-subtable="template_title"]').innerText = safe(d.title);
+                        node.querySelector('[data-kt-docs-datatable-subtable="template_start_date"]').innerText = safe(d.start_date);
+                        node.querySelector('[data-kt-docs-datatable-subtable="template_end_date"]').innerText = safe(d.end_date);
+                        node.querySelector('[data-kt-docs-datatable-subtable="template_priority"]').innerHTML = safe(d.TaskPrority);
+                        node.querySelector('[data-kt-docs-datatable-subtable="template_status"]').innerHTML = safe(d.TaskStatus);
 
-                                    d.assigners.forEach(a => {
-                                        const symbol = document.createElement('div');
-                                        symbol.className = 'symbol symbol-25px symbol-circle';
-                                        symbol.setAttribute('data-bs-toggle', 'tooltip');
-                                        symbol.setAttribute('title', a.Name ?? a.name ?? '-');
-                                        if (a.photo && a.photo.path) {
-                                            const img = document.createElement('img');
-                                            img.alt = 'Pic';
-                                            img.src = `{{ route('home') }}/${a.photo.path}`;
-                                            symbol.appendChild(img);
-                                        } else {
-                                            const span = document.createElement('span');
-                                            span.className = 'symbol-label bg-primary text-inverse-primary fw-bold';
-                                            span.innerText = (a.Name ?? a.name ?? '?').substring(0, 1);
-                                            symbol.appendChild(span);
-                                        }
+                        // اعضا
+                        const membersNode = node.querySelector('[data-kt-docs-datatable-subtable="template_members"]');
+                        membersNode.innerHTML = '';
 
-                                        container.appendChild(symbol);
-                                    });
+                        if (Array.isArray(d.assigners) && d.assigners.length) {
+                            const wrap = document.createElement('div');
+                            wrap.className = "symbol-group symbol-hover fs-8";
 
-                                    membersNode.appendChild(container);
+                            d.assigners.forEach(a => {
+                                const block = document.createElement('div');
+                                block.className = "symbol symbol-25px symbol-circle";
+                                block.setAttribute("data-bs-toggle", "tooltip");
+                                block.setAttribute("title", a.Name ?? a.name ?? "-");
+
+                                if (a.photo && a.photo.path) {
+                                    const img = document.createElement('img');
+                                    img.src = "{{ route('home') }}/" + a.photo.path;
+                                    img.alt = "Pic";
+                                    block.appendChild(img);
                                 } else {
-                                    membersNode.innerHTML = '<span class="text-muted fs-8">بدون عضو</span>';
+                                    const span = document.createElement('span');
+                                    span.className = "symbol-label bg-primary text-inverse-primary fw-bold";
+                                    span.innerText = (a.name ?? '?')[0];
+                                    block.appendChild(span);
                                 }
+
+                                wrap.appendChild(block);
+                            });
+
+                            membersNode.appendChild(wrap);
+                        } else {
+                            membersNode.innerHTML = '<span class="text-muted fs-8">بدون عضو</span>';
+                        }
+
+                        // دکمه‌ها
+                        const actionsNode = node.querySelector('[data-kt-docs-datatable-subtable="template_actions"]');
+                        if (actionsNode) {
+                            const showRouteT = document.getElementById('datatable-template').dataset.showRoute;
+                            const updateRouteT = document.getElementById('datatable-template').dataset.updateStatusRoute;
+
+                            const showRoute = showRouteT.replace(':id', d.id);
+                            const updateRoute = updateRouteT.replace(':id', d.id);
+
+                            let canShow = @json(auth()->user()->canany(['manager_taskShow','member_taskShow','assign_taskShow']));
+                            let canDep  = @json(auth()->user()->can('manager_taskDependency'));
+
+                            let html = "";
+
+                            if (canShow) {
+                                html += `<a href="#" onclick="openShowModal('${showRoute}', '${updateRoute}')" class="btn btn-sm btn-light-info">
+                            <i class="ki-outline ki-eye fs-6 px-2"></i>
+                         </a>`;
                             }
 
-
-                            const actionsNode = newTemplate.querySelector('[data-kt-docs-datatable-subtable="template_actions"]');
-                            const routeTemplate = document.getElementById('datatable-template').dataset.showRoute;
-                            const updateStatusTemplate = document.getElementById('datatable-template').dataset.updateStatusRoute;
-
-                            if (actionsNode && routeTemplate && updateStatusTemplate) {
-                                const route = routeTemplate.replace(':id', d.id ?? 0);
-                                const updateRoute = updateStatusTemplate.replace(':id', d.id ?? 0);
-
-                                let canShow = @json(auth()->user()->canany(['manager_taskShow','member_taskShow','assign_taskShow']));
-                                let canDependency = @json(auth()->user()->can('manager_taskDependency'));
-
-                                let showBtn = '';
-                                let depBtn = '';
-
-                                // دکمه مشاهده
-                                if (canShow) {
-                                    showBtn = `
-        <a href="#" onclick="openShowModal('${route}', '${updateRoute}')"
-           class="btn btn-sm btn-light-info"
-           data-bs-toggle="tooltip"
-           data-bs-placement="top"
-           title="مشاهده">
-            <i class="ki-outline ki-eye fs-6 px-2"></i>
-        </a>
-        `;
-                                }
-
-                                // دکمه تعریف وابستگی
-                                if (canDependency) {
-                                    const depRoute = '{{ route("dashboard.task.dependency", ":id") }}'.replace(':id', d.id ?? 0);
-                                    depBtn = `
-        <a href="#" class="btn btn-light-warning btn-sm"
-           onclick="openDependencyModal('${depRoute}', JSON.stringify({id:'${d.id}', title:'${d.title}'}))">
-            تعریف وابستگی تسک
-            <i class="ki-outline ki-plus-square fs-6 px-2"></i>
-        </a>
-        `;
-                                }
-
-                                // اضافه کردن دکمه‌ها به DOM
-                                actionsNode.innerHTML = showBtn + depBtn;
+                            if (canDep) {
+                                const dep = '{{ route("dashboard.task.dependency", ":id") }}'.replace(':id', d.id);
+                                html += `<a href="#" class="btn btn-light-warning btn-sm"
+                            onclick="openDependencyModal('${dep}', JSON.stringify({id:'${d.id}', title:'${d.title}'}))">
+                            تعریف وابستگی <i class="ki-outline ki-plus-square fs-6 px-2"></i>
+                         </a>`;
                             }
 
-
-
-
-                            tbody.insertBefore(newTemplate, target.nextSibling);
-                        });
+                            actionsNode.innerHTML = html;
+                        }
                     };
-
 
                     const resetSubtable = () => {
-                        const subtables = document.querySelectorAll('[data-kt-docs-datatable-subtable="subtable_template"]');
-                        subtables.forEach((st) => st.parentNode.removeChild(st));
+                        table.querySelectorAll('[data-kt-docs-datatable-subtable="subtable_template"]')
+                            .forEach(el => el.remove());
 
-                        const rows = table.querySelectorAll('tbody tr');
-                        rows.forEach((r) => {
+                        table.querySelectorAll('tbody tr').forEach(r => {
                             r.classList.remove('isOpen');
                             const toggle = r.querySelector('[data-kt-docs-datatable-subtable="expand_row"]');
                             if (toggle) toggle.classList.remove('active');
@@ -1374,14 +1348,15 @@
                     };
 
                     return {
-                        init: function () {
+                        init: () => {
                             initDatatable();
-                            handleActionButton();
+                            bindButtons();
                         }
                     };
-                });
 
-                KTUtil.onDOMContentLoaded(function () {
+                })();
+
+                KTUtil.onDOMContentLoaded(() => {
                     KTDocsDatatableSubtable.init();
                 });
             </script>

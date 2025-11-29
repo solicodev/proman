@@ -46,7 +46,18 @@ class InfluencerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+
+            $influencer = new Influencer();
+            $influencer->instagram_id = $request->instagram_id;
+            $influencer->comment = $request->comment ?? null;
+            $influencer->credibility = $request->credibility ?? null;
+            $influencer->save();
+
+            return redirect(route('admin.campaign.influencer.index'))->with('flash_message', 'با موفقیت ایجاد شد');
+        } catch (Exception $exception) {
+            return redirect()->back()->with('err_message', $exception->getMessage());
+        }
     }
 
     /**
@@ -70,7 +81,15 @@ class InfluencerController extends Controller
      */
     public function update(Request $request, Influencer $influencer)
     {
-        //
+        try {
+            $influencer->instagram_id = $request->instagram_id;
+            $influencer->comment = $request->comment ?? null;
+            $influencer->credibility = $request->credibility ?? null;
+            $influencer->update();
+            return redirect(route('admin.campaign.influencer.index'))->with('flash_message', 'با موفقیت ویرایش شد');
+        } catch (Exception $exception) {
+            return redirect()->back()->with('err_message', $exception->getMessage());
+        }
     }
 
     /**
@@ -78,6 +97,11 @@ class InfluencerController extends Controller
      */
     public function destroy(Influencer $influencer)
     {
-        //
+        try {
+            $influencer->delete();
+            return redirect(route('admin.campaign.influencer.index'))->with('flash_message', 'با موفقیت حذف شد');
+        } catch (Exception $exception) {
+            return redirect()->back()->with('err_message', $exception->getMessage());
+        }
     }
 }
