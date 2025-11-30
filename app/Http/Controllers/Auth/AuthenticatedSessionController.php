@@ -30,13 +30,9 @@ class AuthenticatedSessionController extends Controller
     public function store(Request $request)
     {
 
-
         $user = User::where('mobile',$request->mobile)->first();
-
         $random = rand(111111, 999999);
         $otp = $user->Name .' کد تایید شما در پلتفرم سولیکوکاله '. $random ;
-
-
         $user->confirm_code = $random;
         $user->update();
 

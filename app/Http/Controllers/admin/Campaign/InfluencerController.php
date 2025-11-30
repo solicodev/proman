@@ -20,7 +20,7 @@ class InfluencerController extends Controller
             $excel = \Maatwebsite\Excel\Facades\Excel::import(new InfluencerImport(), $upload, 'public', \Maatwebsite\Excel\Excel::XLSX);
             return redirect()->route('admin.campaign.influencer.index')->with('flash_message', 'با موفقیت انجام شد');
 
-    } catch (Exception $exception) {
+        } catch (Exception $exception) {
             return redirect()->back()->with('err_message', $exception->getMessage());
         }
     }

@@ -18,7 +18,6 @@ class InfluencerImport implements ToModel , WithHeadingRow
     {
         //
     }
-
     public function model(array $row)
     {
         $influencer = Influencer::where('instagram_id', $row['id'])->first();
@@ -28,9 +27,7 @@ class InfluencerImport implements ToModel , WithHeadingRow
             $influencer->comment = $row['comment'] ?? null;
             $influencer->credibility = $row['credibility'] ?? 0;
             $influencer->save();
-
         }
         return $influencer;
     }
-
 }
