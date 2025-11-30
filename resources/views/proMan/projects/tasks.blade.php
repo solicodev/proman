@@ -335,27 +335,27 @@
                                 <td>
                                     @canany(['manager_taskShow','member_taskShow','assign_taskShow'])
                                         <a href="#" onclick="openShowModal(
-                                        '{{ route('dashboard.task.show', $task->id) }}',
-                                        '{{ route('dashboard.task.update.status', $task->id) }}'
+                                        '{{ route('dashboard.task.show', $tb_task->id) }}',
+                                        '{{ route('dashboard.task.update.status', $tb_task->id) }}'
                                         )"
-                                           data-task-id="{{ $task->id }}"
-                                           data-task-status="{{ $task->status }}"
+                                           data-task-id="{{ $tb_task->id }}"
+                                           data-task-status="{{ $tb_task->status }}"
                                            class="btn btn-sm btn-light-info" data-bs-toggle="tooltip" data-bs-placement="top" title="مشاهده">
                                             <i class="ki-outline ki-eye fs-6 px-2"></i>
                                         </a>
                                     @endcanany
                                     @can('manager_taskSubTaskAdd')
                                         <a href="#" class="btn btn-light-primary btn-sm"
-                                           onclick="openEditModal('{{ route('dashboard.task.subtasks.store', $task->id) }}',
-                                           JSON.stringify({title:'{{ $task->title }}'}))">
+                                           onclick="openEditModal('{{ route('dashboard.task.subtasks.store', $tb_task->id) }}',
+                                                    JSON.stringify({id:'{{ $tb_task->id }}', title:'{{ $tb_task->title }}'}))">
                                             ساخت زیر تسک جدید
                                             <i class="ki-outline ki-plus-square fs-6 px-2"></i>
                                         </a>
                                     @endcan
                                     @can('manager_taskDependency')
                                         <a href="#" class="btn btn-light-warning btn-sm"
-                                           onclick="openDependencyModal('{{ route('dashboard.task.dependency', $task->id) }}',
-                                           JSON.stringify({id: '{{ $task->id }}', title: '{{ $task->title }}'}))">
+                                           onclick="openDependencyModal('{{ route('dashboard.task.dependency', $tb_task->id) }}',
+                                           JSON.stringify({id: '{{ $tb_task->id }}', title: '{{ $tb_task->title }}'}))">
                                             تعریف وابستگی تسک
                                             <i class="ki-outline ki-plus-square fs-6 px-2"></i>
                                         </a>
@@ -481,6 +481,7 @@
                             <div class="col-md-4 fv-row">
                                 <label class="required fs-6 fw-semibold mb-2">نیاز به تایید مسئول تایید کننده دارد</label>
                                 <input class="form-check-input" name="manager_check" type="checkbox" value="1" id="flexCheckDefault"/>
+
                             </div>
                             <!--begin::Col-->
                             <div class="col-md-8 fv-row">
@@ -592,7 +593,7 @@
                             <!--begin::Heading-->
                             <div class="mb-13 text-center">
                                 <!--begin::Title-->
-                                <h1 class="mb-3">افزودن زیرتسک</h1>
+                                <h1 class="mb-3" id="modalTitle">افزودن زیرتسک</h1>
                                 <!--end::Title-->
                                 <input type="hidden" value="{{$project->id}}" name="project_id">
                                 <!--begin::Description-->
@@ -1326,6 +1327,8 @@
                 var modal = new bootstrap.Modal(document.getElementById('kt_modal_new_target_sub'));
                 modal.show();
             }
+
+
 
 
 
