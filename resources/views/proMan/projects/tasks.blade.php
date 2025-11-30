@@ -336,7 +336,7 @@
                                     @canany(['manager_taskShow','member_taskShow','assign_taskShow'])
                                         <a href="#" onclick="openShowModal(
                                         '{{ route('dashboard.task.show', $tb_task->id) }}',
-                                        '{{ route('dashboard.task.update.status', $tb_task->id) }}'
+                                        '{{ route('dashboard.task.update.status', $tb_task->id) }}',
                                         )"
                                            data-task-id="{{ $tb_task->id }}"
                                            data-task-status="{{ $tb_task->status }}"
@@ -1339,10 +1339,11 @@
                     url: showUrl,
                     type: 'GET',
                     success: function (data) {
-
+                        console.log(data.title)
                         // task data from json controller
-                        $('#modalTitle').text(` مشاهده: ${data.title}`);
-                        $('#taskCode').text(`  ${data.code}`);
+                        $('#modalTitle').show().text(` مشاهده: ${data.title}`);
+                        $('#taskCode').show().text(`  ${data.code}`);
+
                         if (data.manager) {
                             $('#taskManager').show().text(`مدیر تایید کننده: ${data.manager}`);
                             $('#taskManagerCheck').show().text(`آیا تسک توسط مدیر تایید شود؟ ${data.managerCheck}`);
