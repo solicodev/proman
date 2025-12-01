@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('post_type')->nullable();
             $table->string('story_type')->nullable();
 
+            $table->softDeletes();
             $table->timestamps();
         });
     }

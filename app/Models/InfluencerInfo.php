@@ -36,4 +36,14 @@ class InfluencerInfo extends Model
             ->logOnlyDirty()
             ->setDescriptionForEvent(fn(string $eventName) => "Influencer Information has been {$eventName}");
     }
+
+    public function influencer()
+    {
+        return $this->belongsTo(Influencer::class,'influencer_id ');
+    }
+
+    public function user_id()
+    {
+        return $this->belongsTo(User::class,'user_id');
+    }
 }
