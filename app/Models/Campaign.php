@@ -21,7 +21,7 @@ class Campaign extends Model
     protected static $logName = 'campaign';
 
     protected static $logAttributes = ['name','start_date_j','start_date_m','forecast_end_time_j','forecast_end_time_m','real_end_date_j','real_end_date_m',
-        'budget','status','user_id','brand_id','agancy_id'];
+        'budget','status','user_id','brand_id','agancy_id','deleted_at','created_at','updated_at'];
 
     protected static $logOnlyDirty = true;
 
@@ -34,7 +34,7 @@ class Campaign extends Model
         return LogOptions::defaults()
             ->useLogName('campaign')
             ->logOnly(['name','start_date_j','start_date_m','forecast_end_time_j','forecast_end_time_m','real_end_date_j','real_end_date_m',
-                'budget','status','user_id','brand_id','agancy_id'])
+                'budget','status','user_id','brand_id','agancy_id','deleted_at','created_at','updated_at'])
             ->logOnlyDirty()
             ->setDescriptionForEvent(fn(string $eventName) => "campaign has been {$eventName}");
     }

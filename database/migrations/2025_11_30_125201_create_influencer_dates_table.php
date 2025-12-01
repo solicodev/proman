@@ -21,6 +21,8 @@ return new class extends Migration
 
             $table->string('publication_date_j')->nullable();
             $table->string('publication_date_m')->nullable();
+
+            $table->softDeletes();
             $table->timestamps();
         });
     }

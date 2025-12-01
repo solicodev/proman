@@ -11,13 +11,14 @@ use Spatie\Activitylog\Traits\LogsActivity;
 class Influencer extends Model
 {
     use HasFactory,SoftDeletes,LogsActivity;
+
     protected $fillable = ['instagram_id','comment','credibility'];
 
     protected $appends = ['InfluencerCredibility'];
 
     protected static $logname = 'Influencer';
 
-    protected static $logAttributes = ['instagram_id','comment','credibility'];
+    protected static $logAttributes = ['instagram_id','comment','credibility','deleted_at','created_at','updated_at'];
 
     protected static $logOnlyDirty = true;
 
@@ -30,7 +31,7 @@ class Influencer extends Model
     {
         return LogOptions::defaults()
             ->useLogName('Influencer')
-            ->logOnly(['instagram_id','comment','credibility'])
+            ->logOnly(['instagram_id','comment','credibility','deleted_at','created_at','updated_at'])
             ->logOnlyDirty()
             ->setDescriptionForEvent(fn(string $eventName) => "The influencer has been {$eventName}");
     }
