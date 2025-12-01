@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('real_end_date_j')->nullable();
             $table->string('real_end_date_m')->nullable();
             $table->string('budget');
-            $table->enum('status',['0','1','2','3'])->default('0');
+            $table->enum('status',[0,1,2,3,4,5])->default('0')->comment('0=>hold , 1=>in progress , 2=>active , 3=>done , 4=>postponed , 5=>rejected');
 
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');

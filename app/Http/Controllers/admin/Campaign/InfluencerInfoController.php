@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\admin\Campaign;
 
+use App\Http\Controllers\Controller;
 use App\Models\InfluencerInfo;
 use Illuminate\Http\Request;
 

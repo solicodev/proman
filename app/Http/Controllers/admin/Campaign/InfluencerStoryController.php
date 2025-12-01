@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\admin\Campaign;
 
-use App\Models\InfluencerDate;
+use App\Http\Controllers\Controller;
+use App\Models\InfluencerStory;
 use Illuminate\Http\Request;
 
-class InfluencerDateController extends Controller
+class InfluencerStoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +35,7 @@ class InfluencerDateController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(InfluencerDate $influencerDate)
+    public function show(InfluencerStory $influencerStory)
     {
         //
     }
@@ -42,7 +43,7 @@ class InfluencerDateController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(InfluencerDate $influencerDate)
+    public function edit(InfluencerStory $influencerStory)
     {
         //
     }
@@ -50,7 +51,7 @@ class InfluencerDateController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, InfluencerDate $influencerDate)
+    public function update(Request $request, InfluencerStory $influencerStory)
     {
         //
     }
@@ -58,7 +59,7 @@ class InfluencerDateController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(InfluencerDate $influencerDate)
+    public function destroy(InfluencerStory $influencerStory)
     {
         //
     }

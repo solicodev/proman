@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\admin\Campaign;
 
-use App\Models\InfluencerPrice;
+use App\Http\Controllers\Controller;
+use App\Models\InfluencerPost;
 use Illuminate\Http\Request;
 
-class InfluencerPriceController extends Controller
+class InfluencerPostController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +35,7 @@ class InfluencerPriceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(InfluencerPrice $influencerPrice)
+    public function show(InfluencerPost $influencerPost)
     {
         //
     }
@@ -42,7 +43,7 @@ class InfluencerPriceController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(InfluencerPrice $influencerPrice)
+    public function edit(InfluencerPost $influencerPost)
     {
         //
     }
@@ -50,7 +51,7 @@ class InfluencerPriceController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, InfluencerPrice $influencerPrice)
+    public function update(Request $request, InfluencerPost $influencerPost)
     {
         //
     }
@@ -58,7 +59,7 @@ class InfluencerPriceController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(InfluencerPrice $influencerPrice)
+    public function destroy(InfluencerPost $influencerPost)
     {
         //
     }

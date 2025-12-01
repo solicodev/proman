@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('instagram_id');
             $table->text('comment')->nullable();
             $table->enum('credibility',['0','1'])->default(0);
+
+            $table->softDeletes();
             $table->timestamps();
         });
     }
