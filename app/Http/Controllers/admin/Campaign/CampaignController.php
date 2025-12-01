@@ -13,7 +13,8 @@ class CampaignController extends Controller
      */
     public function index()
     {
-        //
+        $campaigns = Campaign::all();
+        return view('admin.campaign.index',get_defined_vars());
     }
 
     /**

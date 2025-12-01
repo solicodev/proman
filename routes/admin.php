@@ -3,6 +3,7 @@
 use App\Http\Controllers\admin\adminController;
 use App\Http\Controllers\admin\Campaign\CampaignAgancyController;
 use App\Http\Controllers\admin\Campaign\CampaignBrandController;
+use App\Http\Controllers\admin\Campaign\CampaignController;
 use App\Http\Controllers\admin\Campaign\InfluencerController;
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\DepartmentController;
@@ -126,6 +127,17 @@ Route::prefix('admin')->name('admin.')->middleware(['auth','SuperAdminCheck'])->
             Route::post('/import', [InfluencerController::class , 'import'])->name('import');
             Route::put('/update/{influencer}', [InfluencerController::class , 'update'])->name('update');
             Route::get('/delete/{influencer}', [InfluencerController::class , 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('campaign')->name('campaign.')->group(function () {
+            Route::get('/', [CampaignController::class , 'index'])->name('index');
+            Route::get('/show/{ticket}', [CampaignController::class , 'show'])->name('show');
+            Route::get('/create', [CampaignController::class , 'create'])->name('create');
+            Route::post('/store', [CampaignController::class , 'store'])->name('store');
+            Route::get('/edit/{campaign}', [CampaignController::class , 'edit'])->name('edit');
+            Route::put('/update/{campaign}', [CampaignController::class , 'update'])->name('update');
+            Route::post('/status/{campaign}', [CampaignController::class , 'status'])->name('status');
+            Route::get('/delete/{campaign}', [CampaignController::class , 'destroy'])->name('destroy');
         });
     });
 });
