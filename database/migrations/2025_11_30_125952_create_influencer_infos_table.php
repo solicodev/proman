@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('average_comment')->nullable();
             $table->enum('status',[0,1,2])->nullable()->comment('0=>in list , 1=>pending , 2=>published');
 
-
+            $table->softDeletes();
             $table->timestamps();
         });
     }
