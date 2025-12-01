@@ -35,12 +35,12 @@
                             <td>
                                 <div class="d-flex">
                                     <a href="#"
-                                       onclick="openEditModal('{{ route('admin.campaign.campaign.update', $campaign->id) }}', JSON.stringify({instagram_id:'{{ $campaign->instagram_id }}', comment:'{{$campaign->comment}}' , credibility:'{{$campaign->credibility}}'}))"
+                                       onclick="openEditModal('{{ route('admin.campaign.update', $campaign->id) }}', JSON.stringify({instagram_id:'{{ $campaign->instagram_id }}', comment:'{{$campaign->comment}}' , credibility:'{{$campaign->credibility}}'}))"
                                        class='text-warning'>
                                         <i class="bx bxs-edit"></i>
                                     </a>
                                     <a href="#"
-                                       onclick="openDeleteModal('{{ route('admin.campaign.campaign.destroy', $campaign->id) }}')"
+                                       onclick="openDeleteModal('{{ route('admin.campaign.destroy', $campaign->id) }}')"
                                        class="text-danger ms-3">
                                         <i class="bx bxs-trash"></i>
                                     </a>
@@ -64,7 +64,7 @@
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('admin.campaign.campaign.store') }}" method="post" id='createForm'>
+                <form action="{{ route('admin.campaign.store') }}" method="post" id='createForm'>
                     @csrf
                     <div class="modal-body">
                         <div class="row g-3">
@@ -111,7 +111,7 @@
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('admin.campaign.campaign.import') }}" method="post" id='createForm' enctype="multipart/form-data">
+                <form action="{{ route('admin.campaign.import') }}" method="post" id='createForm' enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                         <div class="mb-3">

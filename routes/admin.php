@@ -95,6 +95,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth','SuperAdminCheck'])->
 
     Route::prefix('ticket')->name('ticket.')->group(function () {
         Route::get('/', [TicketController::class , 'index'])->name('index');
+
         Route::get('/show/{ticket}', [TicketController::class , 'show'])->name('show');
         Route::get('/create', [TicketController::class , 'create'])->name('create');
         Route::post('/store', [TicketController::class , 'store'])->name('store');
@@ -109,6 +110,16 @@ Route::prefix('admin')->name('admin.')->middleware(['auth','SuperAdminCheck'])->
 
 //    Campaign Routes
     Route::prefix('campaign')->name('campaign.')->group(function () {
+        Route::get('/', [CampaignController::class , 'index'])->name('index');
+        Route::get('/show/{campaign}', [CampaignController::class , 'show'])->name('show');
+        Route::post('/import', [CampaignController::class , 'import'])->name('import');
+        Route::get('/create', [CampaignController::class , 'create'])->name('create');
+        Route::post('/store', [CampaignController::class , 'store'])->name('store');
+        Route::get('/edit/{campaign}', [CampaignController::class , 'edit'])->name('edit');
+        Route::put('/update/{campaign}', [CampaignController::class , 'update'])->name('update');
+        Route::post('/status/{campaign}', [CampaignController::class , 'status'])->name('status');
+        Route::get('/delete/{campaign}', [CampaignController::class , 'destroy'])->name('destroy');
+
         Route::prefix('agancy')->name('agancy.')->group(function () {
             Route::get('/', [CampaignAgancyController::class , 'index'])->name('index');
             Route::post('/store', [CampaignAgancyController::class , 'store'])->name('store');
@@ -129,15 +140,5 @@ Route::prefix('admin')->name('admin.')->middleware(['auth','SuperAdminCheck'])->
             Route::get('/delete/{influencer}', [InfluencerController::class , 'destroy'])->name('destroy');
         });
 
-        Route::prefix('campaign')->name('campaign.')->group(function () {
-            Route::get('/', [CampaignController::class , 'index'])->name('index');
-            Route::get('/show/{ticket}', [CampaignController::class , 'show'])->name('show');
-            Route::get('/create', [CampaignController::class , 'create'])->name('create');
-            Route::post('/store', [CampaignController::class , 'store'])->name('store');
-            Route::get('/edit/{campaign}', [CampaignController::class , 'edit'])->name('edit');
-            Route::put('/update/{campaign}', [CampaignController::class , 'update'])->name('update');
-            Route::post('/status/{campaign}', [CampaignController::class , 'status'])->name('status');
-            Route::get('/delete/{campaign}', [CampaignController::class , 'destroy'])->name('destroy');
-        });
     });
 });

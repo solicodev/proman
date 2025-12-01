@@ -11,10 +11,10 @@ use Spatie\Activitylog\Traits\LogsActivity;
 class InfluencerStory extends Model
 {
     use LogsActivity, SoftDeletes , HasFactory;
+
     protected $guarded = [];
 
     protected $fillable = ['influencer_id','story_link','views','reach','interaction','profile_activity','like_count','share_count','save_count','comment_count','deleted_at','created_at','updated_at'];
-
     protected static $logName = 'Influencer Story';
 
     protected static $logAttributes = ['influencer_id','story_link','views','reach','interaction','profile_activity','like_count','share_count','save_count','comment_count','deleted_at','created_at','updated_at'];
@@ -25,6 +25,7 @@ class InfluencerStory extends Model
     {
         return "Influencer Story has been {$eventName}";
     }
+
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
