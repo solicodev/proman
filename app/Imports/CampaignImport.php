@@ -20,6 +20,8 @@ class CampaignImport implements ToModel, WithHeadingRow
 
     public function model(array $row)
     {
+        $explode_campaign = explode(' - ' , $row['campaign']);
+        dd($explode_campaign);
         $campaign = Campaign::where('name', $row['name'])->first();
     }
 }
