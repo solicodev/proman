@@ -25,6 +25,8 @@ return new class extends Migration
             $table->string('share_count')->nullable();
             $table->string('save_count')->nullable();
             $table->string('comment_count')->nullable();
+
+            $table->softDeletes();
             $table->timestamps();
         });
     }
