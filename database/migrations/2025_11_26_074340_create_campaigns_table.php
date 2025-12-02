@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('start_date_j');
-            $table->string('start_date_m');
+            $table->string('start_date_g');
             $table->string('forecast_end_time_j')->nullable();
-            $table->string('forecast_end_time_m')->nullable();
+            $table->string('forecast_end_time_g')->nullable();
             $table->string('real_end_date_j')->nullable();
-            $table->string('real_end_date_m')->nullable();
+            $table->string('real_end_date_g')->nullable();
             $table->string('budget');
             $table->enum('status',[0,1,2,3,4,5])->default('0')->comment('0=>hold , 1=>in progress , 2=>active , 3=>done , 4=>postponed , 5=>rejected');
 

@@ -15,12 +15,12 @@ class Campaign extends Model
 
     protected $appends = ['CampaignStatus'];
 
-    protected $fillable =['name','start_date_j','start_date_m','forecast_end_time_j','forecast_end_time_m','real_end_date_j','real_end_date_m',
+    protected $fillable =['name','start_date_j','start_date_g','forecast_end_time_j','forecast_end_time_g','real_end_date_j','real_end_date_g',
         'budget','status','user_id','brand_id','agancy_id'];
 
     protected static $logName = 'campaign';
 
-    protected static $logAttributes = ['name','start_date_j','start_date_m','forecast_end_time_j','forecast_end_time_m','real_end_date_j','real_end_date_m',
+    protected static $logAttributes = ['name','start_date_j','start_date_g','forecast_end_time_j','forecast_end_time_g','real_end_date_j','real_end_date_g',
         'budget','status','user_id','brand_id','agancy_id','deleted_at','created_at','updated_at'];
 
     protected static $logOnlyDirty = true;
@@ -33,7 +33,7 @@ class Campaign extends Model
     {
         return LogOptions::defaults()
             ->useLogName('campaign')
-            ->logOnly(['name','start_date_j','start_date_m','forecast_end_time_j','forecast_end_time_m','real_end_date_j','real_end_date_m',
+            ->logOnly(['name','start_date_j','start_date_g','forecast_end_time_j','forecast_end_time_g','real_end_date_j','real_end_date_g',
                 'budget','status','user_id','brand_id','agancy_id','deleted_at','created_at','updated_at'])
             ->logOnlyDirty()
             ->setDescriptionForEvent(fn(string $eventName) => "campaign has been {$eventName}");

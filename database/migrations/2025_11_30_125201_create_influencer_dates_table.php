@@ -17,10 +17,10 @@ return new class extends Migration
             $table->foreign('influencer_id')->references('id')->on('influencers');
 
             $table->string('forecast_date_j')->nullable();
-            $table->string('forecast_date_m')->nullable();
+            $table->string('forecast_date_g')->nullable();
 
             $table->string('publication_date_j')->nullable();
-            $table->string('publication_date_m')->nullable();
+            $table->string('publication_date_g')->nullable();
 
             $table->softDeletes();
             $table->timestamps();

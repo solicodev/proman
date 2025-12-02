@@ -12,13 +12,13 @@ class InfluencerDate extends Model
 {
     use HasFactory ,SoftDeletes ,LogsActivity;
 
-    protected $fillable = ['forecast_date_j','forecast_date_m','publication_date_j','publication_date_m'];
+    protected $fillable = ['forecast_date_j','forecast_date_g','publication_date_j','publication_date_g'];
 
     protected $guarded = [];
 
     protected static $logName = 'Influencer Date';
 
-    protected static $logAttributes = ['forecast_date_j','forecast_date_m','publication_date_j','publication_date_m','deleted_at','created_at','updated_at'];
+    protected static $logAttributes = ['forecast_date_j','forecast_date_g','publication_date_j','publication_date_g','deleted_at','created_at','updated_at'];
 
     protected static $logOnlyDirty = true;
 
@@ -30,7 +30,7 @@ class InfluencerDate extends Model
     {
         return LogOptions::defaults()
             ->useLogName('Influencer Date')
-            ->logOnly(['forecast_date_j','forecast_date_m','publication_date_j','publication_date_m','deleted_at','created_at','updated_at'])
+            ->logOnly(['forecast_date_j','forecast_date_g','publication_date_j','publication_date_g','deleted_at','created_at','updated_at'])
             ->logOnlyDirty()
             ->setDescriptionForEvent(fn(string $eventName) => "Influencer Date has been {$eventName}");
     }

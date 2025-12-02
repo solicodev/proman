@@ -21,7 +21,8 @@ class InfluencerImport implements ToModel , WithHeadingRow
     public function model(array $row)
     {
         $influencer = Influencer::where('instagram_id', $row['id'])->first();
-        if (!$influencer) {
+        if (!$influencer)
+        {
             $influencer = new Influencer();
             $influencer->instagram_id = $row['id'];
             $influencer->comment = $row['comment'] ?? null;
