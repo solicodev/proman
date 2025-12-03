@@ -13,16 +13,15 @@ class Project extends Model
 
     protected static $logName = 'project';
 
-    protected static $logAttributes = ['name','status', 'start_todo_date', 'start_date', 'end_date','manager_id','category_id','department_id','brand_id','project_code','deleted_at','updated_at','created_at'];
+    protected static $logAttributes = ['approving_manager','approve_need','approve_verify','name','status', 'start_todo_date', 'start_date', 'end_date','manager_id','category_id','department_id','brand_id','project_code','deleted_at','updated_at','created_at'];
 
     protected static $logOnlyDirty = true;
-
 
     public function getDescriptionForEvent(string $eventName): string
     {
         return "task has been {$eventName}";
     }
-    protected $fillable = ['project_code', 'name' , 'start_date' , 'end_date' , 'status' , 'manager_id' , 'category_id' , 'department_id' , 'start_todo_date'];
+    protected $fillable = ['approving_manager','approve_need','approve_verify','project_code', 'name' , 'start_date' , 'end_date' , 'status' , 'manager_id' , 'category_id' , 'department_id' , 'start_todo_date'];
 
 
     public $status_english =[
@@ -103,7 +102,7 @@ class Project extends Model
     {
         return LogOptions::defaults()
             ->useLogName('project')
-            ->logOnly(['name','status', 'start_todo_date', 'start_date', 'end_date','manager_id','category_id','department_id','brand_id','project_code','deleted_at','updated_at','created_at'])
+            ->logOnly(['approving_manager','approve_need','approve_verify','name','status', 'start_todo_date', 'start_date', 'end_date','manager_id','category_id','department_id','brand_id','project_code','deleted_at','updated_at','created_at'])
             ->logOnlyDirty()
             ->setDescriptionForEvent(fn(string $eventName) => "Task has been {$eventName}");
     }

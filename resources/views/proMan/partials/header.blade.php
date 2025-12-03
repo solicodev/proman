@@ -777,7 +777,6 @@
                                         {{\Illuminate\Support\Facades\Auth::user()->Name}} <span
                                             class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">{{role_name(\Illuminate\Support\Facades\Auth::user()->getRoleNames()->first())}}</span>
                                     </div>
-
                                     <a href="#" class="fw-semibold text-muted text-hover-primary fs-7">
                                         {{\Illuminate\Support\Facades\Auth::user()->email}} </a>
                                 </div>
@@ -802,13 +801,13 @@
                         <div class="menu-item px-5" data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
                              data-kt-menu-placement="left-start" data-kt-menu-offset="-15px, 0">
                             <a href="#" class="menu-link px-5">
-                                            <span class="menu-title position-relative">
-                                                حالت نمایش
-
-                                                <span class="ms-5 position-absolute translate-middle-y top-50 end-0">
-                                                    <i class="ki-outline ki-night-day theme-light-show fs-2"></i> <i
-                                                        class="ki-outline ki-moon theme-dark-show fs-2"></i> </span>
-                                            </span>
+                                <span class="menu-title position-relative">
+                                    حالت نمایش
+                                    <span class="ms-5 position-absolute translate-middle-y top-50 end-0">
+                                        <i class="ki-outline ki-night-day theme-light-show fs-2"></i>
+                                        <i class="ki-outline ki-moon theme-dark-show fs-2"></i>
+                                    </span>
+                                </span>
                             </a>
 
                             <!--begin::Menu-->
