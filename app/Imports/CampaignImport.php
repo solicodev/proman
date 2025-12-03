@@ -59,14 +59,16 @@ class CampaignImport implements ToModel, WithHeadingRow
                 }
             }
 
-
             $campaign = new Campaign();
+
             $campaign->campaign_code = $explode_campaign[0];
-            if (count($explode_campaign) >= 3) {
-                $campaign->name = $explode_campaign[1] . ' - ' . $explode_campaign[2];
-            } else {
-                $campaign->name = $row['campaign'];
-            }
+
+            dd($explode_campaign,count($explode_campaign) , $row , array_first($explode_campaign) ,
+            array_last($explode_campaign) , array_diff($explode_campaign)
+            );
+
+            $campaign->name = $explode_campaign[1] . ' - ' . $explode_campaign[2];
+
             $campaign->start_date_j = $row['start_campaignshamsi'];
             if ($row['start_campaignshamsi'])
             {

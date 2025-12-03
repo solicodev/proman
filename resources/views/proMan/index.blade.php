@@ -272,7 +272,7 @@
                     <div class="card-header mt-6">
                         <div class="card-title flex-column">
                             <h3 class="fw-bold mb-1">امروز چه کاری باید انجام بشه؟</h3>
-                            <div class="fs-6 text-gray-500">تعداد </div>
+{{--                            <div class="fs-6 text-gray-500">تعداد </div>--}}
                         </div>
                     </div>
                     <div class="card-body p-9 pt-4">
@@ -311,7 +311,7 @@
                                                     </span>
                                                 </div>
 
-                                                <a href="{{ route('dashboard.task.show', $task->id) }}" class="fs-5 fw-bold text-gray-800 text-hover-primary mb-2">
+                                                <a class="fs-5 fw-bold text-gray-800 text-hover-primary mb-2">
                                                     {{ $task->title }}  - {{$task->task_code}}
                                                 </a>
 
