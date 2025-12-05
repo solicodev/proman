@@ -70,7 +70,7 @@
             </div>
             <div class="card-toolbar my-1">
                 <div class="me-6 my-1">
-                    <select id="kt_filter_year" name="year" data-control="select2" data-hide-search="true" class="w-125px form-select form-select-solid form-select-sm">
+                    <select id="kt_filter_year" name="year" data-control="select2" data-hide-search="true" class="w-125px form-select form-select-solid form-select-sm d-none">
                         <option value="All" selected>همه زمان ها</option>
                         <option value="thisyear">امسال</option>
                         <option value="thismonth">این ماه</option>
@@ -79,7 +79,7 @@
                     </select>
                 </div>
                 <div class="me-4 my-1">
-                    <select id="kt_filter_orders" name="orders" data-control="select2" data-hide-search="true" class="w-125px form-select form-select-solid form-select-sm">
+                    <select id="kt_filter_orders" name="orders" data-control="select2" data-hide-search="true" class="w-125px form-select form-select-solid form-select-sm d-none">
                         <option value="All" selected>همه</option>
                         <option value="Approved">درحال بررسی</option>
                         <option value="Declined">برای انجام</option>
@@ -107,9 +107,8 @@
                         <th class="text-start">تاریخ پایان</th>
                         <th class="text-start">وضعیت</th>
                         <th class="text-start">توضیحات پروژه</th>
-                        <th class="text-start">تاریخ</th>
                         <th class="text-start">عملیات</th>
-                        <th class="text-start">عملیات</th>
+                        <th class="text-start">درصد پیشرفت</th>
                     </tr>
                     </thead>
                     <tbody class="fs-6">
@@ -136,7 +135,6 @@
                             <td class="text-start">{{$project->end_date}}</td>
                             <td class="text-start">{!! $project->PanelProjectStatus   !!}</td>
                             <td class="text-start">{{$project->description}}</td>
-                            <td class="text-start">{{verta($project->created_at)->format('Y/m/d')}}</td>
                             <td class="text-start">
                                 @canany(['manager_projectShow' , 'member_projectShow'])
                                 <a href="{{route('dashboard.project.show',$project->id)}}" class="btn btn-light-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="مشاهده">
