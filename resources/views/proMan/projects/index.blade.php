@@ -175,7 +175,7 @@
 
                                 <!--begin::Budget-->
                                 <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 mb-3">
-                                    <div class="fs-6 text-gray-800 fw-bold">{{$project->start_date}}</div>
+                                    <div class="fs-6 text-gray-800 fw-bold">{{$project->end_date}}</div>
                                     <div class="fw-semibold text-gray-500">تاریخ پایان تعیین شده</div>
                                 </div>
                                 <!--end::Budget-->

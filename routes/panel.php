@@ -15,6 +15,7 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
 
     Route::prefix('project')->name('project.')->group(function () {
         Route::get('/', [ProjectController::class, 'index'])->name('index');
+        Route::get('/report', [ProjectController::class, 'report'])->name('report');
 
         Route::get('/redirect/{project}', [ProjectController::class, 'redirect'])->name('redirect');
         Route::get('/show/{project}', [ProjectController::class, 'show'])->name('show');

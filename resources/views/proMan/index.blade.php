@@ -27,17 +27,18 @@
                 </ul>
             </div>
             <div class="d-flex align-self-center flex-center flex-shrink-0">
-                @can('manager_projectAdd')
-                    <a href="{{route('dashboard.project.create')}}" class="btn btn-sm btn-light-success d-flex flex-center ms-3 px-4 py-3" >
-                        ایجاد پروژه<i class="ki-outline ki-plus-square fs-2 ps-5"></i>
-                    </a>
-                @endcan
                 @if(auth()->user()->hasAnyRole(['Manager', 'Super Admin']))
-                    <a href="{{route('dashboard.project.index')}}" target="_blank" class="btn btn-sm btn-light-dark ms-3 px-4 py-3">
-                        پروژه ها
+                    <a href="{{route('dashboard.project.report')}}" target="_blank" class="btn btn-sm btn-outline btn-outline-dashed btn-outline-primary btn-active-light-primary ms-3 px-4 py-3">
+                        مشاهده گزارش پروژه ها
                         <i class="ki-outline ki-chart-line-star fs-2 ps-5"></i>
                     </a>
                 @endif
+                @can('manager_projectAdd')
+                    <a href="{{route('dashboard.project.create')}}" class="btn btn-sm btn-outline btn-outline-dashed btn-outline-success btn-abtn-outline-success d-flex flex-center ms-3 px-4 py-3" >
+                        ایجاد پروژه<i class="ki-outline ki-plus-square fs-2 ps-5"></i>
+                    </a>
+                @endcan
+
             </div>
         </div>
     </div>
