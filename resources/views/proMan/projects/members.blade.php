@@ -37,7 +37,7 @@
             <!--begin::Actions-->
             <div class="d-flex my-0">
                 <!--begin::Select-->
-                <select name="status" data-control="select2" data-hide-search="true" data-placeholder="Filter"  class="form-select form-select-sm border-body bg-body w-150px me-5">
+                <select name="status" data-control="select2" data-hide-search="true" data-placeholder="Filter"  class="form-select form-select-sm border-body bg-body w-150px me-5 d-none">
                     <option value="1">آخرین آپدیت</option>
                     <option value="2">ماه اخیر</option>
                     <option value="3">هفته اخیر</option>

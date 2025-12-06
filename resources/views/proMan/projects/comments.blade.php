@@ -11,7 +11,7 @@
             </div>
             <div class="card-toolbar my-1">
                 <div class="me-6 my-1">
-                    <select id="kt_filter_year" name="year" data-control="select2" data-hide-search="true" class="w-125px form-select form-select-solid form-select-sm">
+                    <select id="kt_filter_year" name="year" data-control="select2" data-hide-search="true" class="w-125px form-select form-select-solid form-select-sm d-none">
                         <option value="All" selected>همه زمان ها</option>
                         <option value="thisyear">امسال</option>
                         <option value="thismonth">این ماه</option>

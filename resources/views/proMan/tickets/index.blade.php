@@ -70,7 +70,7 @@
             </div>
             <div class="card-toolbar my-1">
                 <div class="me-6 my-1">
-                    <select id="kt_filter_year" name="year" data-control="select2" data-hide-search="true" class="w-125px form-select form-select-solid form-select-sm">
+                    <select id="kt_filter_year" name="year" data-control="select2" data-hide-search="true" class="w-125px form-select form-select-solid form-select-sm d-none">
                         <option value="All" selected>همه زمان ها</option>
                         <option value="thisyear">امسال</option>
                         <option value="thismonth">این ماه</option>
@@ -79,7 +79,7 @@
                     </select>
                 </div>
                 <div class="me-4 my-1">
-                    <select id="kt_filter_orders" name="orders" data-control="select2" data-hide-search="true" class="w-125px form-select form-select-solid form-select-sm">
+                    <select id="kt_filter_orders" name="orders" data-control="select2" data-hide-search="true" class="w-125px form-select form-select-solid form-select-sm d-none">
                         <option value="All" selected>همه</option>
                         <option value="Approved">درحال بررسی</option>
                         <option value="Declined">برای انجام</option>

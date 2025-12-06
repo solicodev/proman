@@ -28,13 +28,13 @@
             </div>
             <div class="d-flex align-self-center flex-center flex-shrink-0">
                 @if(auth()->user()->hasAnyRole(['Manager', 'Super Admin']))
-                    <a href="{{route('dashboard.project.report')}}" target="_blank" class="btn btn-sm btn-outline btn-outline-dashed btn-outline-primary btn-active-light-primary ms-3 px-4 py-3">
+                    <a href="{{route('dashboard.project.report')}}" target="_blank" class="btn btn-sm btn-light-primary ms-3 px-4 py-3">
                         مشاهده گزارش پروژه ها
                         <i class="ki-outline ki-chart-line-star fs-2 ps-5"></i>
                     </a>
                 @endif
                 @can('manager_projectAdd')
-                    <a href="{{route('dashboard.project.create')}}" class="btn btn-sm btn-outline btn-outline-dashed btn-outline-success btn-abtn-outline-success d-flex flex-center ms-3 px-4 py-3" >
+                    <a href="{{route('dashboard.project.create')}}" class="btn btn-sm btn-light-success d-flex flex-center ms-3 px-4 py-3" >
                         ایجاد پروژه<i class="ki-outline ki-plus-square fs-2 ps-5"></i>
                     </a>
                 @endcan
@@ -136,9 +136,9 @@
                                 <div class="fw-semibold">{{ $last->name }}</div>
 
                                 <div class="d-flex fw-bold">
-{{--                                    <i class="ki-outline ki-arrow-up-right fs-3 me-1 text-success"></i>--}}
+                                    {{--                                    <i class="ki-outline ki-arrow-up-right fs-3 me-1 text-success"></i>--}}
                                     {{ $explode_end_date[0] }}
-{{--                                    {{ verta($last->end_date_only)->format('Y/m/d') }}--}}
+                                    {{--                                    {{ verta($last->end_date_only)->format('Y/m/d') }}--}}
                                 </div>
                             </div>
 
@@ -273,7 +273,7 @@
                     <div class="card-header mt-6">
                         <div class="card-title flex-column">
                             <h3 class="fw-bold mb-1">امروز چه کاری باید انجام بشه؟</h3>
-{{--                            <div class="fs-6 text-gray-500">تعداد </div>--}}
+                            {{--                            <div class="fs-6 text-gray-500">تعداد </div>--}}
                         </div>
                     </div>
                     <div class="card-body p-9 pt-4">
@@ -321,9 +321,9 @@
                                                 </div>
                                             </div>
 
-{{--                                            <a href="{{ route('dashboard.task.show', $task->id) }}" class="btn btn-bg-light btn-light-primary btn-sm">--}}
-{{--                                                مشاهده تسک<i class="ki-outline ki-eye fs-5 ps-3"></i>--}}
-{{--                                            </a>--}}
+                                            {{--                                            <a href="{{ route('dashboard.task.show', $task->id) }}" class="btn btn-bg-light btn-light-primary btn-sm">--}}
+                                            {{--                                                مشاهده تسک<i class="ki-outline ki-eye fs-5 ps-3"></i>--}}
+                                            {{--                                            </a>--}}
                                         </div>
                                     @empty
                                         <div class="text-center text-gray-500 mt-10">تسکی برای این روز وجود ندارد</div>
@@ -332,7 +332,7 @@
                                 </div>
                             @endforeach
                         </div>
-{{--                        {{$daysPaginated->links("pagination::bootstrap-5")}}--}}
+                        {{--                        {{$daysPaginated->links("pagination::bootstrap-5")}}--}}
                     </div>
                 </div>
             </div>
