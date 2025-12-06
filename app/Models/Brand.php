@@ -12,6 +12,10 @@ class Brand extends Model
     {
         return $this->belongsTo(Photo::class,'photo_id');
     }
+    public function department()
+    {
+        return $this->belongsToMany(Department::class,'department_brand' , 'department_id' , 'brand_id');
+    }
 
     public function sumcat()
     {

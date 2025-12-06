@@ -133,11 +133,11 @@
                             <td class="text-start">{{$project->user?->Name}}</td>
                             <td class="text-start">{{$project->start_date}}</td>
                             <td class="text-start">{{$project->end_date}}</td>
-                            <td class="text-start">{!! $project->PanelProjectStatus   !!}</td>
+                            <td class="text-start">{!! $project->PanelProjectStatus  !!}</td>
                             <td class="text-start">{{$project->description}}</td>
                             <td class="text-start">
                                 @canany(['manager_projectShow' , 'member_projectShow'])
-                                <a href="{{route('dashboard.project.show',$project->id)}}" class="btn btn-light-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="مشاهده">
+                                <a href="{{route('dashboard.project.show',$project->id)}}" class="btn btn-light-primary btn-sm p-2" data-bs-toggle="tooltip" data-bs-placement="top" title="مشاهده">
                                     <i class="ki-outline ki-eye fs-6 px-2"></i>
                                 </a>
                                 @endcanany
@@ -152,10 +152,8 @@
                                     @elseif($project->status == 2) bg-success
                                     @elseif($project->status == 3) bg-light-secondary
                                     @elseif($project->status == 4) badge-light
-                                 @endif  rounded h-10px" role="progressbar" style="width: {{ $project->progress }}%"
+                                    @endif  rounded h-10px" role="progressbar" style="width: {{ $project->progress }}%"
                                          aria-valuenow=" {{ round($project->progress) }}%" aria-valuemin="0" aria-valuemax="100">
-
-
                                     </div>
                                 </div>
                             </td>

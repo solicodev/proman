@@ -79,7 +79,5 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
     Route::put('/access/update/{user}' , [PanelController::class,'accessUpdate'])->name('access.update');
     Route::get('/profile/{user}' , [UserController::class,'profile'])->name('profile');
     Route::get('/profile/update/{user}' , [UserController::class,'profileUpdate'])->name('profile.update');
-
-
 });
 

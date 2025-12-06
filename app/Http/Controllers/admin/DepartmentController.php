@@ -22,7 +22,7 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        $departments = Department::get();
+        $departments = Department::orderBy('created_at', 'desc')->get();
         $parents = Department::whereNull('parent_id')->get();
         return view('admin.departments.index',get_defined_vars());
     }

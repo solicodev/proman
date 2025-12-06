@@ -86,101 +86,111 @@
             </li>
 
             <li class="menu-label">مدیریت پروژه ها</li>
-{{--                <li class="menu-label">مدیریت دپارتمان ها</li>--}}
-                <li>
-                    <a href="{{route('admin.department.index')}}">
-                        <div class="parent-icon">
+            {{--                <li class="menu-label">مدیریت دپارتمان ها</li>--}}
+            <li>
+                <a href="{{route('admin.department.index')}}">
+                    <div class="parent-icon">
 
-                            <i  class='bx bx-home-circle'>
-                            </i>
-                        </div>
-                        <div class="menu-title"> دپارتمان ها</div>
-                    </a>
-                </li>
-{{--                <li class="menu-label">مدیریت پرسنل</li>--}}
-                <li>
-                    <a href="{{route('admin.position.index')}}">
-                        <div class="parent-icon">
+                        <i  class='bx bx-home-circle'>
+                        </i>
+                    </div>
+                    <div class="menu-title"> دپارتمان/بیزنس</div>
+                </a>
+            </li>
+            <li>
+                <a href="{{route('admin.brand.index')}}">
+                    <div class="parent-icon">
 
-                            <i  class='bx bx-list-check'>
-                            </i>
-                        </div>
-                        <div class="menu-title"> پوزیشن ها</div>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{route('admin.user.index')}}">
-                        <div class="parent-icon">
+                        <i  class='bx bx-home-circle'>
+                        </i>
+                    </div>
+                    <div class="menu-title"> برند ها</div>
+                </a>
+            </li>
+            {{--                <li class="menu-label">مدیریت پرسنل</li>--}}
+            <li>
+                <a href="{{route('admin.position.index')}}">
+                    <div class="parent-icon">
 
-                            <i  class='bx bx-list-check'>
-                            </i>
-                        </div>
-                        <div class="menu-title"> پرسنل</div>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{route('admin.ticket.index')}}">
-                        <div class="parent-icon">
+                        <i  class='bx bx-list-check'>
+                        </i>
+                    </div>
+                    <div class="menu-title"> پوزیشن ها</div>
+                </a>
+            </li>
+            <li>
+                <a href="{{route('admin.user.index')}}">
+                    <div class="parent-icon">
 
-                            <i  class='bx bx-list-check'>
-                            </i>
-                        </div>
-                        <div class="menu-title"> تیکت ها</div>
-                    </a>
-                </li>
-{{--                <li class="menu-label">مدیریت پروژه ها</li>--}}
-                <li>
-                    <a href="{{route('admin.category.index')}}">
-                        <div class="parent-icon">
+                        <i  class='bx bx-list-check'>
+                        </i>
+                    </div>
+                    <div class="menu-title"> پرسنل</div>
+                </a>
+            </li>
+            <li>
+                <a href="{{route('admin.ticket.index')}}">
+                    <div class="parent-icon">
 
-                            <i  class='bx bx-list-check'>
-                            </i>
-                        </div>
-                        <div class="menu-title"> دسته بندی ها</div>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{route('admin.project.index')}}">
-                        <div class="parent-icon">
+                        <i  class='bx bx-list-check'>
+                        </i>
+                    </div>
+                    <div class="menu-title"> تیکت ها</div>
+                </a>
+            </li>
+            {{--                <li class="menu-label">مدیریت پروژه ها</li>--}}
+            <li>
+                <a href="{{route('admin.category.index')}}">
+                    <div class="parent-icon">
 
-                            <i  class='bx bx-list-check'>
-                            </i>
-                        </div>
-                        <div class="menu-title"> پروژه ها</div>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{route('admin.task.index')}}">
-                        <div class="parent-icon">
+                        <i  class='bx bx-list-check'>
+                        </i>
+                    </div>
+                    <div class="menu-title"> دسته بندی ها</div>
+                </a>
+            </li>
+            <li>
+                <a href="{{route('admin.project.index')}}">
+                    <div class="parent-icon">
 
-                            <i  class='bx bx-list-check'>
-                            </i>
-                        </div>
-                        <div class="menu-title"> تسک ها</div>
-                    </a>
-                </li>
-{{--                <li class="menu-label">مدیریت رسانه ها</li>--}}
-                <li>
-                    <a href="{{route('admin.photo.index')}}">
-                        <div class="parent-icon">
+                        <i  class='bx bx-list-check'>
+                        </i>
+                    </div>
+                    <div class="menu-title"> پروژه ها</div>
+                </a>
+            </li>
+            <li>
+                <a href="{{route('admin.task.index')}}">
+                    <div class="parent-icon">
 
-                            <i  class='bx bx-list-check'>
-                            </i>
-                        </div>
-                        <div class="menu-title"> رسانه ها</div>
-                    </a>
-                </li>
-{{--                <li class="menu-label">مدیریت دسترسی ها</li>--}}
-                <li>
-                    <a href="{{route('admin.permission.index')}}">
-                        <div class="parent-icon">
+                        <i  class='bx bx-list-check'>
+                        </i>
+                    </div>
+                    <div class="menu-title"> تسک ها</div>
+                </a>
+            </li>
+            {{--                <li class="menu-label">مدیریت رسانه ها</li>--}}
+            <li>
+                <a href="{{route('admin.photo.index')}}">
+                    <div class="parent-icon">
 
-                            <i  class='bx bx-list-check'>
-                            </i>
-                        </div>
-                        <div class="menu-title"> دسترسی ها</div>
-                    </a>
-                </li>
+                        <i  class='bx bx-list-check'>
+                        </i>
+                    </div>
+                    <div class="menu-title"> رسانه ها</div>
+                </a>
+            </li>
+            {{--                <li class="menu-label">مدیریت دسترسی ها</li>--}}
+            <li>
+                <a href="{{route('admin.permission.index')}}">
+                    <div class="parent-icon">
+
+                        <i  class='bx bx-list-check'>
+                        </i>
+                    </div>
+                    <div class="menu-title"> دسترسی ها</div>
+                </a>
+            </li>
 
             {{--            <li>--}}
             {{--                <a href="javascript:;" class="has-arrow">--}}

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\adminController;
+use App\Http\Controllers\admin\BrandController;
 use App\Http\Controllers\admin\Campaign\CampaignAgancyController;
 use App\Http\Controllers\admin\Campaign\CampaignBrandController;
 use App\Http\Controllers\admin\Campaign\CampaignController;
@@ -63,6 +64,12 @@ Route::prefix('admin')->name('admin.')->middleware(['auth','SuperAdminCheck'])->
         Route::post('/store', [DepartmentController::class , 'store'])->name('store');
         Route::put('/update/{department}', [DepartmentController::class , 'update'])->name('update');
         Route::get('/delete/{department}', [DepartmentController::class , 'destroy'])->name('destroy');
+    });
+    Route::prefix('brand')->name('brand.')->group(function () {
+        Route::get('/', [BrandController::class , 'index'])->name('index');
+        Route::post('/store', [BrandController::class , 'store'])->name('store');
+        Route::put('/update/{brand}', [BrandController::class , 'update'])->name('update');
+        Route::get('/delete/{brand}', [BrandController::class , 'destroy'])->name('destroy');
     });
 
     Route::prefix('category')->name('category.')->group(function () {
