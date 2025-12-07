@@ -23,6 +23,7 @@ class Project extends Model
     }
     protected $fillable = ['approving_manager','approve_need','approve_verify','project_code', 'name' , 'start_date' , 'end_date' , 'status' , 'manager_id' , 'category_id' , 'department_id' , 'start_todo_date'];
 
+    protected $appends = ['PanelApproveVerify','PanelApprovingManager','ProjectStatus','PanelProjectStatus'];
 
     public $status_english =[
         '0' => 'pending' ,
@@ -59,9 +60,36 @@ class Project extends Model
         return $this->panelstatuses[$this->status] ?? '';
     }
 
+    public $panelapproving = [
+        '0' => '<span class="text-success" style="font-size: 0.85rem;">دارد</span>',
+        '1' => '<span class="text-warning" style="font-size: 0.85rem;"> ندارد</span>',
+    ];
+
+
+    public function getPanelApprovingManagerAttribute()
+    {
+        return $this->panelapproving[$this->approve_need] ?? '';
+    }
+
+    public $panelapproveVerify = [
+        '0' => '<span class="text-success" style="font-size: 0.85rem;">تایید شد</span>',
+        '1' => '<span class="text-warning" style="font-size: 0.85rem;"> تایید نشد</span>',
+    ];
+
+
+    public function getPanelApproveVerifyAttribute()
+    {
+        return $this->panelapproveVerify[$this->approve_verify] ?? '';
+    }
+
     public function manager()
     {
         return $this->belongsTo(User::class , 'manager_id');
+    }
+
+    public function approvingManager()
+    {
+        return $this->belongsTo(User::class , 'approving_manager');
     }
 
     public function category()

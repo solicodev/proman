@@ -194,8 +194,8 @@ class ProjectController extends Controller
 
 //            DB::beginTransaction();
 //            $photos = explode(',', $request->input('photos')[0]);
-            $project = $this->projectService->store($request->all());
-            return redirect(route('dashboard.project.redirect',$project->id))->with('flash_message', 'با موفقیت ایجاد شد');
+        $project = $this->projectService->store($request->all());
+        return redirect(route('dashboard.project.redirect',$project->id))->with('flash_message', 'با موفقیت ایجاد شد');
         try {
             DB::commit();
         } catch (Exception $exception) {
@@ -321,7 +321,34 @@ class ProjectController extends Controller
     }
 
 
+    public function filter()
+    {
 
+    }
+
+    public function approveVerify(Project $project , Request $request)
+    {
+
+        $project->approve_verify = $request->approve_verify;
+        $project->update();
+
+        try {
+            return redirect()->back()->with('flash_message', ' تغییرات اعمال شد');
+        } catch (Exception $exception) {
+            return redirect()->back()->with('err_message', 'خطایی رخ داد مجددا تلاش کنید');
+        }
+    }
+
+    public function status(Project $project , Request $request)
+    {
+        try {
+            $project->status = $request->status;
+            $project->update();
+            return redirect()->back()->with('flash_message', 'وضعیت تغییر کرد');
+        } catch (Exception $exception) {
+            return redirect()->back()->with('err_message', 'خطایی رخ داد مجددا تلاش کنید');
+        }
+    }
 
 
 }

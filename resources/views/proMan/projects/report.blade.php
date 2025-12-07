@@ -13,7 +13,7 @@
                 <div class="page-title d-flex align-items-center me-3">
                     <!--begin::Title-->
                     <h1 class="page-heading d-flex flex-column justify-content-center text-gray-900 fw-bold fs-lg-2x gap-2">
-                        <span>پروژه های من</span>
+                        <span>گزارش پروژه ها</span>
 
                     </h1>
                     <!--end::Title-->
@@ -39,7 +39,7 @@
 
                     <!--begin::Item-->
                     <li class="breadcrumb-item text-gray-700 fw-bold lh-1">
-                        پروژه های من
+                        گزارش پروژه ها
                     </li>
                     <!--end::Item-->
 
@@ -69,6 +69,17 @@
                 <div class="fs-6 text-gray-500"></div>
             </div>
             <div class="card-toolbar my-1">
+                <div class="me-6 my-1">
+                    <form action="{{route('dashboard.project.report.filter')}}" method="post">
+                        @csrf
+                    <select  name="filter" data-control="select2" data-hide-search="true" class="w-325px form-select form-select-solid form-select-sm ">
+                        <option value="approve_verify" selected>مورد تایید آقای سلیمانی</option>
+                        <option value="approve_need">برای تایید آقای سلیمانی</option>
+                        <option value="approving_manager">به استحضار آقای سلیمانی</option>
+                        <option value="other">سایر موارد</option>
+                    </select>
+                    </form>
+                </div>
                 <div class="me-6 my-1">
                     <select id="kt_filter_year" name="year" data-control="select2" data-hide-search="true" class="w-125px form-select form-select-solid form-select-sm d-none">
                         <option value="All" selected>همه زمان ها</option>
@@ -102,17 +113,25 @@
                         <th class="text-start">ردیف</th>
                         <th class="text-start">برند</th>
                         <th class="text-start">بیزنس</th>
+                        <th class="text-start">نیاز به تایید</th>
                         <th class="text-start">مدیر تایید کننده</th>
+                        <th class="text-start">تایید</th>
                         <th class="text-start">تاریخ شروع</th>
                         <th class="text-start">تاریخ پایان</th>
                         <th class="text-start">وضعیت</th>
                         <th class="text-start">توضیحات پروژه</th>
                         <th class="text-start">عملیات</th>
-                        <th class="text-start">درصد پیشرفت</th>
+                        <th class="text-start"> تایید</th>
+                        <th class="text-start"> تغییر وضعیت</th>
+{{--                        <th class="text-start">درصد پیشرفت</th>--}}
                     </tr>
                     </thead>
                     <tbody class="fs-6">
                     @foreach($projects as $project)
+                        @php
+                        $start_date = explode(' ',$project->start_date);
+                        $end_date = explode(' ',$project->end_date);
+                        @endphp
                         <tr>
                             <td>{{$loop->iteration}}</td>
                             <td class="text-start">
@@ -130,33 +149,43 @@
 {{--                                </div>--}}
                             </td>
                             <td class="text-start">{{$project->department?->name}}</td>
-                            <td class="text-start">{{$project->user?->Name}}</td>
-                            <td class="text-start">{{$project->start_date}}</td>
-                            <td class="text-start">{{$project->end_date}}</td>
+                            <td class="text-start">{!! $project->PanelApprovingManager !!}</td>
+                            <td class="text-start" style="font-size: 0.85rem;">{{$project->approvingManager?->Name}}</td>
+                            <td class="text-start">{!! $project->PanelApproveVerify !!}</td>
+                            <td class="text-start" style="font-size: 0.85rem;">{{$start_date[0]}}</td>
+                            <td class="text-start" style="font-size: 0.85rem;">{{$end_date[0]}}</td>
                             <td class="text-start">{!! $project->PanelProjectStatus  !!}</td>
-                            <td class="text-start">{{$project->description}}</td>
+                            <td class="text-start" style="font-size: 0.85rem;">{{$project->description}}</td>
                             <td class="text-start">
                                 @canany(['manager_projectShow' , 'member_projectShow'])
-                                <a href="{{route('dashboard.project.show',$project->id)}}" class="btn btn-light-primary btn-sm p-2" data-bs-toggle="tooltip" data-bs-placement="top" title="مشاهده">
+                                <a href="{{route('dashboard.project.show',$project->id)}}" class="btn btn-light-primary btn-sm p-1" data-bs-toggle="tooltip" data-bs-placement="top" title="مشاهده">
                                     <i class="ki-outline ki-eye fs-6 px-2"></i>
                                 </a>
                                 @endcanany
                             </td>
-                            <td>
-                                <div class="h-10px w-100 bg-light mb-5" data-bs-toggle="tooltip"
-                                     @if($project->progress > 0)
-                                     title="این پروژه {{ round($project->progress) }}% تکمیل شد "
-                                    @endif>
-                                    <div class="@if($project->status == 0) bg-danger
-                                    @elseif($project->status == 1) bg-primary
-                                    @elseif($project->status == 2) bg-success
-                                    @elseif($project->status == 3) bg-light-secondary
-                                    @elseif($project->status == 4) badge-light
-                                    @endif  rounded h-10px" role="progressbar" style="width: {{ $project->progress }}%"
-                                         aria-valuenow=" {{ round($project->progress) }}%" aria-valuemin="0" aria-valuemax="100">
-                                    </div>
-                                </div>
+                            <td class="text-start">
+                                <a href="#" onclick="openEditModal('{{ route('dashboard.project.approveVerify', $project->id) }}', JSON.stringify({project_code:'{{ $project->project_code }}' ,approve_verify:'{{$project->approve_verify}}' }))"
+                                   class="btn btn-sm btn-light-primary p-1"> اعمال تایید<i class="ki-outline ki-pencil fs-7 px-2"></i></a>
                             </td>
+                            <td class="text-start">
+                                <a href="#" onclick="openStatusModal('{{ route('dashboard.project.status', $project->id) }}', JSON.stringify({project_code:'{{ $project->project_code }}' ,status:'{{$project->status}}' }))"
+                                   class="btn btn-sm btn-light-primary p-1"> تغییر وضعیت<i class="ki-outline ki-pencil fs-7 px-2"></i></a>
+                            </td>
+{{--                            <td>--}}
+{{--                                <div class="h-10px w-100 bg-light mb-5" data-bs-toggle="tooltip"--}}
+{{--                                     @if($project->progress > 0)--}}
+{{--                                     title="این پروژه {{ round($project->progress) }}% تکمیل شد "--}}
+{{--                                    @endif>--}}
+{{--                                    <div class="@if($project->status == 0) bg-danger--}}
+{{--                                    @elseif($project->status == 1) bg-primary--}}
+{{--                                    @elseif($project->status == 2) bg-success--}}
+{{--                                    @elseif($project->status == 3) bg-light-secondary--}}
+{{--                                    @elseif($project->status == 4) badge-light--}}
+{{--                                    @endif  rounded h-10px" role="progressbar" style="width: {{ $project->progress }}%"--}}
+{{--                                         aria-valuenow=" {{ round($project->progress) }}%" aria-valuemin="0" aria-valuemax="100">--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </td>--}}
                         </tr>
                     @endforeach
                     </tbody>
@@ -165,9 +194,160 @@
         </div>
     </div>
     <!--begin::Modal - Support Center - Create project-->
+    <div class="modal fade" id="kt_modal_approving_verify" aria-labelledby="approvingModalLabel" tabindex="-1" aria-hidden="true">
+        <!--begin::Modal dialog-->
+        <div class="modal-dialog modal-dialog-centered mw-300px" >
+            <!--begin::Modal content-->
+            <div class="modal-content rounded">
+                <!--begin::Modal header-->
+                <div class="modal-header pb-0 border-0 " id="modalTitle">
+                    <!--begin::Close-->
+                    <h6 id="approvingModalLabel">
+                        گزینه مورد نظر را انتخاب کنید
+                    </h6>
+                    <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                        <i class="ki-outline ki-cross fs-1"></i>
+                    </div>
+                    <!--end::Close-->
+                </div>
+                <!--begin::Modal header-->
+
+                <!--begin::Modal body-->
+                <div class="modal-body scroll-y px-5 justify-content-center ">
+                    <!--begin:Form-->
+                    <div class="stepper stepper-links d-flex flex-column pt-15 between" id="kt_create_account_stepper" data-kt-stepper="true" data-select2-id="select2-data-kt_create_account_stepper" >
+                        <form id="EditAprooveForm" method="post" class="d-flex align-items-center gap-3">
+                            @csrf
+                            <label class="form-check-label text-success">
+                                <input type="radio" id="radio_approved" name="approve_verify" value="0" class="form-check-input" style="width: 1rem; height:1rem"
+                                       onchange="this.form.submit();" >
+                                تایید شد
+                            </label>
+
+                            <label class="form-check-label text-warning">
+                                <input type="radio" id="radio_not_approved" name="approve_verify" value="1" class="form-check-input" style="width: 1rem; height:1rem"
+                                       onchange="this.form.submit();">
+                                تایید نشد
+                            </label>
+
+                        </form>
+                    </div>
+                    <!--end:Form-->
+                </div>
+                <!--end::Modal body-->
+            </div>
+            <!--end::Modal content-->
+        </div>
+        <!--end::Modal dialog-->
+    </div>
 
 
+
+
+    <div class="modal fade" id="kt_modal_status" aria-labelledby="statusModalLabel" tabindex="-1" aria-hidden="true">
+        <!--begin::Modal dialog-->
+        <div class="modal-dialog modal-dialog-centered mw-500px" >
+            <!--begin::Modal content-->
+            <div class="modal-content rounded">
+                <!--begin::Modal header-->
+                <div class="modal-header pb-0 border-0 " id="statusmodalTitle">
+                    <!--begin::Close-->
+                    <h6 id="statusModalLabel">
+                        گزینه مورد نظر را انتخاب کنید
+                    </h6>
+                    <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                        <i class="ki-outline ki-cross fs-1"></i>
+                    </div>
+                    <!--end::Close-->
+                </div>
+                <!--begin::Modal header-->
+
+                <!--begin::Modal body-->
+                <div class="modal-body scroll-y px-5 justify-content-center ">
+                    <!--begin:Form-->
+                    <div class="stepper stepper-links d-flex flex-column pt-15 between" id="kt_create_account_stepper" data-kt-stepper="true" data-select2-id="select2-data-kt_create_account_stepper" >
+                        <form id="EditStatusForm" method="post" class="d-flex align-items-center gap-3">
+                            @csrf
+                            <label class="form-check-label text-warning">
+                                <input type="radio" id="radio_pending" name="status" value="0" class="form-check-input" style="width: 1rem; height:1rem"
+                                       onchange="this.form.submit();" >
+                                درحال بررسی
+                            </label>
+
+                            <label class="form-check-label text-primary">
+                                <input type="radio" id="radio_in_progress" name="status" value="1" class="form-check-input" style="width: 1rem; height:1rem"
+                                       onchange="this.form.submit();">
+                                درحال انجام
+                            </label>
+                            <label class="form-check-label text-success">
+                                <input type="radio" id="radio_completed" name="status" value="2" class="form-check-input" style="width: 1rem; height:1rem"
+                                       onchange="this.form.submit();">
+                                تکمیل شد
+                            </label>
+                            <label class="form-check-label text-secondary">
+                                <input type="radio" id="radio_on_hold" name="status" value="3" class="form-check-input" style="width: 1rem; height:1rem"
+                                       onchange="this.form.submit();">
+                                تعلیق
+                            </label>
+                            <label class="form-check-label text-danger">
+                                <input type="radio" id="radio_canceled" name="status" value="4" class="form-check-input" style="width: 1rem; height:1rem"
+                                       onchange="this.form.submit();">
+                                کنسل شد
+                            </label>
+
+                        </form>
+                    </div>
+                    <!--end:Form-->
+                </div>
+                <!--end::Modal body-->
+            </div>
+            <!--end::Modal content-->
+        </div>
+        <!--end::Modal dialog-->
+    </div>
     @push('scripts')
+
+        <script>
+            function openEditModal(url, currentData) {
+                let data = JSON.parse(currentData);
+
+                $('#approvingModalLabel').text(`اعمال تاییدیه "${data.project_code}"`);
+                $('#editForm #id').val(data.id);
+                $('#EditAprooveForm').attr('action', url);
+                if (data.approve_verify == 0) {
+                    $('#radio_approved').prop('checked', true);
+                } else {
+                    $('#radio_not_approved').prop('checked', true);
+                }
+
+                $('#kt_modal_approving_verify').modal('show');
+            }
+
+            function openStatusModal(url, currentData) {
+                let data = JSON.parse(currentData);
+
+                $('#statusModalLabel').text(`تغییر وضعیت "${data.project_code}"`);
+                $('#editForm #id').val(data.id);
+                $('#EditStatusForm').attr('action', url);
+                if (data.status == 0) {
+                    $('#radio_pending').prop('checked', true);
+                } if (data.status == 1)
+                {
+                    $('#radio_in_progress').prop('checked', true);
+                } if(data.status == 2)
+                {
+                    $('#radio_completed').prop('checked', true);
+                } if(data.status == 3)
+                {
+                    $('#radio_on_hold').prop('checked', true);
+                } if(data.status == 4)
+                {
+                    $('#radio_canceled').prop('checked', true);
+                }
+
+                $('#kt_modal_status').modal('show');
+            }
+        </script>
         <script>
             const uploadUrl = "{{ route('dashboard.upload') }}";
         </script>

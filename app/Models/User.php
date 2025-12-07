@@ -24,7 +24,7 @@ class User extends Authenticatable
 
     public function getDescriptionForEvent(string $eventName): string
     {
-        return "task has been {$eventName}";
+        return "user {$eventName}";
     }
 
     protected $appends = ['Name', 'UserStatus'];
@@ -94,9 +94,6 @@ class User extends Authenticatable
             ->useLogName('User')
             ->logOnly(['first_name','last_name','mobile','confirm_code','personal_id','status','position_id','photo_id','email','created_at','updated_at','deleted_at'])
             ->logOnlyDirty()
-            ->setDescriptionForEvent(fn(string $eventName) => "TaskCheckList has been {$eventName}");
+            ->setDescriptionForEvent(fn(string $eventName) => "user {$eventName}");
     }
-
-
-
 }

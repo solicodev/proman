@@ -133,7 +133,24 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="row g-3 mb-8">
+                                        <div class="col-md-4 fv-row">
+                                            <label class="required fs-6 fw-semibold mb-2">نیاز به تایید مسئول تایید کننده دارد</label>
+                                            <input class="form-check-input" name="manager_check" type="checkbox" value="1" id="flexCheckDefault"/>
 
+                                        </div>
+                                        <!--begin::Col-->
+                                        <div class="col-md-8 fv-row">
+                                            <label class="required fs-6 fw-semibold mb-2">مدیر تایید کننده پروژه</label>
+                                            <select class="form-select form-select-solid"  data-control="select2"
+                                                    data-placeholder="مدیر تایید کننده پروژه" name="approving_manager">
+                                                <option></option>
+                                                @foreach($managers as $manager)
+                                                    <option value="{{$manager->id}}">{{$manager->Name}} - {{role_name($manager->roles()->first()->name)}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div class="fv-row mb-8">
                                         <label class="form-label required">برند</label>
                                         <select class="form-select form-select-solid" data-control="select2"
@@ -183,7 +200,7 @@
                                     <div class="row g-3 mb-8">
                                         <div class="col-md-6 fv-row">
                                             <div class="fv-row mb-8">
-                                                <label class="form-label required">دپارتمان</label>
+                                                <label class="form-label required">دپارتمان/بیزنس</label>
                                                 <select class="form-select form-select-solid" data-control="select2"
                                                         data-placeholder="دپارتمان را انتخاب کنید" name="department_id" required>
                                                     <option></option>
@@ -252,59 +269,59 @@
                                             </div>
                                         </div>
 
-{{--                                        <div class="fv-row mb-8">--}}
-{{--                                            <div class="row g-3 dependencies">--}}
-{{--                                                <div class="form-group depndency align-items-center">--}}
-{{--                                                    <div class="dep">--}}
-{{--                                                        <div class="form-check form-check-custom form-check-solid mt-2 mt-md-11">--}}
-{{--                                                            <div class="mb-10">--}}
-{{--                                                                <div class="form-check">--}}
-{{--                                                                    <input class="form-check-input" type="radio" value="Pr" id="flexCheckDefault1" name="radio2">--}}
-{{--                                                                    <label class="form-check-label" for="flexCheckDefault1">--}}
-{{--                                                                        Pr--}}
-{{--                                                                    </label>--}}
-{{--                                                                </div>--}}
-{{--                                                            </div>--}}
-{{--                                                            <div class="mb-10">--}}
-{{--                                                                <div class="form-check">--}}
-{{--                                                                    <input class="form-check-input" type="radio" value="Po" id="flexCheckDefault1" name="radio2">--}}
-{{--                                                                    <label class="form-check-label" for="flexCheckDefault1">--}}
-{{--                                                                        Po--}}
-{{--                                                                    </label>--}}
-{{--                                                                </div>--}}
-{{--                                                            </div>--}}
-{{--                                                            <div class="mb-10">--}}
-{{--                                                                <div class="form-check">--}}
-{{--                                                                    <input class="form-check-input" type="radio" value="Gr" id="flexCheckDefault1" name="radio2">--}}
-{{--                                                                    <label class="form-check-label" for="flexCheckDefault1">--}}
-{{--                                                                        Gr--}}
-{{--                                                                    </label>--}}
-{{--                                                                </div>--}}
-{{--                                                            </div>--}}
-{{--                                                        </div>--}}
-{{--                                                    </div>--}}
-{{--                                                    <div class="form-group">--}}
-{{--                                                        <label class="form-label">عنوان:</label>--}}
-{{--                                                        <input class='form-control form-control-lg form-control-solid mx-1' type="text" name="title_dependencies[]" placeholder="عنوان" accept="image/*">--}}
-{{--                                                    </div>--}}
-{{--                                                    <div class="form-group">--}}
-{{--                                                        <label class="form-label">توضیحات:</label>--}}
-{{--                                                        <textarea class='form-control form-control-lg form-control-solid' type="text" rows="1" name="description_dependencies[]" placeholder="توضیحات"> </textarea>--}}
-{{--                                                    </div>--}}
-{{--                                                    <div class="d-flex justify-content-end">--}}
-{{--                                                    <button type="button" class="btn btn-link text-danger ms-2" title='حذف'--}}
-{{--                                                            onclick='removeDependency(this)'>--}}
-{{--                                                        <i class="ki-outline ki-trash fs-1"></i>--}}
-{{--                                                    </button>--}}
-{{--                                                    </div>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-{{--                                            <div class="d-flex justify-content-end mt-3">--}}
-{{--                                                <button type="button" class="btn btn-outline-info btn-sm" onclick='addDependency()'>--}}
-{{--                                                    افزودن آپشن یا جزییات به پروژه<i class="ki-outline ki-plus fs-3"></i>--}}
-{{--                                                </button>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
+                                        {{--                                        <div class="fv-row mb-8">--}}
+                                        {{--                                            <div class="row g-3 dependencies">--}}
+                                        {{--                                                <div class="form-group depndency align-items-center">--}}
+                                        {{--                                                    <div class="dep">--}}
+                                        {{--                                                        <div class="form-check form-check-custom form-check-solid mt-2 mt-md-11">--}}
+                                        {{--                                                            <div class="mb-10">--}}
+                                        {{--                                                                <div class="form-check">--}}
+                                        {{--                                                                    <input class="form-check-input" type="radio" value="Pr" id="flexCheckDefault1" name="radio2">--}}
+                                        {{--                                                                    <label class="form-check-label" for="flexCheckDefault1">--}}
+                                        {{--                                                                        Pr--}}
+                                        {{--                                                                    </label>--}}
+                                        {{--                                                                </div>--}}
+                                        {{--                                                            </div>--}}
+                                        {{--                                                            <div class="mb-10">--}}
+                                        {{--                                                                <div class="form-check">--}}
+                                        {{--                                                                    <input class="form-check-input" type="radio" value="Po" id="flexCheckDefault1" name="radio2">--}}
+                                        {{--                                                                    <label class="form-check-label" for="flexCheckDefault1">--}}
+                                        {{--                                                                        Po--}}
+                                        {{--                                                                    </label>--}}
+                                        {{--                                                                </div>--}}
+                                        {{--                                                            </div>--}}
+                                        {{--                                                            <div class="mb-10">--}}
+                                        {{--                                                                <div class="form-check">--}}
+                                        {{--                                                                    <input class="form-check-input" type="radio" value="Gr" id="flexCheckDefault1" name="radio2">--}}
+                                        {{--                                                                    <label class="form-check-label" for="flexCheckDefault1">--}}
+                                        {{--                                                                        Gr--}}
+                                        {{--                                                                    </label>--}}
+                                        {{--                                                                </div>--}}
+                                        {{--                                                            </div>--}}
+                                        {{--                                                        </div>--}}
+                                        {{--                                                    </div>--}}
+                                        {{--                                                    <div class="form-group">--}}
+                                        {{--                                                        <label class="form-label">عنوان:</label>--}}
+                                        {{--                                                        <input class='form-control form-control-lg form-control-solid mx-1' type="text" name="title_dependencies[]" placeholder="عنوان" accept="image/*">--}}
+                                        {{--                                                    </div>--}}
+                                        {{--                                                    <div class="form-group">--}}
+                                        {{--                                                        <label class="form-label">توضیحات:</label>--}}
+                                        {{--                                                        <textarea class='form-control form-control-lg form-control-solid' type="text" rows="1" name="description_dependencies[]" placeholder="توضیحات"> </textarea>--}}
+                                        {{--                                                    </div>--}}
+                                        {{--                                                    <div class="d-flex justify-content-end">--}}
+                                        {{--                                                    <button type="button" class="btn btn-link text-danger ms-2" title='حذف'--}}
+                                        {{--                                                            onclick='removeDependency(this)'>--}}
+                                        {{--                                                        <i class="ki-outline ki-trash fs-1"></i>--}}
+                                        {{--                                                    </button>--}}
+                                        {{--                                                    </div>--}}
+                                        {{--                                                </div>--}}
+                                        {{--                                            </div>--}}
+                                        {{--                                            <div class="d-flex justify-content-end mt-3">--}}
+                                        {{--                                                <button type="button" class="btn btn-outline-info btn-sm" onclick='addDependency()'>--}}
+                                        {{--                                                    افزودن آپشن یا جزییات به پروژه<i class="ki-outline ki-plus fs-3"></i>--}}
+                                        {{--                                                </button>--}}
+                                        {{--                                            </div>--}}
+                                        {{--                                        </div>--}}
                                     </div>
                                 </div>
                             </div>

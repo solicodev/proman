@@ -12,7 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('projects', function (Blueprint $table) {
-            $table->string('approving_manager')->after('status')->comment('مدیر تایید کننده')->nullable();
+            $table->unsignedBigInteger('approving_manager')->after('status')->comment('مدیر تایید کننده')->nullable();
+            $table->foreign('approving_manager')->references('id')->on('users');
+
             $table->enum('approve_need',[0,1])->after('approving_manager')->default(0)->nullable()->comment('0=>yes , 1=>no');
             $table->enum('approve_verify',[0,1])->after('approve_need')->default(0)->nullable()->comment('0=>yes , 1=>no');
         });

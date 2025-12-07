@@ -16,6 +16,9 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
     Route::prefix('project')->name('project.')->group(function () {
         Route::get('/', [ProjectController::class, 'index'])->name('index');
         Route::get('/report', [ProjectController::class, 'report'])->name('report');
+        Route::post('/filter', [ProjectController::class, 'filter'])->name('report.filter');
+        Route::post('/approveVerify/{project}', [ProjectController::class, 'approveVerify'])->name('approveVerify');
+        Route::post('/status/{project}', [ProjectController::class, 'status'])->name('status');
 
         Route::get('/redirect/{project}', [ProjectController::class, 'redirect'])->name('redirect');
         Route::get('/show/{project}', [ProjectController::class, 'show'])->name('show');
