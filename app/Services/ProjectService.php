@@ -15,26 +15,26 @@ class ProjectService
 {
     public function store(array $param)
     {
-
         $rand = rand(111111, 999999);
         $project = new Project();
         $project->name = $param['name'];
         $project->start_date = $param['start_date'];
-        $project->end_date = $param['end_date'];
+        $project->end_date = $param['end_date'] ?? null;
         $project->project_code = 'P_' . $rand;
         $project->manager_id = Auth::id();
-        $project->category_id = $param['category_id'];
+        $project->category_id = $param['category_id'] ?? null;
         $project->department_id = $param['department_id'];
+        $project->brand_id = $param['brand_id'] ?? null;
         $project->description = $param['description'] ?? null;
 
-        if ($param['approve_need'])
+        if (isset($param['approve_need']))
         {
             $project->approve_need  = $param['approve_need'];
             $project->approving_manager = $param['approving_manager'];
         }
         $project->save();
 
-        if($param['photos'])
+        if(isset($param['photos']))
         {
             for($i = 0; $i<count($param['photos']); $i++)
             {

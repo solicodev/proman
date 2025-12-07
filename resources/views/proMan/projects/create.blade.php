@@ -119,7 +119,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6 fv-row">
-                                            <label class="required fs-6 fw-semibold mb-2">تاریخ پایان</label>
+                                            <label class="fs-6 fw-semibold mb-2">تاریخ پایان</label>
                                             <div class="position-relative d-flex align-items-center">
                                                 <i class="ki-outline ki-calendar-8 fs-2 position-absolute mx-4"></i>
                                                 <input name="end_date"
@@ -129,37 +129,51 @@
                                                        placeholder="تاریخ پایان پروژه"
                                                        autocomplete="off"
                                                        value="{{ old('end_date') }}"
-                                                       required />
+                                                        />
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row g-3 mb-8">
                                         <div class="col-md-4 fv-row">
-                                            <label class="required fs-6 fw-semibold mb-2">نیاز به تایید دارد</label>
+                                            <label class=" fs-6 fw-semibold mb-2">نیاز به تایید دارد</label>
                                             <input class="form-check-input" name="approve_need" type="checkbox" value="0" id="flexCheckDefault"/>
 
                                         </div>
                                         <!--begin::Col-->
                                         <div class="col-md-8 fv-row">
-                                            <label class="required fs-6 fw-semibold mb-2">مدیر تایید کننده پروژه</label>
+                                            <label class=" fs-6 fw-semibold mb-2">مدیر تایید کننده پروژه</label>
                                             <select class="form-select form-select-solid"  data-control="select2"
                                                     data-placeholder="مدیر تایید کننده پروژه" name="approving_manager">
                                                 <option></option>
                                                 @foreach($managers as $manager)
-                                                    <option value="{{$manager->id}}">{{$manager->Name}} - {{role_name($manager->roles()->first()->name)}}</option>
+                                                    <option value="{{$manager->id}}" @if(old('approving_manager') == $manager->id) selected @endif>{{$manager->Name}} - {{role_name($manager->roles()->first()->name)}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="fv-row mb-8">
-                                        <label class="form-label required">برند</label>
-                                        <select class="form-select form-select-solid" data-control="select2"
-                                                data-placeholder="برند را انتخاب کنید" name="brand_id" required>
-                                            <option></option>
-                                            @foreach($brands as $brand)
-                                                <option value="{{ $brand->id }}">{{ $brand->name }}</option>
-                                            @endforeach
-                                        </select>
+                                    <div class="row g-3 mb-8">
+                                        <div class="col-md-6 fv-row">
+                                            <div class="fv-row mb-8">
+                                                <label class="form-label required">دپارتمان/بیزنس</label>
+                                                <select class="form-select form-select-solid" data-control="select2"
+                                                        data-placeholder="دپارتمان را انتخاب کنید" name="department_id" required>
+                                                    <option></option>
+                                                    @foreach($departments as $department)
+                                                        <option value="{{ $department->id }}" @if(old('department_id') == $department->id) selected @endif>{{ $department->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">برند</label>
+                                            <select class="form-select form-select-solid" data-control="select2"
+                                                    data-placeholder="برند را انتخاب کنید" name="brand_id">
+                                                <option></option>
+                                                @foreach($brands as $brand)
+                                                    <option value="{{ $brand->id }}" @if(old('brand_id') == $brand->id) selected @endif>{{ $brand->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     </div>
 
                                     {{--                                    <div class="row g-3 mb-8">--}}
@@ -193,31 +207,20 @@
                                                 multiple name="members[]" data-placeholder="اعضای پروژه را انتخاب کنید" required>
                                             <option></option>
                                             @foreach($members as $member)
-                                                <option value="{{ $member->id }}">{{ $member->Name }}</option>
+                                                <option value="{{ $member->id }}" >{{ $member->Name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="row g-3 mb-8">
-                                        <div class="col-md-6 fv-row">
-                                            <div class="fv-row mb-8">
-                                                <label class="form-label required">دپارتمان/بیزنس</label>
-                                                <select class="form-select form-select-solid" data-control="select2"
-                                                        data-placeholder="دپارتمان را انتخاب کنید" name="department_id" required>
-                                                    <option></option>
-                                                    @foreach($departments as $department)
-                                                        <option value="{{ $department->id }}">{{ $department->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
+
 
                                         <div class="col-md-6 fv-row">
-                                            <label class="form-label required">دسته بندی</label>
+                                            <label class="form-label">دسته بندی</label>
                                             <select class="form-select form-select-solid" data-control="select2"
-                                                    data-placeholder="دپارتمان را انتخاب کنید" name="category_id" required>
+                                                    data-placeholder="دپارتمان را انتخاب کنید" name="category_id">
                                                 <option></option>
                                                 @foreach($categories as $category)
-                                                    <option value="{{$category->id}}">{{$category->title}} </option>
+                                                    <option value="{{$category->id}}"  @if(old('category_id') == $category->id) selected @endif>{{$category->title}} </option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -326,7 +329,7 @@
                                 </div>
                             </div>
                             <div class="d-flex justify-content-end">
-                                <button type="submit" onclick="productGallery()" class="btn btn-primary btn-sm"> ثبت پروژه<i class="ki-outline ki-plus-square fs-3 px-2"></i></button>
+                                <button type="submit" class="btn btn-primary btn-sm"> ثبت پروژه<i class="ki-outline ki-plus-square fs-3 px-2"></i></button>
                             </div>
                         </form>
 

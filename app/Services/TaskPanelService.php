@@ -39,11 +39,13 @@ class TaskPanelService
 //            sendSms($manager->mobile, $message);
         }
 
+
+
         $task->watcher_id = $param['watcher_id'];
         $task->duration = intval($param['duration']);
         $task->save();
 
-        if($param['photos'])
+        if(isset($param['photos']))
         {
             for($i = 0; $i<count($param['photos']); $i++)
             {
@@ -56,6 +58,8 @@ class TaskPanelService
             }
         }
 
+
+
         $task->assigners()->attach($param['members']);
         foreach ($param['members'] as $member)
         {
@@ -64,7 +68,6 @@ class TaskPanelService
 //            $message = $member_item->Name . ' تسک ' .$task->task_code .' برای انجام به شما محول شده است لطفا به پنل خود سر بزنید. مدت زمان انجام این تسک ' . $task->duration . ' روز است';
 //            sendSms($member_item->mobile, $message);
         }
-
         return $task;
     }
 

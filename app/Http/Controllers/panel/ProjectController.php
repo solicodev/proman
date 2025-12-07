@@ -49,7 +49,8 @@ class ProjectController extends Controller
         $projects = Project::with(['manager','category','department','members','photos','brand'])->where('manager_id',Auth::id())->get();
         $project_id = Project::with(['manager','category','department','members','photos','brand'])->where('manager_id',Auth::id())->pluck('id')->toArray();
         $last_projects = Project::with(['manager','category','department','members','photos','brand'])->where('manager_id',Auth::id())->take(3)->latest()->get();
-
+        $departments = Department::all();
+        $brands = Brand::all();
         return view('proMan.projects.report',get_defined_vars());
     }
 

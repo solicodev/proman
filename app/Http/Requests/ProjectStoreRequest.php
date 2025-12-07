@@ -27,9 +27,9 @@ class ProjectStoreRequest extends FormRequest
             'name' => 'required',
             'description' => 'nullable',
             'start_date' => 'required',
-            'end_date' => 'required',
+            'end_date' => 'nullable',
             'manager_id' => 'nullable',
-            'category_id' => 'required',
+            'category_id' => 'nullable',
             'members *' => 'required',
             'department_id' => 'required',
             'brand_id' => 'nullable',
@@ -41,8 +41,8 @@ class ProjectStoreRequest extends FormRequest
         return [
             'name.required' => 'وارد کردن نام پروژه الزامی است',
             'start_date.required' => 'زمان شروع پروژه را تعیین کنید',
-            'end_date.required' => 'زمان پایان پروژه را تعیین کنید',
-            'category_id.required' => 'دسته بندی پروژه را انتخاب کنید',
+//            'end_date.required' => 'زمان پایان پروژه را تعیین کنید',
+//            'category_id.required' => 'دسته بندی پروژه را انتخاب کنید',
             'department_id.required' => 'دپارتمان را انتخاب کنید',
             'members.required' => 'اعضای پروژه را انتخاب کنید',
         ];

@@ -479,13 +479,13 @@
 
                         <div class="row g-9 mb-8">
                             <div class="col-md-4 fv-row">
-                                <label class="required fs-6 fw-semibold mb-2">نیاز به تایید مسئول تایید کننده دارد</label>
+                                <label class=" fs-6 fw-semibold mb-2">نیاز به تایید مسئول تایید کننده دارد</label>
                                 <input class="form-check-input" name="manager_check" type="checkbox" value="1" id="flexCheckDefault"/>
 
                             </div>
                             <!--begin::Col-->
                             <div class="col-md-8 fv-row">
-                                <label class="required fs-6 fw-semibold mb-2">مدیر تایید کننده تسک</label>
+                                <label class=" fs-6 fw-semibold mb-2">مدیر تایید کننده تسک</label>
 
                                 <select class="form-select form-select-solid"  data-control="select2"
                                         data-placeholder="مدیر تایید کننده تسک" name="manager_id">

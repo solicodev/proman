@@ -342,7 +342,7 @@
 {{--                                        <i class="ki-outline ki-plus-square fs-6 px-2"></i>--}}
 {{--                                    </a>--}}
                                     <a href="#" class="btn btn-light-warning btn-sm"
-                                       onclick="openDependencyModal('{{ route('dashboard.task.dependency', $tb_task->id) }}',
+                                       onclick="openDependencyModal('{{ route('dashboard.task.dependency', $tb_task->id ?? 0) }}',
                                            JSON.stringify({id: '{{ $tb_task->id }}', title: '{{ $tb_task->title }}'}))">
                                         تعریف وابستگی تسک
                                         <i class="ki-outline ki-plus-square fs-6 px-2"></i>
@@ -424,7 +424,7 @@
                                         <div class="menu-content fs-6 text-gray-900 fw-bold px-3 py-4">افزودن چک لیست</div>
                                     </div>
                                     <div class="separator mb-3 opacity-75"></div>
-                                    <form action="{{ route('dashboard.task.checklist',$task->id) }}" method="post" enctype="multipart/form-data"
+                                    <form action="{{ route('dashboard.task.checklist',$task->id ?? 0) }}" method="post" enctype="multipart/form-data"
                                           class="mx-auto mw-100 w-100 fv-plugins-bootstrap5 fv-plugins-framework needs-validation"
                                           novalidate id="kt_docs_formvalidation_text" autocomplete="off">
                                         @csrf
@@ -556,7 +556,7 @@
                                     </div>
                                     <div class="separator mb-3 opacity-75"></div>
                                     <form method="POST" id="taskStatusForm"
-                                          data-url="{{ route('dashboard.task.update.status', $task->id) }}"
+                                          data-url="{{ route('dashboard.task.update.status', $task->id ?? 0) }}"
                                           data-parent-id="{{ $task->parent_id }}"
                                           class="d-flex align-items-center">
                                         @csrf
@@ -624,7 +624,7 @@
                                     <div id="commentsList"></div>
                                 </div>
                                 <div>
-                                    <form method="POST" id="commentForm" class="mt-4" data-url="{{ route('dashboard.task.comment.add', $task->id) }}">
+                                    <form method="POST" id="commentForm" class="mt-4" data-url="{{ route('dashboard.task.comment.add', $task->id ?? 0) }}">
                                         @csrf
                                         <textarea name="text" class="form-control mb-2" placeholder="افزودن کامنت جدید..." required></textarea>
                                         <div class="d-flex justify-content-end">
@@ -633,7 +633,7 @@
                                     </form>
                                 </div>
 
-                                <input type="hidden" id="taskId" value="{{ $task->id }}">
+                                <input type="hidden" id="taskId" value="{{ $task->id ?? 0}}">
 
                             </div>
                         </div>

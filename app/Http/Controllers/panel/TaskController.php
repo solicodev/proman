@@ -28,6 +28,7 @@ class TaskController extends Controller
     }
     public function index()
     {
+
         $SuperAdminRoles = ['Super Admin'];
         $excludedRoles = ['Manager'];
         $memberRoles = ['Member'];
@@ -62,17 +63,38 @@ class TaskController extends Controller
 
     public function create(Project $project)
     {
+        $SuperAdminRoles = ['Super Admin'];
+        $excludedRoles = ['Manager'];
+        $memberRoles = ['Member'];
+
+        $managers = User::whereHas('roles', function ($query) use ($excludedRoles) {
+            $query->whereIn('name', $excludedRoles);
+        })->whereStatus('1')->latest()->get();
+
+        $members = User::whereHas('roles', function ($query) use ($memberRoles) {
+            $query->whereIn('name', $memberRoles);
+        })->whereStatus('1')->latest()->get();
+
+        $projects = Project::get();;
+
+        $watchers = User::whereDoesntHave('roles', function ($query) use ($SuperAdminRoles) {
+            $query->whereIn('name', $SuperAdminRoles);
+        })->whereStatus('1')->latest()->get();
+        $item_tasks = Task::with(['project','manager','watcher','assigners','photos','predecessors','successors'])->where('project_id',$project->id)->paginate(15);
+
         return view('proMan.tasks.create', get_defined_vars());
     }
     public function store(TaskStoreRequest $request)
     {
+        try {
 //            DB::beginTransaction();
             $this->taskPanelService->store($request->all());
-            return redirect()->back()->with('flash_message', ' با موفقیت ایجاد شد :)');
-            DB::commit();
-        try {
+
+            return redirect()->route('dashboard.project.redirect',$request->project_id)->with('flash_message', ' تسک با موفقیت ایجاد شد :)');
+//            DB::commit();
+
         } catch (Exception $exception) {
-            DB::rollBack();
+//            DB::rollBack();
             return redirect()->back()->with('err_message', 'خطایی رخ داد :('.$exception->getMessage());
         }
     }

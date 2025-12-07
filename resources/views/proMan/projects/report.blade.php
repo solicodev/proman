@@ -61,25 +61,45 @@
         <!--end::Toolbar container-->
     </div>
 
-    <div class="card card-flush mt-6 mt-xl-9">
+    <div class="card card-flush mt-6 mt-xl-9" >
         <div class="card-header mt-5">
             <div class="card-title flex-column">
                 <h3 class="fw-bold mb-1">لیست تمام پروژه ها</h3>
 
                 <div class="fs-6 text-gray-500"></div>
             </div>
-            <div class="card-toolbar my-1">
-                <div class="me-6 my-1">
-                    <form action="{{route('dashboard.project.report.filter')}}" method="post">
-                        @csrf
-                    <select  name="filter" data-control="select2" data-hide-search="true" class="w-325px form-select form-select-solid form-select-sm ">
-                        <option value="approve_verify" selected>مورد تایید آقای سلیمانی</option>
-                        <option value="approve_need">برای تایید آقای سلیمانی</option>
-                        <option value="approving_manager">به استحضار آقای سلیمانی</option>
-                        <option value="other">سایر موارد</option>
-                    </select>
-                    </form>
-                </div>
+            <div class="card-toolbar my-1" id="kt_create_account_stepper" data-kt-stepper="true" data-select2-id="select2-data-kt_create_account_stepper">
+                <form action="{{route('dashboard.project.report.filter')}}" method="post" class="fv-plugins-bootstrap5 fv-plugins-framework" id="kt_docs_formvalidation_text">
+                    @csrf
+                    <div class="d-flex gap-4 mb-8">
+                        <select  name="brand_filter" data-control="select2" data-hide-search="true"
+                                 class="form-select form-select-solid form-select-sm w-325px"
+                                 data-placeholder="برند را انتخاب کنید">
+                            <option></option>
+                            @foreach($brands as $brand)
+                                <option value="{{$brand->id}}">{{$brand->name}}</option>
+                            @endforeach
+                        </select>
+
+                        <select  name="department_filter" data-control="select2" data-hide-search="true"
+                                 class="form-select form-select-solid form-select-sm w-325px"
+                                    data-placeholder="دپارتمان را انتخاب کنید">
+                            <option></option>
+                           @foreach($departments as $department)
+                            <option value="{{$department->id}}">{{$department->name}}</option>
+                            @endforeach
+                        </select>
+
+                        <select  name="filter" data-control="select2" data-hide-search="true"
+                                 class="form-select form-select-solid form-select-sm w-325px">
+                            <option value="approve_verify">مورد تایید آقای سلیمانی</option>
+                            <option value="approve_need">برای تایید آقای سلیمانی</option>
+                            <option value="approving_manager">به استحضار آقای سلیمانی</option>
+                            <option value="other">سایر موارد</option>
+                        </select>
+                    </div>
+                </form>
+
                 <div class="me-6 my-1">
                     <select id="kt_filter_year" name="year" data-control="select2" data-hide-search="true" class="w-125px form-select form-select-solid form-select-sm d-none">
                         <option value="All" selected>همه زمان ها</option>
@@ -111,6 +131,7 @@
                     <thead class="fs-7 text-gray-500 text-uppercase text-start">
                     <tr>
                         <th class="text-start">ردیف</th>
+                        <th class="text-start">نام پروژه</th>
                         <th class="text-start">برند</th>
                         <th class="text-start">بیزنس</th>
                         <th class="text-start">نیاز به تایید</th>
@@ -123,34 +144,36 @@
                         <th class="text-start">عملیات</th>
                         <th class="text-start"> تایید</th>
                         <th class="text-start"> تغییر وضعیت</th>
-{{--                        <th class="text-start">درصد پیشرفت</th>--}}
+                        {{--                        <th class="text-start">درصد پیشرفت</th>--}}
                     </tr>
                     </thead>
                     <tbody class="fs-6">
                     @foreach($projects as $project)
                         @php
-                        $start_date = explode(' ',$project->start_date);
-                        $end_date = explode(' ',$project->end_date);
+                            $start_date = explode(' ',$project->start_date);
+                            $end_date = explode(' ',$project->end_date);
                         @endphp
                         <tr>
                             <td>{{$loop->iteration}}</td>
+                            <td class="text-start fs-7 ">{{$project->name}} - <span class="fs-8 rounded-1 px-1 text-bg-secondary">{{$project->project_code}}</span></td>
+
                             <td class="text-start">
                                 {{$project->brand?->name}}
-{{--                                <div class="d-flex align-items-center">--}}
-{{--                                    <div class="me-5 position-relative">--}}
-{{--                                        <div class="symbol symbol-50px w-50px symbol-circle bg-light">--}}
-{{--                                            @if($project->brand_id)--}}
-{{--                                                <img src="{{route('home')}}/{{$project->brand?->photo?->path}}" alt="image" class="p-3"/>--}}
-{{--                                            @else--}}
-{{--                                                <img src="{{url('panel/assets/media/svg/brand-logos/default.png')}}" alt="image" class="p-3"/>--}}
-{{--                                            @endif--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
+                                {{--                                <div class="d-flex align-items-center">--}}
+                                {{--                                    <div class="me-5 position-relative">--}}
+                                {{--                                        <div class="symbol symbol-50px w-50px symbol-circle bg-light">--}}
+                                {{--                                            @if($project->brand_id)--}}
+                                {{--                                                <img src="{{route('home')}}/{{$project->brand?->photo?->path}}" alt="image" class="p-3"/>--}}
+                                {{--                                            @else--}}
+                                {{--                                                <img src="{{url('panel/assets/media/svg/brand-logos/default.png')}}" alt="image" class="p-3"/>--}}
+                                {{--                                            @endif--}}
+                                {{--                                        </div>--}}
+                                {{--                                    </div>--}}
+                                {{--                                </div>--}}
                             </td>
                             <td class="text-start">{{$project->department?->name}}</td>
                             <td class="text-start">{!! $project->PanelApprovingManager !!}</td>
-                            <td class="text-start" style="font-size: 0.85rem;">{{$project->approvingManager?->Name}}</td>
+                            <td class="text-start" style="font-size: 0.85rem;">@if(!$project->approving_manager ) ندارد@else {{$project->approvingManager?->Name}}@endif </td>
                             <td class="text-start">{!! $project->PanelApproveVerify !!}</td>
                             <td class="text-start" style="font-size: 0.85rem;">{{$start_date[0]}}</td>
                             <td class="text-start" style="font-size: 0.85rem;">{{$end_date[0]}}</td>
@@ -158,34 +181,36 @@
                             <td class="text-start" style="font-size: 0.85rem;">{{$project->description}}</td>
                             <td class="text-start">
                                 @canany(['manager_projectShow' , 'member_projectShow'])
-                                <a href="{{route('dashboard.project.show',$project->id)}}" class="btn btn-light-primary btn-sm p-1" data-bs-toggle="tooltip" data-bs-placement="top" title="مشاهده">
-                                    <i class="ki-outline ki-eye fs-6 px-2"></i>
-                                </a>
+                                    <a href="{{route('dashboard.project.show',$project->id)}}" class="btn btn-light-primary btn-sm p-1" data-bs-toggle="tooltip" data-bs-placement="top" title="مشاهده">
+                                        <i class="ki-outline ki-eye fs-6 px-2"></i>
+                                    </a>
                                 @endcanany
                             </td>
                             <td class="text-start">
+                                @if(isset($project->approve_need))
                                 <a href="#" onclick="openEditModal('{{ route('dashboard.project.approveVerify', $project->id) }}', JSON.stringify({project_code:'{{ $project->project_code }}' ,approve_verify:'{{$project->approve_verify}}' }))"
                                    class="btn btn-sm btn-light-primary p-1"> اعمال تایید<i class="ki-outline ki-pencil fs-7 px-2"></i></a>
+                                @endif
                             </td>
                             <td class="text-start">
                                 <a href="#" onclick="openStatusModal('{{ route('dashboard.project.status', $project->id) }}', JSON.stringify({project_code:'{{ $project->project_code }}' ,status:'{{$project->status}}' }))"
                                    class="btn btn-sm btn-light-primary p-1"> تغییر وضعیت<i class="ki-outline ki-pencil fs-7 px-2"></i></a>
                             </td>
-{{--                            <td>--}}
-{{--                                <div class="h-10px w-100 bg-light mb-5" data-bs-toggle="tooltip"--}}
-{{--                                     @if($project->progress > 0)--}}
-{{--                                     title="این پروژه {{ round($project->progress) }}% تکمیل شد "--}}
-{{--                                    @endif>--}}
-{{--                                    <div class="@if($project->status == 0) bg-danger--}}
-{{--                                    @elseif($project->status == 1) bg-primary--}}
-{{--                                    @elseif($project->status == 2) bg-success--}}
-{{--                                    @elseif($project->status == 3) bg-light-secondary--}}
-{{--                                    @elseif($project->status == 4) badge-light--}}
-{{--                                    @endif  rounded h-10px" role="progressbar" style="width: {{ $project->progress }}%"--}}
-{{--                                         aria-valuenow=" {{ round($project->progress) }}%" aria-valuemin="0" aria-valuemax="100">--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </td>--}}
+                            {{--                            <td>--}}
+                            {{--                                <div class="h-10px w-100 bg-light mb-5" data-bs-toggle="tooltip"--}}
+                            {{--                                     @if($project->progress > 0)--}}
+                            {{--                                     title="این پروژه {{ round($project->progress) }}% تکمیل شد "--}}
+                            {{--                                    @endif>--}}
+                            {{--                                    <div class="@if($project->status == 0) bg-danger--}}
+                            {{--                                    @elseif($project->status == 1) bg-primary--}}
+                            {{--                                    @elseif($project->status == 2) bg-success--}}
+                            {{--                                    @elseif($project->status == 3) bg-light-secondary--}}
+                            {{--                                    @elseif($project->status == 4) badge-light--}}
+                            {{--                                    @endif  rounded h-10px" role="progressbar" style="width: {{ $project->progress }}%"--}}
+                            {{--                                         aria-valuenow=" {{ round($project->progress) }}%" aria-valuemin="0" aria-valuemax="100">--}}
+                            {{--                                    </div>--}}
+                            {{--                                </div>--}}
+                            {{--                            </td>--}}
                         </tr>
                     @endforeach
                     </tbody>
@@ -219,7 +244,7 @@
                         <form id="EditAprooveForm" method="post" class="d-flex align-items-center gap-3">
                             @csrf
                             <label class="form-check-label text-success">
-                                <input type="radio" id="radio_approved" name="approve_verify" value="0" class="form-check-input" style="width: 1rem; height:1rem"
+                                <input type="radio" id="radio_approved" name="approve_verify"  value="0" class="form-check-input" style="width: 1rem; height:1rem"
                                        onchange="this.form.submit();" >
                                 تایید شد
                             </label>
@@ -316,7 +341,7 @@
                 $('#EditAprooveForm').attr('action', url);
                 if (data.approve_verify == 0) {
                     $('#radio_approved').prop('checked', true);
-                } else {
+                } if((data.approve_verify == 1)) {
                     $('#radio_not_approved').prop('checked', true);
                 }
 

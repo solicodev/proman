@@ -63,6 +63,7 @@ class Project extends Model
     public $panelapproving = [
         '0' => '<span class="text-success" style="font-size: 0.85rem;">دارد</span>',
         '1' => '<span class="text-warning" style="font-size: 0.85rem;"> ندارد</span>',
+        '' => '<span class="text-warning" style="font-size: 0.85rem;"> ندارد</span>',
     ];
 
 

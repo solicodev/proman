@@ -1,4 +1,5 @@
 <x-layout>
+    @include('layouts.message')
     <div class="d-flex flex-column flex-column-fluid" data-select2-id="select2-data-135-nh5p">
         <div id="kt_app_toolbar" class="app-toolbar  d-flex pb-3 pb-lg-5 ">
             <div class="d-flex flex-stack flex-row-fluid">
@@ -34,231 +35,165 @@
             <div class="card" data-select2-id="select2-data-134-tiwj">
                 <div class="card-body" data-select2-id="select2-data-133-kmb7">
                     <div class="stepper stepper-links d-flex flex-column pt-15 between" id="kt_create_account_stepper" data-kt-stepper="true" data-select2-id="select2-data-kt_create_account_stepper">
-                        <form action="{{ route('dashboard.project.store') }}" method="post" enctype="multipart/form-data"
-                              class="mx-auto mw-100 w-100 pt-15 pb-10 fv-plugins-bootstrap5 fv-plugins-framework needs-validation"
-                              novalidate id="kt_docs_formvalidation_text" autocomplete="off">
+                        <form action="{{route('dashboard.task.store')}}" method="post" id="kt_modal_new_target_form" class="form needs-validation"  autocomplete="off"  enctype="multipart/form-data">
                             @csrf
+                            <input type="text" hidden="" value="{{$project->id}}" name="project_id">
+                            <!--begin::Heading-->
+                            <div class="mb-13 text-center">
+                                <!--begin::Title-->
+                                <h1 class="mb-3">افزودن تسک</h1>
+                                <!--end::Title-->
 
-                            <div class="row">
-                                <div class="col-lg-8 col-md-7 card shadow-sm p-4">
-                                    <div class="pb-10 pb-lg-12">
-                                        <h2 class="fw-bold text-gray-900">جزئیات تسک</h2>
-                                    </div>
-
-                                    <div class="fv-row mb-10">
-                                        <label class="form-label required">نام تسک</label>
-                                        <input name="name" value="{{ old('name') }}" class="form-control form-control-lg form-control-solid"
-                                               placeholder="نام تسک" required>
-                                    </div>
-
-                                    <div class="row g-3 mb-8">
-                                        <div class="col-md-6 fv-row">
-                                            <label class="required fs-6 fw-semibold mb-2">تاریخ شروع</label>
-                                            <div class="position-relative d-flex align-items-center">
-                                                <i class="ki-outline ki-calendar-8 fs-2 position-absolute mx-4"></i>
-                                                <input name="start_date"
-                                                       class="result form-control form-control-solid ps-12"
-                                                       type="text"
-                                                       data-jdp
-                                                       placeholder="تاریخ شروع تسک"
-                                                       autocomplete="off"
-                                                       value="{{ old('start_date') }}"
-                                                       required />
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 fv-row">
-                                            <label class="required fs-6 fw-semibold mb-2">تاریخ پایان</label>
-                                            <div class="position-relative d-flex align-items-center">
-                                                <i class="ki-outline ki-calendar-8 fs-2 position-absolute mx-4"></i>
-                                                <input name="end_date"
-                                                       class="result form-control form-control-solid ps-12"
-                                                       type="text"
-                                                       data-jdp
-                                                       placeholder="تاریخ پایان تسک"
-                                                       autocomplete="off"
-                                                       value="{{ old('end_date') }}"
-                                                       required />
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="fv-row mb-8">
-                                        <label class="form-label required">برند</label>
-                                        <select class="form-select form-select-solid" data-control="select2"
-                                                data-placeholder="برند را انتخاب کنید" name="brand_id" required>
-                                            <option></option>
-{{--                                            @foreach($brands as $brand)--}}
-{{--                                                <option value="{{ $brand->id }}">{{ $brand->name }}</option>--}}
-{{--                                            @endforeach--}}
-                                        </select>
-                                    </div>
-
-                                    {{--                                    <div class="row g-3 mb-8">--}}
-                                    {{--                                        <div class="col-md-6 fv-row">--}}
-                                    {{--                                            <label class="form-label required">مدیر تسک</label>--}}
-                                    {{--                                            <select class="form-select form-select-solid" data-control="select2"--}}
-                                    {{--                                                    data-placeholder="مدیر تسک را انتخاب کنید" name="manager_id" required>--}}
-                                    {{--                                                <option></option>--}}
-                                    {{--                                                @foreach($managers as $manager)--}}
-                                    {{--                                                    <option value="{{ $manager->id }}">{{ $manager->Name }} - نقش:--}}
-                                    {{--                                                        {{ role_name($manager->roles()->first()->name) }}--}}
-                                    {{--                                                    </option>--}}
-                                    {{--                                                @endforeach--}}
-                                    {{--                                            </select>--}}
-                                    {{--                                        </div>--}}
-
-                                    {{--                                        <div class="col-md-6 fv-row">--}}
-                                    {{--                                            <label class="form-label required">برند</label>--}}
-                                    {{--                                            <select class="form-select form-select-solid" data-control="select2"--}}
-                                    {{--                                                    data-placeholder="برند را انتخاب کنید" name="brand_id" required>--}}
-                                    {{--                                                <option></option>--}}
-                                    {{--                                                @foreach($brands as $brand)--}}
-                                    {{--                                                    <option value="{{ $brand->id }}">{{ $brand->name }}</option>--}}
-                                    {{--                                                @endforeach--}}
-                                    {{--                                            </select>--}}
-                                    {{--                                        </div>--}}
-                                    {{--                                    </div>--}}
-                                    <div class="fv-row mb-8">
-                                        <label class="form-label required">اعضای تسک</label>
-                                        <select class="form-select form-select-solid" data-control="select2"
-                                                multiple name="members[]" data-placeholder="اعضای تسک را انتخاب کنید" required>
-                                            <option></option>
-{{--                                            @foreach($members as $member)--}}
-{{--                                                <option value="{{ $member->id }}">{{ $member->Name }}</option>--}}
-{{--                                            @endforeach--}}
-                                        </select>
-                                    </div>
-                                    <div class="row g-3 mb-8">
-                                        <div class="col-md-6 fv-row">
-                                            <div class="fv-row mb-8">
-                                                <label class="form-label required">دپارتمان</label>
-                                                <select class="form-select form-select-solid" data-control="select2"
-                                                        data-placeholder="دپارتمان را انتخاب کنید" name="department_id" required>
-                                                    <option></option>
-{{--                                                    @foreach($departments as $department)--}}
-{{--                                                        <option value="{{ $department->id }}">{{ $department->name }}</option>--}}
-{{--                                                    @endforeach--}}
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6 fv-row">
-                                            <label class="form-label required">دسته بندی</label>
-                                            <select class="form-select form-select-solid" data-control="select2"
-                                                    data-placeholder="دپارتمان را انتخاب کنید" name="category_id" required>
-                                                <option></option>
-{{--                                                @foreach($categories as $category)--}}
-{{--                                                    <option value="{{$category->id}}">{{$category->title}} </option>--}}
-{{--                                                @endforeach--}}
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="fv-row mb-10">
-                                        <label class="form-label">توضیحات تسک</label>
-                                        <textarea name="description" class="form-control form-control-lg form-control-solid"
-                                                  rows="3">{{ old('description') }}</textarea>
-                                    </div>
-
-
+                                <!--begin::Description-->
+                                <div class="text-muted fw-semibold fs-5">
+                                    برای پروژه
+                                    <a href="#" class="fw-bold link-primary">{{$project->name}} - {{$project->project_code}}</a>.
                                 </div>
+                                <!--end::Description-->
+                            </div>
+                            <!--end::Heading-->
 
-                                <div class="col-lg-4 col-md-5">
-                                    <div class="card shadow-sm p-4">
-                                        <h5 class="fw-bold mb-4">فایل‌های تسک</h5>
-                                        {{--                                        <input type="hidden" name="photos[]" id="pro-photo">--}}
-                                        {{--                                        <div class="dropzone" id="kt_dropzonejs_example_1">--}}
-                                        {{--                                            <!--begin::Message-->--}}
-                                        {{--                                            <div class="dz-message needsclick">--}}
-                                        {{--                                                <i class="ki-duotone ki-file-up fs-3x text-primary">--}}
-                                        {{--                                                    <span class="path1"></span>--}}
-                                        {{--                                                    <span class="path2"></span>--}}
-                                        {{--                                                </i>--}}
+                            <div class="row g-9 mb-8">
+                                <!--begin::Col-->
+                                <div class="col-md-6 fv-row">
+                                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                        <span class="required">عنوان</span>
+                                        <span class="ms-1"  data-bs-toggle="tooltip" title="عنوان تسک را بنویسید" >
+	                                <i class="ki-outline ki-information-5 text-gray-500 fs-6"></i>
+                                </span>
+                                    </label>
+                                    <input type="text" class="form-control form-control-solid" placeholder="عنوان تسک" value="{{old('title')}}" name="title" required/>
+                                    <div class="invalid-feedback">عنوان تسک الزامی است</div>
+                                </div>
+                                <div class="col-md-6 fv-row">
+                                    <label class="required fs-6 fw-semibold mb-2">اولویت تسک </label>
 
-                                        {{--                                                <!--begin::Info-->--}}
-                                        {{--                                                <div class="ms-4">--}}
-                                        {{--                                                    <h3 class="fs-5 fw-bold text-gray-900 mb-1">فایل های مربوط به تسک</h3>--}}
-                                        {{--                                                    <span class="fs-7 fw-semibold text-gray-500">آپلود</span>--}}
-                                        {{--                                                </div>--}}
-                                        {{--                                                <!--end::Info-->--}}
-                                        {{--                                            </div>--}}
-                                        {{--                                        </div>--}}
-                                        <div class="fv-row mb-8">
-                                            <div class="row g-3 images">
-                                                <div class="col-12 d-flex image align-items-center">
-                                                    <input class='form-control form-control-lg form-control-solid' type="file" name="photos[]" accept="image/*">
-                                                    <button type="button" class="btn btn-link text-danger ms-2" title='حذف'
-                                                            onclick='removeImage(this)'>
-                                                        <i class="ki-outline ki-trash fs-1"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div class="d-flex justify-content-end mt-3">
-                                                <button type="button" class="btn btn-sm btn-bg-light btn-active-color-primary" onclick='addImage()'>
-                                                    افزودن فایل<i class="ki-outline ki-plus-square fs-3 px-2"></i>
-                                                </button>
-                                            </div>
-                                        </div>
+                                    <select class="form-select form-select-solid"  data-control="select2" data-hide-search="true"
+                                            data-placeholder="تسک را به کاربران مد نظرتان assign کنید" name="priority">
+                                        <option></option>
+                                        <option value="0">کم</option>
+                                        <option value="1">متوسط</option>
+                                        <option value="2">زیاد</option>
+                                    </select>
+                                </div>
+                                <!--end::Col-->
+                            </div>
+                            <!--end::Input group-->
 
-{{--                                        <div class="fv-row mb-8">--}}
-{{--                                            <div class="row g-3 dependencies">--}}
-{{--                                                <div class="form-group depndency align-items-center">--}}
-{{--                                                    <div class="dep">--}}
-{{--                                                        <div class="form-check form-check-custom form-check-solid mt-2 mt-md-11">--}}
-{{--                                                            <div class="mb-10">--}}
-{{--                                                                <div class="form-check">--}}
-{{--                                                                    <input class="form-check-input" type="radio" value="Pr" id="flexCheckDefault1" name="radio2">--}}
-{{--                                                                    <label class="form-check-label" for="flexCheckDefault1">--}}
-{{--                                                                        Pr--}}
-{{--                                                                    </label>--}}
-{{--                                                                </div>--}}
-{{--                                                            </div>--}}
-{{--                                                            <div class="mb-10">--}}
-{{--                                                                <div class="form-check">--}}
-{{--                                                                    <input class="form-check-input" type="radio" value="Po" id="flexCheckDefault1" name="radio2">--}}
-{{--                                                                    <label class="form-check-label" for="flexCheckDefault1">--}}
-{{--                                                                        Po--}}
-{{--                                                                    </label>--}}
-{{--                                                                </div>--}}
-{{--                                                            </div>--}}
-{{--                                                            <div class="mb-10">--}}
-{{--                                                                <div class="form-check">--}}
-{{--                                                                    <input class="form-check-input" type="radio" value="Gr" id="flexCheckDefault1" name="radio2">--}}
-{{--                                                                    <label class="form-check-label" for="flexCheckDefault1">--}}
-{{--                                                                        Gr--}}
-{{--                                                                    </label>--}}
-{{--                                                                </div>--}}
-{{--                                                            </div>--}}
-{{--                                                        </div>--}}
-{{--                                                    </div>--}}
-{{--                                                    <div class="form-group">--}}
-{{--                                                        <label class="form-label">عنوان:</label>--}}
-{{--                                                        <input class='form-control form-control-lg form-control-solid mx-1' type="text" name="title_dependencies[]" placeholder="عنوان" accept="image/*">--}}
-{{--                                                    </div>--}}
-{{--                                                    <div class="form-group">--}}
-{{--                                                        <label class="form-label">توضیحات:</label>--}}
-{{--                                                        <textarea class='form-control form-control-lg form-control-solid' type="text" rows="1" name="description_dependencies[]" placeholder="توضیحات"> </textarea>--}}
-{{--                                                    </div>--}}
-{{--                                                    <div class="d-flex justify-content-end">--}}
-{{--                                                    <button type="button" class="btn btn-link text-danger ms-2" title='حذف'--}}
-{{--                                                            onclick='removeDependency(this)'>--}}
-{{--                                                        <i class="ki-outline ki-trash fs-1"></i>--}}
-{{--                                                    </button>--}}
-{{--                                                    </div>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-{{--                                            <div class="d-flex justify-content-end mt-3">--}}
-{{--                                                <button type="button" class="btn btn-outline-info btn-sm" onclick='addDependency()'>--}}
-{{--                                                    افزودن آپشن یا جزییات به تسک<i class="ki-outline ki-plus fs-3"></i>--}}
-{{--                                                </button>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
+                            <div class="row g-9 mb-8">
+                                <div class="col-md-6 fv-row">
+                                    <label class="required fs-6 fw-semibold mb-2">تاریخ شروع</label>
+                                    <div class="position-relative d-flex align-items-center">
+                                        <i class="ki-outline ki-calendar-8 fs-2 position-absolute mx-4"></i>
+                                        <input name="start_date"
+                                               class="result form-control form-control-solid ps-12"
+                                               type="text"
+                                               data-jdp
+                                               data-jdp-only-date
+                                               placeholder="تاریخ شروع تسک"
+                                               autocomplete="off"
+                                               value="{{ old('start_date') }}"
+                                               required />
+                                    </div>
+                                </div>
+                                <div class="col-md-6 fv-row">
+                                    <label class="required fs-6 fw-semibold mb-2">مدت زمان انجام تسک</label>
+                                    <div class="position-relative d-flex align-items-center">
+                                        <i class="ki-outline ki-watch fs-2 position-absolute mx-4"></i>
+                                        <input name="duration"
+                                               class="result form-control form-control-solid ps-12"
+                                               type="text"
+                                               placeholder="مدت زمان انجام تسک"
+                                               autocomplete="off"
+                                               value="{{ old('duration') }}"
+                                               required />
                                     </div>
                                 </div>
                             </div>
-                            <div class="d-flex justify-content-end">
-                                <button type="submit" onclick="productGallery()" class="btn btn-primary btn-sm"> ثبت تسک<i class="ki-outline ki-plus-square fs-3 px-2"></i></button>
+                            <!--end::Input group-->
+
+                            <div class="row g-9 mb-8">
+                                <div class="col-md-4 fv-row">
+                                    <label class=" fs-6 fw-semibold mb-2">نیاز به تایید مسئول تایید کننده دارد</label>
+                                    <input class="form-check-input" name="manager_check" type="checkbox" value="1" id="flexCheckDefault"/>
+
+                                </div>
+                                <!--begin::Col-->
+                                <div class="col-md-8 fv-row">
+                                    <label class=" fs-6 fw-semibold mb-2">مدیر تایید کننده تسک</label>
+
+                                    <select class="form-select form-select-solid"  data-control="select2"
+                                            data-placeholder="مدیر تایید کننده تسک" name="manager_id">
+                                        <option></option>
+                                        @foreach($managers as $manager)
+                                            <option value="{{$manager->id}}">{{$manager->Name}} - {{role_name($manager->roles()->first()->name)}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-12 fv-row">
+                                    <label class="required fs-6 fw-semibold mb-2">ناظر تسک</label>
+
+                                    <select class="form-select form-select-solid"  data-control="select2"
+                                            data-placeholder="ناظر تسک" name="watcher_id">
+                                        <option></option>
+                                        @foreach($watchers as $watcher)
+                                            <option value="{{$watcher->id}}">{{ $watcher->Name }} </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <!--end::Col-->
                             </div>
+
+                            <!--begin::Input group-->
+                            <div class="row g-9 mb-8">
+                                <!--begin::Col-->
+                                <div class="col-md-12 fv-row">
+                                    <label class="required fs-6 fw-semibold mb-2">کاربران تسک </label>
+
+                                    <select class="form-select form-select-solid"  data-control="select2"
+                                            multiple  data-placeholder="تسک را به کاربران مد نظرتان assign کنید" name="members[]">
+                                        <option></option>
+                                        @foreach($members as $member)
+                                            <option value="{{$member->id}}">{{$member->Name}} </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <!--end::Col-->
+                            </div>
+                            <!--begin::Input group-->
+                            <div class="d-flex flex-column mb-8">
+                                <label class="fs-6 fw-semibold mb-2">توضیحات تسک</label>
+                                <textarea class="form-control form-control-solid" name="description" data-kt-autosize="true" placeholder="توضیحات تسک">
+                            {{old('description')}}
+                            </textarea>
+                            </div>
+                            <!--end::Input group-->
+                            <div class="row g-9 mb-8">
+                                <label for="gallery" class="form-label">فایل های مربوط به تسک </label>
+                                <input type="file" class="form-control mb-2 mb-md-0" id="gallery"
+                                       name="photos[]" placeholder="تصویر" multiple>
+                                <div class="invalid-feedback">تصویر الزامی است</div>
+                            </div>
+                            <!--begin::Input group-->
+
+
+                            <!--begin::Actions-->
+                            <div class="text-center">
+                                <button type="reset" id="kt_modal_new_target_cancel" class="btn btn-light me-3">
+                                    انصراف
+                                </button>
+
+                                <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary">
+                            <span class="indicator-label">
+                                افزودن تسک
+                            </span>
+                                    <span class="indicator-progress">
+                                کمی صبر کنید ...
+                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                </span>
+                                </button>
+                            </div>
+                            <!--end::Actions-->
                         </form>
 
                         <!--end::Form-->
@@ -274,7 +209,41 @@
 
     </div>
     @push('scripts')
+        <script>
+            FilePond.create(document.querySelector('#featureImage'), {
+                ...options,
+                name: 'photo',
+                server: {
+                    process: (fieldName, file, metadata, load, error, progress, abort) => {
+                        const fileURL = URL.createObjectURL(file);
+                        fetch(fileURL).then(res => res.blob()).then(myBlob => {
+                            load(myBlob);
+                            showCropModal('featureImage', fileURL, 27 / 40);
+                        })
+                    }
+                }
+            });
 
+            FilePond.create(document.querySelector('#innerImage'), {
+                ...options,
+                name: 'large_photo',
+                server: {
+                    process: (fieldName, file, metadata, load, error, progress, abort) => {
+                        const fileURL = URL.createObjectURL(file);
+                        fetch(fileURL).then(res => res.blob()).then(myBlob => {
+                            load(myBlob);
+                            showCropModal('innerImage', fileURL, 16 / 11);
+                        })
+                    }
+                }
+            });
+
+            FilePond.create(document.querySelector('#gallery'), {
+                ...options,
+                storeAsFile: true,
+                allowImagePreview: false
+            });
+        </script>
         <script>
             jalaliDatepicker.startWatch({
                 showTodayBtn: true,
@@ -457,6 +426,18 @@
             // function removeDependency(el) {
             //     $(el).closest('.depndency').remove();
             // }
+
+            $(document).ready(function() {
+                $('select[name="manager_id"]').closest('.fv-row').hide();
+
+                $('#flexCheckDefault').on('change', function() {
+                    if ($(this).is(':checked')) {
+                        $('select[name="manager_id"]').closest('.fv-row').show();
+                    } else {
+                        $('select[name="manager_id"]').closest('.fv-row').hide();
+                    }
+                });
+            });
         </script>
         <script src="{{url('panel/assets/js/custom/widgets.js')}}"></script>
 

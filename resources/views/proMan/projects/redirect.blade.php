@@ -1,4 +1,5 @@
 <x-layout>
+    @include('layouts.message')
 <div id="kt_app_content" class="app-content  flex-column-fluid" >
     <div class="card">
         <div class="card-body">
