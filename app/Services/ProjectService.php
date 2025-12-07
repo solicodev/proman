@@ -26,13 +26,18 @@ class ProjectService
         $project->category_id = $param['category_id'];
         $project->department_id = $param['department_id'];
         $project->description = $param['description'] ?? null;
+
+        if ($param['approve_need'])
+        {
+            $project->approve_need  = $param['approve_need'];
+            $project->approving_manager = $param['approving_manager'];
+        }
         $project->save();
 
         if($param['photos'])
         {
             for($i = 0; $i<count($param['photos']); $i++)
             {
-
                 $photo = new Photo();
                 $photo->path = file_store($param['photos'][$i], 'uploads/projects/', '');
 //                $photo->name = $explode[2];
