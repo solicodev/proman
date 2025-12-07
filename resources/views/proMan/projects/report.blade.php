@@ -77,7 +77,7 @@
                                  data-placeholder="برند را انتخاب کنید">
                             <option></option>
                             @foreach($brands as $brand)
-                                <option value="{{$brand->id}}">{{$brand->name}}</option>
+                                <option value="{{$brand->id}}" {{ request('brand_filter') == $brand->id ? 'selected' : '' }}>{{$brand->name}}</option>
                             @endforeach
                         </select>
 
@@ -86,18 +86,19 @@
                                     data-placeholder="دپارتمان را انتخاب کنید">
                             <option></option>
                            @foreach($departments as $department)
-                            <option value="{{$department->id}}">{{$department->name}}</option>
+                            <option value="{{$department->id}}"  {{ request('department_filter') == $department->id ? 'selected' : '' }}>{{$department->name}}</option>
                             @endforeach
                         </select>
 
                         <select  name="filter" data-control="select2" data-hide-search="true"
                                  class="form-select form-select-solid form-select-sm w-325px">
-                            <option value="approve_verify">مورد تایید آقای سلیمانی</option>
-                            <option value="approve_need">برای تایید آقای سلیمانی</option>
-                            <option value="approving_manager">به استحضار آقای سلیمانی</option>
-                            <option value="other">سایر موارد</option>
+                            <option value="approve_verify"  {{ request('filter') == 'approve_verify' ? 'selected' : '' }}>مورد تایید آقای سلیمانی</option>
+                            <option value="approve_need"  {{ request('filter') == 'approve_need' ? 'selected' : '' }}>برای تایید آقای سلیمانی</option>
+                            <option value="approving_manager" {{ request('filter') == 'approving_manager' ? 'selected' : '' }}>به استحضار آقای سلیمانی</option>
+                            <option value="other" {{ request('filter') == 'other' ? 'selected' : '' }}>سایر موارد</option>
                         </select>
                     </div>
+                    <button type="submit" class="btn btn-sm btn-light-success">فیلتر </button>
                 </form>
 
                 <div class="me-6 my-1">

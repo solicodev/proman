@@ -322,9 +322,28 @@ class ProjectController extends Controller
     }
 
 
-    public function filter()
+    public function filter(Request $request)
     {
+        $query = Project::query();
 
+        if ($request->filled('brand_filter')) {
+            $query->where('brand_id', $request->brand_filter);
+        }
+
+        if ($request->filled('department_filter')) {
+            $query->where('department_id', $request->department_filter);
+        }
+
+        if ($request->filled('filter')) {
+            $query->where('approve_verify', $request->filter);
+        }
+
+        $projects = $query->latest()->get();
+
+        $brands = Brand::all();
+        $departments = Department::all();
+
+        return view('proMan.projects.report', compact('projects','brands','departments'));
     }
 
     public function approveVerify(Project $project , Request $request)
