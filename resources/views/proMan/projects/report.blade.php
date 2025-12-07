@@ -52,7 +52,7 @@
 
             <!--begin::Actions-->
             <div class="d-flex align-self-center flex-center flex-shrink-0">
-                <a href="{{route('dashboard.project.create')}}" class="btn btn-sm btn-light-success d-flex flex-center ms-3 px-4 py-3" data-bs-toggle="modal" data-bs-target="#kt_modal_new_project">
+                <a href="{{route('dashboard.project.create')}}" class="btn btn-sm btn-light-success d-flex flex-center ms-3 px-4 py-3">
                     ایجاد پروژه<i class="ki-outline ki-plus-square fs-2 ps-5"></i>
                 </a>
             </div>

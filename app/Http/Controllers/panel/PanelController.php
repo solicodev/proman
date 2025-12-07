@@ -34,7 +34,7 @@ class PanelController extends Controller
 
         $projects = Project::with(['manager','category','department','members','photos','brand'])->where('manager_id',Auth::id())->get();
 
-        $members = Project::with('members')->get()->pluck('members')->flatten()->unique('id');
+        $members = Project::where('manager_id',Auth::id())->with('members')->get()->pluck('members')->flatten()->unique('id');
 
         $days = [];
 
