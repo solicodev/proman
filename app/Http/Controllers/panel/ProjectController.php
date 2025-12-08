@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Department;
 use App\Models\Photo;
+use App\Models\Position;
 use App\Models\Project;
 use App\Models\ProjectDependency;
 use App\Models\Task;
@@ -333,17 +334,38 @@ class ProjectController extends Controller
         if ($request->filled('department_filter')) {
             $query->where('department_id', $request->department_filter);
         }
-
+        $position = Position::where('title' , 'like' , '%بنیان گذار%')->first()?->users()
+            ->first();
         if ($request->filled('filter')) {
-            $query->where('approve_verify', $request->filter);
+
+            switch ($request->filter) {
+
+                case 'approve_verify':
+                    $query->where('approve_verify', '0');
+                    break;
+
+                case 'approve_need':
+                    $query->where('approve_need', '0');
+                    break;
+
+                case 'approving_manager':
+                    $query->where('inform','0');
+                    break;
+
+                case 'other':
+                    $query->where(function ($q) use ($position) {
+                            $q->whereNull('approving_manager')
+                                ->orWhere('approving_manager', '!=', $position->id);
+                        });
+                    break;
+
+            }
         }
 
-        $projects = $query->latest()->get();
-
+        $projects = $query->latest()->where('manager_id',Auth::id())->get();
         $brands = Brand::all();
         $departments = Department::all();
-
-        return view('proMan.projects.report', compact('projects','brands','departments'));
+        return view('proMan.projects.report',get_defined_vars());
     }
 
     public function approveVerify(Project $project , Request $request)

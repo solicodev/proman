@@ -96,4 +96,9 @@ class User extends Authenticatable
             ->logOnlyDirty()
             ->setDescriptionForEvent(fn(string $eventName) => "user {$eventName}");
     }
+
+    public function position()
+    {
+        return $this->belongsTo(Position::class,'position_id');
+    }
 }

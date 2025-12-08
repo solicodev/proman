@@ -265,6 +265,9 @@ if (!function_exists('new_sms')) {
 
     function sendSms($phone, $otp): false|string
     {
+
+
+
         $url = env('SMS_URL');
         $username = env('SMS_USERNAME');
         $password = env('SMS_PASSWORD');
@@ -289,6 +292,53 @@ if (!function_exists('new_sms')) {
             ]);
             return false;
         }
+
+
+
+
+
+
+//        $url = env('SMS_URL');
+//        $username = env('SMS_USERNAME');
+//        $password = env('SMS_PASSWORD');
+//
+//        $payload = [
+//            'phonenumber' => $phone,
+//            'message' => $otp,
+//        ];
+//
+//        try {
+//            $request = Http::withHeaders([
+//                'Authorization' => 'Basic ' . base64_encode("{$username}:{$password}"),
+//            ])->withOptions([
+//                'verify' => env('SMS_VERIFY_SSL', false),
+//            ]);
+//
+//            $response = $asForm
+//                ? $request->asForm()->post($url, $payload)
+//                : $request->post($url, $payload);
+//            if ($response->successful()) {
+//                return $response->body();
+//            }
+//
+//
+//            \Log::error('SMS ارسال نشد', [
+//                'phone' => $phone,
+//                'payload' => $payload,
+//                'status' => $response->status(),
+//                'body' => $response->body(),
+//            ]);
+//
+//            return false;
+//
+//        } catch (\Throwable $e) {
+//            \Log::error('SMS Exception', [
+//                'message' => $e->getMessage(),
+//                'phone' => $phone,
+//                'payload' => $payload,
+//            ]);
+//            return false;
+//        }
     }
 
 }

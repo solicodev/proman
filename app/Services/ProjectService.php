@@ -27,6 +27,10 @@ class ProjectService
         $project->brand_id = $param['brand_id'] ?? null;
         $project->description = $param['description'] ?? null;
 
+        if (isset($param['inform']))
+        {
+            $project->inform = $param['inform'];
+        }
         if (isset($param['approve_need']))
         {
             $project->approve_need  = $param['approve_need'];

@@ -134,13 +134,17 @@
                                         </div>
                                     </div>
                                     <div class="row g-3 mb-8">
-                                        <div class="col-md-4 fv-row">
+                                        <div class="col-md-6 fv-row">
+                                            <label class=" fs-6 fw-semibold mb-2">به اطلاع آقای سلیمانی برسد</label>
+                                            <input class="form-check-input" name="inform" type="checkbox" value="0" id="flexCheckDefault"/>
+                                        </div>
+                                        <div class="col-md-6 fv-row">
                                             <label class=" fs-6 fw-semibold mb-2">نیاز به تایید دارد</label>
                                             <input class="form-check-input" name="approve_need" type="checkbox" value="0" id="flexCheckDefault"/>
 
                                         </div>
                                         <!--begin::Col-->
-                                        <div class="col-md-8 fv-row">
+                                        <div class="col-md-12 fv-row">
                                             <label class=" fs-6 fw-semibold mb-2">مدیر تایید کننده پروژه</label>
                                             <select class="form-select form-select-solid"  data-control="select2"
                                                     data-placeholder="مدیر تایید کننده پروژه" name="approving_manager">
