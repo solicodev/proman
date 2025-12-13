@@ -266,8 +266,6 @@ if (!function_exists('new_sms')) {
     function sendSms($phone, $otp): false|string
     {
 
-
-
         $url = env('SMS_URL');
         $username = env('SMS_USERNAME');
         $password = env('SMS_PASSWORD');
