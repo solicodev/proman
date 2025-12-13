@@ -101,4 +101,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Position::class,'position_id');
     }
+
+    public function department()
+    {
+        return $this->belongsTo(Department::class , 'position_id');
+    }
 }

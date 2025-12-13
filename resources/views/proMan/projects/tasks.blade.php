@@ -491,7 +491,7 @@
                                         data-placeholder="مدیر تایید کننده تسک" name="manager_id">
                                     <option></option>
                                     @foreach($managers as $manager)
-                                        <option value="{{$manager->id}}">{{$manager->Name}} - {{role_name($manager->roles()->first()->name)}}</option>
+                                        <option value="{{$manager->id}}">{{$manager->Name}}  @if($manager->department_id)   - دپارتمان {{ $manager->department?->name }}@endif @if($manager->position_id)  - {{$manager->position?->title}} @endif</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -502,7 +502,7 @@
                                         data-placeholder="ناظر تسک" name="watcher_id">
                                     <option></option>
                                     @foreach($watchers as $watcher)
-                                        <option value="{{$watcher->id}}">{{ $watcher->Name }} </option>
+                                        <option value="{{$watcher->id}}">{{ $watcher->Name }}  @if($watcher->department_id)   - دپارتمان {{ $watcher->department?->name }}@endif @if($watcher->position_id)  - {{$watcher->position?->title}} @endif </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -519,7 +519,7 @@
                                         multiple  data-placeholder="تسک را به کاربران مد نظرتان assign کنید" name="members[]">
                                     <option></option>
                                     @foreach($members as $member)
-                                        <option value="{{$member->id}}">{{$member->Name}} </option>
+                                        <option value="{{$member->id}}">{{$member->Name}}  @if($member->department_id)   - دپارتمان {{ $member->department?->name }}@endif @if($member->position_id)  - {{$member->position?->title}} @endif</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -675,7 +675,7 @@
                                             data-placeholder="مدیر تایید کننده تسک" name="sub_manager_id">
                                         <option></option>
                                         @foreach($managers as $manager)
-                                            <option value="{{$manager->id}}">{{$manager->Name}} - {{role_name($manager->roles()->first()->name)}}</option>
+                                            <option value="{{$manager->id}}">{{$manager->Name}}  @if($manager->department_id)   - دپارتمان {{ $manager->department?->name }}@endif @if($manager->position_id)  - {{$manager->position?->title}} @endif$manager</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -686,7 +686,7 @@
                                             data-placeholder="ناظر تسک" name="watcher_id">
                                         <option></option>
                                         @foreach($watchers as $watcher)
-                                            <option value="{{$watcher->id}}">{{ $watcher->Name }} </option>
+                                            <option value="{{$watcher->id}}">{{ $watcher->Name }}  @if($watcher->department_id)   - دپارتمان {{ $watcher->department?->name }}@endif @if($watcher->position_id)  - {{$watcher->position?->title}} @endif</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -701,7 +701,7 @@
                                              multiple  data-placeholder="تسک را به کاربران مد نظرتان assign کنید" name="members[]">
                                         <option></option>
                                         @foreach($members as $member)
-                                            <option value="{{$member->id}}">{{$member->Name}} </option>
+                                            <option value="{{$member->id}}">{{$member->Name}}  @if($member->department_id)   - دپارتمان {{ $member->department?->name }}@endif @if($member->position_id)  - {{$member->position?->title}} @endif</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -1045,12 +1045,11 @@
                     <!--end::Close-->
                 </div>
                 <!--begin::Modal header-->
-
                 <!--begin::Modal body-->
                 <div class="modal-body scroll-y px-5 ">
                     <!--begin:Form-->
                     <div class="stepper stepper-links d-flex flex-column pt-15 between" id="kt_create_account_stepper" data-kt-stepper="true" data-select2-id="select2-data-kt_create_account_stepper" >
-                        <form method="POST" action="{{ route('dashboard.task.dependency', $task->id ?? 0) }}" id="dependencyForm">
+                        <form method="POST" action="{{ route('dashboard.task.dependency', $project->id) }}" id="dependencyForm">
                             @csrf
                             <div class="mb-13 text-center">
                                 <!--begin::Title-->
@@ -1063,10 +1062,10 @@
                                 <!--end::Description-->
                             </div>
                             <div class="fv-row mb-8">
-                                <label for="predecessor_task_id" class="form-label required">تسک وابسته</label>
-                                <select class="form-select form-select-solid" data-control="select2" id="predecessor_task_id"
-                                        data-ajax-route="{{ route('dashboard.task.related-tasks', ':id') }}"
-                                        data-placeholder="تسک وابسته را انتخاب کنید" name="predecessor_task_id" required>
+                                <label for="project_id" class="form-label required">تسک وابسته</label>
+                                <select class="form-select form-select-solid" data-control="select2" id="project_id"
+                                        data-ajax-route="{{ route('dashboard.task.related-tasks', $project->id) }}"
+                                        data-placeholder="تسک وابسته را انتخاب کنید" name="project_id" required>
                                     <option></option>
                                     {{--                                    @foreach($tb_tasks as $task_item)--}}
                                     {{--                                        <option value="{{ $task_item->id }}">{{ $task_item->title }}</option>--}}
@@ -1929,10 +1928,9 @@
                 modal.show();
             }
 
-            function loadPredecessorTasks(taskId) {
-                const $select = $('#predecessor_task_id');
-
-                const ajaxRoute = $select.data('ajax-route').replace(':id', taskId);
+            function loadPredecessorTasks(projectId) {
+                const $select = $('#project_id');
+                const ajaxRoute = $select.data('ajax-route');
 
                 $select.select2({
                     placeholder: 'تسک وابسته را انتخاب کنید',
@@ -1942,13 +1940,13 @@
                         dataType: 'json',
                         delay: 250,
                         processResults: function (data) {
-                            console.log(data)
                             return { results: data.related ?? [] };
                         },
                         cache: true
                     }
                 });
             }
+
 
 
             // ایجاد وابستگی

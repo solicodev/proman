@@ -24,6 +24,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth','SuperAdminCheck'])->
         Route::get('/', [UserController::class , 'index'])->name('index');
         Route::get('/create', [UserController::class , 'create'])->name('create');
         Route::post('/store', [UserController::class , 'store'])->name('store');
+        Route::post('/import', [UserController::class , 'import'])->name('import');
         Route::get('/edit/{user}', [UserController::class , 'edit'])->name('edit');
         Route::put('/update/{user}', [UserController::class , 'update'])->name('update');
         Route::post('/status/{user}', [UserController::class , 'status'])->name('status');

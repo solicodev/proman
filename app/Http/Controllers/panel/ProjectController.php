@@ -47,7 +47,7 @@ class ProjectController extends Controller
 
     public function report()
     {
-        $projects = Project::with(['manager','category','department','members','photos','brand'])->where('manager_id',Auth::id())->get();
+        $projects = Project::with(['manager','category','department','members','photos','brand'])->where('manager_id',Auth::id())->latest()->get();
         $project_id = Project::with(['manager','category','department','members','photos','brand'])->where('manager_id',Auth::id())->pluck('id')->toArray();
         $last_projects = Project::with(['manager','category','department','members','photos','brand'])->where('manager_id',Auth::id())->take(3)->latest()->get();
         $departments = Department::all();
@@ -65,8 +65,8 @@ class ProjectController extends Controller
             $query->whereIn('name', $excludedRoles);
         })->whereStatus('1')->latest()->get();
 
-        $members = User::whereHas('roles', function ($query) use ($memberRoles) {
-            $query->whereIn('name', $memberRoles);
+        $members = User::whereDoesntHave('roles', function ($query) use ($SuperAdminRoles) {
+            $query->whereIn('name', $SuperAdminRoles);
         })->whereStatus('1')->latest()->get();
 
         $projects = Project::get();;
@@ -174,16 +174,18 @@ class ProjectController extends Controller
     public function create()
     {
         $excludedRoles = ['Manager'];
-        $memberRoles = ['Member'];
+        $memberRoles = ['Super Admin'];
         $managers = User::whereHas('roles', function ($query) use ($excludedRoles) {
             $query->whereIn('name', $excludedRoles);
         })->whereStatus('1')->latest()->get();
 
         $categories = Category::with('getChid')->get();
         $departments = Department::get();
-        $members = User::whereHas('roles', function ($query) use ($memberRoles) {
+
+        $members = User::whereDoesntHave('roles', function ($query) use ($memberRoles) {
             $query->whereIn('name', $memberRoles);
         })->whereStatus('1')->latest()->get();
+
         $brands = Brand::with(['photo','getChid'])->get();
         return view('proMan.projects.create',get_defined_vars());
     }

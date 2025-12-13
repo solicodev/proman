@@ -7,6 +7,10 @@
         <div class="card-body">
             <div class="d-flex align-items-center justify-content-end">
                 <a href="{{ route('admin.user.create') }}" class="btn btn-primary btn-sm">افزودن کاربر(پرسنل)</a>
+
+                <button type="button" class="btn btn-info btn-sm mx-3" data-bs-toggle="modal"
+                        data-bs-target="#uploadUserModal">آپلود فایل اکسل User
+                </button>
             </div>
             <hr>
             <div class="table-responsive">
@@ -167,6 +171,39 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="uploadUserModal" tabindex="-1" aria-labelledby="uploadUserModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="uploadUserModalLabel">
+                        آپلود User
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ route('admin.user.import') }}" method="post" id='createForm' enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="excel" class="form-label required">بارگذاری فایل</label>
+                            <div class="form-group custom-form-input">
+                                <label for="excel" class="form-control">انتخاب فایل</label>
+                                <input id="excel" type="file" accept=".xls,.xlsb,.xlsx" name="excel"
+                                       required>
+                            </div>
+                            <div class="invalid-feedback">بارگذاری فایل الزامی است</div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">
+                            ثبت
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 
 @endsection
 

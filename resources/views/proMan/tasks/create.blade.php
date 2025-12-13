@@ -126,7 +126,7 @@
                                             data-placeholder="مدیر تایید کننده تسک" name="manager_id">
                                         <option></option>
                                         @foreach($managers as $manager)
-                                            <option value="{{$manager->id}}">{{$manager->Name}} - {{role_name($manager->roles()->first()->name)}}</option>
+                                            <option value="{{$manager->id}}">{{$manager->Name}} @if($manager->department_id)   - دپارتمان {{ $manager->department?->name }}@endif @if($manager->position_id)  - {{$manager->position?->title}} @endif</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -137,7 +137,7 @@
                                             data-placeholder="ناظر تسک" name="watcher_id">
                                         <option></option>
                                         @foreach($watchers as $watcher)
-                                            <option value="{{$watcher->id}}">{{ $watcher->Name }} </option>
+                                            <option value="{{$watcher->id}}">{{ $watcher->Name }} @if($watcher->department_id)   - دپارتمان {{ $watcher->department?->name }}@endif @if($watcher->position_id)  - {{$watcher->position?->title}} @endif</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -154,7 +154,7 @@
                                             multiple  data-placeholder="تسک را به کاربران مد نظرتان assign کنید" name="members[]">
                                         <option></option>
                                         @foreach($members as $member)
-                                            <option value="{{$member->id}}">{{$member->Name}} </option>
+                                            <option value="{{$member->id}}">{{$member->Name}} @if($member->department_id)   - دپارتمان {{ $member->department?->name }}@endif @if($member->position_id)  - {{$member->position?->title}} @endif</option>
                                         @endforeach
                                     </select>
                                 </div>

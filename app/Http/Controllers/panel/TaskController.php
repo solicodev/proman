@@ -71,8 +71,8 @@ class TaskController extends Controller
             $query->whereIn('name', $excludedRoles);
         })->whereStatus('1')->latest()->get();
 
-        $members = User::whereHas('roles', function ($query) use ($memberRoles) {
-            $query->whereIn('name', $memberRoles);
+        $members = User::whereDoesntHave('roles', function ($query) use ($SuperAdminRoles) {
+            $query->whereIn('name', $SuperAdminRoles);
         })->whereStatus('1')->latest()->get();
 
         $projects = Project::get();;
@@ -280,25 +280,9 @@ class TaskController extends Controller
         ],201);
     }
 
-    public function relatedTasks(Task $task)
+    public function relatedTasks(Project $project)
     {
-        if (!$task->parent_id) {
-            $result = Task::where('parent_id',$task->id)->get()->map(fn($t) => [
-                'id' => $t->id,
-                'text' => $t->title,
-            ]);
-            return response()->json([
-                'related' => $result
-            ], 200);
-        }
-
-        $parentId = $task->parent_id;
-
-        $related = Task::where(function ($query) use ($task, $parentId) {
-            $query->where('parent_id', $parentId)
-                ->orWhere('id', $parentId);
-        })
-            ->where('id', '!=', $task->id)
+        $related = Task::where('project_id',$project->id)
             ->select(['id', 'title'])
             ->get()
             ->map(fn($t) => [
@@ -310,6 +294,7 @@ class TaskController extends Controller
             'related' => $related
         ], 200);
     }
+
 
     public function taskTimeLine(Project $project)
     {

@@ -4,9 +4,11 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UserStoreRequest;
+use App\Imports\UserImport;
 use App\Models\Position;
 use App\Models\User;
 use App\Services\UserService;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -63,6 +65,19 @@ class UserController extends Controller
         try {
             $this->userService->store($request->all());
             return redirect(route('admin.user.index'))->with('flash_message', 'با موفقیت ایجاد شد');
+        } catch (Exception $exception) {
+            return redirect()->back()->with('err_message', $exception->getMessage());
+        }
+    }
+
+    public function import(Request $request)
+    {
+        try {
+            $file = Carbon::now()->microsecond . '.' . $request->file('excel')->extension();
+            $upload = $request->file('excel')->storeAs('uploads/users', $file, 'public');
+            $excel = \Maatwebsite\Excel\Facades\Excel::import(new UserImport(), $upload, 'public', \Maatwebsite\Excel\Excel::XLSX);
+            return redirect()->back()->with('flash_message', 'با موفقیت انجام شد');
+
         } catch (Exception $exception) {
             return redirect()->back()->with('err_message', $exception->getMessage());
         }

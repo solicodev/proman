@@ -229,10 +229,8 @@
                                 @endcanany
                             </td>
                             <td class="text-start">
-                                @if($project->approve_need = 0)
                                     <a href="#" onclick="openEditModal('{{ route('dashboard.project.approveVerify', $project->id) }}', JSON.stringify({project_code:'{{ $project->project_code }}' ,approve_verify:'{{$project->approve_verify}}' }))"
                                        class="btn btn-sm btn-light-primary p-1"> اعمال تایید<i class="ki-outline ki-pencil fs-7 px-2"></i></a>
-                                @endif
                             </td>
                             <td class="text-start">
                                 <a href="#" onclick="openStatusModal('{{ route('dashboard.project.status', $project->id) }}', JSON.stringify({project_code:'{{ $project->project_code }}' ,status:'{{$project->status}}' }))"

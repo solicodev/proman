@@ -149,8 +149,11 @@
                                             <select class="form-select form-select-solid"  data-control="select2"
                                                     data-placeholder="مدیر تایید کننده پروژه" name="approving_manager">
                                                 <option></option>
+
                                                 @foreach($managers as $manager)
-                                                    <option value="{{$manager->id}}" @if(old('approving_manager') == $manager->id) selected @endif>{{$manager->Name}} - {{role_name($manager->roles()->first()->name)}}</option>
+                                                    <option value="{{$manager->id}}" @if(old('approving_manager') == $manager->id) selected @endif>{{$manager->Name}}
+
+                                                        @if($manager->department_id)   - دپارتمان {{ $manager->department?->name }}@endif @if($manager->position_id)  - {{$manager->position?->title}} @endif</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -158,7 +161,7 @@
                                     <div class="row g-3 mb-8">
                                         <div class="col-md-6 fv-row">
                                             <div class="fv-row mb-8">
-                                                <label class="form-label required">دپارتمان/بیزنس</label>
+                                                <label class="form-label required">دپارتمان/دپارتمان</label>
                                                 <select class="form-select form-select-solid" data-control="select2"
                                                         data-placeholder="دپارتمان را انتخاب کنید" name="department_id" required>
                                                     <option></option>
@@ -211,17 +214,17 @@
                                                 multiple name="members[]" data-placeholder="اعضای پروژه را انتخاب کنید" required>
                                             <option></option>
                                             @foreach($members as $member)
-                                                <option value="{{ $member->id }}" >{{ $member->Name }}</option>
+                                                <option value="{{ $member->id }}" >{{ $member->Name }}@if($manager->department_id)   - دپارتمان {{ $manager->department?->name }}@endif @if($manager->position_id)  - {{$manager->position?->title}} @endif</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="row g-3 mb-8">
 
 
-                                        <div class="col-md-6 fv-row">
+                                        <div class="col-md-12 fv-row">
                                             <label class="form-label">دسته بندی</label>
                                             <select class="form-select form-select-solid" data-control="select2"
-                                                    data-placeholder="دپارتمان را انتخاب کنید" name="category_id">
+                                                    data-placeholder="دسته بندی را انتخاب کنید" name="category_id">
                                                 <option></option>
                                                 @foreach($categories as $category)
                                                     <option value="{{$category->id}}"  @if(old('category_id') == $category->id) selected @endif>{{$category->title}} </option>
