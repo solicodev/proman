@@ -62,85 +62,120 @@
     </div>
 
     <div class="card card-flush mt-6 mt-xl-9" >
-        <div class="card-header mt-5">
-            <div class="card-title flex-column">
-                <h3 class="fw-bold mb-1">لیست تمام پروژه ها</h3>
-
-                <div class="fs-6 text-gray-500"></div>
-            </div>
-            <form action="{{route('dashboard.project.report.filter')}}" method="post" class="fv-plugins-bootstrap5 fv-plugins-framework" id="kt_docs_formvalidation_text">
-                @csrf
-                <div class="d-flex gap-4 mb-8">
+        @php
+            $statuses = [
+                '0' => 'در حال بررسی',
+                '1' => 'درحال انجام',
+                '2' => 'تکمیل شد',
+                '3' => 'تعلیق شد',
+                '4' => 'کنسل شد',
+            ];
+        @endphp
+        <form action="{{route('dashboard.project.report.filter')}}" method="post" class="m-2 fv-plugins-bootstrap5 fv-plugins-framework" id="kt_docs_formvalidation_text">
+            @csrf
+            <div class="row mb-4">
+                <div class="col-3 my-1">
+                    <select  name="status_filter" data-control="select2" data-hide-search="true"
+                             class="form-select form-select-solid form-select-sm"
+                             data-placeholder="وضعیت را انتخاب کنید">
+                        <option></option>
+                        @foreach($statuses as $key => $label)
+                            <option value="{{ $key }}" {{ request('status_filter') == $key ? 'selected' : '' }}>
+                                {{ $label }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-3 my-1">
                     <select  name="brand_filter" data-control="select2" data-hide-search="true"
-                             class="form-select form-select-solid form-select-sm w-325px"
+                             class="form-select form-select-solid form-select-sm"
                              data-placeholder="برند را انتخاب کنید">
                         <option></option>
                         @foreach($brands as $brand)
                             <option value="{{$brand->id}}" {{ request('brand_filter') == $brand->id ? 'selected' : '' }}>{{$brand->name}}</option>
                         @endforeach
                     </select>
-
+                </div>
+                <div class="col-3 my-1">
                     <select  name="department_filter" data-control="select2" data-hide-search="true"
-                             class="form-select form-select-solid form-select-sm w-325px"
+                             class="form-select form-select-solid form-select-sm"
                              data-placeholder="دپارتمان را انتخاب کنید">
                         <option></option>
                         @foreach($departments as $department)
                             <option value="{{$department->id}}"  {{ request('department_filter') == $department->id ? 'selected' : '' }}>{{$department->name}}</option>
                         @endforeach
                     </select>
-
+                </div>
+                <div class="col-3 my-1">
                     <select  name="filter" data-control="select2" data-hide-search="true" data-placeholder="گزینه را انتخاب کنید"
-                             class="form-select form-select-solid form-select-sm w-325px">
+                             class="form-select form-select-solid form-select-sm">
                         <option></option>
-                        <option value="approve_verify"  {{ request('filter') == 'approve_verify' ? 'selected' : '' }}>مورد تایید آقای سلیمانی</option>
-                        <option value="approve_need"  {{ request('filter') == 'approve_need' ? 'selected' : '' }}>برای تایید آقای سلیمانی</option>
-                        <option value="approving_manager" {{ request('filter') == 'approving_manager' ? 'selected' : '' }}>به استحضار آقای سلیمانی</option>
+                        <option value="approve_verify"  {{ request('filter') == 'approve_verify' ? 'selected' : '' }}>مورد تایید مدیر تایید کننده</option>
+                        <option value="approve_need"  {{ request('filter') == 'approve_need' ? 'selected' : '' }}>نیاز به تایید مدیر تایید کننده</option>
+                        <option value="approving_manager" {{ request('filter') == 'approving_manager' ? 'selected' : '' }}>برای اطلاع مدیر تایید کننده</option>
                         <option value="other" {{ request('filter') == 'other' ? 'selected' : '' }}>سایر موارد</option>
                     </select>
                 </div>
+            </div>
 
-                <div class="d-flex justify-content-between my-3">
-                    <div class="d-flex gap-2">
 
-                        @if (request('brand_filter'))
-                            @php
-                                $brand = $brands->firstWhere('id', request('brand_filter'));
-                            @endphp
-                            @if($brand)
-                                <span onclick="delete_value('brand_filter')" class="badge badge-light py-2 px-5 cursor-pointer">
-                    {{ $brand->name }}
-                    <i class="ki-outline ki-cross-square text-danger ms-2"></i>
-                </span>
-                            @endif
+            <div class="d-flex justify-content-between my-3">
+                <div class="d-flex gap-2">
+                    @if (request('status_filter'))
+                        <span onclick="delete_value('status_filter')" class="badge badge-light py-2 px-5 cursor-pointer">
+                                {{ $statuses[request('status_filter')] ?? request('status_filter') }}
+                                <i class="ki-outline ki-cross-square text-danger ms-2"></i>
+                            </span>
+                    @endif
+
+
+
+                    @if (request('brand_filter'))
+                        @php
+                            $brand = $brands->firstWhere('id', request('brand_filter'));
+                        @endphp
+                        @if($brand)
+                            <span onclick="delete_value('brand_filter')" class="badge badge-light py-2 px-5 cursor-pointer">
+                                    {{ $brand->name }}
+                                    <i class="ki-outline ki-cross-square text-danger ms-2"></i>
+                                </span>
                         @endif
+                    @endif
 
-                        @if (request('department_filter'))
-                            @php
-                                $department = $departments->firstWhere('id', request('department_filter'));
-                            @endphp
-                            @if($department)
-                                <span onclick="delete_value('department_filter')" class="badge badge-light py-2 px-5 cursor-pointer">
+                    @if (request('department_filter'))
+                        @php
+                            $department = $departments->firstWhere('id', request('department_filter'));
+                        @endphp
+                        @if($department)
+                            <span onclick="delete_value('department_filter')" class="badge badge-light py-2 px-5 cursor-pointer">
                     {{ $department->name }}
                     <i class="ki-outline ki-cross-square text-danger ms-2"></i>
                 </span>
-                            @endif
                         @endif
+                    @endif
 
-                        @if (request('filter'))
-                            <span onclick="delete_value('filter')" class="badge badge-light py-2 px-5 cursor-pointer">
+                    @if (request('filter'))
+                        <span onclick="delete_value('filter')" class="badge badge-light py-2 px-5 cursor-pointer">
                 {{ __("filters.".request('filter')) ?? request('filter') }}
                 <i class="ki-outline ki-cross-square text-danger ms-2"></i>
             </span>
-                        @endif
+                    @endif
 
-                    </div>
-
-                    <button type="submit" class="btn btn-sm btn-light-success">فیلتر <i class="ki-outline ki-filter-search fs-2 ps-5"></i></button>
                 </div>
 
-            </form>
-            <div class="card-toolbar my-1" id="kt_create_account_stepper" data-kt-stepper="true" data-select2-id="select2-data-kt_create_account_stepper">
+                <button type="submit" class="btn btn-sm btn-light-success">فیلتر <i class="ki-outline ki-filter-search fs-2 ps-5"></i></button>
+            </div>
 
+        </form>
+        <div class="card-header mt-5">
+
+            <div class="card-title flex-column">
+                <h3 class="fw-bold mb-1">لیست تمام پروژه ها</h3>
+
+                <div class="fs-6 text-gray-500"></div>
+            </div>
+
+            <div class="card-toolbar my-1" id="kt_create_account_stepper" data-kt-stepper="true" data-select2-id="select2-data-kt_create_account_stepper">
 
                 <div class="me-6 my-1">
                     <select id="kt_filter_year" name="year" data-control="select2" data-hide-search="true" class="w-125px form-select form-select-solid form-select-sm d-none">
@@ -229,8 +264,19 @@
                                 @endcanany
                             </td>
                             <td class="text-start">
-                                    <a href="#" onclick="openEditModal('{{ route('dashboard.project.approveVerify', $project->id) }}', JSON.stringify({project_code:'{{ $project->project_code }}' ,approve_verify:'{{$project->approve_verify}}' }))"
-                                       class="btn btn-sm btn-light-primary p-1"> اعمال تایید<i class="ki-outline ki-pencil fs-7 px-2"></i></a>
+                                <a href="#"
+                                   onclick="openEditModal('{{ route('dashboard.project.approveVerify', $project->id) }}',
+                                           JSON.stringify({
+                                               id:'{{ $project->id }}',
+                                               project_code:'{{ $project->project_code }}',
+                                               approve_verify:'{{ $project->approve_verify }}'
+                                           }))"
+                                   class="btn btn-sm btn-light-primary p-1">
+                                    اعمال تایید<i class="ki-outline ki-pencil fs-7 px-2"></i>
+                                </a>
+
+                                {{--                                <a href="#" onclick="openEditModal('{{ route('dashboard.project.approveVerify', $project->id) }}', JSON.stringify({project_code:'{{ $project->project_code }}' ,approve_verify:'{{$project->approve_verify}}' }))"--}}
+                                {{--                                   class="btn btn-sm btn-light-primary p-1"> اعمال تایید<i class="ki-outline ki-pencil fs-7 px-2"></i></a>--}}
                             </td>
                             <td class="text-start">
                                 <a href="#" onclick="openStatusModal('{{ route('dashboard.project.status', $project->id) }}', JSON.stringify({project_code:'{{ $project->project_code }}' ,status:'{{$project->status}}' }))"
@@ -281,8 +327,9 @@
                 <div class="modal-body scroll-y px-5 justify-content-center ">
                     <!--begin:Form-->
                     <div class="stepper stepper-links d-flex flex-column pt-15 between" id="kt_create_account_stepper" data-kt-stepper="true" data-select2-id="select2-data-kt_create_account_stepper" >
-                        <form id="EditAprooveForm" method="post" class="d-flex align-items-center gap-3">
+                        <form id="EditAprooveForm" method="POST" action="" class="d-flex align-items-center gap-3">
                             @csrf
+                            <input type="hidden" id="id" name="id">
                             <label class="form-check-label text-success">
                                 <input type="radio" id="radio_approved" name="approve_verify"  value="0" class="form-check-input" style="width: 1rem; height:1rem"
                                        onchange="this.form.submit();" >
@@ -294,7 +341,6 @@
                                        onchange="this.form.submit();">
                                 تایید نشد
                             </label>
-
                         </form>
                     </div>
                     <!--end:Form-->
@@ -377,16 +423,20 @@
                 let data = JSON.parse(currentData);
 
                 $('#approvingModalLabel').text(`اعمال تاییدیه "${data.project_code}"`);
-                $('#editForm #id').val(data.id);
+                $('#EditAprooveForm #id').val(data.id);
                 $('#EditAprooveForm').attr('action', url);
+
                 if (data.approve_verify == 0) {
                     $('#radio_approved').prop('checked', true);
-                } if((data.approve_verify == 1)) {
+                }
+                if (data.approve_verify == 1) {
                     $('#radio_not_approved').prop('checked', true);
                 }
 
                 $('#kt_modal_approving_verify').modal('show');
             }
+
+
 
             function openStatusModal(url, currentData) {
                 let data = JSON.parse(currentData);

@@ -135,7 +135,7 @@
                                     </div>
                                     <div class="row g-3 mb-8">
                                         <div class="col-md-6 fv-row">
-                                            <label class=" fs-6 fw-semibold mb-2">به اطلاع آقای سلیمانی برسد</label>
+                                            <label class=" fs-6 fw-semibold mb-2">به اطلاع مدیر برسد</label>
                                             <input class="form-check-input" name="inform" type="checkbox" value="0" id="flexCheckDefault"/>
                                         </div>
                                         <div class="col-md-6 fv-row">
@@ -152,7 +152,6 @@
 
                                                 @foreach($managers as $manager)
                                                     <option value="{{$manager->id}}" @if(old('approving_manager') == $manager->id) selected @endif>{{$manager->Name}}
-
                                                         @if($manager->department_id)   - دپارتمان {{ $manager->department?->name }}@endif @if($manager->position_id)  - {{$manager->position?->title}} @endif</option>
                                                 @endforeach
                                             </select>
@@ -219,8 +218,6 @@
                                         </select>
                                     </div>
                                     <div class="row g-3 mb-8">
-
-
                                         <div class="col-md-12 fv-row">
                                             <label class="form-label">دسته بندی</label>
                                             <select class="form-select form-select-solid" data-control="select2"

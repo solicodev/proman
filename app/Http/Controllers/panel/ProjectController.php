@@ -329,6 +329,11 @@ class ProjectController extends Controller
     {
         $query = Project::query();
 
+        if ($request->filled('status_filter'))
+        {
+            $query->where('status',$request->status_filter);
+        }
+
         if ($request->filled('brand_filter')) {
             $query->where('brand_id', $request->brand_filter);
         }
@@ -336,14 +341,23 @@ class ProjectController extends Controller
         if ($request->filled('department_filter')) {
             $query->where('department_id', $request->department_filter);
         }
-        $position = Position::where('title' , 'like' , '%بنیان گذار%')->first()?->users()
-            ->first();
+
+        $excludedRoles = ['Manager'];
+
+        $managers = User::whereHas('roles', function ($query) use ($excludedRoles) {
+            $query->whereIn('name', $excludedRoles);
+        })->whereStatus('1')->latest()->get();
+
+//        $position = Position::where('title' , 'like' , '%بنیان گذار%')->first();
+//
+//        $user = User::where('position_id', $position->id)->first();
+
         if ($request->filled('filter')) {
 
             switch ($request->filter) {
 
                 case 'approve_verify':
-                    $query->where('approve_verify', '0');
+                    $query->where('approve_verify', '0')->where('approve_need', '0');
                     break;
 
                 case 'approve_need':
@@ -354,12 +368,6 @@ class ProjectController extends Controller
                     $query->where('inform','0');
                     break;
 
-                case 'other':
-                    $query->where(function ($q) use ($position) {
-                            $q->whereNull('approving_manager')
-                                ->orWhere('approving_manager', '!=', $position->id);
-                        });
-                    break;
 
             }
         }
@@ -372,14 +380,13 @@ class ProjectController extends Controller
 
     public function approveVerify(Project $project , Request $request)
     {
-
+        try {
         $project->approve_verify = $request->approve_verify;
         $project->update();
 
-        try {
-            return redirect()->back()->with('flash_message', ' تغییرات اعمال شد');
+            return redirect()->route('dashboard.project.report')->with('flash_message', ' تغییرات اعمال شد');
         } catch (Exception $exception) {
-            return redirect()->back()->with('err_message', 'خطایی رخ داد مجددا تلاش کنید');
+            return redirect()->route('dashboard.project.report')->with('err_message', 'خطایی رخ داد مجددا تلاش کنید');
         }
     }
 
@@ -388,9 +395,9 @@ class ProjectController extends Controller
         try {
             $project->status = $request->status;
             $project->update();
-            return redirect()->back()->with('flash_message', 'وضعیت تغییر کرد');
+            return redirect()->route('dashboard.project.report')->with('flash_message', 'وضعیت تغییر کرد');
         } catch (Exception $exception) {
-            return redirect()->back()->with('err_message', 'خطایی رخ داد مجددا تلاش کنید');
+            return redirect()->route('dashboard.project.report')->with('err_message', 'خطایی رخ داد مجددا تلاش کنید');
         }
     }
 
