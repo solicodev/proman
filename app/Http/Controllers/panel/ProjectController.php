@@ -41,6 +41,19 @@ class ProjectController extends Controller
 
         $user = auth()->user();
 
+// پروژه‌های مدیر پروژه
+        $projectsAsManager = Project::where('manager_id', $user->id);
+
+// پروژه‌های ادمین
+        $managerIds = DB::table('project_manager_admins')
+            ->where('admin_id', $user->id)
+            ->pluck('project_manager_id');
+
+        $projectsAsAdmin = Project::whereIn('manager_id', $managerIds);
+
+// ترکیب هر دو
+        $projects = $projectsAsManager->union($projectsAsAdmin)->with(['manager','category','department','members','photos','brand'])->paginate(9);
+
 //        if ($user->hasRole('project_manager')) {
 //            $projects = Project::where('manager_id', $user->id)->get();
 //        }
@@ -53,7 +66,7 @@ class ProjectController extends Controller
 
 
 
-        $projects = Project::with(['manager','category','department','members','photos','brand'])->where('manager_id',Auth::id())->paginate(9);
+//        $projects = Project::with(['manager','category','department','members','photos','brand'])->where('manager_id',Auth::id())->paginate(9);
         $project_id = Project::with(['manager','category','department','members','photos','brand'])->where('manager_id',Auth::id())->pluck('id')->toArray();
         $last_projects = Project::with(['manager','category','department','members','photos','brand'])->where('manager_id',Auth::id())->take(3)->latest()->get();
 

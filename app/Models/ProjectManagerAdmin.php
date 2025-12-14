@@ -12,7 +12,6 @@ class ProjectManagerAdmin extends Model
     {
         return $this->belongsTo(User::class,'project_manager_id');
     }
-
     public function admin()
     {
         return $this->belongsTo(User::class,'admin_id');
