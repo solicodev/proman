@@ -1,6 +1,65 @@
 <x-layout>
     @include('layouts.message')
     @include('proMan.projects.main-card')
+    <div id="kt_app_toolbar" class="app-toolbar  d-flex pb-3 pb-lg-5 ">
+
+        <!--begin::Toolbar container-->
+        <div class="d-flex flex-stack flex-row-fluid">
+            <!--begin::Toolbar container-->
+            <div class="d-flex flex-column flex-row-fluid">
+                <!--begin::Toolbar wrapper-->
+
+                <!--begin::Page title-->
+                <div class="page-title d-flex align-items-center me-3">
+                    <!--begin::Title-->
+                    <h1 class="page-heading d-flex flex-column justify-content-center text-gray-900 fw-bold fs-lg-2x gap-2">
+                        <span>سطوح دسترسی</span>
+
+                    </h1>
+                    <!--end::Title-->
+                </div>
+                <!--end::Page title-->
+
+
+                <!--begin::Breadcrumb-->
+                <ul class="breadcrumb breadcrumb-separatorless fw-semibold mb-3 fs-7">
+
+                    <!--begin::Item-->
+                    <li class="breadcrumb-item text-gray-700 fw-bold lh-1">
+                        <a href="{{route('dashboard.index')}}" class="text-hover-primary">
+                            <i class="ki-outline ki-home text-gray-700 fs-6"></i>
+                        </a>
+                    </li>
+                    <!--end::Item-->
+
+                    <!--begin::Item-->
+                    <li class="breadcrumb-item">
+                        <i class="ki-outline ki-left fs-7 text-gray-700 mx-n1"></i></li>
+                    <!--end::Item-->
+
+
+                    <!--begin::Item-->
+                    <li class="breadcrumb-item text-gray-700 fw-bold lh-1">
+                       سطوح دسترسی
+                    </li>
+                    <!--end::Item-->
+                </ul>
+                <!--end::Breadcrumb-->
+
+            </div>
+            <!--end::Toolbar container-->
+
+            <!--begin::Actions-->
+            <div class="d-flex align-self-center flex-center flex-shrink-0">
+                <a href="{{route('dashboard.add.admin')}}" class="btn btn-sm btn-light-success d-flex flex-center ms-3 px-4 py-3" data-bs-toggle="modal" data-bs-target="#kt_modal_new_ticket">
+                    افزودن دسترسی کل<i class="ki-outline ki-plus-square fs-2 ps-5"></i>
+                </a>
+            </div>
+            <!--end::Actions-->
+        </div>
+        <!--end::Toolbar container-->
+    </div>
+
     <div class="card card-flush mt-6 mt-xl-9">
         <div class="card-header mt-5">
             <div class="card-title flex-column">

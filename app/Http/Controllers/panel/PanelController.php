@@ -4,6 +4,7 @@ namespace App\Http\Controllers\panel;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project;
+use App\Models\ProjectManagerAdmin;
 use App\Models\Task;
 use App\Models\User;
 use Carbon\Carbon;
@@ -12,6 +13,7 @@ use Hekmatinasser\Verta\Verta;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -106,6 +108,8 @@ class PanelController extends Controller
             return redirect()->back()->with('err_message', 'خطایی رخ داد مجددا تلاش کنید');
         }
     }
+
+
 
     /**
      * Show the form for creating a new resource.

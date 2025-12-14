@@ -299,27 +299,21 @@ class TaskController extends Controller
     public function taskTimeLine(Project $project)
     {
         $tasks = Task::with(['dependencies', 'children'])->where('project_id', $project->id)->get();
-
-
         $groups = [];
         $items  = [];
-
         foreach ($tasks as $task) {
             $groups[] = [
                 'id'      => $task->id,
                 'content' => $task->title .'.('. $task->task_code .')',
             ];
-
             $start = $task->start_date ? Carbon::parse($task->start_date)->toIso8601String() : null;
             $end   = $task->end_date   ? Carbon::parse($task->end_date)->toIso8601String() : null;
-
             $type = 'box'; // پیش‌فرض
             if ($start && $end) {
                 $type = 'range';
             } elseif ($start && !$end) {
                 $type = 'point'; // یا 'box' بسته به نیاز
             }
-
             $items[] = [
                 'id'      => $task->id,
                 'group'   => $task->id,
@@ -333,10 +327,7 @@ class TaskController extends Controller
                 'tree_progress' => intval($task->progress_tree ?? 0),
             ];
         }
-
-
         $dependencies = [];
-
         foreach ($tasks as $task) {
             foreach ($task->dependencies as $dep) {
                 $dependencies[] = [
@@ -347,16 +338,11 @@ class TaskController extends Controller
                 ];
             }
         }
-
         return view('proMan.projects.taskTimeLine', [
             'project'      => $project,
             'groupsJson'   => json_encode($groups, JSON_UNESCAPED_UNICODE),
             'itemsJson'    => json_encode($items, JSON_UNESCAPED_UNICODE),
             'depsJson'     => json_encode($dependencies, JSON_UNESCAPED_UNICODE),
         ]);
-
-
     }
-
-
 }

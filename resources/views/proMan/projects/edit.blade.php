@@ -30,6 +30,7 @@
                         <li class="breadcrumb-item text-gray-700 fw-bold lh-1">
                             <a href="{{route('dashboard.index')}}" class="text-white text-hover-primary">
                                 <i class="ki-outline ki-home text-gray-700 fs-6"></i>
+                                خانه
                             </a>
                         </li>
                         <!--end::Item-->

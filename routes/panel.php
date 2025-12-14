@@ -3,6 +3,7 @@
 use App\Http\Controllers\panel\PanelController;
 use App\Http\Controllers\panel\PhotoController;
 use App\Http\Controllers\panel\ProjectController;
+use App\Http\Controllers\panel\ProjectManagerAdminController;
 use App\Http\Controllers\panel\TaskChecklistController;
 use App\Http\Controllers\panel\TaskController;
 use App\Http\Controllers\panel\TicketController;
@@ -80,6 +81,12 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
     Route::post('/upload' , [PhotoController::class,'upload'])->name('upload');
     Route::get('/access' , [PanelController::class,'access'])->name('access');
     Route::put('/access/update/{user}' , [PanelController::class,'accessUpdate'])->name('access.update');
+
+    Route::get('/admin/list', [ProjectManagerAdminController::class, 'index'])->name('list.admin');
+    Route::get('/admin', [ProjectManagerAdminController::class, 'create'])->name('add.admin');
+    Route::post('/add/admin', [ProjectManagerAdminController::class, 'store'])->name('admin.store');
+    Route::get('/admin/destroy/{projectManagerAdmin}', [ProjectManagerAdminController::class, 'destroy'])->name('admin.delete');
+
     Route::get('/profile/{user}' , [UserController::class,'profile'])->name('profile');
     Route::get('/profile/update/{user}' , [UserController::class,'profileUpdate'])->name('profile.update');
 });

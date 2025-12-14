@@ -12,6 +12,7 @@ use App\Models\Photo;
 use App\Models\Position;
 use App\Models\Project;
 use App\Models\ProjectDependency;
+use App\Models\ProjectManagerAdmin;
 use App\Models\Task;
 use App\Models\User;
 use App\Services\ProjectService;
@@ -37,6 +38,21 @@ class ProjectController extends Controller
      */
     public function index()
     {
+
+        $user = auth()->user();
+
+//        if ($user->hasRole('project_manager')) {
+//            $projects = Project::where('manager_id', $user->id)->get();
+//        }
+//
+//        elseif ($user->hasRole('project_admin')) {
+//            $managerIds = ProjectManagerAdmin::where('admin_id', $user->id)
+//                ->pluck('project_manager_id');
+//            $projects = Project::whereIn('manager_id', $managerIds)->get();
+//        }
+
+
+
         $projects = Project::with(['manager','category','department','members','photos','brand'])->where('manager_id',Auth::id())->paginate(9);
         $project_id = Project::with(['manager','category','department','members','photos','brand'])->where('manager_id',Auth::id())->pluck('id')->toArray();
         $last_projects = Project::with(['manager','category','department','members','photos','brand'])->where('manager_id',Auth::id())->take(3)->latest()->get();
@@ -52,6 +68,13 @@ class ProjectController extends Controller
         $last_projects = Project::with(['manager','category','department','members','photos','brand'])->where('manager_id',Auth::id())->take(3)->latest()->get();
         $departments = Department::all();
         $brands = Brand::all();
+
+        $excludedRoles = ['Manager'];
+
+        $managers = User::whereHas('roles', function ($query) use ($excludedRoles) {
+            $query->whereIn('name', $excludedRoles);
+        })->whereStatus('1')->latest()->get();
+
         return view('proMan.projects.report',get_defined_vars());
     }
 
@@ -340,6 +363,10 @@ class ProjectController extends Controller
 
         if ($request->filled('department_filter')) {
             $query->where('department_id', $request->department_filter);
+        }
+
+        if ($request->filled('user_filter')) {
+            $query->where('approving_manager', $request->user_filter);
         }
 
         $excludedRoles = ['Manager'];

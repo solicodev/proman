@@ -229,16 +229,12 @@
                                             </select>
                                         </div>
                                     </div>
-
                                     <div class="fv-row mb-10">
                                         <label class="form-label">توضیحات پروژه</label>
                                         <textarea name="description" class="form-control form-control-lg form-control-solid"
                                                   rows="3">{{ old('description') }}</textarea>
                                     </div>
-
-
                                 </div>
-
                                 <div class="col-lg-4 col-md-5">
                                     <div class="card shadow-sm p-4">
                                         <h5 class="fw-bold mb-4">فایل‌های پروژه</h5>

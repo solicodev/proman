@@ -69,7 +69,7 @@
                                     <label class="required fs-6 fw-semibold mb-2">اولویت تسک </label>
 
                                     <select class="form-select form-select-solid"  data-control="select2" data-hide-search="true"
-                                            data-placeholder="تسک را به کاربران مد نظرتان assign کنید" name="priority">
+                                            data-placeholder="اولویت تسک" name="priority">
                                         <option></option>
                                         <option value="0">کم</option>
                                         <option value="1">متوسط</option>

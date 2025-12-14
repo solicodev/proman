@@ -11,14 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('department_brand', function (Blueprint $table) {
+        Schema::create('project_manager_admins', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('department_id')->nullable();
-            $table->foreign('department_id')->references('id')->on('departments');
+            $table->unsignedBigInteger('project_manager_id')->nullable();
+            $table->foreign('project_manager_id')->references('id')->on('users');
 
-            $table->unsignedBigInteger('brand_id')->nullable();
-            $table->foreign('brand_id')->references('id')->on('brands');
-
+            $table->unsignedBigInteger('admin_id')->nullable();
+            $table->foreign('admin_id')->references('id')->on('users');
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('department_brand');
+        Schema::dropIfExists('project_manager_admins');
     }
 };

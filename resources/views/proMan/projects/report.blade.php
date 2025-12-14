@@ -14,7 +14,6 @@
                     <!--begin::Title-->
                     <h1 class="page-heading d-flex flex-column justify-content-center text-gray-900 fw-bold fs-lg-2x gap-2">
                         <span>گزارش پروژه ها</span>
-
                     </h1>
                     <!--end::Title-->
                 </div>
@@ -27,7 +26,8 @@
                     <!--begin::Item-->
                     <li class="breadcrumb-item text-gray-700 fw-bold lh-1">
                         <a href="{{route('dashboard.index')}}" class="text-hover-primary">
-                            <i class="ki-outline ki-home text-gray-700 fs-6"></i> </a>
+                            <i class="ki-outline ki-home text-gray-700 fs-6"></i>
+                        </a>
                     </li>
                     <!--end::Item-->
 
@@ -35,21 +35,15 @@
                     <li class="breadcrumb-item">
                         <i class="ki-outline ki-left fs-7 text-gray-700 mx-n1"></i></li>
                     <!--end::Item-->
-
-
                     <!--begin::Item-->
                     <li class="breadcrumb-item text-gray-700 fw-bold lh-1">
                         گزارش پروژه ها
                     </li>
                     <!--end::Item-->
-
-
                 </ul>
                 <!--end::Breadcrumb-->
-
             </div>
             <!--end::Toolbar container-->
-
             <!--begin::Actions-->
             <div class="d-flex align-self-center flex-center flex-shrink-0">
                 <a href="{{route('dashboard.project.create')}}" class="btn btn-sm btn-light-success d-flex flex-center ms-3 px-4 py-3">
@@ -74,7 +68,7 @@
         <form action="{{route('dashboard.project.report.filter')}}" method="post" class="m-2 fv-plugins-bootstrap5 fv-plugins-framework" id="kt_docs_formvalidation_text">
             @csrf
             <div class="row mb-4">
-                <div class="col-3 my-1">
+                <div class="col my-1">
                     <select  name="status_filter" data-control="select2" data-hide-search="true"
                              class="form-select form-select-solid form-select-sm"
                              data-placeholder="وضعیت را انتخاب کنید">
@@ -86,7 +80,7 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="col-3 my-1">
+                <div class="col my-1">
                     <select  name="brand_filter" data-control="select2" data-hide-search="true"
                              class="form-select form-select-solid form-select-sm"
                              data-placeholder="برند را انتخاب کنید">
@@ -96,7 +90,7 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="col-3 my-1">
+                <div class="col my-1">
                     <select  name="department_filter" data-control="select2" data-hide-search="true"
                              class="form-select form-select-solid form-select-sm"
                              data-placeholder="دپارتمان را انتخاب کنید">
@@ -106,7 +100,7 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="col-3 my-1">
+                <div class="col my-1">
                     <select  name="filter" data-control="select2" data-hide-search="true" data-placeholder="گزینه را انتخاب کنید"
                              class="form-select form-select-solid form-select-sm">
                         <option></option>
@@ -114,6 +108,18 @@
                         <option value="approve_need"  {{ request('filter') == 'approve_need' ? 'selected' : '' }}>نیاز به تایید مدیر تایید کننده</option>
                         <option value="approving_manager" {{ request('filter') == 'approving_manager' ? 'selected' : '' }}>برای اطلاع مدیر تایید کننده</option>
                         <option value="other" {{ request('filter') == 'other' ? 'selected' : '' }}>سایر موارد</option>
+                    </select>
+                </div>
+                <div class="col my-1">
+                    <select  name="user_filter" data-control="select2" data-hide-search="true"
+                             class="form-select form-select-solid form-select-sm"
+                             data-placeholder="مدیر مربوطه را انتخاب کنید">
+                        <option></option>
+                        @foreach($managers as $key => $manager)
+                            <option value="{{ $manager->id }}" {{ request('user_filter') == $manager->id ? 'selected' : '' }}>
+                                {{ $manager->Name }}
+                            </option>
+                        @endforeach
                     </select>
                 </div>
             </div>
@@ -127,8 +133,6 @@
                                 <i class="ki-outline ki-cross-square text-danger ms-2"></i>
                             </span>
                     @endif
-
-
 
                     @if (request('brand_filter'))
                         @php
@@ -148,11 +152,23 @@
                         @endphp
                         @if($department)
                             <span onclick="delete_value('department_filter')" class="badge badge-light py-2 px-5 cursor-pointer">
-                    {{ $department->name }}
-                    <i class="ki-outline ki-cross-square text-danger ms-2"></i>
-                </span>
+                                {{ $department->name }}
+                                <i class="ki-outline ki-cross-square text-danger ms-2"></i>
+                            </span>
                         @endif
                     @endif
+
+                        @if (request('user_filter'))
+                            @php
+                                $manager = $managers->firstWhere('id', request('user_filter'));
+                            @endphp
+                            @if($manager)
+                                <span onclick="delete_value('user_filter')" class="badge badge-light py-2 px-5 cursor-pointer">
+                                {{ $manager->name }}
+                                <i class="ki-outline ki-cross-square text-danger ms-2"></i>
+                            </span>
+                            @endif
+                        @endif
 
                     @if (request('filter'))
                         <span onclick="delete_value('filter')" class="badge badge-light py-2 px-5 cursor-pointer">
