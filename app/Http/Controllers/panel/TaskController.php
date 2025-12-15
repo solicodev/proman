@@ -53,7 +53,23 @@ class TaskController extends Controller
             3 => ['title' => 'انجام شد', 'color' => 'secondary'],
         ];
 
-        $projects = Project::with('manager','category','department','brand','members','photos','dependencies','comments')->where('manager_id',Auth::id())->pluck('id')->all();;
+//        $projects = Project::with('manager','category','department','brand','members','photos','dependencies','comments')->where('manager_id',Auth::id())->pluck('id')->all();;
+
+
+        $user = auth()->user();
+        $projectsAsManager = Project::where('manager_id', $user->id);
+
+        $managerIds = DB::table('project_manager_admins')
+            ->where('admin_id', $user->id)
+            ->pluck('project_manager_id');
+
+        $projectsAsAdmin = Project::whereIn('manager_id', $managerIds);
+
+        $projects = $projectsAsManager->select('id')->union($projectsAsAdmin->select('id'))->with(['manager','category','department','members','photos','brand'])->pluck('id');
+
+        //        $project_id = $projectsAsManager->union($projectsAsAdmin)->with(['manager','category','department','members','photos','brand']);
+//        $last_projects = $projectsAsManager->union($projectsAsAdmin)->with(['manager','category','department','members','photos','brand'])->get();
+//
 
         $tasks = Task::with(['project','manager','watcher','assigners','photos','predecessors','successors'])->whereNull('parent_id')->whereIn('project_id',$projects)->get()->groupBy('status');
         $tb_tasks = Task::with(['children'=>with(['assigners' => with(['photo'])])],['project','manager','watcher','assigners','photos','parent'])->whereNull('parent_id')->whereIn('project_id',$projects)->get();
@@ -75,11 +91,12 @@ class TaskController extends Controller
             $query->whereIn('name', $SuperAdminRoles);
         })->whereStatus('1')->latest()->get();
 
-        $projects = Project::get();;
+        $projects = Project::get();
 
         $watchers = User::whereDoesntHave('roles', function ($query) use ($SuperAdminRoles) {
             $query->whereIn('name', $SuperAdminRoles);
         })->whereStatus('1')->latest()->get();
+
         $item_tasks = Task::with(['project','manager','watcher','assigners','photos','predecessors','successors'])->where('project_id',$project->id)->paginate(15);
 
         return view('proMan.tasks.create', get_defined_vars());

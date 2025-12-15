@@ -41,34 +41,35 @@ class ProjectController extends Controller
 
         $user = auth()->user();
 
+        if ($user->hasRole(['Member','Assignee'])) {
+            $projects = Project::with(['manager','category','department','members','photos','brand'])
+                ->whereHas('members', function($q) use ($user) {
+                    $q->where('user_id', $user->id);
+                })
+                ->paginate(9);
+        }
+        else
+        {
+
 // پروژه‌های مدیر پروژه
-        $projectsAsManager = Project::where('manager_id', $user->id);
+            $projectsAsManager = Project::where('manager_id', $user->id);
 
 // پروژه‌های ادمین
-        $managerIds = DB::table('project_manager_admins')
-            ->where('admin_id', $user->id)
-            ->pluck('project_manager_id');
+            $managerIds = DB::table('project_manager_admins')
+                ->where('admin_id', $user->id)
+                ->pluck('project_manager_id');
 
-        $projectsAsAdmin = Project::whereIn('manager_id', $managerIds);
+            $projectsAsAdmin = Project::whereIn('manager_id', $managerIds);
 
 // ترکیب هر دو
-        $projects = $projectsAsManager->union($projectsAsAdmin)->with(['manager','category','department','members','photos','brand'])->paginate(9);
-
-//        if ($user->hasRole('project_manager')) {
-//            $projects = Project::where('manager_id', $user->id)->get();
-//        }
-//
-//        elseif ($user->hasRole('project_admin')) {
-//            $managerIds = ProjectManagerAdmin::where('admin_id', $user->id)
-//                ->pluck('project_manager_id');
-//            $projects = Project::whereIn('manager_id', $managerIds)->get();
-//        }
-
+            $projects = $projectsAsManager->union($projectsAsAdmin)->with(['manager','category','department','members','photos','brand'])
+                ->paginate(9);
+            $project_id = $projectsAsManager->union($projectsAsAdmin)->with(['manager','category','department','members','photos','brand']);
+            $last_projects = $projectsAsManager->union($projectsAsAdmin)->with(['manager','category','department','members','photos','brand'])->get();
+        }
 
 
 //        $projects = Project::with(['manager','category','department','members','photos','brand'])->where('manager_id',Auth::id())->paginate(9);
-        $project_id = Project::with(['manager','category','department','members','photos','brand'])->where('manager_id',Auth::id())->pluck('id')->toArray();
-        $last_projects = Project::with(['manager','category','department','members','photos','brand'])->where('manager_id',Auth::id())->take(3)->latest()->get();
 
         return view('proMan.projects.index',get_defined_vars());
     }
@@ -76,9 +77,20 @@ class ProjectController extends Controller
 
     public function report()
     {
-        $projects = Project::with(['manager','category','department','members','photos','brand'])->where('manager_id',Auth::id())->latest()->get();
-        $project_id = Project::with(['manager','category','department','members','photos','brand'])->where('manager_id',Auth::id())->pluck('id')->toArray();
-        $last_projects = Project::with(['manager','category','department','members','photos','brand'])->where('manager_id',Auth::id())->take(3)->latest()->get();
+        $user = auth()->user();
+        $projectsAsManager = Project::where('manager_id', $user->id);
+
+        $managerIds = DB::table('project_manager_admins')
+            ->where('admin_id', $user->id)
+            ->pluck('project_manager_id');
+
+        $projectsAsAdmin = Project::whereIn('manager_id', $managerIds);
+
+        $projects = $projectsAsManager->union($projectsAsAdmin)->with(['manager','category','department','members','photos','brand'])->paginate(9);
+        $project_id = $projectsAsManager->union($projectsAsAdmin)->with(['manager','category','department','members','photos','brand']);
+        $last_projects = $projectsAsManager->union($projectsAsAdmin)->with(['manager','category','department','members','photos','brand'])->get();
+
+
         $departments = Department::all();
         $brands = Brand::all();
 
@@ -316,9 +328,11 @@ class ProjectController extends Controller
         $brands = Brand::with(['photo','getChid'])->get();
 
         $departments = Department::get();
-        $members = User::whereHas('roles', function ($query) use ($memberRoles) {
+
+        $members = User::whereDoesntHave('roles', function ($query) use ($memberRoles) {
             $query->whereIn('name', $memberRoles);
         })->whereStatus('1')->latest()->get();
+
         return view('proMan.projects.edit',get_defined_vars());
     }
 

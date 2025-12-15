@@ -6,7 +6,7 @@
                 <div class="d-flex flex-column flex-row-fluid">
                     <div class="page-title d-flex align-items-center me-3">
                         <h1 class="page-heading d-flex flex-column justify-content-center text-gray-900 fw-bold fs-lg-2x gap-2">
-                            <span>افزودن تسک</span>
+                            <span>افزودن ادمین</span>
                         </h1>
                     </div>
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold mb-3 fs-7">

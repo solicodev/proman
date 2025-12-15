@@ -8,6 +8,8 @@ use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class ProjectManagerAdminController extends Controller
 {
@@ -16,7 +18,24 @@ class ProjectManagerAdminController extends Controller
      */
     public function index()
     {
-        $admins = ProjectManagerAdmin::where('project_manager_id',Auth::id())->get();
+        $userId = Auth::id();
+
+        $project_admins = ProjectManagerAdmin::where('project_manager_id', $userId)
+            ->pluck('admin_id');
+
+        $allUsers = collect([$userId])->merge($project_admins);
+
+        $admins = User::whereIn('id', $allUsers)->get();
+
+
+        $roles = Role::all();
+        $permissions = Permission::all();
+
+        $permission_lists = Permission::get();
+        $groupedPermissions = collect($permission_lists)->groupBy(function($permission) {
+            return explode('_', $permission->name)[0];
+        });
+
         return view('proMan.user.admin_list', get_defined_vars());
     }
 

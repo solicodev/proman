@@ -141,7 +141,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6 fv-row">
-                                                        <label class="required fs-6 fw-semibold mb-2">تاریخ پایان</label>
+                                                        <label class=" fs-6 fw-semibold mb-2">تاریخ پایان</label>
                                                         <div class="position-relative d-flex align-items-center">
                                                             <i class="ki-outline ki-calendar-8 fs-2 position-absolute mx-4"></i>
                                                             <input name="end_date"
@@ -151,7 +151,7 @@
                                                                    placeholder="تاریخ پایان پروژه"
                                                                    autocomplete="off"
                                                                    value="{{ $project->end_date }}"
-                                                                   required />
+                                                                    />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -217,9 +217,9 @@
                                                     </div>
 
                                                     <div class="col-md-6 fv-row">
-                                                        <label class="form-label required">دسته بندی</label>
+                                                        <label class="form-label">دسته بندی</label>
                                                         <select class="form-select form-select-solid" data-control="select2"
-                                                                data-placeholder="دپارتمان را انتخاب کنید" name="category_id" required>
+                                                                data-placeholder="دپارتمان را انتخاب کنید" name="category_id" >
                                                             <option></option>
                                                             @foreach($categories as $category)
                                                                 <option value="{{$category->id}}" @if($project->category_id == $category->id) selected @endif>{{$category->title}} </option>

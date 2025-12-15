@@ -110,15 +110,15 @@
                     <tbody class="fs-6">
                     @foreach($admins as $projectManagerAdmin)
                         @php
-                            $role = $projectManagerAdmin->admin?->getRoleNames()->first();
+                            $role = $projectManagerAdmin->getRoleNames()->first();
                         @endphp
                         <tr>
                             <td>{{$loop->iteration}}</td>
-                            <td class="text-start">{{$projectManagerAdmin->admin?->Name}}</td>
-                            <td  class="text-start"> {{ $projectManagerAdmin->admin?->personal_id }}</td>
-                            <td  class="text-start"> {{ $projectManagerAdmin->admin?->mobile }}</td>
-                            <td  class="text-start"> {{ $projectManagerAdmin->admin?->department?->name }}</td>
-                            <td  class="text-start"> {{ $projectManagerAdmin->admin?->department?->name }}</td>
+                            <td class="text-start">{{$projectManagerAdmin->Name}}</td>
+                            <td  class="text-start"> {{ $projectManagerAdmin->personal_id }}</td>
+                            <td  class="text-start"> {{ $projectManagerAdmin->mobile }}</td>
+                            <td  class="text-start"> {{ $projectManagerAdmin->department?->name }}</td>
+                            <td  class="text-start"> {{ $projectManagerAdmin->department?->name }}</td>
                             <td  class="text-start"> {{ role_name($role) }}</td>
                             <td class="text-start">
                                 <a href="#"
@@ -126,6 +126,12 @@
                                    class="btn btn-light-danger btn-sm p-1">
                                     <i class="ki-outline ki-trash fs-6 px-2"></i>
                                 </a>
+{{--                                <a href="#"--}}
+{{--                                   onclick="openEditModal('{{ route('dashboard.access.update',$projectManagerAdmin->id) }}', JSON.stringify({name:'{{ $projectManagerAdmin->Name }}', permission: @json($projectManagerAdmin->permissions->pluck('id')) }))">--}}
+{{--                                   <span class="btn btn-sm btn-light-primary">--}}
+{{--                                        ویرایش سطوح دسترسی<i class="ki-outline ki-pencil fs-3 px-2"></i>--}}
+{{--                                   </span>--}}
+{{--                                </a>--}}
                             </td>
                         </tr>
                     @endforeach
@@ -161,11 +167,95 @@
             </div>
         </div>
     </div>
-    @push('script')
+    <div class="modal fade" id="permissionModal" tabindex="-1" aria-labelledby="permissionModalLabel" aria-hidden="true">
+        <!--begin::Modal dialog-->
+        <div class="modal-dialog modal-dialog-centered mw-900px">
+            <!--begin::Modal content-->
+            <div class="modal-content rounded">
+                <!--begin::Modal header-->
+                <div class="modal-header pb-0 border-0 justify-content-end">
+                    <!--begin::Close-->
+                    <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                        <i class="ki-outline ki-cross fs-1"></i>
+                    </div>
+                    <!--end::Close-->
+                </div>
+                <!--begin::Modal header-->
+
+                <!--begin::Modal body-->
+                <div class="modal-body scroll-y px-10 px-lg-15 pt-0 pb-15">
+                    <!--begin:Form-->
+                    <form id="EditAccessForm" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+                        @csrf
+                        @method('put')
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold mb-2">دسترسی‌ها</label>
+                            <div class="row g-3">
+                                @php
+                                    $groupTitles = [
+                                        'manager' => 'دسترسی‌های مدیر پروژه',
+                                        'member' => 'دسترسی‌های اعضای پروژه',
+                                        'assign' => 'دسترسی‌های مسئول انجام پروژه',
+                                        'dep' => 'دسترسی‌های دپارتمان',
+                                    ];
+                                @endphp
+
+                                @foreach($groupedPermissions as $group => $permissions)
+                                    <div class="col-12 mt-3">
+                                        <h6 class="fw-bold border-bottom pb-1 mb-2">{{ $groupTitles[$group] ?? 'سایر دسترسی‌ها' }}</h6>
+                                    </div>
+
+                                    @foreach($permissions as $permission)
+                                        <div class="col-md-4 col-sm-6">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="permissions[]" value="{{ $permission->id }}" id="perm{{ $permission->id }}">
+                                                <label class="form-check-label" for="perm{{ $permission->id }}">
+                                                    {{ permission_name($permission->name) }}
+                                                </label>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                @endforeach
+
+
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn btn-primary px-4">ذخیره</button>
+                            <button type="button" class="btn btn-secondary ms-2" data-bs-dismiss="modal">انصراف</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+@push('script')
         <script>
             function openDeleteModal(url) {
                 $('#deleteForm').attr('action', url);
                 $('#deletePricingModal').modal('show');
+            }
+
+            function openEditModal(url, currentData) {
+                let data = JSON.parse(currentData);
+
+                $('#permissionModalLabel').text(`ویرایش سطوح دسترسی "${data.name}"`);
+                $('#editForm #name').val(data.name);
+                $('#EditAccessForm').attr('action', url);
+
+                $('input[name="permissions[]"]').prop('checked', false);
+
+                // old permission for user
+                if (Array.isArray(data.permission)) {
+                    data.permission.forEach(function (permId) {
+                        $('#perm' + permId).prop('checked', true);
+                    });
+                }
+
+                $('#permissionModal').modal('show');
             }
         </script>
     @endpush

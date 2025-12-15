@@ -129,6 +129,9 @@
                         </a>
                         <!--end::Link-->
                     </div>
+
+                    @endcan
+                    @if(auth()->user()->hasrole('Manager'))
                         <div class="col-6">
                             <!--begin::Link-->
                             <a href="{{route('dashboard.list.admin')}}"
@@ -146,7 +149,7 @@
                             </a>
                             <!--end::Link-->
                         </div>
-                    @endcan
+                    @endif
                     <!--end::Col-->
 
                 </div>

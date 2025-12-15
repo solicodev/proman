@@ -23,7 +23,6 @@ class UserImport implements ToModel, WithHeadingRow
 
     public function model(array $row)
     {
-
         $user = User::where('mobile',$row['mobile'])->first();
         if (!$user)
         {
@@ -33,13 +32,12 @@ class UserImport implements ToModel, WithHeadingRow
             $user->first_name = $row['first_name'];
             $user->last_name = $row['last_name'];
             $user->mobile = $row['mobile'];
-            $user->status = 1;
+            $user->status = '1';
             $user->position_id = $row['position_id'];
             $user->department_id = $row['department_id'];
             $user->personal_id = $rand;
             $user->password = Hash::make($rand);
             $user->save();
-
 
             $user->assignRole($row['role_id']);
             switch ($row['role_id']) {
@@ -61,6 +59,7 @@ class UserImport implements ToModel, WithHeadingRow
             }
 
             $user->permissions()->attach($permission_lists);
+
         }
 
         return $user;
