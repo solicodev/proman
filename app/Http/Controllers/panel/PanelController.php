@@ -77,6 +77,10 @@ class PanelController extends Controller
 //            ['path' => request()->url(), 'query' => request()->query()]
 //        );
 
+        $high_tasks = Task::with(['project','manager','watcher','assigners','photos','predecessors','successors'])->whereIn('project_id',$project_id)->where('priority','2')->get();
+        $array_tasks = Task::with(['project','manager','watcher','assigners','photos','parent','children'])->whereNull('parent_id')->where('project_id',$project_id)->get();
+
+//        dd(Auth::id(),$project_id,$high_tasks,$array_tasks,$tasks);
         return view('proMan.index',get_defined_vars());
     }
 

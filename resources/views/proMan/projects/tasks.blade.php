@@ -32,34 +32,32 @@
     @endpush
     @include('layouts.message')
     @include('proMan.projects.main-card')
-    <div class="d-flex flex-wrap flex-stack pt-10 pb-8" data-select2-id="select2-data-135-nh5p">
+    <div class="d-flex flex-wrap flex-stack pt-1 pb-2" data-select2-id="select2-data-135-nh5p">
         <!--begin::Heading-->
         <h3 class="fw-bold my-2">
             تسک های پروژه
             {{--            <span class="fs-6 text-gray-500 fw-semibold ms-1">آپدیت بر اساس ↓</span>--}}
         </h3>
         <!--end::Heading-->
-        <div class="d-flex flex-wrap my-1">
-            @can('manager_taskAdd')
-                <a href="#" class="btn btn-sm btn-primary er w-100 fs-6 px-8 py-4"  data-bs-toggle="modal" data-bs-target="#kt_modal_new_target">ایجاد تسک<i class="ki-outline ki-plus-square fs-6 px-2"></i> </a>
-            @endcan
-        </div>
         <!--begin::Controls-->
         <div class="d-flex flex-wrap my-1">
+            @can('manager_taskAdd')
+                <a href="#" class="btn btn-sm btn-light-success d-flex flex-center ms-3 px-4 py-3"  data-bs-toggle="modal" data-bs-target="#kt_modal_new_target">ایجاد تسک<i class="ki-outline ki-plus-square fs-6 px-2"></i> </a>
+            @endcan
             <!--begin::Tab nav-->
-            <ul class="nav nav-pills me-5">
-                <li class="nav-item m-0">
-                    <a class="btn btn-sm btn-icon btn-light btn-color-muted btn-active-primary me-3" data-bs-toggle="tab" href="#kt_project_targets_card_pane">
-                        <i class="ki-outline ki-element-plus fs-1"></i>
-                    </a>
-                </li>
+            {{--            <ul class="nav nav-pills me-5">--}}
+            {{--                <li class="nav-item m-0">--}}
+            {{--                    <a class="btn btn-sm btn-icon btn-light btn-color-muted btn-active-primary me-3" data-bs-toggle="tab" href="#kt_project_targets_card_pane">--}}
+            {{--                        <i class="ki-outline ki-element-plus fs-1"></i>--}}
+            {{--                    </a>--}}
+            {{--                </li>--}}
 
-                <li class="nav-item m-0">
-                    <a class="btn btn-sm btn-icon btn-light btn-color-muted btn-active-primary active" data-bs-toggle="tab" href="#kt_project_targets_table_pane">
-                        <i class="ki-outline ki-row-horizontal fs-2"></i>
-                    </a>
-                </li>
-            </ul>
+            {{--                <li class="nav-item m-0">--}}
+            {{--                    <a class="btn btn-sm btn-icon btn-light btn-color-muted btn-active-primary active" data-bs-toggle="tab" href="#kt_project_targets_table_pane">--}}
+            {{--                        <i class="ki-outline ki-row-horizontal fs-2"></i>--}}
+            {{--                    </a>--}}
+            {{--                </li>--}}
+            {{--            </ul>--}}
             <!--end::Tab nav-->
 
             <!--begin::Wrapper-->
@@ -200,13 +198,15 @@
                                                 </a>
                                             @endcan
                                             @canany(['manager_taskShow','member_taskShow','assign_taskShow'])
-                                                <a href="#" onclick="openShowModal(
-                                                '{{ route('dashboard.task.show', $task->id) }}',
-                                                '{{ route('dashboard.task.update.status', $task->id) }}'
-                                                )"
-                                                   data-task-id="{{ $task->id }}"
-                                                   data-task-status="{{ $task->status }}"
-                                                   class="btn btn-sm btn-light-info" data-bs-toggle="tooltip" data-bs-placement="top" title="مشاهده"><i class="ki-outline ki-eye fs-6 px-2"></i></a>
+
+                                                <a href="#"
+                                                   class="btn btn-sm btn-light-info show-task-btn"
+                                                   data-show-url="{{ route('dashboard.task.show', $task->id) }}"
+                                                   data-update-url="{{ route('dashboard.task.update.status', $task->id) }}"
+                                                   data-bs-toggle="tooltip"
+                                                   title="مشاهده">
+                                                    <i class="ki-outline ki-eye fs-6 px-2"></i>
+                                                </a>
                                             @endcanany
                                         </div>
                                     </div>
@@ -295,16 +295,16 @@
 
                         <!--begin::SubTable template-->
                         <tr data-kt-docs-datatable-subtable="subtable_template" class="d-none">
-                            <td data-kt-docs-datatable-subtable="template_index"></td>
-                            <td data-kt-docs-datatable-subtable="template_id"></td>
-                            <td data-kt-docs-datatable-subtable="template_title"></td>
-                            <td data-kt-docs-datatable-subtable="template_start_date"></td>
-                            <td data-kt-docs-datatable-subtable="template_end_date"></td>
-                            <td data-kt-docs-datatable-subtable="template_priority"></td>
-                            <td data-kt-docs-datatable-subtable="template_status"></td>
-                            <td data-kt-docs-datatable-subtable="template_members"></td>
-                            <td data-kt-docs-datatable-subtable="template_actions"></td>
-                            <td data-kt-docs-datatable-subtable="template"></td>
+                            <td data-kt-docs-datatable-subtable="template_index" class="text-start"></td>
+                            <td data-kt-docs-datatable-subtable="template_id" class="text-start"></td>
+                            <td data-kt-docs-datatable-subtable="template_title" class="text-start"></td>
+                            <td data-kt-docs-datatable-subtable="template_start_date" class="text-start"></td>
+                            <td data-kt-docs-datatable-subtable="template_end_date" class="text-start"></td>
+                            <td data-kt-docs-datatable-subtable="template_priority" class="text-start"></td>
+                            <td data-kt-docs-datatable-subtable="template_status" class="text-start"></td>
+                            <td data-kt-docs-datatable-subtable="template_members" class="text-start"></td>
+                            <td data-kt-docs-datatable-subtable="template_actions" class="text-start"></td>
+                            <td data-kt-docs-datatable-subtable="template" class="text-start"></td>
                         </tr>
                         <!--end::SubTable template-->
 
@@ -338,6 +338,7 @@
                                         '{{ route('dashboard.task.show', $tb_task->id) }}',
                                         '{{ route('dashboard.task.update.status', $tb_task->id) }}',
                                         )"
+                                           data-task='@json($tb_task)'
                                            data-task-id="{{ $tb_task->id }}"
                                            data-task-status="{{ $tb_task->status }}"
                                            class="btn btn-sm btn-light-info" data-bs-toggle="tooltip" data-bs-placement="top" title="مشاهده">
@@ -364,8 +365,8 @@
                                 <td>
                                     <button type="button" class="btn btn-sm btn-icon btn-light btn-active-light-primary  toggle h-25px w-25px"
                                             data-kt-docs-datatable-subtable="expand_row">
-                                        <span class="btn btn-sm btn-light-primary toggle-off"><i class="ki-outline ki-plus"></i></span>
-                                        <span class="btn btn-sm btn-light-danger toggle-on"><i class="ki-outline ki-cross"></i></span>
+                                        <span class="btn btn-sm btn-light-primary toggle-off"><i class="ki-outline ki-plus text-success"></i></span>
+                                        <span class="btn btn-sm btn-light-danger toggle-on"><i class="ki-outline ki-cross "></i></span>
                                     </button>
                                 </td>
                             </tr>
@@ -784,46 +785,46 @@
                                    autocomplete="off"
                                    required />
                         </div>
-                        <div class="dropdown">
-                            <button class="btn btn-sm btn-light-primary rotate"
-                                    data-kt-menu-trigger="click"
-                                    data-kt-menu-placement="bottom-start"
-                                    data-kt-menu-offset="30px, 30px">
-                                چک‌لیست
-                                <span class="svg-icon fs-3 rotate-180 ms-3 me-0">
-                                    <i class="ki-outline ki-down fs-6"></i>
-                                </span>
-                            </button>
-                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800
-                             menu-state-bg-light-primary fw-semibold w-auto min-w-200 mw-300px"
-                                 data-kt-menu="true">
+{{--                        <div class="dropdown">--}}
+{{--                            <button class="btn btn-sm btn-light-primary rotate"--}}
+{{--                                    data-kt-menu-trigger="click"--}}
+{{--                                    data-kt-menu-placement="bottom-start"--}}
+{{--                                    data-kt-menu-offset="30px, 30px">--}}
+{{--                                چک‌لیست--}}
+{{--                                <span class="svg-icon fs-3 rotate-180 ms-3 me-0">--}}
+{{--                                    <i class="ki-outline ki-down fs-6"></i>--}}
+{{--                                </span>--}}
+{{--                            </button>--}}
+{{--                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800--}}
+{{--                             menu-state-bg-light-primary fw-semibold w-auto min-w-200 mw-300px"--}}
+{{--                                 data-kt-menu="true">--}}
 
-                                <div class="menu-item px-3">
-                                    <div class="menu-content fs-6 text-gray-900 fw-bold px-3 py-4">افزودن چک لیست</div>
-                                </div>
-                                <div class="separator mb-3 opacity-75"></div>
-                                <form action="{{ route('dashboard.task.checklist',$task->id ?? 0) }}" method="post" enctype="multipart/form-data"
-                                      class="mx-auto mw-100 w-100 fv-plugins-bootstrap5 fv-plugins-framework needs-validation"
-                                      novalidate id="kt_docs_formvalidation_text" autocomplete="off">
-                                    @csrf
+{{--                                <div class="menu-item px-3">--}}
+{{--                                    <div class="menu-content fs-6 text-gray-900 fw-bold px-3 py-4">افزودن چک لیست</div>--}}
+{{--                                </div>--}}
+{{--                                <div class="separator mb-3 opacity-75"></div>--}}
+{{--                                <form action="{{ route('dashboard.task.checklist',$task->id ?? 0) }}" method="post" enctype="multipart/form-data"--}}
+{{--                                      class="mx-auto mw-100 w-100 fv-plugins-bootstrap5 fv-plugins-framework needs-validation"--}}
+{{--                                      novalidate id="kt_docs_formvalidation_text" autocomplete="off">--}}
+{{--                                    @csrf--}}
 
-                                    <div class="shadow-sm p-4">
+{{--                                    <div class="shadow-sm p-4">--}}
 
-                                        <div class="fv-row mb-10">
-                                            <label class="form-label required">چک لیست</label>
-                                            <input name="title" value="{{ old('title') }}" class="form-control form-control-lg"
-                                                   placeholder="چک لیست" required>
-                                        </div>
-                                    </div>
+{{--                                        <div class="fv-row mb-10">--}}
+{{--                                            <label class="form-label required">چک لیست</label>--}}
+{{--                                            <input name="title" value="{{ old('title') }}" class="form-control form-control-lg"--}}
+{{--                                                   placeholder="چک لیست" required>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
 
-                                    <div class="menu-item d-flex justify-content-end px-3">
-                                        <div class="menu-content  px-3 py-3">
-                                            <button class="btn btn-light-primary btn-sm px-4">افزودن<i class="ki-outline ki-plus-square fs-3 px-2"></i></button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+{{--                                    <div class="menu-item d-flex justify-content-end px-3">--}}
+{{--                                        <div class="menu-content  px-3 py-3">--}}
+{{--                                            <button class="btn btn-light-primary btn-sm px-4">افزودن<i class="ki-outline ki-plus-square fs-3 px-2"></i></button>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </form>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
                         <div class="dropdown">
                             <button class="btn btn-sm btn-light-primary rotate"
                                     data-kt-menu-trigger="click"
@@ -1001,22 +1002,25 @@
                         </div>
                         <!-- کامنت‌ها -->
                         <div class="col-4">
+
                             <div id="taskComments" class="hover-scroll-y h-400px">
                                 <h6 class="fw-semibold mb-2">کامنت‌ها</h6>
 
                                 <div id="commentsList"></div>
                             </div>
+
                             <div>
-                                <form method="POST" id="commentForm" class="mt-4" data-url="{{ route('dashboard.task.comment.add', $task->id ?? 0) }}">
+                                <form method="POST" id="commentForm" class="mt-4">
                                     @csrf
                                     <textarea name="text" class="form-control mb-2" placeholder="افزودن کامنت جدید..." required></textarea>
+
                                     <div class="d-flex justify-content-end">
                                         <button type="submit" class="btn btn-sm btn-light-primary">ارسال</button>
                                     </div>
                                 </form>
                             </div>
 
-                            <input type="hidden" id="taskId" value="{{ $task->id ?? 0}}">
+                            <input type="hidden" id="taskId">
 
                         </div>
                     </div>
@@ -1331,196 +1335,394 @@
 
 
 
-
             // task show modal
-            function openShowModal(showUrl, updateUrl) {
-                $.ajax({
-                    url: showUrl,
-                    type: 'GET',
-                    success: function (data) {
-                        console.log(data.title)
-                        // task data from json controller
-                        $('#modalTitle').show().text(` مشاهده: ${data.title}`);
-                        $('#taskCode').show().text(`  ${data.code}`);
 
-                        if (data.manager) {
-                            $('#taskManager').show().text(`مدیر تایید کننده: ${data.manager}`);
-                            $('#taskManagerCheck').show().text(`آیا تسک توسط مدیر تایید شود؟ ${data.managerCheck}`);
-                            $('#managerCheckVerify').show().text(` تایید شده توسط مدیر : ${data.managerCheckVerify}`);
-                        } else {
-                            $('#taskManager').hide();
-                            $('#taskManagerCheck').hide();
-                            $('#managerCheckVerify').hide();
+
+            async function openShowModal(showUrl, updateUrl) {
+                // try {
+
+                    const res = await fetch(showUrl);
+                    const data = await res.json();
+                    console.log(data.id)
+                    // عنوان
+                    document.getElementById('modalTitle').innerText = `مشاهده: ${data.title}`;
+                    document.getElementById('taskCode').innerText = data.code ?? '-';
+                    document.getElementById('taskId').innerText = data.task_id ?? '-';
+
+                    // مدیر
+                    const managerEl = document.getElementById('taskManager');
+                    const managerCheckEl = document.getElementById('taskManagerCheck');
+                    const managerVerifyEl = document.getElementById('managerCheckVerify');
+
+                    if (data.manager) {
+                        managerEl.style.display = 'block';
+                        managerCheckEl.style.display = 'block';
+                        managerVerifyEl.style.display = 'block';
+
+                        managerEl.innerText = `مدیر تایید کننده: ${data.manager}`;
+                        managerCheckEl.innerText = data.managerCheck ?? '-';
+                        managerVerifyEl.innerText = data.managerCheckVerify ?? '-';
+                    } else {
+                        managerEl.style.display = 'none';
+                        managerCheckEl.style.display = 'none';
+                        managerVerifyEl.style.display = 'none';
+                    }
+
+                    document.getElementById('watcher').innerText = data.watcher ?? '-';
+                    document.getElementById('taskStatus').innerHTML = `وضعیت: ${data.status}`;
+                    document.getElementById('TaskPrority').innerHTML = `اولویت: ${data.priority}`;
+                    document.getElementById('task-deadline').innerText = data.deadline ?? '-';
+                    document.getElementById('task-desc').innerText = data.description ?? '-';
+
+                    // اعضا
+                    document.getElementById('taskMembers').innerHTML =
+                        (data.assigners || []).map(a => `
+                <div class="symbol symbol-35px symbol-circle" title="${a.name}">
+                    ${a.photo
+                            ? `<img src="${a.photo}" alt="${a.name}">`
+                            : `<span class="symbol-label bg-warning fw-bold">${a.name.charAt(0)}</span>`
                         }
-                        $('#watcher').text(` ناظر تسک : ${data.watcher}`);
+                </div>
+            `).join('');
 
-                        $('#taskStatus').html(`وضعیت: ${data.status}`);
-                        $('#TaskPrority').html(`اولویت: ${data.priority}`);
-                        $('#task-deadline').text(`مهلت: ${data.deadline}`);
-                        $('#task-desc').text(data.description ?? '-');
+                    // فایل‌ها
+                    document.getElementById('taskFiles').innerHTML =
+                        (data.files || []).map(f => `
+                <div class="d-flex align-items-center mb-3">
+                    <div>
+                        <div>${f.user_name}</div>
+                        <div class="text-muted">${f.created_at}</div>
+                    </div>
+                    <a href="${f.path}" download class="btn btn-sm btn-light ms-auto">
+                        دانلود
+                    </a>
+                </div>
+                 `).join('');
 
-                        // اعضا
-                        let membersHTML = '';
-                        data.assigners.forEach(a => {
-                            if (a.photo) {
-                                membersHTML += `
-                        <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="${a.name}">
-                            <img src="${window.location.origin}/${a.photo}" alt="${a.name}">
-                        </div>`;
-                            } else {
-                                membersHTML += `
-                        <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" data-bs-original-title="${a.name}">
-                            <span class="symbol-label bg-warning text-inverse-warning fw-bold" title="${a.name}">
-                            ${a.name.charAt(0)}
-                             </span>
-                        </div>`;
+                    // کامنت‌ها
+                    // renderComments(data.comments || []);
+
+                // ============================
+// RENDER COMMENTS
+// ============================
+                function renderComments(comments) {
+                    const list = document.getElementById('commentsList');
+                    if (!list) return;
+
+                    list.innerHTML = (comments || []).map(c => {
+
+                        const userPhoto = c.photo
+                            ? `${window.location.origin}/${c.photo}`
+                            : `${window.location.origin}/panel/assets/media/svg/avatars/blank.svg`;
+
+                        return `
+            <div class="d-flex align-items-center mb-4">
+                <div class="symbol symbol-35px symbol-circle">
+                    <img alt="Pic" src="${userPhoto}">
+                </div>
+
+                <div class="ms-5">
+                    <div class="fw-bold">${c.name ?? 'بدون نام'}</div>
+                    <div class="text-muted">${c.text ?? ''}</div>
+                    <div class="text-gray-500 small mt-1">${c.created_at ?? ''}</div>
+                </div>
+            </div>
+        `;
+                    }).join('');
+                }
+
+
+                // ============================
+                // SETUP COMMENT FORM
+                // ============================
+                function setupCommentForm(taskId) {
+
+                    const form = document.getElementById('commentForm');
+                    if (!form) return;
+
+                    // جلوگیری از duplicate bind
+                    form.onsubmit = null;
+
+                    // URL داینامیک
+                    form.dataset.url = `/dashboard/task/tasks/${taskId}/comments`;
+
+                    form.onsubmit = async function (e) {
+                        e.preventDefault();
+
+                        const url = form.dataset.url;
+                        if (!url) return console.error('Comment URL not set');
+
+                        const formData = new FormData(form);
+
+                        try {
+                            const res = await fetch(url, {
+                                method: 'POST',
+                                headers: {
+                                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                                },
+                                body: formData
+                            });
+
+                            if (!res.ok) throw new Error('Request failed');
+
+                            const response = await res.json();
+
+                            if (!response?.comment) {
+                                alert('ارسال کامنت ناموفق بود');
+                                return;
                             }
-                        });
-                        $('#taskMembers').html(membersHTML);
 
-                        // فایل‌ها
-                        let filesHTML = '';
-                        data.files.forEach(f => {
-                            // نوع فایل رو تشخیص می‌دیم برای انتخاب آیکون مناسب
-                            const ext = f.path.split('.').pop().toLowerCase();
-                            let icon = 'ai.svg';
-                            if (ext === 'pdf') icon = 'pdf.svg';
-                            else if (ext === 'doc' || ext === 'docx') icon = 'doc.svg';
-                            else if (ext === 'css') icon = 'css.svg';
+                            const c = response.comment;
 
-                            filesHTML += `
-                            <div class="d-flex align-items-center mb-5">
-                                <div class="symbol symbol-30px me-5">
-                                    <img alt="Icon" src="${window.location.origin}/panel/assets/media/svg/files/${icon}" />
-                                </div>
-                                <div class="fw-semibold">
-                                    <a class="fs-6 fw-bold text-gray-900 text-hover-primary">${f.user_name}</a>
-                                    <div class="text-gray-500">
-                                        ${f.created_at}
-                                        <a class="text-active-danger">${f.user_role}</a>
-                                    </div>
-                                </div>
-                                <a href="${window.location.origin}/${f.path}"
-                                   download
-                                   class="btn btn-clean btn-sm btn-icon btn-icon-primary btn-active-light-primary ms-auto"
-                                   data-bs-toggle="tooltip" data-bs-placement="top" title="دانلود فایل">
-                                    <i class="ki-outline ki-cloud-download fs-3"></i>
-                                </a>
-                            </div>
-                        `;
-                        });
+                            const list = document.getElementById('commentsList');
+                            if (!list) return console.error('commentsList not found');
 
-                        $('#taskFiles').html(filesHTML);
-
-
-
-                        // comment store
-                        let commentsHTML = '';
-
-                        data.comments.forEach(c => {
-                            // مسیر عکس — اگر کاربر عکس نداشت، عکس پیش‌فرض
                             const userPhoto = c.photo
                                 ? `${window.location.origin}/${c.photo}`
                                 : `${window.location.origin}/panel/assets/media/svg/avatars/blank.svg`;
 
-                            commentsHTML += `
-                            <div class="d-flex align-items-center mb-4">
-                                <div class="symbol symbol-35px symbol-circle">
-                                    <img alt="Pic" src="${userPhoto}">
-                                </div>
-                                <div class="ms-5">
-                                    <a href="#" class="fs-5 fw-bold text-gray-900 text-hover-primary mb-1">${c.name ?? 'بدون نام'}</a>
-                                    <div class="fw-semibold text-muted">${c.text ?? ''}</div>
-                                    <div class="text-gray-500 small mt-1">${c.created_at ?? ''}</div>
-                                </div>
-                            </div>
-                        `;
-                        });
+                            list.insertAdjacentHTML('afterbegin', `
+                <div class="d-flex align-items-center mb-4">
+                    <div class="symbol symbol-35px symbol-circle">
+                        <img alt="Pic" src="${userPhoto}">
+                    </div>
 
-                        // show
-                        $('#taskComments').html(`
-                        <h6 class="fw-semibold mb-2">کامنت‌ها</h6>
-                        ${commentsHTML}
-                    `);
+                    <div class="ms-5">
+                        <div class="fw-bold">${c.name ?? 'بدون نام'}</div>
+                        <div class="text-muted">${c.text ?? ''}</div>
+                        <div class="text-gray-500 small mt-1">${c.created_at ?? ''}</div>
+                    </div>
+                </div>
+            `);
 
-                        // comments store
+                            form.reset();
 
-                        $.ajaxSetup({
-                            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
-                        });
+                        } catch (err) {
+                            console.error(err);
+                            alert('خطا در ارسال کامنت');
+                        }
+                    };
+                }
 
-                        $(document).on('submit', '#commentForm', function(e) {
-                            e.preventDefault();
-                            const form = $(this);
 
-                            $.ajax({
-                                url: form.data('url'),
-                                type: 'POST',
-                                data: form.serialize(),
-                                success: function(res) {
-                                    if (res.status) {
-                                        const c = res.comment;
-                                        const userPhoto = c.photo ? `${window.location.origin}/${c.photo}` :
-                                            `${window.location.origin}/panel/assets/media/avatars/blank.png`;
+                // ============================
+                // OPEN MODAL (MAIN FUNCTION)
+                // ============================
+                console.log(typeof openShowModal);
+                window.openShowModal = async function(showUrl, updateUrl) {
 
-                                        // اضافه کردن کامنت جدید به ابتدای لیست
-                                        $('#commentsList').prepend(`
-                                            <div class="d-flex align-items-center mb-4">
-                                                <div class="symbol symbol-35px symbol-circle">
-                                                    <img alt="Pic" src="${userPhoto}">
-                                                </div>
-                                                <div class="ms-5">
-                                                    <a href="#" class="fs-5 fw-bold text-gray-900 text-hover-primary mb-1">${c.name}</a>
-                                                    <div class="fw-semibold text-muted">${c.text}</div>
-                                                    <div class="text-gray-500 small mt-1">${c.created_at}</div>
-                                                </div>
-                                            </div>
-                                        `);
+                    try {
+                        const res = await fetch(showUrl);
+                        const data = await res.json();
 
-                                        // پاک کردن textarea بعد از ارسال
-                                        form.trigger('reset');
-                                    }
-                                },
-                                error: function(xhr) {
-                                    alert('خطا در ارسال کامنت. لطفاً دوباره تلاش کنید.');
-                                }
-                            });
-                        });
+                        document.getElementById('taskId').value = data.id;
 
-                        $('#taskStatusForm').attr('data-url', updateUrl);
+                        renderComments(data.comments || []);
+                        setupCommentForm(data.id);
 
-                        $(document).off('change', '#taskStatusForm input[name="status"]').on('change', '#taskStatusForm input[name="status"]', function() {
-                            const form = $('#taskStatusForm');
-                            const url = form.data('url');
-                            $.ajax({
-                                type: 'PUT',
-                                url: url,
-                                data: form.serialize(),
-                                success: function(res) {
-                                    if (res.success) {
-                                        $.jGrowl(res.flash_message, {
-                                            life: 4000,
-                                            position: 'bottom-left',
-                                            theme: 'bg-success'
-                                        });
-                                    }
-                                },
-                                error: function() {
-                                    toastr.error('خطا در بروزرسانی وضعیت');
-                                }
-                            });
-                        });
+                        const modal = new bootstrap.Modal(
+                            document.getElementById('kt_modal_task_show')
+                        );
 
-                        const modal = new bootstrap.Modal(document.getElementById('kt_modal_task_show'));
                         modal.show();
 
-                        loadTaskChecklists(data.id);
-                    },
-                    error: function () {
-                        toastr.error('دریافت اطلاعات تسک با خطا مواجه شد');
+                    } catch (err) {
+                        console.error(err);
                     }
-                });
-            }
+                };
+
+            // TODO
+
+            // function openShowModal(showUrl, updateUrl) {
+            //     console.log(data)
+            //     $.ajax({
+            //         url: showUrl,
+            //         type: 'GET',
+            //         success: function (data) {
+            //             console.log(data)
+            //             // task data from json controller
+            //             $('#modalTitle').show().text(` مشاهده: ${data.title}`);
+            //             $('#taskCode').show().text(`  ${data.code}`);
+            //             $('#taskId').show().text(`  ${data.task_id}`);
+            //
+            //             if (data.manager) {
+            //                 $('#taskManager').show().text(`مدیر تایید کننده: ${data.manager}`);
+            //                 $('#taskManagerCheck').show().text(`آیا تسک توسط مدیر تایید شود؟ ${data.managerCheck}`);
+            //                 $('#managerCheckVerify').show().text(` تایید شده توسط مدیر : ${data.managerCheckVerify}`);
+            //             } else {
+            //                 $('#taskManager').hide();
+            //                 $('#taskManagerCheck').hide();
+            //                 $('#managerCheckVerify').hide();
+            //             }
+            //             $('#watcher').text(` ناظر تسک : ${data.watcher}`);
+            //
+            //             $('#taskStatus').html(`وضعیت: ${data.status}`);
+            //             $('#TaskPrority').html(`اولویت: ${data.priority}`);
+            //             $('#task-deadline').text(`مهلت: ${data.deadline}`);
+            //             $('#task-desc').text(data.description ?? '-');
+            //
+            //             // اعضا
+            //             let membersHTML = '';
+            //             data.assigners.forEach(a => {
+            //                 if (a.photo) {
+            //                     membersHTML += `
+            //             <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="${a.name}">
+            //                 <img src="${window.location.origin}/${a.photo}" alt="${a.name}">
+            //             </div>`;
+            //                 } else {
+            //                     membersHTML += `
+            //             <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" data-bs-original-title="${a.name}">
+            //                 <span class="symbol-label bg-warning text-inverse-warning fw-bold" title="${a.name}">
+            //                 ${a.name.charAt(0)}
+            //                  </span>
+            //             </div>`;
+            //                 }
+            //             });
+            //             $('#taskMembers').html(membersHTML);
+            //
+            //             // فایل‌ها
+            //             let filesHTML = '';
+            //             data.files.forEach(f => {
+            //                 // نوع فایل رو تشخیص می‌دیم برای انتخاب آیکون مناسب
+            //                 const ext = f.path.split('.').pop().toLowerCase();
+            //                 let icon = 'ai.svg';
+            //                 if (ext === 'pdf') icon = 'pdf.svg';
+            //                 else if (ext === 'doc' || ext === 'docx') icon = 'doc.svg';
+            //                 else if (ext === 'css') icon = 'css.svg';
+            //
+            //                 filesHTML += `
+            //                 <div class="d-flex align-items-center mb-5">
+            //                     <div class="symbol symbol-30px me-5">
+            //                         <img alt="Icon" src="${window.location.origin}/panel/assets/media/svg/files/${icon}" />
+            //                     </div>
+            //                     <div class="fw-semibold">
+            //                         <a class="fs-6 fw-bold text-gray-900 text-hover-primary">${f.user_name}</a>
+            //                         <div class="text-gray-500">
+            //                             ${f.created_at}
+            //                             <a class="text-active-danger">${f.user_role}</a>
+            //                         </div>
+            //                     </div>
+            //                     <a href="${window.location.origin}/${f.path}"
+            //                        download
+            //                        class="btn btn-clean btn-sm btn-icon btn-icon-primary btn-active-light-primary ms-auto"
+            //                        data-bs-toggle="tooltip" data-bs-placement="top" title="دانلود فایل">
+            //                         <i class="ki-outline ki-cloud-download fs-3"></i>
+            //                     </a>
+            //                 </div>
+            //             `;
+            //             });
+            //
+            //             $('#taskFiles').html(filesHTML);
+            //
+            //
+            //
+            //             // comment store
+            //             let commentsHTML = '';
+            //
+            //             data.comments.forEach(c => {
+            //                 // مسیر عکس — اگر کاربر عکس نداشت، عکس پیش‌فرض
+            //                 const userPhoto = c.photo
+            //                     ? `${window.location.origin}/${c.photo}`
+            //                     : `${window.location.origin}/panel/assets/media/svg/avatars/blank.svg`;
+            //
+            //                 commentsHTML += `
+            //                 <div class="d-flex align-items-center mb-4">
+            //                     <div class="symbol symbol-35px symbol-circle">
+            //                         <img alt="Pic" src="${userPhoto}">
+            //                     </div>
+            //                     <div class="ms-5">
+            //                         <a href="#" class="fs-5 fw-bold text-gray-900 text-hover-primary mb-1">${c.name ?? 'بدون نام'}</a>
+            //                         <div class="fw-semibold text-muted">${c.text ?? ''}</div>
+            //                         <div class="text-gray-500 small mt-1">${c.created_at ?? ''}</div>
+            //                     </div>
+            //                 </div>
+            //             `;
+            //             });
+            //
+            //             // show
+            //             $('#taskComments').html(`
+            //             <h6 class="fw-semibold mb-2">کامنت‌ها</h6>
+            //             ${commentsHTML}
+            //         `);
+            //
+            //             // comments store
+            //
+            //             $.ajaxSetup({
+            //                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
+            //             });
+            //
+            //             $(document).on('submit', '#commentForm', function(e) {
+            //                 e.preventDefault();
+            //                 const form = $(this);
+            //
+            //                 $.ajax({
+            //                     url: form.data('url'),
+            //                     type: 'POST',
+            //                     data: form.serialize(),
+            //                     success: function(res) {
+            //                         if (res.status) {
+            //                             const c = res.comment;
+            //                             const userPhoto = c.photo ? `${window.location.origin}/${c.photo}` :
+            //                                 `${window.location.origin}/panel/assets/media/avatars/blank.png`;
+            //
+            //                             // اضافه کردن کامنت جدید به ابتدای لیست
+            //                             $('#commentsList').prepend(`
+            //                                 <div class="d-flex align-items-center mb-4">
+            //                                     <div class="symbol symbol-35px symbol-circle">
+            //                                         <img alt="Pic" src="${userPhoto}">
+            //                                     </div>
+            //                                     <div class="ms-5">
+            //                                         <a href="#" class="fs-5 fw-bold text-gray-900 text-hover-primary mb-1">${c.name}</a>
+            //                                         <div class="fw-semibold text-muted">${c.text}</div>
+            //                                         <div class="text-gray-500 small mt-1">${c.created_at}</div>
+            //                                     </div>
+            //                                 </div>
+            //                             `);
+            //
+            //                             // پاک کردن textarea بعد از ارسال
+            //                             form.trigger('reset');
+            //                         }
+            //                     },
+            //                     error: function(xhr) {
+            //                         alert('خطا در ارسال کامنت. لطفاً دوباره تلاش کنید.');
+            //                     }
+            //                 });
+            //             });
+            //
+            //             $('#taskStatusForm').attr('data-url', updateUrl);
+            //
+            //             $(document).off('change', '#taskStatusForm input[name="status"]').on('change', '#taskStatusForm input[name="status"]', function() {
+            //                 const form = $('#taskStatusForm');
+            //                 const url = form.data('url');
+            //                 $.ajax({
+            //                     type: 'PUT',
+            //                     url: url,
+            //                     data: form.serialize(),
+            //                     success: function(res) {
+            //                         if (res.success) {
+            //                             $.jGrowl(res.flash_message, {
+            //                                 life: 4000,
+            //                                 position: 'bottom-left',
+            //                                 theme: 'bg-success'
+            //                             });
+            //                         }
+            //                     },
+            //                     error: function() {
+            //                         toastr.error('خطا در بروزرسانی وضعیت');
+            //                     }
+            //                 });
+            //             });
+            //
+            //             const modal = new bootstrap.Modal(document.getElementById('kt_modal_task_show'));
+            //             modal.show();
+            //
+            //             loadTaskChecklists(data.id);
+            //         },
+            //         error: function () {
+            //             toastr.error('دریافت اطلاعات تسک با خطا مواجه شد');
+            //         }
+            //     });
+            // }
             // checklist fetch
 
 

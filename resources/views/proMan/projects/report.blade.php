@@ -17,13 +17,7 @@
                     </h1>
                     <!--end::Title-->
                 </div>
-                <!--end::Page title-->
-
-
-                <!--begin::Breadcrumb-->
                 <ul class="breadcrumb breadcrumb-separatorless fw-semibold mb-3 fs-7">
-
-                    <!--begin::Item-->
                     <li class="breadcrumb-item text-gray-700 fw-bold lh-1">
                         <a href="{{route('dashboard.index')}}" class="text-hover-primary">
                             <i class="ki-outline ki-home text-gray-700 fs-6"></i>
@@ -158,17 +152,17 @@
                         @endif
                     @endif
 
-                        @if (request('user_filter'))
-                            @php
-                                $manager = $managers->firstWhere('id', request('user_filter'));
-                            @endphp
-                            @if($manager)
-                                <span onclick="delete_value('user_filter')" class="badge badge-light py-2 px-5 cursor-pointer">
+                    @if (request('user_filter'))
+                        @php
+                            $manager = $managers->firstWhere('id', request('user_filter'));
+                        @endphp
+                        @if($manager)
+                            <span onclick="delete_value('user_filter')" class="badge badge-light py-2 px-5 cursor-pointer">
                                 {{ $manager->name }}
                                 <i class="ki-outline ki-cross-square text-danger ms-2"></i>
                             </span>
-                            @endif
                         @endif
+                    @endif
 
                     @if (request('filter'))
                         <span onclick="delete_value('filter')" class="badge badge-light py-2 px-5 cursor-pointer">
@@ -224,6 +218,7 @@
                     <thead class="fs-7 text-gray-500 text-uppercase text-start">
                     <tr>
                         <th class="text-start">ردیف</th>
+                        <th class="text-start">شناسه</th>
                         <th class="text-start">نام پروژه</th>
                         <th class="text-start">برند</th>
                         <th class="text-start">بیزنس</th>
@@ -234,9 +229,10 @@
                         <th class="text-start">تاریخ پایان</th>
                         <th class="text-start">وضعیت</th>
                         <th class="text-start">توضیحات پروژه</th>
-                        <th class="text-start">عملیات</th>
-                        <th class="text-start"> تایید</th>
-                        <th class="text-start"> تغییر وضعیت</th>
+                        <th class="text-start">پروژه</th>
+                        <th class="text-start">تسک</th>
+                        <th class="text-start">تایید</th>
+                        <th class="text-start">تغییر وضعیت</th>
                         {{--                        <th class="text-start">درصد پیشرفت</th>--}}
                     </tr>
                     </thead>
@@ -248,7 +244,8 @@
                         @endphp
                         <tr>
                             <td>{{$loop->iteration}}</td>
-                            <td class="text-start fs-7 ">{{$project->name}} - <span class="fs-8 rounded-1 px-1 text-bg-secondary">{{$project->project_code}}</span></td>
+                            <td><span class="fs-8 rounded-1 px-1 text-bg-secondary">{{$project->project_code}}</span></td>
+                            <td class="text-start fs-7 ">{{$project->name}}</td>
 
                             <td class="text-start">
                                 {{$project->brand?->name}}
@@ -270,14 +267,23 @@
                             <td class="text-start">{!! $project->PanelApproveVerify !!}</td>
                             <td class="text-start" style="font-size: 0.85rem;">{{$start_date[0]}}</td>
                             <td class="text-start" style="font-size: 0.85rem;">{{$end_date[0]}}</td>
-                            <td class="text-start">{!! $project->PanelProjectStatus  !!}</td>
+                            <td class="text-start">{!! $project->PanelProjectStatus !!}</td>
                             <td class="text-start" style="font-size: 0.85rem;">{{$project->description}}</td>
                             <td class="text-start">
                                 @canany(['manager_projectShow' , 'member_projectShow'])
-                                    <a href="{{route('dashboard.project.show',$project->id)}}" class="btn btn-light-primary btn-sm p-1" data-bs-toggle="tooltip" data-bs-placement="top" title="مشاهده">
-                                        <i class="ki-outline ki-eye fs-6 px-2"></i>
+                                    <a href="{{route('dashboard.project.show',$project->id)}}">
+                                        <span class="ms-1"  data-bs-toggle="tooltip" title="مشاهده پروژه" >
+	                                        <i class="ki-outline ki-eye text-primary fs-4 px-2"></i>
+                                        </span>
                                     </a>
                                 @endcanany
+                            </td>
+                            <td class="text-start">
+                                <a href="{{route('dashboard.project.show',$project->id)}}">
+                                    <span class="ms-1"  data-bs-toggle="tooltip" title="مشاهده تسک" >
+                                        <i class="ki-outline ki- text-primary fs-4 px-2"></i>
+                                    </span>
+                                </a>
                             </td>
                             <td class="text-start">
                                 <a href="#"
@@ -286,17 +292,21 @@
                                                id:'{{ $project->id }}',
                                                project_code:'{{ $project->project_code }}',
                                                approve_verify:'{{ $project->approve_verify }}'
-                                           }))"
-                                   class="btn btn-sm btn-light-primary p-1">
-                                    اعمال تایید<i class="ki-outline ki-pencil fs-7 px-2"></i>
+                                           }))">
+                                   <span class="ms-1"  data-bs-toggle="tooltip" title="اعمال تایید" >
+	                                        <i class="ki-outline ki-check-square text-success fs-4 px-2"></i>
+                                   </span>
                                 </a>
 
                                 {{--                                <a href="#" onclick="openEditModal('{{ route('dashboard.project.approveVerify', $project->id) }}', JSON.stringify({project_code:'{{ $project->project_code }}' ,approve_verify:'{{$project->approve_verify}}' }))"--}}
                                 {{--                                   class="btn btn-sm btn-light-primary p-1"> اعمال تایید<i class="ki-outline ki-pencil fs-7 px-2"></i></a>--}}
                             </td>
                             <td class="text-start">
-                                <a href="#" onclick="openStatusModal('{{ route('dashboard.project.status', $project->id) }}', JSON.stringify({project_code:'{{ $project->project_code }}' ,status:'{{$project->status}}' }))"
-                                   class="btn btn-sm btn-light-primary p-1"> تغییر وضعیت<i class="ki-outline ki-pencil fs-7 px-2"></i></a>
+                                <a href="#" class="text-primary" onclick="openStatusModal('{{ route('dashboard.project.status', $project->id) }}', JSON.stringify({project_code:'{{ $project->project_code }}' ,status:'{{$project->status}}' }))">
+                                    <span class="ms-1"  data-bs-toggle="tooltip" title="تغییر وضعیت" >
+	                                        <i class="ki-outline ki-pencil text-warning fs-4 px-2"></i>
+                                    </span>
+                                </a>
                             </td>
                             {{--                            <td>--}}
                             {{--                                <div class="h-10px w-100 bg-light mb-5" data-bs-toggle="tooltip"--}}
@@ -323,7 +333,7 @@
     <!--begin::Modal - Support Center - Create project-->
     <div class="modal fade" id="kt_modal_approving_verify" aria-labelledby="approvingModalLabel" tabindex="-1" aria-hidden="true">
         <!--begin::Modal dialog-->
-        <div class="modal-dialog modal-dialog-centered mw-300px" >
+        <div class="modal-dialog modal-dialog-centered " >
             <!--begin::Modal content-->
             <div class="modal-content rounded">
                 <!--begin::Modal header-->
@@ -343,20 +353,71 @@
                 <div class="modal-body scroll-y px-5 justify-content-center ">
                     <!--begin:Form-->
                     <div class="stepper stepper-links d-flex flex-column pt-15 between" id="kt_create_account_stepper" data-kt-stepper="true" data-select2-id="select2-data-kt_create_account_stepper" >
-                        <form id="EditAprooveForm" method="POST" action="" class="d-flex align-items-center gap-3">
+                        <form id="EditAprooveForm" method="POST" action="" class="form" enctype="multipart/form-data" >
                             @csrf
                             <input type="hidden" id="id" name="id">
-                            <label class="form-check-label text-success">
-                                <input type="radio" id="radio_approved" name="approve_verify"  value="0" class="form-check-input" style="width: 1rem; height:1rem"
-                                       onchange="this.form.submit();" >
-                                تایید شد
-                            </label>
-
-                            <label class="form-check-label text-warning">
-                                <input type="radio" id="radio_not_approved" name="approve_verify" value="1" class="form-check-input" style="width: 1rem; height:1rem"
-                                       onchange="this.form.submit();">
-                                تایید نشد
-                            </label>
+                            <div class="col-md-12 fv-row my-5">
+                                <label class="form-check-label text-success">
+                                    <input type="radio" id="radio_approved" name="approve_verify"  value="0" class="form-check-input" style="width: 1rem; height:1rem"
+{{--                                           onchange="this.form.submit();" --}}
+                                    >
+                                    تایید شد
+                                </label>
+                                <label class="form-check-label text-warning">
+                                    <input type="radio" id="radio_not_approved" name="approve_verify" value="1" class="form-check-input" style="width: 1rem; height:1rem"
+{{--                                           onchange="this.form.submit();"--}}
+                                    >
+                                    تایید نشد
+                                </label>
+                            </div>
+                            <div class="col-md-12 fv-row my-5">
+                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                    <span>عنوان</span>
+                                    <span class="ms-1"  data-bs-toggle="tooltip" title="یک عنوان بنویسید" >
+	                                        <i class="ki-outline ki-information-5 text-gray-500 fs-6"></i>
+                                        </span>
+                                </label>
+                                <input type="text" class="form-control form-control-solid" placeholder="یک عنوان بنویسید" value="{{old('title')}}" name="title" />
+                            </div>
+                            <div class="col-md-12 fv-row my-5">
+                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                    <span>تاریخ</span>
+                                    <span class="ms-1"  data-bs-toggle="tooltip" title="تاریخ تایید پروژه را انتخاب کنید" >
+	                                        <i class="ki-outline ki-information-5 text-gray-500 fs-6"></i>
+                                        </span>
+                                </label>
+                                <div class="position-relative d-flex align-items-center">
+                                    <i class="ki-outline ki-calendar-8 fs-2 position-absolute mx-4"></i>
+                                    <input name="date"
+                                           class="result form-control form-control-solid ps-12"
+                                           type="text"
+                                           data-jdp
+                                           data-jdp-only-date
+                                           placeholder="تاریخ تایید"
+                                           autocomplete="off"
+                                           value="{{ old('date') }}"
+                                    />
+                                </div>
+                            </div>
+                            <div class="fv-row mb-8">
+                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                    <span>توضیحات</span>
+                                    <span class="ms-1"  data-bs-toggle="tooltip" title="توضیحی درباره تایید بنویسید" >
+	                                        <i class="ki-outline ki-information-5 text-gray-500 fs-6"></i>
+                                        </span>
+                                </label>
+                                <textarea class="form-control form-control-solid" name="description" data-kt-autosize="true" placeholder="توضیحی درباره تایید بنویسید">
+                                    {{old('description')}}
+                                </textarea>
+                            </div>
+                            <div class="fv-row g-9 mb-8">
+                                <label for="gallery" class="form-label">فایل را ضمیمه کنید </label>
+                                <input type="file" class="form-control mb-2 mb-md-0" id="gallery"
+                                       name="photo_id" placeholder="تصویر">
+                            </div>
+                            <div class="d-flex justify-content-end fv-row g-9 mb-8">
+                            <button type="submit" id="kt_modal_new_target_submit" class="btn btn-sm btn-success">ثبت تایید<i class="ki-outline ki-check fs-3 px-2"></i></button>
+                            </div>
                         </form>
                     </div>
                     <!--end:Form-->
@@ -484,6 +545,33 @@
                 $(`[name="${id}"]`).val('').trigger('change');
                 document.getElementById('delete_form_value_org').submit();
             }
+        </script>
+        <script>
+            $(".datepicker").pickadate({
+                selectMonths: true,
+                selectYears: true,
+            }),
+                $(".timepicker").pickatime();
+        </script>
+        <script>
+            $(function () {
+                $("#date-time").bootstrapMaterialDatePicker({
+                    format: "YYYY-MM-DD HH:mm",
+                });
+                $("#date").bootstrapMaterialDatePicker({
+                    time: false,
+                });
+                $("#time").bootstrapMaterialDatePicker({
+                    date: false,
+                    format: "HH:mm",
+                    cancelText: "انصراف",
+                    okText: "خب",
+                });
+            });
+            $("#kt_datepicker_3").flatpickr({
+                enableTime: true,
+                dateFormat: "Y-m-d H:i",
+            });
         </script>
 
         <script>

@@ -59,8 +59,8 @@
                                     <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                                         <span class="required">عنوان</span>
                                         <span class="ms-1"  data-bs-toggle="tooltip" title="عنوان تسک را بنویسید" >
-	                                <i class="ki-outline ki-information-5 text-gray-500 fs-6"></i>
-                                </span>
+	                                        <i class="ki-outline ki-information-5 text-gray-500 fs-6"></i>
+                                        </span>
                                     </label>
                                     <input type="text" class="form-control form-control-solid" placeholder="عنوان تسک" value="{{old('title')}}" name="title" required/>
                                     <div class="invalid-feedback">عنوان تسک الزامی است</div>
@@ -102,7 +102,7 @@
                                         <i class="ki-outline ki-watch fs-2 position-absolute mx-4"></i>
                                         <input name="duration"
                                                class="result form-control form-control-solid ps-12"
-                                               type="text"
+                                               type="number"
                                                placeholder="مدت زمان انجام تسک"
                                                autocomplete="off"
                                                value="{{ old('duration') }}"

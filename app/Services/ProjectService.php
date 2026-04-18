@@ -15,6 +15,7 @@ class ProjectService
 {
     public function store(array $param)
     {
+
         $rand = rand(111111, 999999);
         $project = new Project();
         $project->name = $param['name'];

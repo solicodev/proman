@@ -30,7 +30,7 @@ class ProjectStoreRequest extends FormRequest
             'end_date' => 'nullable',
             'manager_id' => 'nullable',
             'category_id' => 'nullable',
-            'members *' => 'required',
+//            'members *' => 'required',
             'department_id' => 'required',
             'brand_id' => 'nullable',
             'inform' => 'nullable',

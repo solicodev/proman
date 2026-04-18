@@ -20,6 +20,7 @@ class TaskChecklistController extends Controller
     }
     public function store(TaskCheckListRequest $request , Task $task)
     {
+
         try {
             DB::beginTransaction();
             $this->taskChecklistService->store($request->all(),$task);

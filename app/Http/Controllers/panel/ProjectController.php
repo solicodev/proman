@@ -11,6 +11,7 @@ use App\Models\Department;
 use App\Models\Photo;
 use App\Models\Position;
 use App\Models\Project;
+use App\Models\ProjectApprove;
 use App\Models\ProjectDependency;
 use App\Models\ProjectManagerAdmin;
 use App\Models\Task;
@@ -51,17 +52,14 @@ class ProjectController extends Controller
         else
         {
 
-// پروژه‌های مدیر پروژه
             $projectsAsManager = Project::where('manager_id', $user->id);
 
-// پروژه‌های ادمین
             $managerIds = DB::table('project_manager_admins')
                 ->where('admin_id', $user->id)
                 ->pluck('project_manager_id');
 
             $projectsAsAdmin = Project::whereIn('manager_id', $managerIds);
 
-// ترکیب هر دو
             $projects = $projectsAsManager->union($projectsAsAdmin)->with(['manager','category','department','members','photos','brand'])
                 ->paginate(9);
             $project_id = $projectsAsManager->union($projectsAsAdmin)->with(['manager','category','department','members','photos','brand']);
@@ -134,6 +132,8 @@ class ProjectController extends Controller
 
         $tasks = Task::with(['project','manager','watcher','assigners','photos','parent','children'])->whereNull('parent_id')->where('project_id',$project->id)->get()->groupBy('status');
         $tb_tasks = Task::with(['children'=>with(['assigners' => with(['photo'])])],['project','manager','watcher','assigners','photos','parent'])->whereNull('parent_id')->where('project_id',$project->id)->get();
+
+//        dd($project,$tb_tasks,$tasks);
         return view('proMan.projects.tasks',get_defined_vars());
     }
 
@@ -232,7 +232,7 @@ class ProjectController extends Controller
 
         $members = User::whereDoesntHave('roles', function ($query) use ($memberRoles) {
             $query->whereIn('name', $memberRoles);
-        })->whereStatus('1')->latest()->get();
+        })->whereStatus('1')->with('position')->latest()->get();
 
         $brands = Brand::with(['photo','getChid'])->get();
         return view('proMan.projects.create',get_defined_vars());
@@ -243,7 +243,6 @@ class ProjectController extends Controller
      */
     public function store(ProjectStoreRequest $request)
     {
-
 //            DB::beginTransaction();
 //            $photos = explode(',', $request->input('photos')[0]);
         $project = $this->projectService->store($request->all());
@@ -407,7 +406,6 @@ class ProjectController extends Controller
 //        $user = User::where('position_id', $position->id)->first();
 
         if ($request->filled('filter')) {
-
             switch ($request->filter) {
 
                 case 'approve_verify':
@@ -421,11 +419,8 @@ class ProjectController extends Controller
                 case 'approving_manager':
                     $query->where('inform','0');
                     break;
-
-
             }
         }
-
         $projects = $query->latest()->where('manager_id',Auth::id())->get();
         $brands = Brand::all();
         $departments = Department::all();
@@ -434,10 +429,27 @@ class ProjectController extends Controller
 
     public function approveVerify(Project $project , Request $request)
     {
-        try {
+
         $project->approve_verify = $request->approve_verify;
         $project->update();
 
+        $projectApprove = new ProjectApprove();
+        $projectApprove->title = $request->title ?? null;
+        $projectApprove->description = $request->description ?? null;
+        $projectApprove->project_id = $project->id;
+        if (isset($request->photo_id))
+        {
+            $photo = new Photo();
+            $photo->path = file_store($request->photo_id, 'uploads/project/Approve/', '');
+            $photo->user_id = Auth::id();
+            $photo->save();
+            $projectApprove->photo_id = $photo->id;
+        }
+        $projectApprove->date = $request->date ?? null;
+
+        $projectApprove->save();
+
+        try {
             return redirect()->route('dashboard.project.report')->with('flash_message', ' تغییرات اعمال شد');
         } catch (Exception $exception) {
             return redirect()->route('dashboard.project.report')->with('err_message', 'خطایی رخ داد مجددا تلاش کنید');

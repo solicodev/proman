@@ -213,7 +213,7 @@
                                                 multiple name="members[]" data-placeholder="اعضای پروژه را انتخاب کنید" required>
                                             <option></option>
                                             @foreach($members as $member)
-                                                <option value="{{ $member->id }}" >{{ $member->Name }}@if($manager->department_id)   - دپارتمان {{ $manager->department?->name }}@endif @if($manager->position_id)  - {{$manager->position?->title}} @endif</option>
+                                                <option value="{{ $member->id }}" >{{ $member->Name }}@if($manager->department_id)   - دپارتمان {{ $member->department?->name }}@endif   - {{$member->position?->title ?? null}} </option>
                                             @endforeach
                                         </select>
                                     </div>

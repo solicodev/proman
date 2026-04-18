@@ -1,5 +1,5 @@
 <div class="d-flex flex-column flex-column-fluid">
-    <div id="kt_app_toolbar" class="app-toolbar  d-flex pb-3 pb-lg-5 ">
+    <div id="kt_app_toolbar" class="app-toolbar  d-flex pb-3 pb-lg-1 ">
         <div class="d-flex flex-stack flex-row-fluid">
             <div class="d-flex flex-column flex-row-fluid">
                 <div class="page-title d-flex align-items-center me-3">
@@ -41,8 +41,8 @@
             {{--                    </div>--}}
         </div>
     </div>
-    <div id="kt_app_content" class="app-content  flex-column-fluid" >
-        <div class="card mb-6 mb-xl-9">
+    <div id="kt_app_content" class="app-content p-0 flex-column-fluid" >
+        <div class="card mb-2">
             <div class="card-body pt-9 pb-0">
                 <div class="d-flex flex-wrap flex-sm-nowrap mb-6">
                     <div class="d-flex flex-center flex-shrink-0 bg-light rounded w-100px h-100px w-lg-150px h-lg-150px me-7 mb-4">
@@ -81,66 +81,66 @@
                                         </a>
                                         @endcan
 
-                                        <div class="me-0">
-                                            <button class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                                                <i class="ki-solid ki-dots-horizontal fs-2x"></i>
-                                            </button>
-                                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px py-3" data-kt-menu="true">
-                                                <div class="menu-item px-3">
-                                                    <div class="menu-content text-muted pb-2 px-3 fs-7 text-uppercase">
-                                                        خروجی pdf
-                                                    </div>
-                                                </div>
-                                                <div class="menu-item px-3">
-                                                    <a href="#" class="menu-link px-3">
-                                                        ایجاد تسک
-                                                    </a>
-                                                </div>
-                                                <div class="menu-item px-3">
-                                                    <a href="#" class="menu-link flex-stack px-3">
-                                                        ایجاد تسک
-                                                        <span class="ms-2" data-bs-toggle="tooltip" title="Create Task">
-                                                            <i class="ki-outline ki-plus-square fs-6"></i>
-                                                        </span>
-                                                    </a>
-                                                </div>
-                                                <div class="menu-item px-3" data-kt-menu-trigger="hover" data-kt-menu-placement="right-end">
-                                                    <a href="#" class="menu-link px-3">
-                                                        <span class="menu-title">منوی چند سطحی</span>
-                                                        <span class="menu-arrow"></span>
-                                                    </a>
-                                                    <div class="menu-sub menu-sub-dropdown w-175px py-4">
-                                                        <div class="menu-item px-3">
-                                                            <a href="#" class="menu-link px-3">
-                                                                Plans
-                                                            </a>
-                                                        </div>
-                                                        <div class="menu-item px-3">
-                                                            <a href="#" class="menu-link px-3">
-                                                                Billing
-                                                            </a>
-                                                        </div>
-                                                        <div class="menu-item px-3">
-                                                            <a href="#" class="menu-link px-3">
-                                                                Statements
-                                                            </a>
-                                                        </div>
-                                                        <div class="separator my-2"></div>
-                                                        <div class="menu-item px-3">
-                                                            <div class="menu-content px-3">
-                                                                <label class="form-check form-switch form-check-custom form-check-solid">
-                                                                    <input class="form-check-input w-30px h-20px" type="checkbox" value="1" checked="checked" name="notifications"/>
-                                                                    <span class="form-check-label text-muted fs-6">
-                                                                    Recuring
-                                                                    </span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+{{--                                        <div class="me-0">--}}
+{{--                                            <button class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">--}}
+{{--                                                <i class="ki-solid ki-dots-horizontal fs-2x"></i>--}}
+{{--                                            </button>--}}
+{{--                                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px py-3" data-kt-menu="true">--}}
+{{--                                                <div class="menu-item px-3">--}}
+{{--                                                    <div class="menu-content text-muted pb-2 px-3 fs-7 text-uppercase">--}}
+{{--                                                        خروجی pdf--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
+{{--                                                <div class="menu-item px-3">--}}
+{{--                                                    <a href="#" class="menu-link px-3">--}}
+{{--                                                        ایجاد تسک--}}
+{{--                                                    </a>--}}
+{{--                                                </div>--}}
+{{--                                                <div class="menu-item px-3">--}}
+{{--                                                    <a href="#" class="menu-link flex-stack px-3">--}}
+{{--                                                        ایجاد تسک--}}
+{{--                                                        <span class="ms-2" data-bs-toggle="tooltip" title="Create Task">--}}
+{{--                                                            <i class="ki-outline ki-plus-square fs-6"></i>--}}
+{{--                                                        </span>--}}
+{{--                                                    </a>--}}
+{{--                                                </div>--}}
+{{--                                                <div class="menu-item px-3" data-kt-menu-trigger="hover" data-kt-menu-placement="right-end">--}}
+{{--                                                    <a href="#" class="menu-link px-3">--}}
+{{--                                                        <span class="menu-title">منوی چند سطحی</span>--}}
+{{--                                                        <span class="menu-arrow"></span>--}}
+{{--                                                    </a>--}}
+{{--                                                    <div class="menu-sub menu-sub-dropdown w-175px py-4">--}}
+{{--                                                        <div class="menu-item px-3">--}}
+{{--                                                            <a href="#" class="menu-link px-3">--}}
+{{--                                                                Plans--}}
+{{--                                                            </a>--}}
+{{--                                                        </div>--}}
+{{--                                                        <div class="menu-item px-3">--}}
+{{--                                                            <a href="#" class="menu-link px-3">--}}
+{{--                                                                Billing--}}
+{{--                                                            </a>--}}
+{{--                                                        </div>--}}
+{{--                                                        <div class="menu-item px-3">--}}
+{{--                                                            <a href="#" class="menu-link px-3">--}}
+{{--                                                                Statements--}}
+{{--                                                            </a>--}}
+{{--                                                        </div>--}}
+{{--                                                        <div class="separator my-2"></div>--}}
+{{--                                                        <div class="menu-item px-3">--}}
+{{--                                                            <div class="menu-content px-3">--}}
+{{--                                                                <label class="form-check form-switch form-check-custom form-check-solid">--}}
+{{--                                                                    <input class="form-check-input w-30px h-20px" type="checkbox" value="1" checked="checked" name="notifications"/>--}}
+{{--                                                                    <span class="form-check-label text-muted fs-6">--}}
+{{--                                                                    Recuring--}}
+{{--                                                                    </span>--}}
+{{--                                                                </label>--}}
+{{--                                                            </div>--}}
+{{--                                                        </div>--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
 
-                                            </div>
-                                        </div>
+{{--                                            </div>--}}
+{{--                                        </div>--}}
                                     </div>
                                 </div>
 

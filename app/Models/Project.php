@@ -19,7 +19,7 @@ class Project extends Model
 
     public function getDescriptionForEvent(string $eventName): string
     {
-        return "task has been {$eventName}";
+        return "project has been {$eventName}";
     }
     protected $fillable = ['approving_manager','approve_need','approve_verify','project_code', 'name' , 'start_date' , 'end_date' , 'status' , 'manager_id' , 'category_id' , 'department_id' , 'start_todo_date'];
 
@@ -133,7 +133,7 @@ class Project extends Model
             ->useLogName('project')
             ->logOnly(['approving_manager','approve_need','approve_verify','name','status', 'start_todo_date', 'start_date', 'end_date','manager_id','category_id','department_id','brand_id','project_code','deleted_at','updated_at','created_at'])
             ->logOnlyDirty()
-            ->setDescriptionForEvent(fn(string $eventName) => "Task has been {$eventName}");
+            ->setDescriptionForEvent(fn(string $eventName) => "project has been {$eventName}");
     }
 
     public function tasks()
@@ -143,15 +143,12 @@ class Project extends Model
     public function getProgressAttribute()
     {
         $progressItems = [];
-
         foreach ($this->tasks as $task) {
-
             $progressItems[] = $task->progress;
             foreach ($task->children as $sub) {
                 $progressItems[] = $sub->progress;
             }
         }
-
         if (count($progressItems) === 0) {
             return 0;
         }

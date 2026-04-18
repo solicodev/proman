@@ -56,7 +56,8 @@
                     @if(auth()->user()->hasAnyRole(['Manager' , 'Member', 'Super Admin']))
                     <div class="col-6">
                         <!--begin::Link-->
-                        <a href="{{route('dashboard.project.index')}}"
+{{--                        <a href="{{route('dashboard.project.index')}}"--}}
+                        <a href="{{route('dashboard.project.report')}}"
                            class="btn btn-icon btn-outline btn-bg-light btn-active-light-primary btn-flex flex-column flex-center w-100px h-100px border-gray-200"
                            data-kt-button="true">
                             <!--begin::Icon-->

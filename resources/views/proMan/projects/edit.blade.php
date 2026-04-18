@@ -364,7 +364,7 @@
                                         <div class="fv-row mb-8">
 
                                             @if(count($project->dependencies)>0)
-                                                <div class="row g-3 dependencies">
+                                                    <div class="row g-3 dependencies">
                                                     @foreach($project->dependencies as $dependency)
                                                         <div class="form-group col-4 depndency align-items-center">
                                                             {{--                                                    <div class="dep">--}}
