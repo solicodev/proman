@@ -118,7 +118,7 @@
         <div class="d-flex flex-center w-lg-50 pt-15 pt-lg-0 px-10">
             <div class="d-flex flex-center flex-lg-center flex-column">
                 <a href="" class="mb-7">
-                    <img alt="Logo" src="{{url('panel/assets/media/logos/logo.png')}}"/>
+                    <img alt="Logo" style="width: 200px;" src="{{url('panel/assets/media/logos/logo.png')}}"/>
                 </a>
                 <h2 class="text-white fw-normal m-0">
                     داشبورد مدیریت اختصاصی
