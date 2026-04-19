@@ -44,7 +44,10 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
     Route::prefix('task')->name('task.')->group(function () {
         Route::get('/', [TaskController::class, 'index'])->name('index');
         Route::get('/project/{task}', [TaskController::class, 'show'])->name('show');
+
+        Route::get('/create', [TaskController::class, 'taskCreate'])->name('oneTask.create'); // تسک تکی بدون پروژه
         Route::get('/create/{project}', [TaskController::class, 'create'])->name('create');
+
         Route::post('/store', [TaskController::class, 'store'])->name('store');
         Route::post('/tasks/{task}/subtasks', [TaskController::class, 'storeSubtask'])->name('subtasks.store');
         Route::post('/tasks/{project}/dependency', [TaskController::class, 'dependency'])->name('dependency');

@@ -71,12 +71,62 @@ class TaskController extends Controller
 //        $last_projects = $projectsAsManager->union($projectsAsAdmin)->with(['manager','category','department','members','photos','brand'])->get();
 //
 
-        $tasks = Task::with(['project','manager','watcher','assigners','photos','predecessors','successors'])->whereNull('parent_id')->whereIn('project_id',$projects)->get()->groupBy('status');
-        $tb_tasks = Task::with(['children'=>with(['assigners' => with(['photo'])])],['project','manager','watcher','assigners','photos','parent'])->whereNull('parent_id')->whereIn('project_id',$projects)->get();
+        $tasks = Task::with(['project','manager','watcher','assigners','photos','predecessors','successors'])->whereNull('parent_id')->whereIn('project_id',$projects)->where('user_id',$user->id)
+            ->whereHas('assigners' , function ($q) {
+                $q->where('user_id',auth()->user()->id);
+            })
+            ->get()->groupBy('status');
 
+        $tb_tasks = Task::with([
+            'children.assigners.photo',
+            'project',
+            'manager',
+            'watcher',
+            'assigners',
+            'photos',
+            'parent'
+        ])
+            ->whereNull('parent_id')
+            ->where(function ($q) use ($projects, $user) {
+                $q->where('user_id', $user->id)
+
+                ->orWhereHas('assigners', function ($q2) use ($user) {
+                    $q2->where('user_id', $user->id);
+                })
+
+                    ->orWhereNull('project_id')
+
+
+                    ->orWhereIn('project_id', $projects);
+            })
+            ->get();
         return view('proMan.tasks.tasks',get_defined_vars());
     }
 
+    public function taskCreate()
+    {
+        $SuperAdminRoles = ['Super Admin'];
+        $excludedRoles = ['Manager'];
+        $memberRoles = ['Member'];
+
+        $managers = User::whereHas('roles', function ($query) use ($excludedRoles) {
+            $query->whereIn('name', $excludedRoles);
+        })->whereStatus('1')->latest()->get();
+
+        $members = User::whereDoesntHave('roles', function ($query) use ($SuperAdminRoles) {
+            $query->whereIn('name', $SuperAdminRoles);
+        })->whereStatus('1')->latest()->get();
+
+        $projects = Project::get();
+
+        $watchers = User::whereDoesntHave('roles', function ($query) use ($SuperAdminRoles) {
+            $query->whereIn('name', $SuperAdminRoles);
+        })->whereStatus('1')->latest()->get();
+
+        $item_tasks = Task::with(['project','manager','watcher','assigners','photos','predecessors','successors'])->paginate(15);
+
+        return view('proMan.tasks.one-task-create', get_defined_vars());
+    }
     public function create(Project $project)
     {
         $SuperAdminRoles = ['Super Admin'];
@@ -103,11 +153,11 @@ class TaskController extends Controller
     }
     public function store(TaskStoreRequest $request)
     {
-        try {
+
 //            DB::beginTransaction();
             $this->taskPanelService->store($request->all());
-
-            return redirect()->route('dashboard.project.redirect',$request->project_id)->with('flash_message', ' تسک با موفقیت ایجاد شد :)');
+        try {
+            return redirect()->route('dashboard.task.index')->with('flash_message', ' تسک با موفقیت ایجاد شد :)');
 //            DB::commit();
 
         } catch (Exception $exception) {

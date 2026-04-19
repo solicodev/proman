@@ -37,6 +37,11 @@
         <h3 class="fw-bold my-2">
            آرشیو همه تسک ها
         </h3>
+        <div class="d-flex align-self-center flex-center flex-shrink-0">
+            <a href="{{route('dashboard.task.oneTask.create')}}" class="btn btn-sm btn-light-success d-flex flex-center ms-3 px-4 py-3">
+                ایجاد تسک<i class="ki-outline ki-plus-square fs-2 ps-5"></i>
+            </a>
+        </div>
         <!--end::Heading-->
 
         <!--begin::Controls-->
@@ -391,7 +396,7 @@
                             <span id="watcher"></span>
                             <span id="taskStatus"></span>
                             <span id="TaskPrority"></span>
-                            <small id="task-deadline" class="text-muted">مهلت: ۱۴۰۴/۰۸/۲۰</small>
+                            <small id="task-deadline" class="text-muted"></small>
                         </div>
                         <div class="d-flex align-items-center flex-wrap gap-2 mb-4">
 
@@ -406,46 +411,46 @@
                                        autocomplete="off"
                                        required />
                             </div>
-                            <div class="dropdown">
-                                <button class="btn btn-sm btn-light-primary rotate"
-                                        data-kt-menu-trigger="click"
-                                        data-kt-menu-placement="bottom-start"
-                                        data-kt-menu-offset="30px, 30px">
-                                    چک‌لیست
-                                    <span class="svg-icon fs-3 rotate-180 ms-3 me-0">
-                                    <i class="ki-outline ki-down fs-6"></i>
-                                </span>
-                                </button>
-                                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800
-                             menu-state-bg-light-primary fw-semibold w-auto min-w-200 mw-300px"
-                                     data-kt-menu="true">
+                            {{--                        <div class="dropdown">--}}
+                            {{--                            <button class="btn btn-sm btn-light-primary rotate"--}}
+                            {{--                                    data-kt-menu-trigger="click"--}}
+                            {{--                                    data-kt-menu-placement="bottom-start"--}}
+                            {{--                                    data-kt-menu-offset="30px, 30px">--}}
+                            {{--                                چک‌لیست--}}
+                            {{--                                <span class="svg-icon fs-3 rotate-180 ms-3 me-0">--}}
+                            {{--                                    <i class="ki-outline ki-down fs-6"></i>--}}
+                            {{--                                </span>--}}
+                            {{--                            </button>--}}
+                            {{--                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800--}}
+                            {{--                             menu-state-bg-light-primary fw-semibold w-auto min-w-200 mw-300px"--}}
+                            {{--                                 data-kt-menu="true">--}}
 
-                                    <div class="menu-item px-3">
-                                        <div class="menu-content fs-6 text-gray-900 fw-bold px-3 py-4">افزودن چک لیست</div>
-                                    </div>
-                                    <div class="separator mb-3 opacity-75"></div>
-                                    <form action="{{ route('dashboard.task.checklist',$task->id ?? 0) }}" method="post" enctype="multipart/form-data"
-                                          class="mx-auto mw-100 w-100 fv-plugins-bootstrap5 fv-plugins-framework needs-validation"
-                                          novalidate id="kt_docs_formvalidation_text" autocomplete="off">
-                                        @csrf
+                            {{--                                <div class="menu-item px-3">--}}
+                            {{--                                    <div class="menu-content fs-6 text-gray-900 fw-bold px-3 py-4">افزودن چک لیست</div>--}}
+                            {{--                                </div>--}}
+                            {{--                                <div class="separator mb-3 opacity-75"></div>--}}
+                            {{--                                <form action="{{ route('dashboard.task.checklist',$task->id ?? 0) }}" method="post" enctype="multipart/form-data"--}}
+                            {{--                                      class="mx-auto mw-100 w-100 fv-plugins-bootstrap5 fv-plugins-framework needs-validation"--}}
+                            {{--                                      novalidate id="kt_docs_formvalidation_text" autocomplete="off">--}}
+                            {{--                                    @csrf--}}
 
-                                        <div class="shadow-sm p-4">
+                            {{--                                    <div class="shadow-sm p-4">--}}
 
-                                            <div class="fv-row mb-10">
-                                                <label class="form-label required">چک لیست</label>
-                                                <input name="title" value="{{ old('title') }}" class="form-control form-control-lg"
-                                                       placeholder="چک لیست" required>
-                                            </div>
-                                        </div>
+                            {{--                                        <div class="fv-row mb-10">--}}
+                            {{--                                            <label class="form-label required">چک لیست</label>--}}
+                            {{--                                            <input name="title" value="{{ old('title') }}" class="form-control form-control-lg"--}}
+                            {{--                                                   placeholder="چک لیست" required>--}}
+                            {{--                                        </div>--}}
+                            {{--                                    </div>--}}
 
-                                        <div class="menu-item d-flex justify-content-end px-3">
-                                            <div class="menu-content  px-3 py-3">
-                                                <button class="btn btn-light-primary btn-sm px-4">افزودن<i class="ki-outline ki-plus-square fs-3 px-2"></i></button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
+                            {{--                                    <div class="menu-item d-flex justify-content-end px-3">--}}
+                            {{--                                        <div class="menu-content  px-3 py-3">--}}
+                            {{--                                            <button class="btn btn-light-primary btn-sm px-4">افزودن<i class="ki-outline ki-plus-square fs-3 px-2"></i></button>--}}
+                            {{--                                        </div>--}}
+                            {{--                                    </div>--}}
+                            {{--                                </form>--}}
+                            {{--                            </div>--}}
+                            {{--                        </div>--}}
                             <div class="dropdown">
                                 <button class="btn btn-sm btn-light-primary rotate"
                                         data-kt-menu-trigger="click"
@@ -497,44 +502,47 @@
                                         <div class="menu-content fs-6 text-gray-900 fw-bold px-3 py-4">فایل های مربوط به تسک</div>
                                     </div>
                                     <div class="separator mb-3 opacity-75"></div>
-
-                                    <ul class="list-unstyled mb-0" id="taskFiles">
-                                        @foreach($task->photos as $file)
-                                            @php
-                                                $explode_file = explode('.',$file['path']);
-                                                $user = \App\Models\User::with('photo')->where('id',$file['user_id'])->first();
-                                            @endphp
-                                            <div class="d-flex align-items-center mb-5">
-                                                <div class="symbol symbol-30px me-5">
-                                                    @if($explode_file[1] == 'pdf')
-                                                        <img alt="Icon" src="{{url('panel/assets/media/svg/files/pdf.svg')}}" />
-                                                    @elseif($explode_file[1] == 'doc')
-                                                        <img alt="Icon" src="{{url('panel/assets/media/svg/files/doc.svg')}}" />
-                                                    @elseif($explode_file[1] == 'css')
-                                                        <img alt="Icon" src="{{url('panel/assets/media/svg/files/css.svg')}}" />
-                                                    @else
-                                                        <img alt="Icon" src="{{url('panel/assets/media/svg/files/ai.svg')}}" />
-                                                    @endif
-                                                </div>
-                                                <div class="fw-semibold">
-                                                    <a class="fs-6 fw-bold text-gray-900 text-hover-primary">{{$user->Name}} </a>
-
-                                                    <div class="text-gray-500">
-                                                        {{verta($file['created_at'])->formatDifference()}}
-                                                        <a class="text-active-danger">{{role_name($user->getRoleNames()->first())}}</a>
+                                    @if(!isset($task))
+                                        <p>تسکی وجود ندارد</p>
+                                    @else
+                                        <ul class="list-unstyled mb-0" id="taskFiles">
+                                            @foreach($task->photos as $file)
+                                                @php
+                                                    $explode_file = explode('.',$file['path']);
+                                                    $user = \App\Models\User::with('photo')->where('id',$file['user_id'])->first();
+                                                @endphp
+                                                <div class="d-flex align-items-center mb-5">
+                                                    <div class="symbol symbol-30px me-5">
+                                                        @if($explode_file[1] == 'pdf')
+                                                            <img alt="Icon" src="{{url('panel/assets/media/svg/files/pdf.svg')}}" />
+                                                        @elseif($explode_file[1] == 'doc')
+                                                            <img alt="Icon" src="{{url('panel/assets/media/svg/files/doc.svg')}}" />
+                                                        @elseif($explode_file[1] == 'css')
+                                                            <img alt="Icon" src="{{url('panel/assets/media/svg/files/css.svg')}}" />
+                                                        @else
+                                                            <img alt="Icon" src="{{url('panel/assets/media/svg/files/ai.svg')}}" />
+                                                        @endif
                                                     </div>
+                                                    <div class="fw-semibold">
+                                                        <a class="fs-6 fw-bold text-gray-900 text-hover-primary">{{$user->Name}} </a>
+
+                                                        <div class="text-gray-500">
+                                                            {{verta($file['created_at'])->formatDifference()}}
+                                                            <a class="text-active-danger">{{role_name($user->getRoleNames()->first())}}</a>
+                                                        </div>
+                                                    </div>
+                                                    <a href="{{ route('home') }}/{{$file['path']}}"
+                                                       type="button" download
+                                                       class="btn btn-clean btn-sm btn-icon btn-icon-primary btn-active-light-primary ms-auto"
+                                                       data-bs-toggle="tooltip" data-bs-placement="top" title="دانلود فایل">
+                                                        <i class="ki-outline ki-cloud-download fs-3"></i>
+                                                    </a>
                                                 </div>
-                                                <a href="{{ route('home') }}/{{$file['path']}}"
-                                                   type="button" download
-                                                   class="btn btn-clean btn-sm btn-icon btn-icon-primary btn-active-light-primary ms-auto"
-                                                   data-bs-toggle="tooltip" data-bs-placement="top" title="دانلود فایل">
-                                                    <i class="ki-outline ki-cloud-download fs-3"></i>
-                                                </a>
-                                            </div>
-                                        @endforeach
-                                        {{--                                    <li><a href="#" class="text-primary text-decoration-none">UI-Dashboard.png</a></li>--}}
-                                        {{--                                    <li><a href="#" class="text-primary text-decoration-none">requirements.docx</a></li>--}}
-                                    </ul>
+                                            @endforeach
+                                            {{--                                    <li><a href="#" class="text-primary text-decoration-none">UI-Dashboard.png</a></li>--}}
+                                            {{--                                    <li><a href="#" class="text-primary text-decoration-none">requirements.docx</a></li>--}}
+                                        </ul>
+                                    @endif
                                 </div>
                             </div>
                             <div class="dropdown">
@@ -555,32 +563,34 @@
                                         <div class="menu-content fs-6 text-gray-900 fw-bold px-3 py-4">تغییر وضعیت تسک</div>
                                     </div>
                                     <div class="separator mb-3 opacity-75"></div>
-                                    <form method="POST" id="taskStatusForm"
-                                          data-url="{{ route('dashboard.task.update.status', $task->id ?? 0) }}"
-                                          data-parent-id="{{ $task->parent_id }}"
-                                          class="d-flex align-items-center">
-                                        @csrf
-                                        <label class="form-check-label text-warning me-3">
-                                            <input type="radio" name="status" value="0" class="form-check-input"
-                                                   @if($task->status == 0) checked @endif>
-                                            در حال بررسی
-                                        </label>
-                                        <label class="form-check-label text-info me-3">
-                                            <input type="radio" name="status" value="1" class="form-check-input"
-                                                   @if($task->status == 1) checked @endif>
-                                            برای انجام
-                                        </label>
-                                        <label class="form-check-label me-3">
-                                            <input type="radio" name="status" value="2" class="form-check-input"
-                                                   @if($task->status == 2) checked @endif>
-                                            در حال انجام
-                                        </label>
-                                        <label class="form-check-label">
-                                            <input type="radio" name="status" value="3" class="form-check-input"
-                                                   @if($task->status == 3) checked @endif>
-                                            انجام شد
-                                        </label>
-                                    </form>
+                                    @if(isset($task))
+                                        <form method="POST" id="taskStatusForm"
+                                              data-url="{{ route('dashboard.task.update.status', $task->id ?? 0) }}"
+                                              data-parent-id="{{ $task->parent_id }}"
+                                              class="d-flex align-items-center">
+                                            @csrf
+                                            <label class="form-check-label text-warning me-3">
+                                                <input type="radio" name="status" value="0" class="form-check-input"
+                                                       @if($task->status == 0) checked @endif>
+                                                در حال بررسی
+                                            </label>
+                                            <label class="form-check-label text-info me-3">
+                                                <input type="radio" name="status" value="1" class="form-check-input"
+                                                       @if($task->status == 1) checked @endif>
+                                                برای انجام
+                                            </label>
+                                            <label class="form-check-label me-3">
+                                                <input type="radio" name="status" value="2" class="form-check-input"
+                                                       @if($task->status == 2) checked @endif>
+                                                در حال انجام
+                                            </label>
+                                            <label class="form-check-label">
+                                                <input type="radio" name="status" value="3" class="form-check-input"
+                                                       @if($task->status == 3) checked @endif>
+                                                انجام شد
+                                            </label>
+                                        </form>
+                                    @endif
 
                                 </div>
 
@@ -668,7 +678,7 @@
                     <div class="modal-body scroll-y px-5 ">
                         <!--begin:Form-->
                         <div class="stepper stepper-links d-flex flex-column pt-15 between" id="kt_create_account_stepper" data-kt-stepper="true" data-select2-id="select2-data-kt_create_account_stepper" >
-                            <form method="POST" action="{{ route('dashboard.task.dependency', $task->id) }}" id="dependencyForm">
+                            <form method="POST" action="{{ route('dashboard.task.dependency', $task->id ?? 0) }}" id="dependencyForm">
                                 @csrf
                                 <div class="mb-13 text-center">
                                     <!--begin::Title-->
@@ -735,8 +745,7 @@
             <!--end::Modal dialog-->
         </div>
 
-        </div>
-    </div>
+
 
         @push('scripts')
 
@@ -957,7 +966,7 @@
                         success: function (data) {
 
                             // task data from json controller
-                            $('#modalTitle').text(` مشاهده: ${data.title}`);
+                            $('#modalTitle').text(`  ${data.title}`);
                             $('#taskCode').text(`  ${data.code}`);
                             if (data.manager) {
                                 $('#taskManager').show().text(`مدیر تایید کننده: ${data.manager}`);

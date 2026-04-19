@@ -1340,7 +1340,7 @@
                     success: function (data) {
                         console.log(data.title)
                         // task data from json controller
-                        $('#modalTitle').show().text(` مشاهده: ${data.title}`);
+                        $('#modalTitle').show().text(`  ${data.title}`);
                         $('#taskCode').show().text(`  ${data.code}`);
 
                         if (data.manager) {

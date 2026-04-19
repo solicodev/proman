@@ -24,8 +24,9 @@ class TaskStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'project_id' => 'required|exists:projects,id',
+            'project_id' => 'nullable|exists:projects,id',
             'manager_id' => 'nullable|exists:users,id',
+            'user_id' => 'nullable|exists:users,id',
             'manager_check' => 'nullable',
             'title' => 'required|string',
             'description' => 'nullable|string',
@@ -42,7 +43,6 @@ class TaskStoreRequest extends FormRequest
             'title.required' => 'وارد کردن نام تسک الزامی است',
             'start_date.required' => 'زمان شروع تسک را تعیین کنید',
             'duration.required' => 'زمان پایان تسک را تعیین کنید',
-            'project_id.required' => 'دسته بندی تسک را انتخاب کنید',
             'watcher_id.required' => 'دپارتمان را انتخاب کنید',
             'members.required' => 'اعضای تسک را انتخاب کنید',
         ];

@@ -37,21 +37,11 @@
                     <div class="stepper stepper-links d-flex flex-column pt-15 between" id="kt_create_account_stepper" data-kt-stepper="true" data-select2-id="select2-data-kt_create_account_stepper">
                         <form action="{{route('dashboard.task.store')}}" method="post" id="kt_modal_new_target_form" class="form needs-validation"  autocomplete="off"  enctype="multipart/form-data">
                             @csrf
-                            <input type="text" hidden="" value="{{$project->id}}" name="project_id">
+
                             <!--begin::Heading-->
                             <div class="mb-13 text-center">
-                                <!--begin::Title-->
                                 <h1 class="mb-3">افزودن تسک</h1>
-                                <!--end::Title-->
-
-                                <!--begin::Description-->
-                                <div class="text-muted fw-semibold fs-5">
-                                    برای پروژه
-                                    <a href="#" class="fw-bold link-primary">{{$project->name}} - {{$project->project_code}}</a>.
-                                </div>
-                                <!--end::Description-->
                             </div>
-                            <!--end::Heading-->
 
                             <div class="row g-9 mb-8">
                                 <!--begin::Col-->
@@ -116,12 +106,9 @@
                                 <div class="col-md-4 fv-row">
                                     <label class=" fs-6 fw-semibold mb-2">نیاز به تایید مسئول تایید کننده دارد</label>
                                     <input class="form-check-input" name="manager_check" type="checkbox" value="1" id="flexCheckDefault"/>
-
                                 </div>
-                                <!--begin::Col-->
                                 <div class="col-md-8 fv-row">
                                     <label class=" fs-6 fw-semibold mb-2">مدیر تایید کننده تسک</label>
-
                                     <select class="form-select form-select-solid"  data-control="select2"
                                             data-placeholder="مدیر تایید کننده تسک" name="manager_id">
                                         <option></option>
@@ -131,8 +118,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-12 fv-row">
-                                    <label class="required fs-6 fw-semibold mb-2">ناظر تسک</label>
-
+                                    <label class="fs-6 fw-semibold mb-2">ناظر تسک</label>
                                     <select class="form-select form-select-solid"  data-control="select2"
                                             data-placeholder="ناظر تسک" name="watcher_id">
                                         <option></option>
@@ -141,7 +127,6 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <!--end::Col-->
                             </div>
 
                             <!--begin::Input group-->

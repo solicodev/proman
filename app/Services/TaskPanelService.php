@@ -16,6 +16,7 @@ class TaskPanelService
 {
     public function store(array $param) :Task
     {
+
         $rand = rand(111111, 999999);
         $end_date = Carbon::parse($param['start_date'] ?? null)->addDays(intval($param['duration']))->format('Y/m/d');
         $task = new Task();
@@ -27,6 +28,7 @@ class TaskPanelService
         $task->start_date = $param['start_date'];
         $task->end_date = $end_date;
         $task->project_id = $param['project_id'] ?? null;
+        $task->user_id = Auth::user()->id ?? null;
 
         if (isset($param['manager_check']))
         {
@@ -41,7 +43,7 @@ class TaskPanelService
 
 
 
-        $task->watcher_id = $param['watcher_id'];
+        $task->watcher_id = $param['watcher_id'] ?? null;
         $task->duration = intval($param['duration']);
         $task->save();
 
