@@ -1156,8 +1156,8 @@
                                         task_id: taskId,
                                         date: date
                                     },
+
                                     success: function (res) {
-                                        console.log(res)
                                         if (res.success) {
                                             $.jGrowl(res.flash_message, {
                                                 life: 4000,

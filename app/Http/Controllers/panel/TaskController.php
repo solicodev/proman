@@ -13,6 +13,7 @@ use App\Services\TaskPanelService;
 use App\Services\TaskScheduler;
 use Carbon\Carbon;
 use Exception;
+use Hekmatinasser\Verta\Verta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -415,17 +416,30 @@ class TaskController extends Controller
 
     public function updateDate(Request $request)
     {
-        $date = Carbon::fromFormat('Y/m/d', $request->date)
-            ->toCarbon()
-            ->format('Y-m-d');
+
+
+//        $date = Carbon::fromFormat('Y/m/d', $request->date)
+//            ->toCarbon()
+//            ->format('Y-m-d');
+
+        $verta = Verta::parse($request->date);
+
+
+        $formatted = $verta->format('Y/m/d');
 
         $task = Task::findOrFail($request->task_id);
 
         $task->update([
-            'completed_at' => $date
+            'completed_at' => $formatted
         ]);
+
         try {
-            return response()->json(['success' => true]);
+            return response()->json([
+                'success' => true,
+                'date' => $formatted,
+                'task' => $task,
+                'flash_message' => 'تاریخ انجام تسک با موفقیت ثبت شد'
+            ]);
         }catch (Exception $exception) {
             return response()->json([
                 'success' => true,
@@ -433,4 +447,5 @@ class TaskController extends Controller
             ],500);
         }
     }
+
 }
