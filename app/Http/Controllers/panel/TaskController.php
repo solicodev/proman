@@ -412,4 +412,25 @@ class TaskController extends Controller
             'depsJson'     => json_encode($dependencies, JSON_UNESCAPED_UNICODE),
         ]);
     }
+
+    public function updateDate(Request $request)
+    {
+        $date = Carbon::fromFormat('Y/m/d', $request->date)
+            ->toCarbon()
+            ->format('Y-m-d');
+
+        $task = Task::findOrFail($request->task_id);
+
+        $task->update([
+            'completed_at' => $date
+        ]);
+        try {
+            return response()->json(['success' => true]);
+        }catch (Exception $exception) {
+            return response()->json([
+                'success' => true,
+                'err_message' => 'خطایی رخ داده است' . $exception->getMessage(),
+            ],500);
+        }
+    }
 }

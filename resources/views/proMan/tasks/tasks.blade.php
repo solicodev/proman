@@ -406,7 +406,6 @@
                                    id="start_date"
                                    class="result form-control form-control-solid ps-12"
                                    type="text"
-                                   data-jdp
                                    placeholder="انتخاب تاریخ انجام تسک"
                                    autocomplete="off"
                                    required />
@@ -964,7 +963,7 @@
                     url: showUrl,
                     type: 'GET',
                     success: function (data) {
-
+                        const taskId = data.id;
                         // task data from json controller
                         $('#modalTitle').text(`  ${data.title}`);
                         $('#taskCode').text(`  ${data.code}`);
@@ -1134,6 +1133,45 @@
                                     toastr.error('خطا در بروزرسانی وضعیت');
                                 }
                             });
+                        });
+
+                        $('#start_date').off('change').persianDatepicker({
+                            format: 'YYYY/MM/DD',
+                            autoClose: true,
+                            initialValue: false,
+
+                            onSelect: function () {
+
+                                const date = $('#start_date').val();
+
+                                if (!date || !taskId) return;
+
+                                $.ajax({
+                                    url: '/dashboard/task/update-date',
+                                    type: 'POST',
+                                    headers: {
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                    },
+                                    data: {
+                                        task_id: taskId,
+                                        date: date
+                                    },
+                                    success: function (res) {
+                                        console.log(res)
+                                        if (res.success) {
+                                            $.jGrowl(res.flash_message, {
+                                                life: 4000,
+                                                position: 'bottom-left',
+                                                theme: 'bg-success'
+                                            });
+                                        }
+                                        console.log('date saved ✅');
+                                    },
+                                    error: function () {
+                                        toastr.error('خطا در ثبت تاریخ');
+                                    }
+                                });
+                            }
                         });
 
                         const modal = new bootstrap.Modal(document.getElementById('kt_modal_task_show'));
@@ -1369,16 +1407,16 @@
                 KTDocsDatatableSubtable.init();
             });
         </script>
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                const menu = document.querySelector('#dateDropdownMenu');
-                menu.addEventListener('shown.bs.dropdown', function () {
-                    setTimeout(() => {
-                        jalaliDatepicker.show(document.getElementById('start_date'));
-                    }, 100);
-                });
-            });
-        </script>
+        {{--        <script>--}}
+        {{--            document.addEventListener("DOMContentLoaded", function() {--}}
+        {{--                const menu = document.querySelector('#dateDropdownMenu');--}}
+        {{--                menu.addEventListener('shown.bs.dropdown', function () {--}}
+        {{--                    setTimeout(() => {--}}
+        {{--                        jalaliDatepicker.show(document.getElementById('start_date'));--}}
+        {{--                    }, 100);--}}
+        {{--                });--}}
+        {{--            });--}}
+        {{--        </script>--}}
 
         {{--          checklist CURD--}}
         <script>
@@ -1417,7 +1455,7 @@
                         html += `
                     <div class="mt-3">
                         <button type="button" id="add-checklist-btn" class="btn btn-sm btn-light-primary w-100">
-                            <i class="ki-outline ki-plus fs-5"></i> افزودن آیتم
+                            <i class="ki-outline ki-plus fs-5"></i> افزودن آیتم چک لیست
                         </button>
                         <form class="mt-2 d-none add-checklist-form" data-task-id="${taskId}">
                             <div class="input-group">
@@ -1617,6 +1655,42 @@
             });
 
         </script>
+
+        {{--        <script>--}}
+        {{--            document.addEventListener("DOMContentLoaded", function () {--}}
+
+        {{--                $('#start_date').persianDatepicker({--}}
+        {{--                    format: 'YYYY/MM/DD',--}}
+        {{--                    autoClose: true,--}}
+        {{--                    initialValue: false,--}}
+
+        {{--                    onSelect: function () {--}}
+
+        {{--                        const date = $('#start_date').val();--}}
+        {{--                        const taskId = document.getElementById("taskId").value;--}}
+        {{--                        console.log(taskId)--}}
+        {{--                        if (!date || !taskId) return;--}}
+
+        {{--                        fetch('/dashboard/task/update-date', {--}}
+        {{--                            method: 'POST',--}}
+        {{--                            headers: {--}}
+        {{--                                'Content-Type': 'application/json',--}}
+        {{--                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content--}}
+        {{--                            },--}}
+        {{--                            body: JSON.stringify({--}}
+        {{--                                task_id: taskId,--}}
+        {{--                                date: date--}}
+        {{--                            })--}}
+        {{--                        })--}}
+        {{--                            .then(res => res.json())--}}
+        {{--                            .then(data => {--}}
+        {{--                                console.log('saved ✅');--}}
+        {{--                            });--}}
+        {{--                    }--}}
+        {{--                });--}}
+
+        {{--            });--}}
+        {{--        </script>--}}
     @endpush
 </x-layout>
 

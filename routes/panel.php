@@ -67,6 +67,8 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
 
         Route::post('/tasks/{task}/comments', [TaskController::class, 'addComment'])->name('comment.add');
         Route::put('/tasks/{task}/status', [TaskController::class, 'updateStatus'])->name('update.status');
+
+        Route::post('/update-date', [TaskController::class, 'updateDate']);
     });
 
 
