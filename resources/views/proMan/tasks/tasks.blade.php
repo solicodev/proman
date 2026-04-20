@@ -1168,7 +1168,11 @@
                                         console.log('date saved ✅');
                                     },
                                     error: function () {
-                                        toastr.error('خطا در ثبت تاریخ');
+                                        $.jGrowl(res.err_message, {
+                                            life: 4000,
+                                            position: 'bottom-left',
+                                            theme: 'bg-warning'
+                                        });
                                     }
                                 });
                             }
