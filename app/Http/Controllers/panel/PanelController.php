@@ -24,6 +24,8 @@ class PanelController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
+
         $project_id = Project::with(['manager','category','department','members','photos','brand'])->where('manager_id',Auth::id())->pluck('id')->toArray();
         $tasks = Task::with(['project','manager','watcher','assigners','photos','predecessors','successors'])->whereIn('project_id',$project_id)->get();
 
@@ -33,9 +35,12 @@ class PanelController extends Controller
         $in_progress = $tasks->where('status', 2)->count();
         $Done = $tasks->where('status', 3)->count();
 
+
         $projects = Project::with(['manager','category','department','members','photos','brand'])->where('manager_id',Auth::id())->get();
 
         $members = Project::where('manager_id',Auth::id())->with('members')->get()->pluck('members')->flatten()->unique('id');
+
+
 
         $days = [];
 
@@ -50,7 +55,9 @@ class PanelController extends Controller
                 'tasks' => $tasks
             ];
         }
+
         $last_projects = Project::with(['manager','category','department','members','photos','brand'])->where('manager_id',Auth::id())->latest()->take(3)->get();
+
 
         foreach ($last_projects as $project) {
             $carbonEnd = \Carbon\Carbon::parse($project->end_date);
@@ -79,7 +86,43 @@ class PanelController extends Controller
         $high_tasks = Task::with(['project','manager','watcher','assigners','photos','predecessors','successors'])->whereIn('project_id',$project_id)->where('priority','2')->get();
         $array_tasks = Task::with(['project','manager','watcher','assigners','photos','parent','children'])->whereNull('parent_id')->where('project_id',$project_id)->get();
 
-//        dd(Auth::id(),$project_id,$high_tasks,$array_tasks,$tasks);
+
+        $managerIds = DB::table('project_manager_admins')
+            ->where('admin_id', $user->id)
+            ->pluck('project_manager_id');
+
+        $projectsAsManager = Project::where('manager_id', $user->id);
+
+        $projectsAsAdmin = Project::whereIn('manager_id', $managerIds);
+
+        $projectIds = $projectsAsManager->select('id')->union($projectsAsAdmin->select('id'))->with(['manager','category','department','members','photos','brand'])->pluck('id');
+
+        $tb_tasks = Task::with([
+            'children.assigners.photo',
+            'project',
+            'manager',
+            'watcher',
+            'assigners',
+            'photos',
+            'parent'
+        ])
+            ->whereNull('parent_id')
+            ->where(function ($q) use ($projectIds, $user) {
+                $q->where('user_id', $user->id)
+
+                    ->orWhereHas('assigners', function ($q2) use ($user) {
+                        $q2->where('user_id', $user->id);
+                    })
+
+                    ->orWhereNull('project_id')
+
+
+                    ->orWhereIn('project_id', $projectIds);
+            })
+            ->get();
+
+//        dd($tb_tasks,$array_tasks,$tasks , $project_id , $total,$pending,$todo,$in_progress,$Done , $projects, $members , $last_projects );
+
         return view('proMan.index',get_defined_vars());
     }
 

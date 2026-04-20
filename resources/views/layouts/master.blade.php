@@ -7,7 +7,7 @@
     <link rel="shortcut icon" href="{{url('panel/assets/media/logos/favicon.ico')}}"/>
 
     <!--begin::Fonts(mandatory for all pages)-->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700"/>
+{{--    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700"/>--}}
     <!--end::Fonts-->
 
     <!--begin::Vendor Stylesheets(used for this page only)-->
@@ -34,6 +34,8 @@
     <link href="{{ asset('panel/assets/css/filepond-plugin-image-preview.css') }}" rel="stylesheet" />
     <link href="{{ asset('panel/assets/css/filepond.css') }}" rel="stylesheet" />
     <link href="{{ asset('panel/assets/css/cropper.min.css') }}" rel="stylesheet" />
+
+
     <link rel="stylesheet" href="{{ asset('panel/assets/css/persian-datepicker.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/admin/css/jgrowl.min.css') }}">
 
@@ -84,15 +86,14 @@
 <!--end::Vendors Javascript-->
 
 <!--begin::Custom Javascript(used for this page only)-->
-<script src="{{url('panel/assets/js/widgets.bundle.js')}}"></script>
-<script src="{{url('panel/assets/js/custom/widgets.js')}}"></script>
+
 <script src="{{url('panel/assets/js/custom/apps/chat/chat.js')}}"></script>
 <script src="{{url('panel/assets/js/custom/utilities/modals/upgrade-plan.js')}}"></script>
 <script src="{{url('panel/assets/js/custom/utilities/modals/new-target.js')}}}"></script>
 <script src="{{url('panel/assets/js/custom/utilities/modals/users-search.js')}}"></script>
 
-<script src="{{url('panel/assets/js/widgets.bundle.js')}}"></script>
-<script src="{{url('panel/assets/js/custom/widgets.js')}}"></script>
+{{--<script src="{{url('panel/assets/js/widgets.bundle.js')}}"></script>--}}
+{{--<script src="{{url('panel/assets/js/custom/widgets.js')}}"></script>--}}
 
 <script src="{{url('assets/admin/plugins/datetimepicker/js/legacy.js')}}"></script>
 <script src="{{url('assets/admin/plugins/datetimepicker/js/picker.js')}}"></script>

@@ -44,9 +44,24 @@
         <!--begin::Row-->
         <div class="row g-5 mb-5">
             <div class="col-lg-6">
+                <div class="card h-100">
+                    <div class="card-header border-0 pt-5">
+                        <h3 class="card-title align-items-start flex-column">
+                            <span class="card-label fw-bold fs-3 mb-1">گزارش پروژه ها</span>
+
+                            <span class="text-muted fw-semibold fs-7">گزارش نموداری روند پیشرفت پروژه ها </span>
+                        </h3>
+                    </div>
+                <div class="card-body">
+                    <div id="kt_charts_widget_6_chart" style="height: 350px"></div>
+                </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
                 <!--begin::Card-->
                 <div class="card h-100">
                     <!--begin::Card body-->
+
                     <div class="card-body p-9">
                         <div class="d-flex flex-wrap">
                             <!--begin::Chart-->
@@ -347,6 +362,115 @@
 
         </script>
 
+
+        <script>
+            "use strict";
+
+            document.addEventListener("DOMContentLoaded", function () {
+                const el = document.getElementById("kt_charts_widget_6_chart");
+                if (!el) return;
+
+                let chart = null;
+
+                function renderChart() {
+                    const height = parseInt(KTUtil.css(el, "height"));
+
+                    const gray500 = KTUtil.getCssVariableValue("--bs-gray-500");
+                    const gray200 = KTUtil.getCssVariableValue("--bs-gray-200");
+                    const primary = KTUtil.getCssVariableValue("--bs-primary");
+                    const primaryLight = KTUtil.getCssVariableValue("--bs-primary-light");
+                    const info = KTUtil.getCssVariableValue("--bs-info");
+
+                    const options = {
+                        series: [
+                            {
+                                name: "پیشرفت واقعی",
+                                type: "bar",
+                                stacked: true,
+                                data: [40, 50, 65, 70, 50, 30]
+                            },
+                            {
+                                name: "پیشرفت مورد انتظار",
+                                type: "bar",
+                                stacked: true,
+                                data: [20, 20, 25, 30, 30, 20]
+                            },
+                            {
+                                name: "تاخیر",
+                                type: "area",
+                                data: [50, 80, 60, 90, 50, 70]
+                            }
+                        ],
+                        chart: {
+                            fontFamily: "inherit",
+                            stacked: true,
+                            height: height,
+                            toolbar: { show: false }
+                        },
+                        plotOptions: {
+                            bar: {
+                                stacked: true,
+                                horizontal: false,
+                                borderRadius: 4,
+                                columnWidth: "12%"
+                            }
+                        },
+                        legend: { show: false },
+                        dataLabels: { enabled: false },
+                        stroke: {
+                            curve: "smooth",
+                            show: true,
+                            width: 2,
+                            colors: ["transparent"]
+                        },
+                        xaxis: {
+                            categories: ["Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+                            axisBorder: { show: false },
+                            axisTicks: { show: false },
+                            labels: {
+                                style: { colors: gray500, fontSize: "12px" }
+                            }
+                        },
+                        yaxis: {
+                            max: 120,
+                            labels: {
+                                style: { colors: gray500, fontSize: "12px" }
+                            }
+                        },
+                        fill: { opacity: 1 },
+                        tooltip: {
+                            style: { fontSize: "12px" },
+                            y: {
+                                formatter: function (val) {
+                                    return "%" + val;
+                                }
+                            }
+                        },
+                        colors: [primary, info, primaryLight],
+                        grid: {
+                            borderColor: gray200,
+                            strokeDashArray: 4,
+                            yaxis: { lines: { show: true } }
+                        }
+                    };
+
+                    chart = new ApexCharts(el, options);
+                    chart.render();
+                }
+
+                renderChart();
+
+                // برای تغییر تم
+                if (typeof KTThemeMode !== "undefined") {
+                    KTThemeMode.on("kt.thememode.change", function () {
+                        if (chart) {
+                            chart.destroy();
+                        }
+                        renderChart();
+                    });
+                }
+            });
+        </script>
     @endpush
 
 @endsection
