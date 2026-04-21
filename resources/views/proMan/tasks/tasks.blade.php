@@ -1065,7 +1065,7 @@
                         $('#taskComments').html(`
                         <h6 class="fw-semibold mb-2">کامنت‌ها</h6>
                         ${commentsHTML}
-                    `);
+                        `);
 
                         // comments store
 
