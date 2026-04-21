@@ -1,5 +1,20 @@
 <x-layout>
     @push('styles')
+        <style>
+            .gantt-wrapper {
+                position: relative;
+            }
+
+            #deps-svg {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+            }
+
+        </style>
         <link href="{{asset('panel/assets/plugins/custom/vis-timeline/vis-timeline.bundle.css')}}" rel="stylesheet" type="text/css" />
     @endpush
     @include('layouts.message')
@@ -14,10 +29,10 @@
 
         </div>
         <div class="card-body">
-            <div id="task-timeline" ></div>
-            <svg id="deps-svg"
-                 style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none;">
-            </svg>
+            <div class="gantt-wrapper">
+                <div id="task-timeline"></div>
+                <svg id="deps-svg"></svg>
+            </div>
         </div>
     </div>
     @push('scripts')
@@ -61,34 +76,55 @@
 
             function drawDependencies(timeline, deps) {
                 const svg = document.getElementById('deps-svg');
-                if (!svg) return;
+                const container = document.getElementById('task-timeline');
+
                 svg.innerHTML = '';
-                console.log(deps)
+
                 deps.forEach(dep => {
-                    const fromItem = timeline.itemsData.get(dep.from);
-                    const toItem   = timeline.itemsData.get(dep.to);
-                    if (!fromItem || !toItem) return;
+                    const fromEl = container.querySelector(`[data-id="${dep.from}"]`);
+                    const toEl   = container.querySelector(`[data-id="${dep.to}"]`);
 
-                    const fromRendered = timeline.itemSet?.items?.[fromItem.id];
-                    const toRendered   = timeline.itemSet?.items?.[toItem.id];
-                    if (!fromRendered || !toRendered) return;
+                    if (!fromEl || !toEl) return;
 
-                    const fromX = timeline.timeToScreen(new Date(fromItem.end ?? fromItem.start));
-                    const toX   = timeline.timeToScreen(new Date(toItem.start));
+                    const containerRect = container.getBoundingClientRect();
+                    const fromRect = fromEl.getBoundingClientRect();
+                    const toRect   = toEl.getBoundingClientRect();
 
-                    const fromY = fromRendered.top + fromRendered.height / 2;
-                    const toY   = toRendered.top + toRendered.height / 2;
+                    const x1 = fromRect.right - containerRect.left;
+                    const y1 = fromRect.top + fromRect.height / 2 - containerRect.top;
+
+                    const x2 = toRect.left - containerRect.left;
+                    const y2 = toRect.top + toRect.height / 2 - containerRect.top;
 
                     const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-                    line.setAttribute('x1', fromX);
-                    line.setAttribute('y1', fromY);
-                    line.setAttribute('x2', toX);
-                    line.setAttribute('y2', toY);
-                    line.setAttribute('stroke', 'red');
+                    line.setAttribute('x1', x1);
+                    line.setAttribute('y1', y1);
+                    line.setAttribute('x2', x2);
+                    line.setAttribute('y2', y2);
+                    line.setAttribute('stroke', '#ef4444');
                     line.setAttribute('stroke-width', '2');
+
                     svg.appendChild(line);
+                    const options = {
+                        stack: false,
+                        orientation: 'top',
+                        zoomKey: 'ctrlKey',
+                        margin: { item: 10, axis: 20 },
+
+                        template: function (item) {
+                            return `<div class="gantt-item" data-id="${item.id}">
+                            ${item.content}
+                            </div>`;
+                        }
+                    };
                 });
             }
+
+            timeline.on('rangechanged', () => {
+                requestAnimationFrame(() => {
+                    drawDependencies(timeline, deps);
+                });
+            });
         </script>
     @endpush
 </x-layout>

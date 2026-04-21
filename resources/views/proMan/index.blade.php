@@ -471,6 +471,8 @@
                 }
             });
         </script>
+
+
     @endpush
 
 @endsection

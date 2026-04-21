@@ -113,10 +113,7 @@ class PanelController extends Controller
                     ->orWhereHas('assigners', function ($q2) use ($user) {
                         $q2->where('user_id', $user->id);
                     })
-
                     ->orWhereNull('project_id')
-
-
                     ->orWhereIn('project_id', $projectIds);
             })
             ->get();
