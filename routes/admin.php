@@ -8,6 +8,7 @@ use App\Http\Controllers\admin\Campaign\CampaignController;
 use App\Http\Controllers\admin\Campaign\InfluencerController;
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\DepartmentController;
+use App\Http\Controllers\admin\ImplementeUnitController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\admin\PhotoController;
 use App\Http\Controllers\admin\PositionController;
@@ -66,6 +67,14 @@ Route::prefix('admin')->name('admin.')->middleware(['auth','SuperAdminCheck'])->
         Route::put('/update/{department}', [DepartmentController::class , 'update'])->name('update');
         Route::get('/delete/{department}', [DepartmentController::class , 'destroy'])->name('destroy');
     });
+
+    Route::prefix('implementeUnit')->name('implementeUnit.')->group(function () {
+        Route::get('/', [ImplementeUnitController::class , 'index'])->name('index');
+        Route::post('/store', [ImplementeUnitController::class , 'store'])->name('store');
+        Route::put('/update/{department}', [ImplementeUnitController::class , 'update'])->name('update');
+        Route::get('/delete/{department}', [ImplementeUnitController::class , 'destroy'])->name('destroy');
+    });
+
     Route::prefix('brand')->name('brand.')->group(function () {
         Route::get('/', [BrandController::class , 'index'])->name('index');
         Route::post('/store', [BrandController::class , 'store'])->name('store');

@@ -12,7 +12,7 @@ class DepartmentController extends Controller
 {
     public function __construct()
     {
-        if (!Auth::user()->hasrole('Super Admin'))
+        if (!Auth::user()->hasrole(['Super Admin','Admin Panel']))
         {
             return redirect()->back()->with('err_message', 'شما دسترسی به پنل ادمین ندارید!');
         }

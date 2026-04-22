@@ -9,7 +9,9 @@ use Spatie\Activitylog\Traits\LogsActivity;
 class ImplementeUnit extends Model
 {
     use LogsActivity;
+
     protected $fillable = ['name','parent_id'];
+
     protected static $logName = 'implementeUnit';
 
     protected static $logAttributes = ['name','parent_id','created_at','updated_at'];

@@ -91,6 +91,16 @@
             <li class="menu-label">مدیریت پروژه ها</li>
             {{--                <li class="menu-label">مدیریت دپارتمان ها</li>--}}
             <li>
+                <a href="{{route('admin.implementeUnit.index')}}">
+                    <div class="parent-icon">
+
+                        <i  class='bx bx-home-circle'>
+                        </i>
+                    </div>
+                    <div class="menu-title"> واحد های انجام دهنده پروژه ها</div>
+                </a>
+            </li>
+            <li>
                 <a href="{{route('admin.department.index')}}">
                     <div class="parent-icon">
 

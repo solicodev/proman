@@ -171,9 +171,9 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6">
-                                            <label class="form-label">برند</label>
+                                            <label class="form-label">واحد انجام دهنده پروژه</label>
                                             <select class="form-select form-select-solid" data-control="select2"
-                                                    data-placeholder="برند را انتخاب کنید" name="brand_id">
+                                                    data-placeholder="واحد را انتخاب کنید" name="brand_id">
                                                 <option></option>
                                                 @foreach($brands as $brand)
                                                     <option value="{{ $brand->id }}" @if(old('brand_id') == $brand->id) selected @endif>{{ $brand->name }}</option>
@@ -181,32 +181,6 @@
                                             </select>
                                         </div>
                                     </div>
-
-                                    {{--                                    <div class="row g-3 mb-8">--}}
-                                    {{--                                        <div class="col-md-6 fv-row">--}}
-                                    {{--                                            <label class="form-label required">مدیر پروژه</label>--}}
-                                    {{--                                            <select class="form-select form-select-solid" data-control="select2"--}}
-                                    {{--                                                    data-placeholder="مدیر پروژه را انتخاب کنید" name="manager_id" required>--}}
-                                    {{--                                                <option></option>--}}
-                                    {{--                                                @foreach($managers as $manager)--}}
-                                    {{--                                                    <option value="{{ $manager->id }}">{{ $manager->Name }} - نقش:--}}
-                                    {{--                                                        {{ role_name($manager->roles()->first()->name) }}--}}
-                                    {{--                                                    </option>--}}
-                                    {{--                                                @endforeach--}}
-                                    {{--                                            </select>--}}
-                                    {{--                                        </div>--}}
-
-                                    {{--                                        <div class="col-md-6 fv-row">--}}
-                                    {{--                                            <label class="form-label required">برند</label>--}}
-                                    {{--                                            <select class="form-select form-select-solid" data-control="select2"--}}
-                                    {{--                                                    data-placeholder="برند را انتخاب کنید" name="brand_id" required>--}}
-                                    {{--                                                <option></option>--}}
-                                    {{--                                                @foreach($brands as $brand)--}}
-                                    {{--                                                    <option value="{{ $brand->id }}">{{ $brand->name }}</option>--}}
-                                    {{--                                                @endforeach--}}
-                                    {{--                                            </select>--}}
-                                    {{--                                        </div>--}}
-                                    {{--                                    </div>--}}
                                     <div class="fv-row mb-8">
                                         <label class="form-label required">اعضای پروژه</label>
                                         <select class="form-select form-select-solid" data-control="select2"
@@ -218,13 +192,23 @@
                                         </select>
                                     </div>
                                     <div class="row g-3 mb-8">
-                                        <div class="col-md-12 fv-row">
+                                        <div class="col-md-6 fv-row">
                                             <label class="form-label">دسته بندی</label>
                                             <select class="form-select form-select-solid" data-control="select2"
                                                     data-placeholder="دسته بندی را انتخاب کنید" name="category_id">
                                                 <option></option>
                                                 @foreach($categories as $category)
                                                     <option value="{{$category->id}}"  @if(old('category_id') == $category->id) selected @endif>{{$category->title}} </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">برند</label>
+                                            <select class="form-select form-select-solid" data-control="select2"
+                                                    data-placeholder="برند را انتخاب کنید" name="brand_id">
+                                                <option></option>
+                                                @foreach($brands as $brand)
+                                                    <option value="{{ $brand->id }}" @if(old('brand_id') == $brand->id) selected @endif>{{ $brand->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
