@@ -60,14 +60,13 @@
                         <div class="col-md-4">
                             <label for="email" class="form-label">آدرس ایمیل</label>
                             <input type="text" name="email" class="form-control" id="email" placeholder="آدرس ایمیل" value="{{$user->email}}"
-                                   required>
-                            <div class="invalid-feedback">آدرس ایمیل الزامی است</div>
+                                   >
                         </div>
                         <div class="col-md-4">
                             <label for="password" class="form-label">رمز عبور کاربر</label>
                             <input type="password" name="password" class="form-control" placeholder="رمز عبور" id="password"
-                                   value="{{old('password')}}" @if(!$user->password) required @endif >
-                            <div class="invalid-feedback">رمز عبور کاربرالزامی است</div>
+                                   value="{{old('password')}}" >
+{{--                            <div class="invalid-feedback">رمز عبور کاربرالزامی است</div>--}}
                         </div>
                         <div class="col-md-6">
                             <label for="position_id" class="form-label">پوزیشن شغلی کاربر</label>

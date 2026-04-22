@@ -14,6 +14,12 @@ class UserService
     public function store(array $param)
     {
 
+        $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()';
+
+        $password = '';
+        for ($i = 0; $i < 10; $i++) {
+            $password .= $chars[random_int(0, strlen($chars) - 1)];
+        }
         $user = new User();
         $user->first_name = $param['first_name'];
         $user->last_name = $param['last_name'];
@@ -21,7 +27,16 @@ class UserService
         $user->personal_id = $param['personal_id'];
         $user->position_id = $param['position_id'] ;
         $user->email= $param['email'];
-        $user->password= Hash::make($param['password']);
+
+        if (isset($param['password']))
+        {
+            $user->password= $param['password'];
+            $user->password_text= $param['password'];
+        }
+        else
+            $user->password= $password;
+            $user->password_text= $password;
+
         $user->save();
 
         //TODO
@@ -51,13 +66,30 @@ class UserService
 
     public function update(array $param ,User $user)
     {
+
+        $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()';
+
+        $password = '';
+        for ($i = 0; $i < 10; $i++) {
+            $password .= $chars[random_int(0, strlen($chars) - 1)];
+        }
+
         $user->first_name = $param['first_name'];
         $user->last_name = $param['last_name'];
         $user->mobile = $param['mobile'];
         $user->personal_id = $param['personal_id'];
         $user->position_id = $param['position_id'] ;
         $user->email= $param['email'];
-        $user->password= Hash::make($param['password']);
+
+        if (isset($param['password']))
+        {
+            $user->password= $param['password'];
+            $user->password_text= $param['password'];
+        }
+        else
+            $user->password= $password;
+            $user->password_text= $password;
+
         $user->update();
 
         //TODO

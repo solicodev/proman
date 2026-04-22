@@ -17,7 +17,7 @@ class SuperAdminCheck
     public function handle(Request $request, Closure $next): Response
     {
         if(Auth::check()){
-            if (Auth::user()->hasrole('Super Admin'))
+            if (Auth::user()->hasrole(['Super Admin','Admin Panel']))
             {
                 return $next($request);
             }

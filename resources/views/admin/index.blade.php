@@ -30,6 +30,7 @@
                     </div>
                     <div class="menu-title">داشبورد</div>
                 </a>
+                @if(\Illuminate\Support\Facades\Auth::user()->hasrole('Super Admin'))
                 <ul>
                     <li> <a href="{{route('admin.index')}}">
 
@@ -42,7 +43,9 @@
                             </i>مدیریت پروژه</a>
                     </li>
                 </ul>
+                @endif
             </li>
+            @if(\Illuminate\Support\Facades\Auth::user()->hasrole('Super Admin'))
             <li class="menu-label">مدیریت کمپین ها</li>
             <li>
                 <a href="{{route('admin.campaign.agancy.index')}}">
@@ -84,7 +87,7 @@
                     <div class="menu-title"> کمپین ها</div>
                 </a>
             </li>
-
+            @endif
             <li class="menu-label">مدیریت پروژه ها</li>
             {{--                <li class="menu-label">مدیریت دپارتمان ها</li>--}}
             <li>
@@ -1034,12 +1037,11 @@
                             </div>
                         </li>
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="javascript:;">
-                                <i
-                                    class="bx bx-log-out-circle">
-                                </i>
-                                <span>خروج</span>
-                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                                @csrf
+                                <button type="submit" class="dropdown-item d-flex align-items-center">خروج</button>
+                            </form>
+
                         </li>
                     </ul>
                 </div>

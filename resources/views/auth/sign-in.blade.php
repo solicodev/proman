@@ -2,7 +2,6 @@
 <html lang="en"  dir="rtl" direction="rtl" style="direction:rtl;" >
 <!--begin::Head-->
 
-<!-- Mirrored from preview.keenthemes.com/metronic8/demo23/rtl/authentication/layouts/corporate/sign-in.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 17 Sep 2024 08:39:16 GMT -->
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
 <head>
     <title>ورود به داشبورد مدیریت پروژه ها</title>
@@ -12,14 +11,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="Metronic - The World's #1 Selling Tailwind CSS & Bootstrap Admin Template by KeenThemes" />
-    <meta property="og:url" content="https://keenthemes.com/metronic"/>
-    <meta property="og:site_name" content="Metronic by Keenthemes" />
+    <meta property="og:site_name" content="پلتفرم مدیریت پروژه سولیکو " />
     <link rel="canonical" href=""/>
     <link rel="shortcut icon" href="{{url('panel/assets/media/logos/favicon.ico')}}"/>
 
     <!--begin::Fonts(mandatory for all pages)-->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700"/>        <!--end::Fonts-->
+    {{--    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700"/>        <!--end::Fonts-->--}}
 
     <!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
     <link href="{{my_asset('panel/assets/plugins/global/plugins.bundle.rtl.css')}}" rel="stylesheet" type="text/css"/>
@@ -53,8 +50,8 @@
                 <!--begin::Wrapper-->
                 <div class="d-flex flex-center flex-column flex-column-fluid px-lg-10 pb-15 pb-lg-20">
 
-                <!-- ======================= Login start ======================== -->
-                    <form class="form w-100" novalidate="novalidate" id="loginForm" data-kt-redirect-url="/metronic8/demo23/rtl/index.html" action="#">
+                    <!-- ======================= Login start ======================== -->
+                    <form  action="{{route('LoginPassword')}}" method="post" class="form w-100" novalidate="novalidate" >
                         @csrf
                         <!--begin::Heading-->
                         <div class="text-center mb-11">
@@ -69,8 +66,9 @@
                         <!--begin::Heading-->
 
                         <div class="separator separator-content my-14">
-                            <span class="w-225px text-gray-500 fw-semibold fs-7">ورود با کد یک بار مصرف</span>
+                            <span class="w-225px text-gray-500 fw-semibold fs-7">ورود </span>
                         </div>
+
 
                         <div class="fv-row mb-8">
                             <input type="text" placeholder="شماره موبایل " name="mobile" autocomplete="off" class="form-control bg-transparent"
@@ -82,9 +80,13 @@
                                 شماره موبایل الزامی است
                             </div>
                         </div>
+
+                        <div class="fv-row mb-3">
+                            <input type="password" placeholder="رمز عبور" name="password" autocomplete="off" class="form-control bg-transparent"/>
+                        </div>
                         <div class="d-grid mb-10">
                             <button type="submit" id="kt_sign_in_submit" class="btn btn-primary">
-                                <span class="indicator-label">دریافت کد یکبار مصرف</span>
+                                <span class="indicator-label">ورود</span>
                                 <span class="indicator-progress">
                                     <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
                                 </span>
@@ -92,6 +94,44 @@
                         </div>
 
                     </form>
+                    {{--                    <form class="form w-100" novalidate="novalidate" id="loginForm" data-kt-redirect-url="/metronic8/demo23/rtl/index.html" action="#">--}}
+                    {{--                        @csrf--}}
+                    {{--                        <!--begin::Heading-->--}}
+                    {{--                        <div class="text-center mb-11">--}}
+                    {{--                            <h1 class="text-gray-900 fw-bolder mb-3">--}}
+                    {{--                                ورود--}}
+                    {{--                            </h1>--}}
+                    {{--                            <div class="text-gray-500 fw-semibold fs-6">--}}
+                    {{--                                به داشبورد مدیریت پروژه--}}
+                    {{--                            </div>--}}
+                    {{--                            <!--end::Subtitle--->--}}
+                    {{--                        </div>--}}
+                    {{--                        <!--begin::Heading-->--}}
+
+                    {{--                        <div class="separator separator-content my-14">--}}
+                    {{--                            <span class="w-225px text-gray-500 fw-semibold fs-7">ورود با کد یک بار مصرف</span>--}}
+                    {{--                        </div>--}}
+
+                    {{--                        <div class="fv-row mb-8">--}}
+                    {{--                            <input type="text" placeholder="شماره موبایل " name="mobile" autocomplete="off" class="form-control bg-transparent"--}}
+                    {{--                                   inputmode="numeric"--}}
+                    {{--                                   pattern="^09\d{9}$"--}}
+                    {{--                                   oninput="this.value=this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"--}}
+                    {{--                                   required/>--}}
+                    {{--                            <div class="invalid-feedback">--}}
+                    {{--                                شماره موبایل الزامی است--}}
+                    {{--                            </div>--}}
+                    {{--                        </div>--}}
+                    {{--                        <div class="d-grid mb-10">--}}
+                    {{--                            <button type="submit" id="kt_sign_in_submit" class="btn btn-primary">--}}
+                    {{--                                <span class="indicator-label">دریافت کد یکبار مصرف</span>--}}
+                    {{--                                <span class="indicator-progress">--}}
+                    {{--                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span>--}}
+                    {{--                                </span>--}}
+                    {{--                            </button>--}}
+                    {{--                        </div>--}}
+
+                    {{--                    </form>--}}
                     <!-- ======================= Login End ======================== -->
 
                 </div>
@@ -335,6 +375,9 @@
                             .text(response.message);
                         switch (response.user_type) {
                             case 'Super Admin':
+                                window.location.replace('{{ route('admin.index') }}');
+                                return;
+                            case 'Admin Panel':
                                 window.location.replace('{{ route('admin.index') }}');
                                 return;
                             case 'Manager':

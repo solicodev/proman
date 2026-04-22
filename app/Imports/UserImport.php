@@ -23,6 +23,13 @@ class UserImport implements ToModel, WithHeadingRow
 
     public function model(array $row)
     {
+        $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()';
+
+        $password = '';
+        for ($i = 0; $i < 10; $i++) {
+            $password .= $chars[random_int(0, strlen($chars) - 1)];
+        }
+
         $user = User::where('mobile',$row['mobile'])->first();
         if (!$user)
         {
@@ -35,8 +42,10 @@ class UserImport implements ToModel, WithHeadingRow
             $user->status = '1';
             $user->position_id = $row['position_id'];
             $user->department_id = $row['department_id'];
-            $user->personal_id = $rand;
-            $user->password = Hash::make($rand);
+
+            $user->password_text = $password;
+            $user->password = $password;
+
             $user->save();
 
             $user->assignRole($row['role_id']);

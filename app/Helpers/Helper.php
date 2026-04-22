@@ -79,10 +79,11 @@ if (!function_exists('role_name')) {
     function role_name($role)
     {
         $roles = [
-            'Super Admin' => 'مدیر کل',
-            'Manager' => 'مدیر پروژه',
-            'Member' => 'اعضای پروژه',
-            'Assignee' => 'مسئول انجام تسک',
+            'Super Admin' => 'مدیر کل', //پنل ادمین
+            'Admin Panel' => 'ادمین', //پنل ادمین
+            'Manager' => 'مدیر پروژه', //پنل مدیریت پروژه
+            'Member' => 'اعضای پروژه', //پنل مدیریت پروژه
+            'Assignee' => 'مسئول انجام تسک', //پنل مدیریت پروژه
             'User' => 'کاربر',
         ];
         return $roles[$role];
@@ -265,7 +266,6 @@ if (!function_exists('new_sms')) {
 
     function sendSms($phone, $otp): false|string
     {
-
         $url = env('SMS_URL');
         $username = env('SMS_USERNAME');
         $password = env('SMS_PASSWORD');
