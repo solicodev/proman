@@ -25,6 +25,7 @@ class ProjectService
         $project->manager_id = Auth::id();
         $project->category_id = $param['category_id'] ?? null;
         $project->department_id = $param['department_id'];
+        $project->implementeunit_id = $param['implementeunit_id'] ?? null;
         $project->brand_id = $param['brand_id'] ?? null;
         $project->description = $param['description'] ?? null;
 
@@ -64,6 +65,7 @@ class ProjectService
         $project->manager_id = Auth::id();
         $project->category_id = $param['category_id'];
         $project->department_id = $param['department_id'];
+        $project->implementeunit_id = $param['implementeunit_id'] ?? null;
         $project->description = $param['description'] ?? null;
         $project->update();
 

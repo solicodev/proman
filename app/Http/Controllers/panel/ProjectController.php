@@ -8,6 +8,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Department;
+use App\Models\ImplementeUnit;
 use App\Models\Photo;
 use App\Models\Position;
 use App\Models\Project;
@@ -229,6 +230,7 @@ class ProjectController extends Controller
 
         $categories = Category::with('getChid')->get();
         $departments = Department::get();
+        $implementeUnits = ImplementeUnit::get();
 
         $members = User::whereDoesntHave('roles', function ($query) use ($memberRoles) {
             $query->whereIn('name', $memberRoles);
@@ -243,11 +245,12 @@ class ProjectController extends Controller
      */
     public function store(ProjectStoreRequest $request)
     {
-//            DB::beginTransaction();
+        try {
+            DB::beginTransaction();
 //            $photos = explode(',', $request->input('photos')[0]);
         $project = $this->projectService->store($request->all());
         return redirect(route('dashboard.project.redirect',$project->id))->with('flash_message', 'با موفقیت ایجاد شد');
-        try {
+
             DB::commit();
         } catch (Exception $exception) {
             DB::rollBack();
@@ -327,6 +330,7 @@ class ProjectController extends Controller
         $brands = Brand::with(['photo','getChid'])->get();
 
         $departments = Department::get();
+        $implementeUnits = ImplementeUnit::get();
 
         $members = User::whereDoesntHave('roles', function ($query) use ($memberRoles) {
             $query->whereIn('name', $memberRoles);

@@ -32,6 +32,7 @@ class ProjectStoreRequest extends FormRequest
             'category_id' => 'nullable',
 //            'members *' => 'required',
             'department_id' => 'required',
+            'implementeunit_id' => 'nullable',
             'brand_id' => 'nullable',
             'inform' => 'nullable',
         ];

@@ -151,20 +151,32 @@
                                                                    placeholder="تاریخ پایان پروژه"
                                                                    autocomplete="off"
                                                                    value="{{ $project->end_date }}"
-                                                                    />
+                                                            />
                                                         </div>
                                                     </div>
                                                 </div>
 
                                                 <div class="fv-row mb-8">
-                                                    <label class="form-label required">برند</label>
-                                                    <select class="form-select form-select-solid" data-control="select2"
-                                                            data-placeholder="برند را انتخاب کنید" name="brand_id" required>
-                                                        <option></option>
-                                                        @foreach($brands as $brand)
-                                                            <option value="{{ $brand->id }}" @if($project->brand_id == $brand->id) selected @endif>{{ $brand->name }}</option>
-                                                        @endforeach
-                                                    </select>
+                                                    <div class="col-md-6 fv-row">
+                                                        <label class="form-label required">برند</label>
+                                                        <select class="form-select form-select-solid" data-control="select2"
+                                                                data-placeholder="برند را انتخاب کنید" name="brand_id" required>
+                                                            <option></option>
+                                                            @foreach($brands as $brand)
+                                                                <option value="{{ $brand->id }}" @if($project->brand_id == $brand->id) selected @endif>{{ $brand->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-6 fv-row">
+                                                        <label class="form-label">دسته بندی</label>
+                                                        <select class="form-select form-select-solid" data-control="select2"
+                                                                data-placeholder="دپارتمان را انتخاب کنید" name="category_id" >
+                                                            <option></option>
+                                                            @foreach($categories as $category)
+                                                                <option value="{{$category->id}}" @if($project->category_id == $category->id) selected @endif>{{$category->title}} </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
                                                 </div>
 
                                                 {{--                                    <div class="row g-3 mb-8">--}}
@@ -215,17 +227,17 @@
                                                             </select>
                                                         </div>
                                                     </div>
-
-                                                    <div class="col-md-6 fv-row">
-                                                        <label class="form-label">دسته بندی</label>
+                                                    <div class="col-md-6">
+                                                        <label class="form-label">واحد انجام دهنده پروژه</label>
                                                         <select class="form-select form-select-solid" data-control="select2"
-                                                                data-placeholder="دپارتمان را انتخاب کنید" name="category_id" >
+                                                                data-placeholder="واحد را انتخاب کنید" name="implementeunit_id">
                                                             <option></option>
-                                                            @foreach($categories as $category)
-                                                                <option value="{{$category->id}}" @if($project->category_id == $category->id) selected @endif>{{$category->title}} </option>
+                                                            @foreach($implementeUnits as $implementeUnit)
+                                                                <option value="{{ $implementeUnit->id }}" @if(old('implementeunit_id') == $implementeUnit->id) selected @endif>{{ $implementeUnit->name }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
+
                                                 </div>
 
                                                 <div class="fv-row mb-10">
@@ -364,7 +376,7 @@
                                         <div class="fv-row mb-8">
 
                                             @if(count($project->dependencies)>0)
-                                                    <div class="row g-3 dependencies">
+                                                <div class="row g-3 dependencies">
                                                     @foreach($project->dependencies as $dependency)
                                                         <div class="form-group col-4 depndency align-items-center">
                                                             {{--                                                    <div class="dep">--}}

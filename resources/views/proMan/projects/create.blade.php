@@ -173,10 +173,10 @@
                                         <div class="col-md-6">
                                             <label class="form-label">واحد انجام دهنده پروژه</label>
                                             <select class="form-select form-select-solid" data-control="select2"
-                                                    data-placeholder="واحد را انتخاب کنید" name="brand_id">
+                                                    data-placeholder="واحد را انتخاب کنید" name="implementeunit_id">
                                                 <option></option>
-                                                @foreach($brands as $brand)
-                                                    <option value="{{ $brand->id }}" @if(old('brand_id') == $brand->id) selected @endif>{{ $brand->name }}</option>
+                                                @foreach($implementeUnits as $implementeUnit)
+                                                    <option value="{{ $implementeUnit->id }}" @if(old('implementeunit_id') == $implementeUnit->id) selected @endif>{{ $implementeUnit->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
