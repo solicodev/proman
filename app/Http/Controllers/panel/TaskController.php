@@ -130,6 +130,7 @@ class TaskController extends Controller
     }
     public function create(Project $project)
     {
+
         $SuperAdminRoles = ['Super Admin'];
         $excludedRoles = ['Manager'];
         $memberRoles = ['Member'];
@@ -157,8 +158,15 @@ class TaskController extends Controller
 
 //            DB::beginTransaction();
             $this->taskPanelService->store($request->all());
+        $explode = explode('/', url()->previous());
+
         try {
-            return redirect()->route('dashboard.task.index')->with('flash_message', ' تسک با موفقیت ایجاد شد :)');
+            if (url()->previous() == route('home').'/'.$explode['3'].'/'.$explode['4'].'/'.$explode['5'].'/'.$request->project_id )
+            {
+                return redirect()->route('dashboard.project.redirect',$request->project_id)->with('flash_message', ' تسک با موفقیت ایجاد شد :)');
+            }
+            else
+                return redirect()->route('dashboard.task.index')->with('flash_message', ' تسک با موفقیت ایجاد شد :)');
 //            DB::commit();
 
         } catch (Exception $exception) {
@@ -188,7 +196,7 @@ class TaskController extends Controller
             'name' => 'sometimes|string|max:255',
             'start_date' => 'sometimes|date',
             'end_date' => 'sometimes|date|after_or_equal:start_date',
-            'duration' => 'nullable|integer|min:0'
+//            'duration' => 'nullable|integer|min:0'
         ]);
         $task->update($data);
 

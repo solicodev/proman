@@ -72,7 +72,7 @@
 
                             <div class="row g-9 mb-8">
                                 <div class="col-md-6 fv-row">
-                                    <label class="required fs-6 fw-semibold mb-2">تاریخ شروع</label>
+                                    <label class="required fs-6 fw-semibold mb-2">تاریخ و ساعت شروع</label>
                                     <div class="position-relative d-flex align-items-center">
                                         <i class="ki-outline ki-calendar-8 fs-2 position-absolute mx-4"></i>
                                         <input name="start_date"
@@ -80,25 +80,40 @@
                                                type="text"
                                                data-jdp
                                                data-jdp-only-date
-                                               placeholder="تاریخ شروع تسک"
+                                               placeholder="تاریخ و ساعت شروع تسک"
                                                autocomplete="off"
                                                value="{{ old('start_date') }}"
                                                required />
                                     </div>
                                 </div>
                                 <div class="col-md-6 fv-row">
-                                    <label class="required fs-6 fw-semibold mb-2">مدت زمان انجام تسک (روز)</label>
+                                    <label class="required fs-6 fw-semibold mb-2">تاریخ و ساعت پایان</label>
                                     <div class="position-relative d-flex align-items-center">
-                                        <i class="ki-outline ki-watch fs-2 position-absolute mx-4"></i>
-                                        <input name="duration"
+                                        <i class="ki-outline ki-calendar-8 fs-2 position-absolute mx-4"></i>
+                                        <input name="end_date"
                                                class="result form-control form-control-solid ps-12"
-                                               type="number"
-                                               placeholder="مدت زمان انجام تسک"
+                                               type="text"
+                                               data-jdp
+                                               required
+                                               placeholder="تاریخ و ساعت پایان پروژه"
                                                autocomplete="off"
-                                               value="{{ old('duration') }}"
-                                               required />
+                                               value="{{ old('end_date') }}"
+                                        />
                                     </div>
                                 </div>
+{{--                                <div class="col-md-6 fv-row">--}}
+{{--                                    <label class="required fs-6 fw-semibold mb-2">مدت زمان انجام تسک (روز)</label>--}}
+{{--                                    <div class="position-relative d-flex align-items-center">--}}
+{{--                                        <i class="ki-outline ki-watch fs-2 position-absolute mx-4"></i>--}}
+{{--                                        <input name="duration"--}}
+{{--                                               class="result form-control form-control-solid ps-12"--}}
+{{--                                               type="number"--}}
+{{--                                               placeholder="مدت زمان انجام تسک"--}}
+{{--                                               autocomplete="off"--}}
+{{--                                               value="{{ old('duration') }}"--}}
+{{--                                               required />--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
                             </div>
                             <!--end::Input group-->
 

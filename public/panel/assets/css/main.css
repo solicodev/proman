@@ -78,3 +78,7 @@ html,body{
     content: "آپلود فایل";
     z-index: 2;
 }
+
+jdp-container .jdp-time-container .jdp-time select {
+    color:black !important;
+}

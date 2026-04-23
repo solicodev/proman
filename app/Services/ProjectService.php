@@ -54,6 +54,7 @@ class ProjectService
         }
 
         $project->members()->attach($param['members']);
+
         return $project;
     }
 

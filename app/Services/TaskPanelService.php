@@ -18,7 +18,8 @@ class TaskPanelService
     {
 
         $rand = rand(111111, 999999);
-        $end_date = Carbon::parse($param['start_date'] ?? null)->addDays(intval($param['duration']))->format('Y/m/d');
+//        $end_date = Carbon::parse($param['start_date'] ?? null)->addDays(intval($param['duration']))->format('Y/m/d');
+
         $task = new Task();
         $task->task_code = 'T_' . $rand;
         $task->title = $param['title'];
@@ -26,7 +27,7 @@ class TaskPanelService
         $task->priority = $param['priority'];
         $task->parent_id = $param['parent_id'] ?? null;
         $task->start_date = $param['start_date'];
-        $task->end_date = $end_date;
+        $task->end_date = $param['end_date'] ?? null;
         $task->project_id = $param['project_id'] ?? null;
         $task->user_id = Auth::user()->id ?? null;
 
@@ -44,7 +45,7 @@ class TaskPanelService
 
 
         $task->watcher_id = $param['watcher_id'] ?? null;
-        $task->duration = intval($param['duration']);
+//        $task->duration = intval($param['duration']);
         $task->save();
 
         if(isset($param['photos']))
@@ -75,7 +76,7 @@ class TaskPanelService
 
     public function storeSubtask(array $param, Task $parentTask) :Task
     {
-        $end_date = Carbon::parse($param['start_date'] ?? null)->addDays(intval($param['duration']))->format('Y/m/d');
+//        $end_date = Carbon::parse($param['start_date'] ?? null)->addDays(intval($param['duration']))->format('Y/m/d');
         $rand = rand(111111, 999999);
         $task = new Task();
         $task->task_code = 'T_' . $rand;
@@ -84,7 +85,8 @@ class TaskPanelService
         $task->priority = $param['priority'];
         $task->parent_id = $parentTask->id;
         $task->start_date = $param['start_date'];
-        $task->end_date = $end_date;
+//        $task->end_date = $end_date;
+        $task->end_date = $param['end_date'] ?? null;
         $task->project_id = $param['project_id'] ?? null;
 
         if ($param['sub_manager_check'])
@@ -100,7 +102,7 @@ class TaskPanelService
         }
 
         $task->watcher_id = $param['watcher_id'];
-        $task->duration = intval($param['duration']);
+//        $task->duration = intval($param['duration']);
         $task->save();
         if($param['photos'])
         {
