@@ -56,7 +56,6 @@ class TaskController extends Controller
 
 //        $projects = Project::with('manager','category','department','brand','members','photos','dependencies','comments')->where('manager_id',Auth::id())->pluck('id')->all();;
 
-
         $user = auth()->user();
         $projectsAsManager = Project::where('manager_id', $user->id);
 
@@ -68,7 +67,7 @@ class TaskController extends Controller
 
         $projects = $projectsAsManager->select('id')->union($projectsAsAdmin->select('id'))->with(['manager','category','department','members','photos','brand'])->pluck('id');
 
-        //        $project_id = $projectsAsManager->union($projectsAsAdmin)->with(['manager','category','department','members','photos','brand']);
+//        $project_id = $projectsAsManager->union($projectsAsAdmin)->with(['manager','category','department','members','photos','brand']);
 //        $last_projects = $projectsAsManager->union($projectsAsAdmin)->with(['manager','category','department','members','photos','brand'])->get();
 //
 
