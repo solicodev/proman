@@ -41,7 +41,7 @@
                             <select class="form-select" name="manager_id" id="inputProductType" required>
                                 <option>مدیر پروژه را انتخاب کنید</option>
                                 @foreach($managers as $manager)
-                                    <option value="{{$manager->id}}">{{$manager->Name}} - {{role_name($manager->roles()->first()->name)}}</option>
+                                    <option value="{{$manager->id}}">{{$manager->Name}}</option>
                                 @endforeach
                             </select>
                             <div class="invalid-feedback">مدیر پروژه الزامی است</div>

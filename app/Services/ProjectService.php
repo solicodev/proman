@@ -22,7 +22,12 @@ class ProjectService
         $project->start_date = $param['start_date'];
         $project->end_date = $param['end_date'] ?? null;
         $project->project_code = 'P_' . $rand;
-        $project->manager_id = Auth::id();
+        if (isset($param['manager_id']))
+        {
+            $project->manager_id = $param['manager_id'];
+        }
+        else
+            $project->manager_id = Auth::id();
         $project->category_id = $param['category_id'] ?? null;
         $project->department_id = $param['department_id'];
         $project->implementeunit_id = $param['implementeunit_id'] ?? null;
@@ -36,7 +41,7 @@ class ProjectService
         if (isset($param['approve_need']))
         {
             $project->approve_need  = $param['approve_need'];
-            $project->approving_manager = $param['approving_manager'];
+            $project->approving_manager = $param['approving_manager']?? null;
         }
         $project->save();
 
@@ -63,7 +68,12 @@ class ProjectService
         $project->name = $param['name'];
         $project->start_date = $param['start_date'];
         $project->end_date = $param['end_date'];
-        $project->manager_id = Auth::id();
+        if (isset($param['manager_id']))
+        {
+            $project->manager_id = $param['manager_id'];
+        }
+        else
+            $project->manager_id = Auth::id();
         $project->category_id = $param['category_id'];
         $project->department_id = $param['department_id'];
         $project->implementeunit_id = $param['implementeunit_id'] ?? null;

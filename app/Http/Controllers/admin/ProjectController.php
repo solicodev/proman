@@ -47,11 +47,12 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        $excludedRoles = ['Manager'];
+        $excludedRoles = ['Manager','Member','Assignee'];
         $memberRoles = ['Super Admin'];
         $managers = User::whereHas('roles', function ($query) use ($excludedRoles) {
             $query->whereIn('name', $excludedRoles);
         })->whereStatus('1')->latest()->get();
+
 
         $categories = Category::with('getChid')->get();
         $departments = Department::get();
@@ -70,7 +71,6 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-
             $this->projectService->store($request->all());
             return redirect(route('admin.project.index'))->with('flash_message', 'با موفقیت ایجاد شد');
         try {
@@ -92,7 +92,7 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        $excludedRoles = ['Manager'];
+        $excludedRoles = ['Manager','Member','Assignee'];
         $memberRoles = ['Member'];
         $managers = User::whereHas('roles', function ($query) use ($excludedRoles) {
             $query->whereIn('name', $excludedRoles);
@@ -100,9 +100,11 @@ class ProjectController extends Controller
 
         $categories = Category::get();
         $departments = Department::get();
-        $members = User::whereHas('roles', function ($query) use ($memberRoles) {
+        $implementeUnits = ImplementeUnit::get();
+        $members = User::whereDoesntHave('roles', function ($query) use ($memberRoles) {
             $query->whereIn('name', $memberRoles);
-        })->whereStatus('1')->latest()->get();
+        })->whereStatus('1')->with('position')->latest()->get();
+        $brands = Brand::with(['photo','getChid'])->get();
         return view('admin.projects.edit',get_defined_vars());
     }
 
