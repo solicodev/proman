@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Department;
+use App\Models\ImplementeUnit;
 use App\Models\Project;
 use App\Models\Task;
 use App\Models\User;
@@ -46,16 +48,20 @@ class ProjectController extends Controller
     public function create()
     {
         $excludedRoles = ['Manager'];
-        $memberRoles = ['Member'];
+        $memberRoles = ['Super Admin'];
         $managers = User::whereHas('roles', function ($query) use ($excludedRoles) {
             $query->whereIn('name', $excludedRoles);
         })->whereStatus('1')->latest()->get();
 
-        $categories = Category::get();
+        $categories = Category::with('getChid')->get();
         $departments = Department::get();
-        $members = User::whereHas('roles', function ($query) use ($memberRoles) {
+        $implementeUnits = ImplementeUnit::get();
+
+        $members = User::whereDoesntHave('roles', function ($query) use ($memberRoles) {
             $query->whereIn('name', $memberRoles);
-        })->whereStatus('1')->latest()->get();
+        })->whereStatus('1')->with('position')->latest()->get();
+
+        $brands = Brand::with(['photo','getChid'])->get();
         return view('admin.projects.create',get_defined_vars());
     }
 

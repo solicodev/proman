@@ -141,7 +141,6 @@
                                         <div class="col-md-6 fv-row">
                                             <label class=" fs-6 fw-semibold mb-2">نیاز به تایید دارد</label>
                                             <input class="form-check-input" name="approve_need" type="checkbox" value="0" id="flexCheckDefault"/>
-
                                         </div>
                                         <!--begin::Col-->
                                         <div class="col-md-12 fv-row">
