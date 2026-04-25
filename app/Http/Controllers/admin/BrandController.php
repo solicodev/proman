@@ -24,7 +24,7 @@ class BrandController extends Controller
     public function index()
     {
         $brands = Brand::orderBy('created_at', 'desc')->get();
-        $parents = Brand::whereNull('parent_id')->get();
+        $parents = Brand::get();
         $departments = Department::all();
         return view('admin.brands.index',get_defined_vars());
     }

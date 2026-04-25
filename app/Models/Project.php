@@ -13,7 +13,7 @@ class Project extends Model
 
     protected static $logName = 'project';
 
-    protected static $logAttributes = ['approving_manager','approve_need','approve_verify','name','status',
+    protected static $logAttributes = ['between_date','approving_manager','approve_need','approve_verify','name','status',
         'start_todo_date', 'start_date', 'end_date','manager_id','category_id' , 'implementeunit_id'
         ,'department_id','brand_id','project_code','deleted_at','updated_at','created_at'];
 
@@ -23,11 +23,18 @@ class Project extends Model
     {
         return "project has been {$eventName}";
     }
-    protected $fillable = ['approving_manager','approve_need','approve_verify','project_code', 'name' ,
+    protected $fillable = ['between_date','approving_manager','approve_need','approve_verify','project_code', 'name' ,
         'start_date' , 'end_date' , 'status' , 'manager_id' , 'category_id' , 'implementeunit_id',
         'department_id' , 'start_todo_date'];
 
     protected $appends = ['PanelApproveVerify','PanelApprovingManager','ProjectStatus','PanelProjectStatus'];
+
+    const STATUS_PENDING = 0;
+    const STATUS_DOING = 1;
+    const STATUS_DONE = 2;
+    const STATUS_DELAYED = 3;
+    const STATUS_CANCELED = 4;
+
 
     public $status_english =[
         '0' => 'pending' ,
@@ -135,7 +142,7 @@ class Project extends Model
     {
         return LogOptions::defaults()
             ->useLogName('project')
-            ->logOnly(['approving_manager','approve_need','approve_verify','name','status', 'start_todo_date', 'start_date',
+            ->logOnly(['between_date','approving_manager','approve_need','approve_verify','name','status', 'start_todo_date', 'start_date',
                 'end_date','manager_id','category_id','department_id', 'implementeunit_id'
                 ,'brand_id','project_code','deleted_at','updated_at','created_at'])
             ->logOnlyDirty()

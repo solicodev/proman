@@ -246,16 +246,16 @@ class ProjectController extends Controller
     public function store(ProjectStoreRequest $request)
     {
 
-
+        try {
 //            DB::beginTransaction();
 //            $photos = explode(',', $request->input('photos')[0]);
         $project = $this->projectService->store($request->all());
-        try {
+
         return redirect(route('dashboard.project.redirect',$project->id))->with('flash_message', 'با موفقیت ایجاد شد');
 
-            DB::commit();
+//            DB::commit();
         } catch (Exception $exception) {
-            DB::rollBack();
+//            DB::rollBack();
             return redirect()->back()->with('err_message', $exception->getMessage());
         }
     }

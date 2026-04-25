@@ -23,7 +23,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::get();
-        $parents = Category::whereNull('parent_id')->get();
+        $parents = Category::get();
         return view('admin.categories.index',get_defined_vars());
     }
 

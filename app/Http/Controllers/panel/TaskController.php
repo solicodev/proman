@@ -29,7 +29,6 @@ class TaskController extends Controller
     }
     public function index()
     {
-
         $SuperAdminRoles = ['Super Admin'];
         $excludedRoles = ['Manager'];
         $memberRoles = ['Member'];
@@ -41,7 +40,6 @@ class TaskController extends Controller
         $members = User::whereHas('roles', function ($query) use ($memberRoles) {
             $query->whereIn('name', $memberRoles);
         })->whereStatus('1')->latest()->get();
-
 
         $watchers = User::whereDoesntHave('roles', function ($query) use ($SuperAdminRoles) {
             $query->whereIn('name', $SuperAdminRoles);

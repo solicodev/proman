@@ -1,18 +1,18 @@
 @extends('admin.index')
 @section('content')
-    <h6 class="mb-0 text-uppercase">لیست دسته بندی</h6>
+    <h6 class="mb-0 text-uppercase">لیست تیم ها</h6>
     <hr/>
     @include('layouts.message')
     <div class="card">
         <div class="card-body">
             <div class="d-flex align-items-center justify-content-end">
                 <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                        data-bs-target="#createCategoryModal">افزودن دسته بندی
+                        data-bs-target="#createCategoryModal">افزودن تیم ها
                 </button>
             </div>
             <hr>
             <div class="table-responsive">
-                <table class="data_table table table-striped table-bordered">
+                <table  class="data_table table table-striped table-bordered">
                     <thead>
                     <tr>
                         <th style='width:50px;'>ردیف</th>
@@ -21,19 +21,19 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach ($categories as $category)
+                    @foreach ($teams as $team)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $category->title }}</td>
+                            <td>{{ $team->name }}</td>
                             <td>
                                 <div class="d-flex">
                                     <a href="#"
-                                       onclick="openEditModal('{{ route('admin.category.update', $category->id) }}', JSON.stringify({title:'{{ $category->title }}'}))"
+                                       onclick="openEditModal('{{ route('admin.team.update', $team->id) }}', JSON.stringify({name:'{{ $team->name }}' , unit_id:'{{$team->unit_id}}'}))"
                                        class='text-warning'>
                                         <i class="bx bxs-edit"></i>
                                     </a>
                                     <a href="#"
-                                       onclick="openDeleteModal('{{ route('admin.category.destroy', $category->id) }}')"
+                                       onclick="openDeleteModal('{{ route('admin.team.destroy', $team->id) }}')"
                                        class="text-danger ms-3">
                                         <i class="bx bxs-trash"></i>
                                     </a>
@@ -53,29 +53,29 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="createCategoryModalLabel">
-                        افزودن دسته بندی
+                        افزودن تیم ها
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('admin.category.store') }}" method="post" id='createForm'>
+                <form action="{{ route('admin.team.store') }}" method="post" id='createForm'>
                     @csrf
                     <div class="modal-body">
                         <div class="row g-3">
                             <div class="col-12">
-                                <label for="title" class="form-label">عنوان دسته بندی</label>
-                                <input type="text" name="title" value="{{ old('title') }}" class="form-control"
+                                <label for="title" class="form-label">نام تیم ها</label>
+                                <input type="text" name="name" value="{{ old('name') }}" class="form-control"
                                        id="title" required>
-                                <div class="invalid-feedback">عنوان دسته بندی الزامی است</div>
+                                <div class="invalid-feedback">نام تیم ها الزامی است</div>
                             </div>
                         </div>
                         <div class="row g-3">
                             <div class="col-12">
-                                <label for="parent_id" class="form-label">دسته بندی مادر</label>
+                                <label for="parent_id" class="form-label">تیم ها مادر</label>
                                 <select class="form-select" id="parent_id" name="parent_id"
                                         aria-label="Default select example">
                                     <option> </option>
-                                    @foreach($parents as $parent)
-                                        <option selected="" value="{{$parent->id}}">{{$parent->title}}</option>
+                                    @foreach($units as $unit)
+                                        <option selected="" value="{{$unit->id}}">{{$unit->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -105,20 +105,20 @@
                     <div class="modal-body">
                         <div class="row g-3">
                             <div class="col-12">
-                                <label for="title" class="form-label">عنوان دسته بندی</label>
-                                <input type="text" name="title" class="form-control" id="title" required>
-                                <div class="invalid-feedback">عنوان دسته بندی الزامی است</div>
+                                <label for="title" class="form-label">نام تیم ها</label>
+                                <input type="text" name="name" class="form-control" id="name" required>
+                                <div class="invalid-feedback">نام تیم ها الزامی است</div>
                             </div>
                         </div>
 
                         <div class="row g-3">
                             <div class="col-12">
-                                <label for="parent_id" class="form-label">دسته بندی مادر</label>
+                                <label for="parent_id" class="form-label">واحد مربوط به تیم</label>
                                 <select class="form-select" id="parent_id" name="parent_id"
                                         aria-label="Default select example">
-                                    <option> انتخاب کنید</option>
-                                    @foreach($parents as $parent)
-                                        <option value="{{$parent->id}}">{{$parent->title}}</option>
+                                    <option> </option>
+                                    @foreach($units as $unit)
+                                        <option selected="" value="{{$unit->id}}">{{$unit->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -126,7 +126,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-success">
-                            ویرایش دسته بندی
+                            ویرایش تیم ها
                         </button>
                     </div>
                 </form>
@@ -140,13 +140,13 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="deletePricingModalLabel">
-                        حذف دسته بندی
+                        حذف تیم ها
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form action="" id='deleteForm'>
                     <div class="modal-body">
-                        آیا از حذف دسته بندی مطمئن هستید؟
+                        آیا از حذف تیم ها مطمئن هستید؟
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
@@ -175,10 +175,10 @@
         function openEditModal(url, currentData) {
             let data = JSON.parse(currentData);
 
-            $('#editCategoryModalLabel').text(`ویرایش دسته بندی "${data.title}"`);
+            $('#editCategoryModalLabel').text(`ویرایش تیم ها "${data.name}"`);
 
-            $('#editForm #title').val(data.title);
-            $('#editForm #parent_id').val(data.parent_id);
+            $('#editForm #name').val(data.name);
+            $('#editForm #unit_id').val(data.unit_id);
 
             $('#editForm').attr('action', url);
             $('#editCategoryModal').modal('show');

@@ -15,7 +15,7 @@ class Task extends Model
 
     protected static $logAttributes = ['title','description','task_code','status',
         'duration','priority','parent_id','project_id','manager_check',
-        'manager_id','watcher_id','manager_verify','start_date','end_date','completed_at',
+        'manager_id','watcher_id','manager_verify','start_date','end_date','between_date','completed_at',
         'created_at','updated_at','deleted_at'];
 
     protected static $logOnlyDirty = true;
@@ -25,7 +25,7 @@ class Task extends Model
         return "task has been {$eventName}";
     }
 
-    protected $fillable = ['title','description','task_code','status','priority','parent_id','start_date','end_date','project_id','manager_id','duration','manager_verify','manager_check','watcher_id','completed_at'];
+    protected $fillable = ['title','description','task_code','status','priority','parent_id','start_date','end_date','between_date','project_id','manager_id','duration','manager_verify','manager_check','watcher_id','completed_at'];
 
     protected $appends = ['TaskStatus', 'TaskPrority'];
 
@@ -120,7 +120,8 @@ class Task extends Model
     {
         return LogOptions::defaults()
             ->useLogName('task')
-            ->logOnly(['title','description','task_code','status', 'duration','priority','parent_id','project_id','manager_check','manager_id','watcher_id','manager_verify','start_date','end_date','created_at','updated_at','deleted_at'])
+            ->logOnly(['title','description','task_code','status', 'duration','priority','parent_id','project_id','manager_check','manager_id','watcher_id','manager_verify','start_date','end_date',
+                'between_date','created_at','updated_at','deleted_at'])
             ->logOnlyDirty()
             ->setDescriptionForEvent(fn(string $eventName) => "Task has been {$eventName}");
     }

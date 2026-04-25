@@ -101,6 +101,16 @@
                 </a>
             </li>
             <li>
+                <a href="{{route('admin.team.index')}}">
+                    <div class="parent-icon">
+
+                        <i  class='bx bx-home-circle'>
+                        </i>
+                    </div>
+                    <div class="menu-title"> تیم ها </div>
+                </a>
+            </li>
+            <li>
                 <a href="{{route('admin.department.index')}}">
                     <div class="parent-icon">
 

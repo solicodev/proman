@@ -74,7 +74,7 @@
                                 <select class="form-select" id="parent_id" name="parent_id[]" multiple
                                         aria-label="Default select example" data-placeholder="اگر برند مادر وجود دارد انتخاب کنید">
                                     <option> </option>
-                                    @foreach($departments as $parent)
+                                    @foreach($parents as $parent)
                                         <option selected="" value="{{$parent->id}}">{{$parent->name}}</option>
                                     @endforeach
                                 </select>
@@ -117,7 +117,7 @@
                                 <select class="form-select" id="department_id" name="parent_id[]" multiple
                                         aria-label="انتخاب کنید" data-placeholder="اگر برند مادر وجود دارد انتخاب کنید">
                                     <option></option>
-                                    @foreach($departments as $parent)
+                                    @foreach($parents as $parent)
                                         <option value="{{$parent->id}}">{{$parent->name}}</option>
                                     @endforeach
                                 </select>

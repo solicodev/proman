@@ -14,6 +14,7 @@ use App\Http\Controllers\admin\PhotoController;
 use App\Http\Controllers\admin\PositionController;
 use App\Http\Controllers\admin\ProjectController;
 use App\Http\Controllers\admin\TaskController;
+use App\Http\Controllers\admin\TeamController;
 use App\Http\Controllers\admin\TicketController;
 use App\Http\Controllers\admin\UserController;
 use Illuminate\Support\Facades\Route;
@@ -73,6 +74,14 @@ Route::prefix('admin')->name('admin.')->middleware(['auth','SuperAdminCheck'])->
         Route::post('/store', [ImplementeUnitController::class , 'store'])->name('store');
         Route::put('/update/{department}', [ImplementeUnitController::class , 'update'])->name('update');
         Route::get('/delete/{department}', [ImplementeUnitController::class , 'destroy'])->name('destroy');
+    });
+
+
+    Route::prefix('team')->name('team.')->group(function () {
+        Route::get('/', [TeamController::class , 'index'])->name('index');
+        Route::post('/store', [TeamController::class , 'store'])->name('store');
+        Route::put('/update/{team}', [TeamController::class , 'update'])->name('update');
+        Route::get('/delete/{team}', [TeamController::class , 'destroy'])->name('destroy');
     });
 
     Route::prefix('brand')->name('brand.')->group(function () {
