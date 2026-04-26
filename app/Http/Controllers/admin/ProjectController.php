@@ -32,7 +32,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::get();
+        $projects = Project::orderBy('created_at', 'desc')->get();
         return view('admin.projects.index',get_defined_vars());
     }
 

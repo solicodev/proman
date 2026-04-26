@@ -31,6 +31,7 @@ class ProjectService
         $project->category_id = $param['category_id'] ?? null;
         $project->department_id = $param['department_id'];
         $project->implementeunit_id = $param['implementeunit_id'] ?? null;
+        $project->approving_manager = $param['approving_manager'] ?? null;
         $project->brand_id = $param['brand_id'] ?? null;
         $project->description = $param['description'] ?? null;
 
@@ -65,6 +66,7 @@ class ProjectService
 
     public function update(array $param, Project $project)
     {
+
         $project->name = $param['name'];
         $project->start_date = $param['start_date'];
         $project->end_date = $param['end_date'];
@@ -77,6 +79,7 @@ class ProjectService
         $project->category_id = $param['category_id'];
         $project->department_id = $param['department_id'];
         $project->implementeunit_id = $param['implementeunit_id'] ?? null;
+        $project->approving_manager = $param['approving_manager'] ?? null;
         $project->description = $param['description'] ?? null;
         $project->update();
 

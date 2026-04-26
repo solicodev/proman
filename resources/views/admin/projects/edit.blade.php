@@ -107,6 +107,25 @@
                             </select>
                             {{--                            <div class="invalid-feedback">نقش پروژه الزامی است</div>--}}
                         </div>
+                        <div class="col-md-6 fv-row">
+                            <label class=" fs-6 fw-semibold mb-2">به اطلاع مدیر برسد</label>
+                            <input class="form-check-input" name="inform" type="checkbox" value="0" id="flexCheckDefault"/>
+                        </div>
+                        <div class="col-md-6 fv-row">
+                            <label class=" fs-6 fw-semibold mb-2">نیاز به تایید دارد</label>
+                            <input class="form-check-input" name="approve_need" type="checkbox" value="0" id="flexCheckDefault"/>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="manager_id" class="form-label">مدیر تایید کننده پروژه</label>
+                            <select class="form-select" name="manager_id" id="inputProductType" required>
+                                <option>مدیر پروژه را انتخاب کنید</option>
+                                @foreach($managers as $manager)
+                                    <option value="{{$manager->id}}" @if($project->approving_manager == $manager->id) selected @endif>{{$manager->Name}}
+                                        @if($manager->department_id)   - دپارتمان {{ $manager->department?->name }}@endif @if($manager->position_id)  - {{$manager->position?->title}} @endif</option>
+                                @endforeach
+                            </select>
+                            <div class="invalid-feedback">مدیر پروژه الزامی است</div>
+                        </div>
                         @if(count($project->members) > 0)
                             <div class="col-md-12">
                                 <label for="memberStacks" class="form-label">اعضای پروژه</label>
