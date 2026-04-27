@@ -17,6 +17,20 @@ class TaskPanelService
     public function store(array $param) :Task
     {
 
+        $start = Carbon::parse($param['start_date']);
+        $end   = Carbon::parse($param['end_date']);
+
+        $days = (int) $start->diffInDays($end);
+
+        if ($days >= 1) {
+            $duration = $days . ' روز';
+        } else {
+            $hours = $start->diffInHours($end);
+            $duration = $hours . ' ساعت';
+        }
+
+
+
         $rand = rand(111111, 999999);
 //        $end_date = Carbon::parse($param['start_date'] ?? null)->addDays(intval($param['duration']))->format('Y/m/d');
 
@@ -38,10 +52,9 @@ class TaskPanelService
 
             $manager = User::where('id', $param['manager_id'])->first();
             //TODO
-//            $message = $manager->Name . ' تسک ' .$task->task_code .' نیاز به تایید دارد لطفا به پنل خود سر بزنید و تیک تایید را بزنید ' ;
+            $message = $manager->Name . ' تسک ' .$task->task_code .' نیاز به تایید دارد لطفا به پنل خود سر بزنید و تیک تایید را بزنید ' ;
 //            sendSms($manager->mobile, $message);
         }
-
 
 
         $task->watcher_id = $param['watcher_id'] ?? null;
@@ -62,13 +75,13 @@ class TaskPanelService
         }
 
 
-
         $task->assigners()->attach($param['members']);
+
         foreach ($param['members'] as $member)
         {
             $member_item = User::findOrFail($member);
             //TODO
-//            $message = $member_item->Name . ' تسک ' .$task->task_code .' برای انجام به شما محول شده است لطفا به پنل خود سر بزنید. مدت زمان انجام این تسک ' . $task->duration . ' روز است';
+            $message = $member_item->Name . ' تسک ' .$task->task_code .' برای انجام به شما محول شده است لطفا به پنل خود سر بزنید. مدت زمان انجام این تسک ' . $duration . '  است';
 //            sendSms($member_item->mobile, $message);
         }
         return $task;
@@ -76,6 +89,20 @@ class TaskPanelService
 
     public function storeSubtask(array $param, Task $parentTask) :Task
     {
+
+        $start = Carbon::parse($param['start_date']);
+        $end   = Carbon::parse($param['end_date']);
+
+        $days = (int) $start->diffInDays($end);
+
+        if ($days >= 1) {
+            $duration = $days . ' روز';
+        } else {
+            $hours = $start->diffInHours($end);
+            $duration = $hours . ' ساعت';
+        }
+
+
 //        $end_date = Carbon::parse($param['start_date'] ?? null)->addDays(intval($param['duration']))->format('Y/m/d');
         $rand = rand(111111, 999999);
         $task = new Task();
@@ -98,7 +125,7 @@ class TaskPanelService
             //TODO
 
             $message = $manager->Name . 'تسک ' .$task->task_code .'نیاز به تایید دارد لطفا تیک تایید را بزنید' ;
-//            sendSms($manager->mobile, $message);
+            sendSms($manager->mobile, $message);
         }
 
         $task->watcher_id = $param['watcher_id'];
@@ -122,8 +149,8 @@ class TaskPanelService
         {
             $member_item = User::where('id',$member)->first();
             //TODO
-            $message = $member_item->Name . ' تسک ' .$task->task_code .' برای انجام به شما محول شده است لطفا به پنل خود سر بزنید. مدت زمان انجام این تسک ' . $task->duration . ' روز است';
-//            sendSms($member_item->mobile, $message);
+            $message = $member_item->Name . ' تسک ' .$task->task_code .' برای انجام به شما محول شده است لطفا به پنل خود سر بزنید. مدت زمان انجام این تسک ' . $duration . ' روز است';
+            sendSms($member_item->mobile, $message);
         }
         return $task;
     }

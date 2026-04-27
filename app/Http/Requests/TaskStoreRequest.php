@@ -43,8 +43,6 @@ class TaskStoreRequest extends FormRequest
             'title.required' => 'وارد کردن نام تسک الزامی است',
             'start_date.required' => 'زمان شروع تسک را تعیین کنید',
             'end_date.required' => 'زمان پایان تسک را تعیین کنید',
-            'duration.required' => 'زمان پایان تسک را تعیین کنید',
-            'watcher_id.required' => 'دپارتمان را انتخاب کنید',
             'members.required' => 'اعضای تسک را انتخاب کنید',
         ];
     }

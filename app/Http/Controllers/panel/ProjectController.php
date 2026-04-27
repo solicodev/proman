@@ -99,6 +99,7 @@ class ProjectController extends Controller
             $query->whereIn('name', $excludedRoles);
         })->whereStatus('1')->latest()->get();
 
+//        dd($project_id);
         return view('proMan.projects.report',get_defined_vars());
     }
 

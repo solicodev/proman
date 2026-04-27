@@ -7,31 +7,32 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
 
-class TaskUser extends Model
+class ProjectUser extends Model
 {
     use HasFactory , LocalFactory;
-    protected $fillable = ['task_id','user_id','progress','status','started_at','completed_at'];
+    protected $fillable = ['project_id','user_id','progress','status','started_at','completed_at'];
 
 
-    protected static $logName = 'Tasks assigned to users';
+    protected static $logName = 'Projects assigned to users';
 
-    protected static $logAttributes = ['task_id','user_id','progress','status','started_at','completed_at','created_at','updated_at'];
+    protected static $logAttributes = ['project_id','user_id','progress','status','started_at','completed_at','created_at','updated_at'];
 
     protected static $logOnlyDirty = true;
 
     public function getDescriptionForEvent(string $eventName): string
     {
-        return "Tasks assigned to users has been {$eventName}";
+        return "Projects assigned to users has been {$eventName}";
     }
 
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-            ->useLogName('task')
-            ->logOnly(['task_id','user_id','progress','status','started_at','completed_at','created_at','updated_at'])
+            ->useLogName('Projects assigned to users')
+            ->logOnly(['project_id','user_id','progress','status','started_at','completed_at','created_at','updated_at'])
             ->logOnlyDirty()
-            ->setDescriptionForEvent(fn(string $eventName) => "Tasks assigned to users has been {$eventName}");
+            ->setDescriptionForEvent(fn(string $eventName) => "Projects assigned to users has been {$eventName}");
     }
+
     public $statuses = [
         '0' => '<span class="badge bg-warning text-black">شروع</span>',
         '1' => '<span class="badge bg-primary text-black">در حال انجام</span>',
@@ -42,4 +43,5 @@ class TaskUser extends Model
     {
         return $this->statuses[$this->status] ?? '';
     }
+
 }
