@@ -193,27 +193,27 @@
                 </a>
             </li>
             {{--                <li class="menu-label">مدیریت رسانه ها</li>--}}
-            <li>
-                <a href="{{route('admin.photo.index')}}">
-                    <div class="parent-icon">
+{{--            <li>--}}
+{{--                <a href="{{route('admin.photo.index')}}">--}}
+{{--                    <div class="parent-icon">--}}
 
-                        <i  class='bx bx-list-check'>
-                        </i>
-                    </div>
-                    <div class="menu-title"> رسانه ها</div>
-                </a>
-            </li>
+{{--                        <i  class='bx bx-list-check'>--}}
+{{--                        </i>--}}
+{{--                    </div>--}}
+{{--                    <div class="menu-title"> رسانه ها</div>--}}
+{{--                </a>--}}
+{{--            </li>--}}
             {{--                <li class="menu-label">مدیریت دسترسی ها</li>--}}
-            <li>
-                <a href="{{route('admin.permission.index')}}">
-                    <div class="parent-icon">
+{{--            <li>--}}
+{{--                <a href="{{route('admin.permission.index')}}">--}}
+{{--                    <div class="parent-icon">--}}
 
-                        <i  class='bx bx-list-check'>
-                        </i>
-                    </div>
-                    <div class="menu-title"> دسترسی ها</div>
-                </a>
-            </li>
+{{--                        <i  class='bx bx-list-check'>--}}
+{{--                        </i>--}}
+{{--                    </div>--}}
+{{--                    <div class="menu-title"> دسترسی ها</div>--}}
+{{--                </a>--}}
+{{--            </li>--}}
 
             {{--            <li>--}}
             {{--                <a href="javascript:;" class="has-arrow">--}}

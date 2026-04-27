@@ -172,7 +172,7 @@
                                 <label for="gallery" class="form-label">فایل های مربوط به تسک </label>
                                 <input type="file" class="form-control mb-2 mb-md-0" id="gallery"
                                        name="photos[]" placeholder="تصویر" multiple>
-                                <div class="invalid-feedback">تصویر الزامی است</div>
+{{--                                <div class="invalid-feedback">تصویر الزامی است</div>--}}
                             </div>
                             <!--begin::Input group-->
 

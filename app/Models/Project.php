@@ -119,9 +119,9 @@ class Project extends Model
         return $this->belongsTo(Brand::class, 'brand_id');
     }
 
-    public function members()
+    public function members() // اعضای پروژه
     {
-        return $this->belongsToMany(User::class , 'project_user' , 'project_id' , 'user_id');
+        return $this->belongsToMany(User::class , 'project_users' , 'project_id' , 'user_id');
     }
     public function photos()
     {

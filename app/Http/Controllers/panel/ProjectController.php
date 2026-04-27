@@ -83,11 +83,13 @@ class ProjectController extends Controller
             ->where('admin_id', $user->id)
             ->pluck('project_manager_id');
 
-        $projectsAsAdmin = Project::whereIn('manager_id', $managerIds);
+        $projectsAsAdmin = Project::whereIn('manager_id', $managerIds); // ADMINS
+        $projectsAsApprovingManager = Project::where('approving_manager', $user->id); //APPROVING MANAGER
 
-        $projects = $projectsAsManager->union($projectsAsAdmin)->with(['manager','category','department','members','photos','brand'])->paginate(9);
+
+        $projects = $projectsAsManager->union($projectsAsAdmin)->union($projectsAsApprovingManager)->with(['manager','category','department','members','photos','brand'])->paginate(9);
         $project_id = $projectsAsManager->union($projectsAsAdmin)->with(['manager','category','department','members','photos','brand']);
-        $last_projects = $projectsAsManager->union($projectsAsAdmin)->with(['manager','category','department','members','photos','brand'])->get();
+        $last_projects = $projectsAsManager->union($projectsAsAdmin)->with(['manager','category','department','members','photos','brand'])->latest()->get();
 
 
         $departments = Department::all();
@@ -99,7 +101,7 @@ class ProjectController extends Controller
             $query->whereIn('name', $excludedRoles);
         })->whereStatus('1')->latest()->get();
 
-//        dd($project_id);
+//        dd($projectsAsAdmin,$projectsAsManager,$last_projects);
         return view('proMan.projects.report',get_defined_vars());
     }
 

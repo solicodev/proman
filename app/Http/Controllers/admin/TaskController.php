@@ -39,13 +39,13 @@ class TaskController extends Controller
     {
         $SuperAdminRoles = ['Super Admin'];
         $excludedRoles = ['Manager'];
-        $memberRoles = ['Member'];
+        $memberRoles = ['Super Admin','Manager','Admin'];
 
         $managers = User::whereHas('roles', function ($query) use ($excludedRoles) {
             $query->whereIn('name', $excludedRoles);
         })->whereStatus('1')->latest()->get();
 
-        $members = User::whereHas('roles', function ($query) use ($memberRoles) {
+        $members = User::whereDoesntHave('roles', function ($query) use ($memberRoles) {
             $query->whereIn('name', $memberRoles);
         })->whereStatus('1')->latest()->get();
 
@@ -90,15 +90,16 @@ class TaskController extends Controller
     {
         $SuperAdminRoles = ['Super Admin'];
         $excludedRoles = ['Manager'];
-        $memberRoles = ['Member'];
+        $memberRoles = ['Super Admin','Manager','Admin'];
 
         $managers = User::whereHas('roles', function ($query) use ($excludedRoles) {
             $query->whereIn('name', $excludedRoles);
         })->whereStatus('1')->latest()->get();
 
-        $members = User::whereHas('roles', function ($query) use ($memberRoles) {
+        $members = User::whereDoesntHave('roles', function ($query) use ($memberRoles) {
             $query->whereIn('name', $memberRoles);
         })->whereStatus('1')->latest()->get();
+
 
         $projects = Project::get();;
 

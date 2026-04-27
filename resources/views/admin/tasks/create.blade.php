@@ -46,14 +46,23 @@
                             <div class="invalid-feedback">تاریخ شروع تسک الزامی است</div>
                         </div>
                         <div class="col-md-4">
-                            <label for="duration" class="form-label">زمان انجام تسک</label>
-                            <input name="duration"
+                            <label for="end_date" class="form-label">تاریخ پایان تسک </label>
+                            <input name="end_date"
                                    class="result form-control"
-                                   type="number"
-                                   placeholder="زمان انجام تسک مثال : 10 روز " autocomplete="off"  value="{{old('duration')}}" required/>
-                            <div class="invalid-feedback">زمان انجام تسک الزامی است</div>
+                                   type="text"
+                                   data-jdp
+                                   placeholder="تاریخ پایان تسک" autocomplete="off"  value="{{old('end_date')}}" required/>
+                            <div class="invalid-feedback">تاریخ شروع تسک الزامی است</div>
                         </div>
-                        <div class="col-md-4">
+{{--                        <div class="col-md-4">--}}
+{{--                            <label for="duration" class="form-label">زمان انجام تسک</label>--}}
+{{--                            <input name="duration"--}}
+{{--                                   class="result form-control"--}}
+{{--                                   type="number"--}}
+{{--                                   placeholder="زمان انجام تسک مثال : 10 روز " autocomplete="off"  value="{{old('duration')}}" required/>--}}
+{{--                            <div class="invalid-feedback">زمان انجام تسک الزامی است</div>--}}
+{{--                        </div>--}}
+                        <div class="col-md-6">
                             <label for="priority" class="form-label">اولویت تسک</label>
                             <select class="form-select" name="priority" id="inputProductType" required>
                                 <option value="" disabled selected hidden>اولویت تسک را انتخاب کنید</option>
@@ -63,7 +72,7 @@
                             </select>
                             <div class="invalid-feedback">ناظر تسک الزامی است</div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <label for="manager_id" class="form-label">مدیر تایید کننده تسک</label>
                             <select class="form-select" name="manager_id" id="inputProductType" required data-placeholder="انتخاب کنید">
                                 <option value="" disabled selected hidden>مدیر تایید کننده تسک را انتخاب کنید</option>
@@ -73,16 +82,16 @@
                             </select>
                             <div class="invalid-feedback">مدیر تایید کننده تسک الزامی است</div>
                         </div>
-                        <div class="col-md-4">
-                            <label for="project_id" class="form-label">پروژه مربوطه</label>
-                            <select class="form-select" name="project_id" id="inputProductType">
-                                <option value="" disabled selected hidden>پروژه مربوطه را انتخاب کنید</option>
-                                @foreach($projects as $project)
-                                    <option value="{{$project->id}}">{{$project->name}} </option>
-                                @endforeach
-                            </select>
-                            <div class="invalid-feedback">پروژه مربوطه الزامی است</div>
-                        </div>
+{{--                        <div class="col-md-4">--}}
+{{--                            <label for="project_id" class="form-label">پروژه مربوطه</label>--}}
+{{--                            <select class="form-select" name="project_id" id="inputProductType">--}}
+{{--                                <option value="" disabled selected hidden>پروژه مربوطه را انتخاب کنید</option>--}}
+{{--                                @foreach($projects as $project)--}}
+{{--                                    <option value="{{$project->id}}">{{$project->name}} </option>--}}
+{{--                                @endforeach--}}
+{{--                            </select>--}}
+{{--                            <div class="invalid-feedback">پروژه مربوطه الزامی است</div>--}}
+{{--                        </div>--}}
                         <div class="col-md-6">
                             <label for="watcher_id" class="form-label">ناظر تسک</label>
                             <select class="form-select" name="watcher_id" id="inputProductType" required>

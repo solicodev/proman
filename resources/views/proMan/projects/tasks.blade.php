@@ -548,10 +548,10 @@
                         </div>
                         <!--end::Input group-->
                         <div class="row g-9 mb-8">
-                            <label for="gallery" class="form-label required">فایل های مربوط به تسک </label>
+                            <label for="gallery" class="form-label">فایل های مربوط به تسک </label>
                             <input type="file" class="form-control mb-2 mb-md-0" id="gallery"
-                                   name="photos[]" placeholder="تصویر" required multiple>
-                            <div class="invalid-feedback">تصویر الزامی است</div>
+                                   name="photos[]" placeholder="تصویر" multiple>
+
                         </div>
                         <!--begin::Input group-->
 
@@ -736,7 +736,7 @@
                             <div class="row g-9 mb-8">
                                 <label for="gallery" class="form-label required">فایل های مربوط به تسک </label>
                                 <input type="file" class="form-control mb-2 mb-md-0" id="gallery"
-                                       name="photos[]" placeholder="تصویر" required multiple>
+                                       name="photos[]" placeholder="تصویر"  multiple>
                                 <div class="invalid-feedback">تصویر الزامی است</div>
                             </div>
 
