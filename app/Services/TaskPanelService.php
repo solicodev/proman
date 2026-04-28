@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Photo;
 use App\Models\Project;
 use App\Models\Task;
+use App\Models\TaskDependency;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -153,5 +154,45 @@ class TaskPanelService
             sendSms($member_item->mobile, $message);
         }
         return $task;
+    }
+
+    // TODO
+
+    function scheduleTasks($projectId)
+    {
+        $tasks = Task::where('project_id', $projectId)->get();
+
+        foreach ($tasks as $task) {
+
+            $dependency = TaskDependency::where('successor_id', $task->id)->first();
+
+            if ($dependency) {
+                $parent = Task::find($dependency->predecessor_id);
+
+                switch ($dependency->relation_type) {
+
+                    case 'FS':
+                        $task->start_date = $parent->end_date->addDays($dependency->lag);
+                        break;
+
+                    case 'SS':
+                        $task->start_date = $parent->start_date->addDays($dependency->lag);
+                        break;
+
+                    case 'FF':
+                        $task->end_date = $parent->end_date->addDays($dependency->lag);
+                        $task->start_date = $task->end_date->subDays($task->duration);
+                        break;
+                }
+
+            } else {
+                // اگر وابستگی نداره
+                $task->start_date = now(); // یا start پروژه
+            }
+
+            $task->end_date = $task->start_date->copy()->addDays($task->duration);
+
+            $task->save();
+        }
     }
 }

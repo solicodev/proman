@@ -42,6 +42,7 @@
         <div class="d-flex flex-wrap my-1">
             @can('manager_taskAdd')
                 <a href="#" class="btn btn-sm btn-primary er w-100 fs-6 px-8 py-4"  data-bs-toggle="modal" data-bs-target="#kt_modal_new_target">ایجاد تسک<i class="ki-outline ki-plus-square fs-6 px-2"></i> </a>
+{{--                <a href="{{route('dashboard.task.create',$project->id)}}" class="btn btn-sm btn-primary er w-100 fs-6 px-8 py-4">ایجاد تسک<i class="ki-outline ki-plus-square fs-6 px-2"></i> </a>--}}
             @endcan
         </div>
         <!--begin::Controls-->
@@ -94,7 +95,6 @@
                                             {{ $column['title'] }}
                                             <span class="fs-6 text-gray-500 ms-2">{{ count($tasks[$key] ?? []) }}</span>
                                         </div>
-
                                         <!-- منوی فیلتر -->
                                         <div>
                                             <button type="button"
@@ -408,7 +408,6 @@
                             <!--begin::Title-->
                             <h1 class="mb-3">افزودن تسک</h1>
                             <!--end::Title-->
-
                             <!--begin::Description-->
                             <div class="text-muted fw-semibold fs-5">
                                 برای پروژه
@@ -445,36 +444,69 @@
                         </div>
                         <!--end::Input group-->
 
-                        <div class="row g-9 mb-8">
-                            <div class="col-md-6 fv-row">
-                                <label class="required fs-6 fw-semibold mb-2">تاریخ و ساعت شروع</label>
-                                <div class="position-relative d-flex align-items-center">
-                                    <i class="ki-outline ki-calendar-8 fs-2 position-absolute mx-4"></i>
-                                    <input name="start_date"
-                                           class="result form-control form-control-solid ps-12"
-                                           type="text"
-                                           data-jdp
-                                           placeholder="تاریخ و ساعت شروع تسک"
-                                           autocomplete="off"
-                                           value="{{ old('start_date') }}"
-                                           required />
+                        <div class="row mb-8">
+{{--                            <div class="fv-row mb-8">--}}
+                                <div class="col-lg-6">
+                                    <label for="project_id" class="form-label required">تسک وابسته</label>
+                                    <select class="form-select form-select-solid" data-control="select2" id="project_id"
+                                            data-ajax-route="{{ route('dashboard.task.related-tasks', $project->id) }}"
+                                            data-placeholder="تسک وابسته را انتخاب کنید" name="project_id" required>
+                                        <option></option>
+                                        {{--                                    @foreach($tb_tasks as $task_item)--}}
+                                        {{--                                        <option value="{{ $task_item->id }}">{{ $task_item->title }}</option>--}}
+                                        {{--                                    @endforeach--}}
+                                    </select>
                                 </div>
+                                <div class="col-lg-6">
+                                    <label for="relation_type" class="form-label required">نوع وابستگی </label>
+                                    <select class="form-select form-select-solid" data-control="select2"
+                                            data-placeholder="نوع وابستگی را انتخاب کنید" name="relation_type" required>
+                                        <option></option>
+                                        <option value="FS">Finish to Start (تسک فعلی بعد از اتمام قبلی شروع می‌شود)</option>
+                                        <option value="FF">Finish to Finish (تسک فعلی تا اتمام قبلی نمی‌تواند تمام شود)</option>
+                                        <option value="SS">Start to Start (شروع هر دو باید هم‌زمان باشد)</option>
+                                        <option value="SF">Start to Finish (تسک فعلی تا شروع قبلی نمی‌تواند تمام شود)</option>
+                                    </select>
+{{--                                </div>--}}
                             </div>
-                            <div class="col-md-6 fv-row">
-                                <label class="required fs-6 fw-semibold mb-2">تاریخ و ساعت پایان</label>
-                                <div class="position-relative d-flex align-items-center">
-                                    <i class="ki-outline ki-calendar-8 fs-2 position-absolute mx-4"></i>
-                                    <input name="end_date"
-                                           class="result form-control form-control-solid ps-12"
-                                           type="text"
-                                           data-jdp
-                                           required
-                                           placeholder="تاریخ و ساعت پایان پروژه"
-                                           autocomplete="off"
-                                           value="{{ old('end_date') }}"
-                                    />
-                                </div>
+                            <div class="fv-row mb-8">
+                                <label class="form-label">Lag / Lead</label>
+                                <input type="number" name="lag" class="form-control form-control-solid" value="{{old('lag')}}"
+                                       placeholder="مثلاً +2 یا -1"
+                                >
+                                <small class="text-muted">
+                                    عدد مثبت = لگ (تاخیر)، عدد منفی = لید (شروع زودتر)
+                                </small>
                             </div>
+{{--                            <div class="col-md-6 fv-row">--}}
+{{--                                <label class="required fs-6 fw-semibold mb-2">تاریخ و ساعت شروع</label>--}}
+{{--                                <div class="position-relative d-flex align-items-center">--}}
+{{--                                    <i class="ki-outline ki-calendar-8 fs-2 position-absolute mx-4"></i>--}}
+{{--                                    <input name="start_date"--}}
+{{--                                           class="result form-control form-control-solid ps-12"--}}
+{{--                                           type="text"--}}
+{{--                                           data-jdp--}}
+{{--                                           placeholder="تاریخ و ساعت شروع تسک"--}}
+{{--                                           autocomplete="off"--}}
+{{--                                           value="{{ old('start_date') }}"--}}
+{{--                                           required />--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="col-md-6 fv-row">--}}
+{{--                                <label class="required fs-6 fw-semibold mb-2">تاریخ و ساعت پایان</label>--}}
+{{--                                <div class="position-relative d-flex align-items-center">--}}
+{{--                                    <i class="ki-outline ki-calendar-8 fs-2 position-absolute mx-4"></i>--}}
+{{--                                    <input name="end_date"--}}
+{{--                                           class="result form-control form-control-solid ps-12"--}}
+{{--                                           type="text"--}}
+{{--                                           data-jdp--}}
+{{--                                           required--}}
+{{--                                           placeholder="تاریخ و ساعت پایان پروژه"--}}
+{{--                                           autocomplete="off"--}}
+{{--                                           value="{{ old('end_date') }}"--}}
+{{--                                    />--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                             {{--                                <div class="col-md-6 fv-row">--}}
                             {{--                                    <label class="required fs-6 fw-semibold mb-2">مدت زمان انجام تسک (روز)</label>--}}
                             {{--                                    <div class="position-relative d-flex align-items-center">--}}
@@ -1075,7 +1107,7 @@
                                 </div>
                                 <!--end::Description-->
                             </div>
-                            <div class="fv-row mb-8">
+                            <div class="fv-row">
                                 <label for="project_id" class="form-label required">تسک وابسته</label>
                                 <select class="form-select form-select-solid" data-control="select2" id="project_id"
                                         data-ajax-route="{{ route('dashboard.task.related-tasks', $project->id) }}"
@@ -1086,8 +1118,7 @@
                                     {{--                                    @endforeach--}}
                                 </select>
                             </div>
-
-                            <div class="fv-row mb-8">
+                            <div class="fv-row">
                                 <label for="relation_type" class="form-label required">نوع وابستگی </label>
                                 <select class="form-select form-select-solid" data-control="select2"
                                         data-placeholder="نوع وابستگی را انتخاب کنید" name="relation_type" required>
@@ -1098,7 +1129,7 @@
                                     <option value="SF">Start to Finish (تسک فعلی تا شروع قبلی نمی‌تواند تمام شود)</option>
                                 </select>
                             </div>
-                            <div class="fv-row mb-8">
+                            <div class="fv-row">
                                 <label class="form-label">Lag / Lead</label>
                                 <input type="number" name="lag" class="form-control form-control-solid" value="{{old('lag')}}"
                                        placeholder="مثلاً +2 یا -1"
