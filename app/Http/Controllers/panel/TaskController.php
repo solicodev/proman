@@ -158,14 +158,15 @@ class TaskController extends Controller
         $explode = explode('/', url()->previous());
 
         try {
-            if (url()->previous() == route('dashboard.project.task',$request->project_id) )
-            {
-                return redirect()->route('dashboard.project.task',$request->project_id)->with('flash_message', ' تسک با موفقیت ایجاد شد :)');
-            }
-            else
-                return redirect()->route('dashboard.task.index')->with('flash_message', ' تسک با موفقیت ایجاد شد :)');
+//            if (url()->previous() == route('dashboard.project.task',$request->project_id) )
+//            {
+//                return redirect()->route('dashboard.project.task',$request->project_id)->with('flash_message', ' تسک با موفقیت ایجاد شد :)');
+//            }
+//            else
+//                return redirect()->route('dashboard.task.index')->with('flash_message', ' تسک با موفقیت ایجاد شد :)');
 //            DB::commit();
-//            return redirect()->back()->with('flash_message', ' تسک با موفقیت ایجاد شد :)');
+            return redirect()->route('dashboard.project.task',$request->project_id)->with('flash_message', ' تسک با موفقیت ایجاد شد :)');
+
 
         } catch (Exception $exception) {
 //            DB::rollBack();

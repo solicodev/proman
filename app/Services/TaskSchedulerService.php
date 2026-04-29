@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Project;
 use App\Models\Task;
 use App\Models\TaskDependency;
 use Carbon\Carbon;
@@ -98,25 +99,32 @@ class TaskSchedulerService
 //    }
 
 
-
     public function scheduleProject($projectId)
     {
+        $project = Project::findOrFail($projectId);
+
+        $projectStart = $project->start_date
+            ? \Carbon\Carbon::parse($project->start_date)
+            : now();
+
         $tasks = Task::where('project_id', $projectId)
             ->get()
             ->keyBy('id');
 
         $dependencies = TaskDependency::whereIn('successor_id', $tasks->keys())
-            ->get();
+            ->get()
+            ->groupBy('successor_id');
 
         $sorted = $this->topologicalSort($tasks, $dependencies);
+
+        $cursor = $projectStart->copy();
 
         foreach ($sorted as $taskId) {
 
             $task = $tasks[$taskId];
+            $taskDeps = $dependencies[$taskId] ?? collect();
 
-            $taskDeps = $dependencies->where('successor_id', $taskId);
-
-            $startDates = [];
+            $startCandidates = [];
             $endOverride = null;
 
             foreach ($taskDeps as $dep) {
@@ -127,11 +135,11 @@ class TaskSchedulerService
                 switch ($dep->relation_type) {
 
                     case 'FS':
-                        $startDates[] = $parent->end_date;
+                        $startCandidates[] = $parent->end_date;
                         break;
 
                     case 'SS':
-                        $startDates[] = $parent->start_date;
+                        $startCandidates[] = $parent->start_date;
                         break;
 
                     case 'FF':
@@ -139,31 +147,39 @@ class TaskSchedulerService
                         break;
 
                     case 'SF':
-                        $startDates[] = $parent->end_date;
+                        $startCandidates[] = $parent->end_date;
                         break;
                 }
             }
 
+            // 🎯 تعیین start
+            $start = !empty($startCandidates)
+                ? collect($startCandidates)->max()
+                : $cursor;
 
-            $start = !empty($startDates)
-                ? collect($startDates)->max()
-                : now();
+            $start = \Carbon\Carbon::parse($start);
 
-            $task->start_date = Carbon::parse($start);
+            $task->start_date = $start;
 
-
+            // 🎯 تعیین end
             if ($endOverride) {
-                $task->end_date = Carbon::parse($endOverride);
+
+                $task->end_date = \Carbon\Carbon::parse($endOverride);
+
                 $task->start_date = $task->end_date
                     ->copy()
                     ->subDays((int)$task->duration);
+
             } else {
+
                 $task->end_date = $task->start_date
                     ->copy()
                     ->addDays((int)$task->duration);
             }
 
             $task->saveQuietly();
+
+            $cursor = $task->end_date->copy();
         }
     }
 
@@ -180,15 +196,17 @@ class TaskSchedulerService
             $inDegree[$id] = 0;
         }
 
-        foreach ($dependencies as $dep) {
-            $graph[$dep->predecessor_id][] = $dep->successor_id;
-            $inDegree[$dep->successor_id]++;
+        foreach ($dependencies as $deps) {
+            foreach ($deps as $dep) {
+                $graph[$dep->predecessor_id][] = $dep->successor_id;
+                $inDegree[$dep->successor_id]++;
+            }
         }
 
         $queue = [];
 
         foreach ($inDegree as $id => $deg) {
-            if ($deg == 0) {
+            if ($deg === 0) {
                 $queue[] = $id;
             }
         }
@@ -203,18 +221,17 @@ class TaskSchedulerService
             foreach ($graph[$current] as $neighbor) {
                 $inDegree[$neighbor]--;
 
-                if ($inDegree[$neighbor] == 0) {
+                if ($inDegree[$neighbor] === 0) {
                     $queue[] = $neighbor;
                 }
             }
         }
 
         if (count($sorted) !== count($tasks)) {
-            throw new \Exception("Dependency loop detected in project!");
+            throw new \Exception("Dependency loop detected!");
         }
 
         return $sorted;
     }
-
 }
 

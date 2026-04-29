@@ -41,8 +41,8 @@
         <!--end::Heading-->
         <div class="d-flex flex-wrap my-1">
             @can('manager_taskAdd')
-                <a href="#" class="btn btn-sm btn-primary er w-100 fs-6 px-8 py-4"  data-bs-toggle="modal" data-bs-target="#kt_modal_new_target">ایجاد تسک<i class="ki-outline ki-plus-square fs-6 px-2"></i> </a>
-{{--                <a href="{{route('dashboard.task.create',$project->id)}}" class="btn btn-sm btn-primary er w-100 fs-6 px-8 py-4">ایجاد تسک<i class="ki-outline ki-plus-square fs-6 px-2"></i> </a>--}}
+{{--                <a href="#" class="btn btn-sm btn-primary er w-100 fs-6 px-8 py-4"  data-bs-toggle="modal" data-bs-target="#kt_modal_new_target">ایجاد تسک<i class="ki-outline ki-plus-square fs-6 px-2"></i> </a>--}}
+                <a href="{{route('dashboard.task.create',$project->id)}}" class="btn btn-sm btn-primary er w-100 fs-6 px-8 py-4">ایجاد تسک<i class="ki-outline ki-plus-square fs-6 px-2"></i> </a>
             @endcan
         </div>
         <!--begin::Controls-->
