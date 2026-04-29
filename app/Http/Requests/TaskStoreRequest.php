@@ -30,8 +30,10 @@ class TaskStoreRequest extends FormRequest
             'manager_check' => 'nullable',
             'title' => 'required|string',
             'description' => 'nullable|string',
-            'end_date' => 'required|date',
-            'start_date' => 'required|date',
+            'duration' => 'required|integer',
+            'duration_type' => 'required|in:minute,hours,day,week,month,year',
+//            'end_date' => 'required|date',
+//            'start_date' => 'required|date',
             'watcher_id' => 'nullable|exists:users,id',
             'members*' => 'required|array',
             'task_id*' => 'nullable|array',
@@ -43,8 +45,8 @@ class TaskStoreRequest extends FormRequest
     {
         return [
             'title.required' => 'وارد کردن نام تسک الزامی است',
-            'start_date.required' => 'زمان شروع تسک را تعیین کنید',
-            'end_date.required' => 'زمان پایان تسک را تعیین کنید',
+//            'start_date.required' => 'زمان شروع تسک را تعیین کنید',
+//            'end_date.required' => 'زمان پایان تسک را تعیین کنید',
             'members.required' => 'اعضای تسک را انتخاب کنید',
         ];
     }

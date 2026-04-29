@@ -96,5 +96,55 @@ class TaskSchedulerService
             $this->updateSuccessorDates($childDep);
         }
     }
+
+
+
+    public function scheduleProject($projectId)
+    {
+        $tasks = Task::where('project_id', $projectId)->get();
+
+        foreach ($tasks as $task) {
+
+            $dependencies = TaskDependency::where('successor_id', $task->id)->get();
+
+            if ($dependencies->isEmpty()) {
+                // بدون وابستگی
+                $task->start_date = now(); // یا start پروژه
+            } else {
+
+                $startDates = [];
+
+                foreach ($dependencies as $dep) {
+
+                    $parent = Task::find($dep->predecessor_id);
+
+                    if (!$parent) continue;
+
+                    switch ($dep->relation_type) {
+
+                        case 'FS':
+                            $startDates[] = $parent->end_date;
+                            break;
+
+                        case 'SS':
+                            $startDates[] = $parent->start_date;
+                            break;
+
+                        case 'FF':
+                            $end = $parent->end_date;
+                            $task->end_date = $end;
+                            $task->start_date = $end->copy()->subDays($task->duration);
+                            continue 2;
+                    }
+                }
+
+                $task->start_date = collect($startDates)->max();
+            }
+
+            $task->end_date = $task->start_date->copy()->addDays($task->duration);
+
+            $task->save();
+        }
+    }
 }
 
