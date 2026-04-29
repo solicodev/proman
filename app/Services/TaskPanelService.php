@@ -2,12 +2,14 @@
 
 namespace App\Services;
 
+use App\Events\TaskChanged;
 use App\Models\Photo;
 use App\Models\Project;
 use App\Models\Task;
 use App\Models\TaskDependency;
 use App\Models\User;
 use Carbon\Carbon;
+use Dflydev\DotAccessData\Data;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -15,9 +17,10 @@ use Illuminate\Support\Facades\Auth;
  */
 class TaskPanelService
 {
+
     public function store(array $param) :Task
     {
-        dd($param);
+
 
 //        $start = Carbon::parse($param['start_date']);
 //        $end   = Carbon::parse($param['end_date']);
@@ -89,31 +92,27 @@ class TaskPanelService
 //        }
 
         if (!empty($param['task_id'])) {
-
             foreach ($param['task_id'] as $index => $predecessorId) {
-
                 TaskDependency::create([
                     'predecessor_id' => $predecessorId,
                     'successor_id'   => $task->id,
-                    'relation_type'  => $param['relation_type'][$index] ?? 'FS',
+                    'relation_type'  => $param['relation_type'][$index],
 //                        'lag'            => $param['lag'][$index] ?? 0,
                 ]);
-
             }
         }
-        if(isset($param['photos']))
-        {
-            for($i = 0; $i<count($param['photos']); $i++)
-            {
-                $photo = new Photo();
-                $photo->path = file_store($param['photos'][$i], 'uploads/tasks/', '');
-                $photo->name = $param['photos'][$i];
-                $photo->user_id = Auth::id();
-                $photo->save();
-                $task->photos()->attach($photo);
-            }
-        }
-
+//        if(isset($param['photos']))
+//        {
+//            for($i = 0; $i<count($param['photos']); $i++)
+//            {
+//                $photo = new Photo();
+//                $photo->path = file_store($param['photos'][$i], 'uploads/tasks/', '');
+//                $photo->name = $param['photos'][$i];
+//                $photo->user_id = Auth::id();
+//                $photo->save();
+//                $task->photos()->attach($photo);
+//            }
+//        }
 
         $task->assigners()->attach($param['members']);
 
@@ -124,6 +123,8 @@ class TaskPanelService
             $message = $member_item->Name . ' تسک ' .$task->task_code .' برای انجام به شما محول شده است لطفا به پنل خود سر بزنید. مدت زمان انجام این تسک ' . $duration . '  است';
 //            sendSms($member_item->mobile, $message);
         }
+
+        event(new TaskChanged($task->project_id));
         return $task;
     }
 
@@ -210,42 +211,4 @@ class TaskPanelService
 
 
 
-    // TODO
-    function scheduleTasks($projectId)
-    {
-        $tasks = Task::where('project_id', $projectId)->get();
-
-        foreach ($tasks as $task) {
-
-            $dependency = TaskDependency::where('successor_id', $task->id)->first();
-
-            if ($dependency) {
-                $parent = Task::find($dependency->predecessor_id);
-
-                switch ($dependency->relation_type) {
-
-                    case 'FS':
-                        $task->start_date = $parent->end_date->addDays($dependency->lag);
-                        break;
-
-                    case 'SS':
-                        $task->start_date = $parent->start_date->addDays($dependency->lag);
-                        break;
-
-                    case 'FF':
-                        $task->end_date = $parent->end_date->addDays($dependency->lag);
-                        $task->start_date = $task->end_date->subDays($task->duration);
-                        break;
-                }
-
-            } else {
-                // اگر وابستگی نداره
-                $task->start_date = now(); // یا start پروژه
-            }
-
-            $task->end_date = $task->start_date->copy()->addDays($task->duration);
-
-            $task->save();
-        }
-    }
 }

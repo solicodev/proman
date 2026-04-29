@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Events\TaskChanged;
+use App\Listeners\ScheduleProjectTasks;
 use App\Models\Project;
 use App\Models\Task;
 use App\Observers\TaskObserver;
@@ -12,6 +14,12 @@ use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
+    protected $listen = [
+        TaskChanged::class => [
+            ScheduleProjectTasks::class,
+        ],
+    ];
+
     /**
      * Register any application services.
      */
@@ -50,7 +58,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Schema::defaultStringLength(191);
-        Task::observe(TaskObserver::class);
+//        Task::observe(TaskObserver::class);
 
         Gate::before(function ($user, $ability) {
             return $user->hasRole('Super Admin') ? true : null;

@@ -573,7 +573,7 @@
             }
 
         </script>
-
+            <script>
             $(document).ready(function () {
                 $('select[name="manager_id"]').closest('.fv-row').hide();
 

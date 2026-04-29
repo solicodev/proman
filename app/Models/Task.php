@@ -61,6 +61,13 @@ class Task extends Model
         return $this->priorities[$this->priority] ?? '';
     }
 
+
+    protected $casts = [
+        'duration' => 'integer',
+        'start_date' => 'datetime',
+        'end_date'   => 'datetime',
+    ];
+
     public function project()
     {
         return $this->belongsTo(Project::class,'project_id');
