@@ -34,6 +34,8 @@ class TaskStoreRequest extends FormRequest
             'start_date' => 'required|date',
             'watcher_id' => 'nullable|exists:users,id',
             'members*' => 'required|array',
+            'task_id*' => 'nullable|array',
+            'relation_type*' => 'nullable|array',
 
         ];
     }

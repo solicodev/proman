@@ -312,7 +312,7 @@
                                 </div>
                             </div>
                             <div class="d-flex justify-content-end">
-                                <button type="submit" class="btn btn-primary btn-sm"> ثبت پروژه<i class="ki-outline ki-plus-square fs-3 px-2"></i></button>
+                                <button type="submit" class="btn btn-success btn-sm"> ثبت پروژه<i class="ki-outline ki-plus-square fs-3 px-2"></i></button>
                             </div>
                         </form>
 

@@ -75,6 +75,31 @@ class TaskPanelService
 //        $task->duration = intval($param['duration']);
         $task->save();
 
+        if (isset($param['project_id']))
+        {
+            for ($i = 0; $i < count($param['project_id']); $i++)
+            {
+                $task_dependency = new TaskDependency();
+                $task_dependency->predecessor_id = $param['project_id'][$i];
+                $task_dependency->successor_id  = $param['project_id'][$i];
+                $task_dependency->relation_Type = $param['relation_type'][$i];
+                $task_dependency->save();
+            }
+
+            if (!empty($param['depends_on'])) {
+
+                foreach ($param['depends_on'] as $index => $predecessorId) {
+
+                    TaskDependency::create([
+                        'predecessor_id' => $predecessorId,
+                        'successor_id'   => $task->id, // 👈 مهم
+                        'relation_type'  => $param['relation_type'][$index] ?? 'FS',
+                        'lag'            => $param['lag'][$index] ?? 0,
+                    ]);
+
+                }
+            }
+        }
         if(isset($param['photos']))
         {
             for($i = 0; $i<count($param['photos']); $i++)
@@ -126,7 +151,6 @@ class TaskPanelService
         $task->priority = $param['priority'];
         $task->parent_id = $parentTask->id;
 
-
         if (isset($param['duration_type']))
         {
             $task->duration_type = $param['duration_type'];
@@ -141,6 +165,7 @@ class TaskPanelService
 //        $task->start_date = $param['start_date'];
 //        $task->end_date = $end_date;
 //        $task->end_date = $param['end_date'] ?? null;
+
         $task->project_id = $param['project_id'] ?? null;
 
         if ($param['sub_manager_check'])
