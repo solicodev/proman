@@ -18,17 +18,17 @@ class TaskPanelService
     public function store(array $param) :Task
     {
 
-        $start = Carbon::parse($param['start_date']);
-        $end   = Carbon::parse($param['end_date']);
-
-        $days = (int) $start->diffInDays($end);
-
-        if ($days >= 1) {
-            $duration = $days . ' روز';
-        } else {
-            $hours = $start->diffInHours($end);
-            $duration = $hours . ' ساعت';
-        }
+//        $start = Carbon::parse($param['start_date']);
+//        $end   = Carbon::parse($param['end_date']);
+//
+//        $days = (int) $start->diffInDays($end);
+//
+//        if ($days >= 1) {
+//            $duration = $days . ' روز';
+//        } else {
+//            $hours = $start->diffInHours($end);
+//            $duration = $hours . ' ساعت';
+//        }
 
 
 
@@ -41,8 +41,21 @@ class TaskPanelService
         $task->description = $param['description'] ?? null;
         $task->priority = $param['priority'];
         $task->parent_id = $param['parent_id'] ?? null;
-        $task->start_date = $param['start_date'];
-        $task->end_date = $param['end_date'] ?? null;
+
+        if (isset($param['duration_type']))
+        {
+            $task->duration_type = $param['duration_type'];
+        }
+        if (isset($param['duration']))
+        {
+            $task->duration = $param['duration'];
+        }
+
+        $duration = $task->duration . $task->duration_type;
+
+//        $task->start_date = $param['start_date'];
+//        $task->end_date = $param['end_date'] ?? null;
+
         $task->project_id = $param['project_id'] ?? null;
         $task->user_id = Auth::user()->id ?? null;
 
@@ -91,17 +104,17 @@ class TaskPanelService
     public function storeSubtask(array $param, Task $parentTask) :Task
     {
 
-        $start = Carbon::parse($param['start_date']);
-        $end   = Carbon::parse($param['end_date']);
-
-        $days = (int) $start->diffInDays($end);
-
-        if ($days >= 1) {
-            $duration = $days . ' روز';
-        } else {
-            $hours = $start->diffInHours($end);
-            $duration = $hours . ' ساعت';
-        }
+//        $start = Carbon::parse($param['start_date']);
+//        $end   = Carbon::parse($param['end_date']);
+//
+//        $days = (int) $start->diffInDays($end);
+//
+//        if ($days >= 1) {
+//            $duration = $days . ' روز';
+//        } else {
+//            $hours = $start->diffInHours($end);
+//            $duration = $hours . ' ساعت';
+//        }
 
 
 //        $end_date = Carbon::parse($param['start_date'] ?? null)->addDays(intval($param['duration']))->format('Y/m/d');
@@ -112,9 +125,22 @@ class TaskPanelService
         $task->description = $param['description'] ?? null;
         $task->priority = $param['priority'];
         $task->parent_id = $parentTask->id;
-        $task->start_date = $param['start_date'];
+
+
+        if (isset($param['duration_type']))
+        {
+            $task->duration_type = $param['duration_type'];
+        }
+        if (isset($param['duration']))
+        {
+            $task->duration = $param['duration'];
+        }
+
+        $duration = $task->duration . $task->duration_type;
+
+//        $task->start_date = $param['start_date'];
 //        $task->end_date = $end_date;
-        $task->end_date = $param['end_date'] ?? null;
+//        $task->end_date = $param['end_date'] ?? null;
         $task->project_id = $param['project_id'] ?? null;
 
         if ($param['sub_manager_check'])
