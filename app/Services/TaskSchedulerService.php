@@ -105,62 +105,51 @@ class TaskSchedulerService
     {
         $project = Project::findOrFail($projectId);
 
+        // 🔥 normalize project start
         $projectStart = toCarbon($project->start_date) ?? now();
 
-
-
+        // 🔥 load tasks
         $tasks = Task::where('project_id', $projectId)
             ->get()
             ->keyBy('id');
 
+        // 🔥 load dependencies (FLAT - NOT GROUPED)
+        $dependencies = TaskDependency::whereIn('successor_id', $tasks->keys())
+            ->get();
 
-//        $dependencies = TaskDependency::whereIn('successor_id', $tasks->keys())
-//            ->get()
-//            ->groupBy('successor_id');
-        $dependencies = TaskDependency::where(function ($q) use ($tasks) {
-            $q->whereIn('successor_id', $tasks->keys())
-                ->orWhereIn('predecessor_id', $tasks->keys());
-        })
-            ->get()
-            ->filter(function ($dep) use ($tasks) {
-                return $tasks->has($dep->successor_id) && $tasks->has($dep->predecessor_id);
-            })
-            ->groupBy('successor_id','predecessor_id');
+        // 🔥 build adjacency list (correct structure)
+        $dependencyMap = [];
 
-//        $dependencies = TaskDependency::where(function ($q) use ($tasks) {
-//            $q->whereIn('successor_id', $tasks->keys())
-//                ->orWhereIn('predecessor_id', $tasks->keys());
-//        })
-//            ->get();
+        foreach ($dependencies as $dep) {
+            $dependencyMap[$dep->successor_id][] = $dep;
+        }
+
+        // 🔥 topological order
         $sorted = $this->topologicalSort($tasks, $dependencies);
 
-
-//        foreach ($dependencies as $taskId => $deps) {
-//            foreach ($deps as $dep) {
-//
-//                if (array_search($dep->predecessor_id, $sorted) > array_search($dep->successor_id, $sorted)) {
-//                    dd('SORT ERROR', $dep);
-//                }
-//            }
-//        }
         $unscheduled = $tasks->keys()->toArray();
 
         while (!empty($unscheduled)) {
 
+            $progress = false;
+
             foreach ($sorted as $taskId) {
 
-                if (!in_array($taskId, $unscheduled)) continue;
+                if (!in_array($taskId, $unscheduled)) {
+                    continue;
+                }
 
                 $task = $tasks[$taskId];
 
                 $taskDeps = $dependencies->where('successor_id', $taskId);
-                dd($taskId,$taskDeps,$task);
-                $ready = true;
+
                 $startConstraints = [];
+
+                $ready = true;
 
                 foreach ($taskDeps as $dep) {
 
-                    $parent = $tasks[$dep->predecessor_id];
+                    $parent = $tasks[$dep->predecessor_id] ?? null;
 
                     if (!$parent || !$parent->start_date || !$parent->end_date) {
                         $ready = false;
@@ -170,7 +159,9 @@ class TaskSchedulerService
                     $startConstraints[] = $parent->end_date;
                 }
 
-                if (!$ready) continue;
+                if (!$ready) {
+                    continue;
+                }
 
                 $start = count($startConstraints)
                     ? collect($startConstraints)->max()
@@ -183,9 +174,15 @@ class TaskSchedulerService
                     'end_date' => $end,
                 ]);
 
-                $tasks[$taskId] = $task;
+                $tasks[$taskId] = $task->fresh();
 
                 unset($unscheduled[array_search($taskId, $unscheduled)]);
+
+                $progress = true;
+            }
+
+            if (!$progress) {
+                throw new \Exception("Circular or invalid dependencies detected");
             }
         }
     }
@@ -203,11 +200,14 @@ class TaskSchedulerService
             $inDegree[$id] = 0;
         }
 
-        foreach ($dependencies as $deps) {
-            foreach ($deps as $dep) {
-                $graph[$dep->predecessor_id][] = $dep->successor_id;
-                $inDegree[$dep->successor_id]++;
+        foreach ($dependencies as $dep) {
+
+            if (!$dep instanceof \App\Models\TaskDependency) {
+                continue;
             }
+
+            $graph[$dep->predecessor_id][] = $dep->successor_id;
+            $inDegree[$dep->successor_id]++;
         }
 
         $queue = [];
