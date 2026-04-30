@@ -1,6 +1,29 @@
 <?php
 
+use Carbon\Carbon;
+use Hekmatinasser\Verta\Verta;
 use Illuminate\Support\Facades\Http;
+
+function toCarbon($date)
+{
+    if (!$date) return null;
+
+    if ($date instanceof Carbon) {
+        return $date;
+    }
+
+
+    if (is_string($date) && preg_match('/^\d{4}-\d{2}-\d{2}/', $date)) {
+        $year = (int)substr($date, 0, 4);
+
+        if ($year < 1700) {
+            return Verta::parse($date)->DateTime();
+        }
+    }
+
+    return Carbon::parse($date);
+}
+
 
 if (!function_exists('permission_name')) {
     /**
@@ -339,5 +362,7 @@ if (!function_exists('new_sms')) {
 //        }
     }
 
+
 }
+
 

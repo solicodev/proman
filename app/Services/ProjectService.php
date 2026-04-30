@@ -19,8 +19,8 @@ class ProjectService
         $rand = rand(111111, 999999);
         $project = new Project();
         $project->name = $param['name'];
-        $project->start_date = $param['start_date'];
-        $project->end_date = $param['end_date'] ?? null;
+        $project->start_date = toCarbon($param['start_date']);
+        $project->end_date = toCarbon($param['end_date']);
         $project->project_code = 'P_' . $rand;
         if (isset($param['manager_id']))
         {
@@ -68,8 +68,8 @@ class ProjectService
     {
 
         $project->name = $param['name'];
-        $project->start_date = $param['start_date'];
-        $project->end_date = $param['end_date'];
+        $project->start_date = toCarbon($param['start_date']);
+        $project->end_date = toCarbon($param['end_date']);
         if (isset($param['manager_id']))
         {
             $project->manager_id = $param['manager_id'];

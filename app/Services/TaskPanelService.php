@@ -79,28 +79,28 @@ class TaskPanelService
 //        $task->duration = intval($param['duration']);
         $task->save();
 
-//        if (isset($param['project_id']))
-//        {
-//            for ($i = 0; $i < count($param['task_id']); $i++)
-//            {
-//                $task_dependency = new TaskDependency();
-//                $task_dependency->predecessor_id = $param['task_id'][$i];
-//                $task_dependency->successor_id  = $param['project_id'][$i];
-//                $task_dependency->relation_Type = $param['relation_type'][$i];
-//                $task_dependency->save();
-//            }
-//        }
-
-        if (!empty($param['task_id'])) {
-            foreach ($param['task_id'] as $index => $predecessorId) {
-                TaskDependency::create([
-                    'predecessor_id' => $predecessorId,
-                    'successor_id'   => $task->id,
-                    'relation_type'  => $param['relation_type'][$index],
-//                        'lag'            => $param['lag'][$index] ?? 0,
-                ]);
+        if (!empty($param['task_id']))
+        {
+            for ($i = 0; $i < count($param['task_id']); $i++)
+            {
+                $task_dependency = new TaskDependency();
+                $task_dependency->predecessor_id = $param['task_id'][$i];
+                $task_dependency->successor_id  = $task->id;
+                $task_dependency->relation_Type = $param['relation_type'][$i];
+                $task_dependency->save();
             }
         }
+
+//        if (!empty($param['task_id'])) {
+//            foreach ($param['task_id'] as $index => $predecessorId) {
+//                TaskDependency::create([
+//                    'predecessor_id' => $predecessorId,
+//                    'successor_id'   => $task->id,
+//                    'relation_type'  => $param['relation_type'][$index],
+////                        'lag'            => $param['lag'][$index] ?? 0,
+//                ]);
+//            }
+//        }
 //        if(isset($param['photos']))
 //        {
 //            for($i = 0; $i<count($param['photos']); $i++)

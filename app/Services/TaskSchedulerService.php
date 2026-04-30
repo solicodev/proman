@@ -6,6 +6,8 @@ use App\Models\Project;
 use App\Models\Task;
 use App\Models\TaskDependency;
 use Carbon\Carbon;
+use Exception;
+use Hekmatinasser\Verta\Verta;
 
 /**
  * Class TaskSchedulerService.
@@ -103,83 +105,88 @@ class TaskSchedulerService
     {
         $project = Project::findOrFail($projectId);
 
-        $projectStart = $project->start_date
-            ? \Carbon\Carbon::parse($project->start_date)
-            : now();
+        $projectStart = toCarbon($project->start_date) ?? now();
+
+
 
         $tasks = Task::where('project_id', $projectId)
             ->get()
             ->keyBy('id');
 
-        $dependencies = TaskDependency::whereIn('successor_id', $tasks->keys())
-            ->get()
-            ->groupBy('successor_id');
 
+//        $dependencies = TaskDependency::whereIn('successor_id', $tasks->keys())
+//            ->get()
+//            ->groupBy('successor_id');
+        $dependencies = TaskDependency::where(function ($q) use ($tasks) {
+            $q->whereIn('successor_id', $tasks->keys())
+                ->orWhereIn('predecessor_id', $tasks->keys());
+        })
+            ->get()
+            ->filter(function ($dep) use ($tasks) {
+                return $tasks->has($dep->successor_id) && $tasks->has($dep->predecessor_id);
+            })
+            ->groupBy('successor_id','predecessor_id');
+
+//        $dependencies = TaskDependency::where(function ($q) use ($tasks) {
+//            $q->whereIn('successor_id', $tasks->keys())
+//                ->orWhereIn('predecessor_id', $tasks->keys());
+//        })
+//            ->get();
         $sorted = $this->topologicalSort($tasks, $dependencies);
 
-        $cursor = $projectStart->copy();
 
-        foreach ($sorted as $taskId) {
+//        foreach ($dependencies as $taskId => $deps) {
+//            foreach ($deps as $dep) {
+//
+//                if (array_search($dep->predecessor_id, $sorted) > array_search($dep->successor_id, $sorted)) {
+//                    dd('SORT ERROR', $dep);
+//                }
+//            }
+//        }
+        $unscheduled = $tasks->keys()->toArray();
 
-            $task = $tasks[$taskId];
-            $taskDeps = $dependencies[$taskId] ?? collect();
+        while (!empty($unscheduled)) {
 
-            $startCandidates = [];
-            $endOverride = null;
+            foreach ($sorted as $taskId) {
 
-            foreach ($taskDeps as $dep) {
+                if (!in_array($taskId, $unscheduled)) continue;
 
-                $parent = $tasks[$dep->predecessor_id] ?? null;
-                if (!$parent) continue;
+                $task = $tasks[$taskId];
 
-                switch ($dep->relation_type) {
+                $taskDeps = $dependencies->where('successor_id', $taskId);
+                dd($taskId,$taskDeps,$task);
+                $ready = true;
+                $startConstraints = [];
 
-                    case 'FS':
-                        $startCandidates[] = $parent->end_date;
+                foreach ($taskDeps as $dep) {
+
+                    $parent = $tasks[$dep->predecessor_id];
+
+                    if (!$parent || !$parent->start_date || !$parent->end_date) {
+                        $ready = false;
                         break;
+                    }
 
-                    case 'SS':
-                        $startCandidates[] = $parent->start_date;
-                        break;
-
-                    case 'FF':
-                        $endOverride = $parent->end_date;
-                        break;
-
-                    case 'SF':
-                        $startCandidates[] = $parent->end_date;
-                        break;
+                    $startConstraints[] = $parent->end_date;
                 }
+
+                if (!$ready) continue;
+
+                $start = count($startConstraints)
+                    ? collect($startConstraints)->max()
+                    : $projectStart;
+
+                $end = $start->copy()->addDays($task->duration);
+
+                $task->update([
+                    'start_date' => $start,
+                    'end_date' => $end,
+                ]);
+
+                $tasks[$taskId] = $task;
+
+                unset($unscheduled[array_search($taskId, $unscheduled)]);
             }
-
-            // 🎯 تعیین start
-            $start = !empty($startCandidates)
-                ? collect($startCandidates)->max()
-                : $cursor;
-
-            $start = \Carbon\Carbon::parse($start);
-
-            $task->start_date = $start;
-
-            // 🎯 تعیین end
-            if ($endOverride) {
-
-                $task->end_date = \Carbon\Carbon::parse($endOverride);
-
-                $task->start_date = $task->end_date
-                    ->copy()
-                    ->subDays((int)$task->duration);
-
-            } else {
-
-                $task->end_date = $task->start_date
-                    ->copy()
-                    ->addDays((int)$task->duration);
-            }
-
-            $task->saveQuietly();
-
-            $cursor = $task->end_date->copy();
         }
     }
 
@@ -232,6 +239,19 @@ class TaskSchedulerService
         }
 
         return $sorted;
+    }
+
+
+
+    // تاریخ
+    function addDuration(Carbon $date, $duration, $type)
+    {
+        return match($type) {
+            'minute' => $date->copy()->addMinutes($duration),
+            'hour'   => $date->copy()->addHours($duration),
+            'day'    => $date->copy()->addDays($duration),
+            default  => throw new Exception('Invalid duration type'),
+        };
     }
 }
 
