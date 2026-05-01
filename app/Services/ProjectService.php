@@ -5,6 +5,8 @@ namespace App\Services;
 use App\Models\Photo;
 use App\Models\Project;
 use App\Models\ProjectDependency;
+use Carbon\Carbon;
+use Hekmatinasser\Verta\Verta;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 
@@ -16,11 +18,13 @@ class ProjectService
     public function store(array $param)
     {
 
+
         $rand = rand(111111, 999999);
         $project = new Project();
         $project->name = $param['name'];
-        $project->start_date = toCarbon($param['start_date']);
-        $project->end_date = toCarbon($param['end_date']);
+        $project->start_date =Verta::parse($param['start_date'])->datetime();
+        $project->end_date = Verta::parse($param['start_date'])->datetime();
+
         $project->project_code = 'P_' . $rand;
         if (isset($param['manager_id']))
         {

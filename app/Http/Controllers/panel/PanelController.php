@@ -62,10 +62,13 @@ class PanelController extends Controller
         foreach ($last_projects as $project) {
             $carbonEnd = \Carbon\Carbon::parse($project->end_date);
             $vEnd = new Verta($carbonEnd);
+
+            $vEnd = Verta::instance($carbonEnd);
             $vNow = Verta::now();
-            $project->remaining_hours = max(0, ($vEnd->timestamp - $vNow->timestamp) / 3600);
-            $project->remaining_days = max(0, ($vEnd->timestamp - $vNow->timestamp) / 86400);
-            $project->end_date_jalali = $vEnd->format('Y/m/d');
+
+//            $project->remaining_hours = max(0, ($vEnd->timestamp - $vNow->timestamp) / 3600);
+//            $project->remaining_days = max(0, ($vEnd->timestamp - $vNow->timestamp) / 86400);
+//            $project->end_date_jalali = $vEnd->format('Y/m/d');
         }
 //        $perPage = 5;
 //

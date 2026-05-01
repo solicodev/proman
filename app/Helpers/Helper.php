@@ -4,6 +4,38 @@ use Carbon\Carbon;
 use Hekmatinasser\Verta\Verta;
 use Illuminate\Support\Facades\Http;
 
+//function toCarbon($date)
+//{
+//    if (!$date) return null;
+//
+//    if ($date instanceof \Carbon\Carbon) {
+//        return $date;
+//    }
+//
+//    if (is_string($date)) {
+//
+//        // normalize
+//        $date = trim($date);
+//        $date = str_replace('/', '-', $date);
+//
+//        $year = (int) substr($date, 0, 4);
+//
+//        if ($year < 1700) {
+//
+//            try {
+//                return \Hekmatinasser\Verta\Verta::createFromFormat('Y-m-d H:i:s', $date)->datetime();
+//            } catch (\Exception $e) {
+//                try {
+//                    return \Hekmatinasser\Verta\Verta::createFromFormat('Y-m-d H:i', $date)->datetime();
+//                } catch (\Exception $e) {
+//                    return \Hekmatinasser\Verta\Verta::createFromFormat('Y-m-d', $date)->datetime();
+//                }
+//            }
+//        }
+//    }
+//
+//    return \Carbon\Carbon::parse($date);
+//}
 function toCarbon($date)
 {
     if (!$date) return null;
