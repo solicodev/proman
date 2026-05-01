@@ -54,42 +54,33 @@ class TaskSchedulerService
 
                     $parent = $tasks[$dep->predecessor_id] ?? null;
 
-                    if (!$parent || !$parent->start_date || !$parent->end_date) {
+                    if (!$parent) {
                         $ready = false;
                         break;
                     }
 
-                    $preStart = toCarbon($parent->start_date);
-                    $preEnd   = toCarbon($parent->end_date);
+                    $preStart = $parent->start_date ? toCarbon($parent->start_date) : null;
+                    $preEnd   = $parent->end_date ? toCarbon($parent->end_date) : null;
 
                     switch ($dep->relation_type) {
 
-                        /**
-                         * FS: Finish → Start
-                         * successor starts after predecessor ends
-                         */
                         case 'FS':
+                            if (!$preEnd) { $ready = false; break 2; }
                             $startConstraints[] = $preEnd;
                             break;
 
-                        /**
-                         * SS: Start → Start
-                         */
                         case 'SS':
+                            if (!$preStart) { $ready = false; break 2; }
                             $startConstraints[] = $preStart;
                             break;
 
-                        /**
-                         * FF: Finish → Finish
-                         */
                         case 'FF':
+                            if (!$preEnd) { $ready = false; break 2; }
                             $endConstraints[] = $preEnd;
                             break;
 
-                        /**
-                         * SF: Start → Finish
-                         */
                         case 'SF':
+                            if (!$preStart) { $ready = false; break 2; }
                             $endConstraints[] = $preStart;
                             break;
                     }
@@ -99,10 +90,11 @@ class TaskSchedulerService
                     continue;
                 }
 
+
                 $duration = (int) $task->duration;
 
                 /**
-                 * 🎯 START calculation
+                 * START calculation
                  */
                 $start = count($startConstraints)
                     ? collect($startConstraints)->max()
@@ -111,7 +103,7 @@ class TaskSchedulerService
                 $start = toCarbon($start);
 
                 /**
-                 * 🎯 END calculation
+                 * END calculation
                  */
                 if (count($endConstraints)) {
 
@@ -127,14 +119,14 @@ class TaskSchedulerService
                 }
 
                 /**
-                 * 🧠 safety correction (prevents inversion)
+                 *  safety correction (prevents inversion)
                  */
                 if ($end->lt($start)) {
                     $end = $start->copy()->addDays($duration);
                 }
 
                 /**
-                 * 💾 save
+                 *  save
                  */
                 $task->update([
                     'start_date' => $start,
@@ -142,7 +134,7 @@ class TaskSchedulerService
                 ]);
 
                 /**
-                 * 🔥 update runtime state (VERY IMPORTANT)
+                 *  update runtime state (VERY IMPORTANT)
                  */
                 $tasks[$taskId]->start_date = $start;
                 $tasks[$taskId]->end_date = $end;

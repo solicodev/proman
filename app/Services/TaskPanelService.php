@@ -78,7 +78,6 @@ class TaskPanelService
         $task->watcher_id = $param['watcher_id'] ?? null;
 //        $task->duration = intval($param['duration']);
         $task->save();
-
         if (!empty($param['task_id']))
         {
             for ($i = 0; $i < count($param['task_id']); $i++)

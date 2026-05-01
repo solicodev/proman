@@ -57,7 +57,7 @@
                                             <div class="fv-row mb-8">
                                                 <label class="form-label required">دپارتمان</label>
                                                 <select class="form-select form-select-solid" data-control="select2"
-                                                        data-placeholder="دپارتمان را انتخاب کنید" name="department_id" required>
+                                                            data-placeholder="دپارتمان را انتخاب کنید" name="department_id" required>
                                                     <option></option>
                                                 </select>
                                             </div>
