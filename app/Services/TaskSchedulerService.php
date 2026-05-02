@@ -62,34 +62,46 @@ class TaskSchedulerService
                     $preStart = $parent->start_date ? toCarbon($parent->start_date) : null;
                     $preEnd   = $parent->end_date ? toCarbon($parent->end_date) : null;
 
+
+
                     switch ($dep->relation_type) {
 
                         case 'FS':
-                            if (!$preEnd) { $ready = false; break 2; }
+                            if (!$preEnd) {
+                                $ready = false;
+                                break 2;
+                            }
                             $startConstraints[] = $preEnd;
                             break;
 
                         case 'SS':
-                            if (!$preStart) { $ready = false; break 2; }
+                            if (!$preStart) {
+                                $ready = false;
+                                break 2;
+                            }
                             $startConstraints[] = $preStart;
                             break;
 
                         case 'FF':
-                            if (!$preEnd) { $ready = false; break 2; }
+                            if (!$preEnd) {
+                                $ready = false;
+                                break 2;
+                            }
                             $endConstraints[] = $preEnd;
                             break;
 
                         case 'SF':
-                            if (!$preStart) { $ready = false; break 2; }
+                            if (!$preStart) {
+                                $ready = false;
+                                break 2;
+                            }
                             $endConstraints[] = $preStart;
                             break;
                     }
                 }
-
                 if (!$ready) {
                     continue;
                 }
-
 
                 $duration = (int) $task->duration;
 

@@ -6,7 +6,6 @@ use App\Events\TaskChanged;
 use App\Listeners\ScheduleProjectTasks;
 use App\Models\Project;
 use App\Models\Task;
-use App\Observers\TaskObserver;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Schema;

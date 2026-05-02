@@ -147,7 +147,7 @@ class TaskController extends Controller
         })->whereStatus('1')->latest()->get();
 
         $item_tasks = Task::with(['project','manager','watcher','assigners','photos','predecessors','successors'])->where('project_id',$project->id)->paginate(15);
-        $tb_tasks = Task::get();
+        $tb_tasks = Task::with(['project','manager','watcher','assigners','photos','predecessors','successors'])->where('project_id',$project->id)->get();
         return view('proMan.tasks.create', get_defined_vars());
     }
     public function store(TaskStoreRequest $request)
