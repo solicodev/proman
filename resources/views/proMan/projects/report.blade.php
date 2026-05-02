@@ -13,7 +13,7 @@
                 <div class="page-title d-flex align-items-center me-3">
                     <!--begin::Title-->
                     <h1 class="page-heading d-flex flex-column justify-content-center text-gray-900 fw-bold fs-lg-2x gap-2">
-                        <span>گزارش پروژه ها</span>
+                        <span> پروژه ها</span>
                     </h1>
                     <!--end::Title-->
                 </div>
@@ -31,7 +31,7 @@
                     <!--end::Item-->
                     <!--begin::Item-->
                     <li class="breadcrumb-item text-gray-700 fw-bold lh-1">
-                        گزارش پروژه ها
+                         پروژه ها
                     </li>
                     <!--end::Item-->
                 </ul>

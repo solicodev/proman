@@ -127,17 +127,17 @@ class TaskPanelService
 
         $users = User::whereIn('id',$param['members'])->get();
 
-        $excludedRoles = ['Super Admin','Admin'];
+        $excludedRoles = ['Super Admin','Admin Panel'];
 
-        $admins = User::whereDoesntHave('roles', function ($query) use ($excludedRoles) {
+        $admins = User::whereHas('roles', function ($query) use ($excludedRoles) {
             $query->whereIn('name', $excludedRoles);
         })->latest()->get();
 
+        $recipients = $users->merge($admins);
 
-        Notification::send($users, new TaskAssignedNotification($task));
-        Notification::send($admins, new TaskAssignedNotification($task));
         // task scheduler service start
         event(new TaskChanged($task->project_id));
+        Notification::send($recipients, new TaskAssignedNotification($task));
         return $task;
     }
 
