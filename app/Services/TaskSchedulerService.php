@@ -104,6 +104,7 @@ class TaskSchedulerService
                 }
 
                 $duration = (int) $task->duration;
+                $type = $task->duration_type ?? 'day';
 
                 /**
                  * START calculation
@@ -117,24 +118,30 @@ class TaskSchedulerService
                 /**
                  * END calculation
                  */
+
+
                 if (count($endConstraints)) {
 
                     $end = collect($endConstraints)->max();
                     $end = toCarbon($end);
 
                     // backward alignment (for FF/SF)
-                    $start = $end->copy()->subDays($duration);
+                    $start = $this->subDuration($end, $duration, $type);
+//                    $start = $end->copy()->subDays($duration);
 
                 } else {
 
-                    $end = $start->copy()->addDays($duration);
+                    $end = $this->addDuration($start, $duration, $type);
+
+//                    $end = $start->copy()->addDays($duration);
                 }
 
                 /**
                  *  safety correction (prevents inversion)
                  */
                 if ($end->lt($start)) {
-                    $end = $start->copy()->addDays($duration);
+                    $end = $this->addDuration($start, $duration, $type);
+//                    $end = $start->copy()->addDays($duration);
                 }
 
                 /**
@@ -225,8 +232,24 @@ class TaskSchedulerService
     {
         return match($type) {
             'minute' => $date->copy()->addMinutes($duration),
-            'hour'   => $date->copy()->addHours($duration),
+            'hours'   => $date->copy()->addHours($duration),
             'day'    => $date->copy()->addDays($duration),
+            'week'    => $date->copy()->addWeeks($duration),
+            'month'    => $date->copy()->addMonths($duration),
+            'year'    => $date->copy()->addYears($duration),
+            default  => throw new Exception('Invalid duration type'),
+        };
+    }
+
+    function subDuration(Carbon $date, $duration, $type)
+    {
+        return match($type) {
+            'minute' => $date->copy()->subMinutes($duration),
+            'hours'   => $date->copy()->subHours($duration),
+            'day'    => $date->copy()->subDays($duration),
+            'week'    => $date->copy()->subWeeks($duration),
+            'month'    => $date->copy()->subMonths($duration),
+            'year'    => $date->copy()->subYears($duration),
             default  => throw new Exception('Invalid duration type'),
         };
     }

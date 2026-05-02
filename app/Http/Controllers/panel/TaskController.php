@@ -98,6 +98,7 @@ class TaskController extends Controller
                     ->orWhereIn('project_id', $projects);
             })
             ->get();
+
         return view('proMan.tasks.tasks',get_defined_vars());
     }
 

@@ -8,9 +8,11 @@ use App\Models\Project;
 use App\Models\Task;
 use App\Models\TaskDependency;
 use App\Models\User;
+use App\Notifications\TaskAssignedNotification;
 use Carbon\Carbon;
 use Dflydev\DotAccessData\Data;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 
 /**
  * Class TaskPanelService.
@@ -123,6 +125,18 @@ class TaskPanelService
 //            sendSms($member_item->mobile, $message);
         }
 
+        $users = User::whereIn('id',$param['members'])->get();
+
+        $excludedRoles = ['Super Admin','Admin'];
+
+        $admins = User::whereDoesntHave('roles', function ($query) use ($excludedRoles) {
+            $query->whereIn('name', $excludedRoles);
+        })->latest()->get();
+
+
+        Notification::send($users, new TaskAssignedNotification($task));
+        Notification::send($admins, new TaskAssignedNotification($task));
+        // task scheduler service start
         event(new TaskChanged($task->project_id));
         return $task;
     }

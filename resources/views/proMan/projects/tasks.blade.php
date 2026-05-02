@@ -81,151 +81,151 @@
     <!--begin::Tab Content-->
     <div class="tab-content">
         <!--begin::Tab pane-->
-        <div id="kt_project_targets_card_pane" class="tab-pane fade show ">
-            <!--begin::Row-->
-            <div class="row g-9">
-                <div class="row">
-                    @if(count($tasks)>0)
-                        @foreach($columns as $key => $column)
-                            <div class="col-md-3 col-lg-12 col-xl-3">
-                                <!--begin::Col header-->
-                                <div class="mb-9">
-                                    <div class="d-flex flex-stack">
-                                        <div class="fw-bold fs-4">
-                                            {{ $column['title'] }}
-                                            <span class="fs-6 text-gray-500 ms-2">{{ count($tasks[$key] ?? []) }}</span>
-                                        </div>
-                                        <!-- منوی فیلتر -->
-                                        <div>
-                                            <button type="button"
-                                                    class="btn btn-sm btn-icon btn-color-light-dark btn-active-light-primary"
-                                                    data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                                                <i class="ki-outline ki-element-plus fs-2"></i>
-                                            </button>
-                                        </div>
-                                    </div>
+{{--        <div id="kt_project_targets_card_pane" class="tab-pane fade show ">--}}
+{{--            <!--begin::Row-->--}}
+{{--            <div class="row g-9">--}}
+{{--                <div class="row">--}}
+{{--                    @if(count($tasks)>0)--}}
+{{--                        @foreach($columns as $key => $column)--}}
+{{--                            <div class="col-md-3 col-lg-12 col-xl-3">--}}
+{{--                                <!--begin::Col header-->--}}
+{{--                                <div class="mb-9">--}}
+{{--                                    <div class="d-flex flex-stack">--}}
+{{--                                        <div class="fw-bold fs-4">--}}
+{{--                                            {{ $column['title'] }}--}}
+{{--                                            <span class="fs-6 text-gray-500 ms-2">{{ count($tasks[$key] ?? []) }}</span>--}}
+{{--                                        </div>--}}
+{{--                                        <!-- منوی فیلتر -->--}}
+{{--                                        <div>--}}
+{{--                                            <button type="button"--}}
+{{--                                                    class="btn btn-sm btn-icon btn-color-light-dark btn-active-light-primary"--}}
+{{--                                                    data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">--}}
+{{--                                                <i class="ki-outline ki-element-plus fs-2"></i>--}}
+{{--                                            </button>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
 
-                                    <div class="h-3px w-100 bg-{{ $column['color'] }}"></div>
-                                </div>
-                                <!--end::Col header-->
+{{--                                    <div class="h-3px w-100 bg-{{ $column['color'] }}"></div>--}}
+{{--                                </div>--}}
+{{--                                <!--end::Col header-->--}}
 
-                                <!--begin::Tasks Loop-->
+{{--                                <!--begin::Tasks Loop-->--}}
 
-                                @forelse($tasks[$key] ?? [] as $task)
-                                    <div class="card mb-6 mb-xl-9">
-                                        <div class="card-body">
-                                            <div class="d-flex flex-stack mb-3">
-                                                <div>{!! $task->task_status !!}</div>
-                                                <div>
-                                                    <button type="button"
-                                                            class="btn btn-sm btn-icon btn-color-light-dark btn-active-light-primary"
-                                                            data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                                                        <i class="ki-outline ki-element-plus fs-2"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
+{{--                                @forelse($tasks[$key] ?? [] as $task)--}}
+{{--                                    <div class="card mb-6 mb-xl-9">--}}
+{{--                                        <div class="card-body">--}}
+{{--                                            <div class="d-flex flex-stack mb-3">--}}
+{{--                                                <div>{!! $task->task_status !!}</div>--}}
+{{--                                                <div>--}}
+{{--                                                    <button type="button"--}}
+{{--                                                            class="btn btn-sm btn-icon btn-color-light-dark btn-active-light-primary"--}}
+{{--                                                            data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">--}}
+{{--                                                        <i class="ki-outline ki-element-plus fs-2"></i>--}}
+{{--                                                    </button>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
 
-                                            <div class="mb-2">
-                                                <a href="#" class="fs-4 fw-bold mb-1 text-gray-900 text-hover-primary">
-                                                    {{ $task->title }}
-                                                </a>
-                                            </div>
+{{--                                            <div class="mb-2">--}}
+{{--                                                <a href="#" class="fs-4 fw-bold mb-1 text-gray-900 text-hover-primary">--}}
+{{--                                                    {{ $task->title }}--}}
+{{--                                                </a>--}}
+{{--                                            </div>--}}
 
-                                            <div class="fs-6 fw-semibold text-gray-600 mb-5">
-                                                {{ $task->description }}
-                                            </div>
+{{--                                            <div class="fs-6 fw-semibold text-gray-600 mb-5">--}}
+{{--                                                {{ $task->description }}--}}
+{{--                                            </div>--}}
 
-                                            <!-- SUBTASK SHOW -->
-                                            @if($task->children && $task->children->count() > 0)
-                                                <div class="ms-5 mt-4 border-start ps-3">
-                                                    @foreach($task->children as $subtask)
-                                                        <div class="card mb-3 shadow-sm border-bottom rounded-3">
-                                                            <div class="card-body py-3 px-4">
-                                                                <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-2">
-                                                                    <div class="d-flex flex-column">
-                                                                        <span class="fw-bold text-gray-800">{{ $subtask->title }}</span>
-                                                                        <span class="text-gray-600 small mt-1">{{ $subtask->description }}</span>
-                                                                    </div>
+{{--                                            <!-- SUBTASK SHOW -->--}}
+{{--                                            @if($task->children && $task->children->count() > 0)--}}
+{{--                                                <div class="ms-5 mt-4 border-start ps-3">--}}
+{{--                                                    @foreach($task->children as $subtask)--}}
+{{--                                                        <div class="card mb-3 shadow-sm border-bottom rounded-3">--}}
+{{--                                                            <div class="card-body py-3 px-4">--}}
+{{--                                                                <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-2">--}}
+{{--                                                                    <div class="d-flex flex-column">--}}
+{{--                                                                        <span class="fw-bold text-gray-800">{{ $subtask->title }}</span>--}}
+{{--                                                                        <span class="text-gray-600 small mt-1">{{ $subtask->description }}</span>--}}
+{{--                                                                    </div>--}}
 
-                                                                    <div class="d-flex align-items-center gap-2">
-                                                                        {!! $subtask->TaskStatus !!}
-                                                                        {!! $subtask->TaskPrority !!}
+{{--                                                                    <div class="d-flex align-items-center gap-2">--}}
+{{--                                                                        {!! $subtask->TaskStatus !!}--}}
+{{--                                                                        {!! $subtask->TaskPrority !!}--}}
 
-                                                                    </div>
-                                                                </div>
+{{--                                                                    </div>--}}
+{{--                                                                </div>--}}
 
-                                                                {{-- اعضا --}}
-                                                                @if($subtask->assigners && $subtask->assigners->count() > 0)
-                                                                    <div class="mt-3 d-flex flex-wrap align-items-center gap-1">
-                                                                        @foreach($subtask->assigners as $assigner)
-                                                                            <div class="symbol symbol-25px symbol-circle" data-bs-toggle="tooltip" title="{{ $assigner->Name }}">
-                                                                                @if($assigner->photo_id)
-                                                                                    <img src="{{ route('home') }}/{{ $assigner->photo?->path }}" alt="Pic" class="object-fit-cover" />
-                                                                                @else
-                                                                                    <span class="symbol-label bg-primary text-inverse-primary fw-bold">
-                                                                                        {{ mb_substr($assigner->Name, 0, 1) }}
-                                                                                    </span>
-                                                                                @endif
-                                                                            </div>
-                                                                        @endforeach
-                                                                    </div>
-                                                                @endif
-                                                                <div class="d-flex justify-content-end">
-                                                                    <a href="#" onclick="openShowModal(
-                                                                        '{{ route('dashboard.task.show', $subtask->id) }}',
-                                                                        '{{ route('dashboard.task.update.status', $subtask->id) }}'
-                                                                        )"
-                                                                       data-task-id="{{ $subtask->id }}"
-                                                                       data-task-status="{{ $subtask->status }}"
-                                                                       class="btn btn-sm btn-light-info p-1" data-bs-toggle="tooltip" data-bs-placement="top" title="مشاهده"><i class="ki-outline ki-eye fs-6 px-2"></i></a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    @endforeach
-                                                </div>
-                                            @endif
+{{--                                                                --}}{{-- اعضا --}}
+{{--                                                                @if($subtask->assigners && $subtask->assigners->count() > 0)--}}
+{{--                                                                    <div class="mt-3 d-flex flex-wrap align-items-center gap-1">--}}
+{{--                                                                        @foreach($subtask->assigners as $assigner)--}}
+{{--                                                                            <div class="symbol symbol-25px symbol-circle" data-bs-toggle="tooltip" title="{{ $assigner->Name }}">--}}
+{{--                                                                                @if($assigner->photo_id)--}}
+{{--                                                                                    <img src="{{ route('home') }}/{{ $assigner->photo?->path }}" alt="Pic" class="object-fit-cover" />--}}
+{{--                                                                                @else--}}
+{{--                                                                                    <span class="symbol-label bg-primary text-inverse-primary fw-bold">--}}
+{{--                                                                                        {{ mb_substr($assigner->Name, 0, 1) }}--}}
+{{--                                                                                    </span>--}}
+{{--                                                                                @endif--}}
+{{--                                                                            </div>--}}
+{{--                                                                        @endforeach--}}
+{{--                                                                    </div>--}}
+{{--                                                                @endif--}}
+{{--                                                                <div class="d-flex justify-content-end">--}}
+{{--                                                                    <a href="#" onclick="openShowModal(--}}
+{{--                                                                        '{{ route('dashboard.task.show', $subtask->id) }}',--}}
+{{--                                                                        '{{ route('dashboard.task.update.status', $subtask->id) }}'--}}
+{{--                                                                        )"--}}
+{{--                                                                       data-task-id="{{ $subtask->id }}"--}}
+{{--                                                                       data-task-status="{{ $subtask->status }}"--}}
+{{--                                                                       class="btn btn-sm btn-light-info p-1" data-bs-toggle="tooltip" data-bs-placement="top" title="مشاهده"><i class="ki-outline ki-eye fs-6 px-2"></i></a>--}}
+{{--                                                                </div>--}}
+{{--                                                            </div>--}}
+{{--                                                        </div>--}}
+{{--                                                    @endforeach--}}
+{{--                                                </div>--}}
+{{--                                            @endif--}}
 
-                                            <!-- پایان زیرتسک‌ها -->
+{{--                                            <!-- پایان زیرتسک‌ها -->--}}
 
-                                        </div>
+{{--                                        </div>--}}
 
-                                        <!-- دکمه زیر تسک -->
-                                        <div class="card-footer text-center py-3">
-                                            @can('manager_taskSubTaskAdd')
-                                                <a href="#" class="btn btn-light-primary btn-sm"
-                                                   onclick="openEditModal('{{ route('dashboard.task.subtasks.store', $task->id) }}',
-                                                   JSON.stringify({title:'{{ $task->title }}'}))">
-                                                    ساخت زیر تسک جدید
-                                                    <i class="ki-outline ki-plus-square fs-6 px-2"></i>
-                                                </a>
-                                            @endcan
-                                            @canany(['manager_taskShow','member_taskShow','assign_taskShow'])
-                                                <a href="#" onclick="openShowModal(
-                                                '{{ route('dashboard.task.show', $task->id) }}',
-                                                '{{ route('dashboard.task.update.status', $task->id) }}'
-                                                )"
-                                                   data-task-id="{{ $task->id }}"
-                                                   data-task-status="{{ $task->status }}"
-                                                   class="btn btn-sm btn-light-info" data-bs-toggle="tooltip" data-bs-placement="top" title="مشاهده"><i class="ki-outline ki-eye fs-6 px-2"></i></a>
-                                            @endcanany
-                                        </div>
-                                    </div>
-                                @empty
-                                    <div class="alert alert-dismissible bg-secondary d-flex flex-column flex-sm-row w-100 p-5 mb-10">
-                                        <div class="d-flex flex-column">
-                                            <span>تسکی در این وضعیت وجود ندارد!</span>
-                                        </div>
-                                    </div>
-                                @endforelse
-                                <!--end::Tasks Loop-->
-                            </div>
-                        @endforeach
-                    @endif
-                </div>
+{{--                                        <!-- دکمه زیر تسک -->--}}
+{{--                                        <div class="card-footer text-center py-3">--}}
+{{--                                            @can('manager_taskSubTaskAdd')--}}
+{{--                                                <a href="#" class="btn btn-light-primary btn-sm"--}}
+{{--                                                   onclick="openEditModal('{{ route('dashboard.task.subtasks.store', $task->id) }}',--}}
+{{--                                                   JSON.stringify({title:'{{ $task->title }}'}))">--}}
+{{--                                                    ساخت زیر تسک جدید--}}
+{{--                                                    <i class="ki-outline ki-plus-square fs-6 px-2"></i>--}}
+{{--                                                </a>--}}
+{{--                                            @endcan--}}
+{{--                                            @canany(['manager_taskShow','member_taskShow','assign_taskShow'])--}}
+{{--                                                <a href="#" onclick="openShowModal(--}}
+{{--                                                '{{ route('dashboard.task.show', $task->id) }}',--}}
+{{--                                                '{{ route('dashboard.task.update.status', $task->id) }}'--}}
+{{--                                                )"--}}
+{{--                                                   data-task-id="{{ $task->id }}"--}}
+{{--                                                   data-task-status="{{ $task->status }}"--}}
+{{--                                                   class="btn btn-sm btn-light-info" data-bs-toggle="tooltip" data-bs-placement="top" title="مشاهده"><i class="ki-outline ki-eye fs-6 px-2"></i></a>--}}
+{{--                                            @endcanany--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                @empty--}}
+{{--                                    <div class="alert alert-dismissible bg-secondary d-flex flex-column flex-sm-row w-100 p-5 mb-10">--}}
+{{--                                        <div class="d-flex flex-column">--}}
+{{--                                            <span>تسکی در این وضعیت وجود ندارد!</span>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                @endforelse--}}
+{{--                                <!--end::Tasks Loop-->--}}
+{{--                            </div>--}}
+{{--                        @endforeach--}}
+{{--                    @endif--}}
+{{--                </div>--}}
 
-            </div>
-            <!--end::Row-->
-        </div>
+{{--            </div>--}}
+{{--            <!--end::Row-->--}}
+{{--        </div>--}}
         <!--end::Tab pane-->
 
         <!--begin::Tab pane-->
@@ -313,8 +313,8 @@
                                 <td class="text-start">{{$loop->iteration}}</td>
                                 <td class="text-start">{{$tb_task->task_code}}</td>
                                 <td class="text-start">{{$tb_task->title}}</td>
-                                <td class="text-start">{{$tb_task->start_date}}</td>
-                                <td class="text-start">{{$tb_task->end_date}}</td>
+                                <td class="text-start">{{verta($tb_task->start_date)}}</td>
+                                <td class="text-start">{{verta($tb_task->end_date)}}</td>
                                 <td class="text-start">{!! $tb_task->TaskPrority !!}</td>
 
                                 <td class="text-start">{!! $tb_task->TaskStatus !!}</td>

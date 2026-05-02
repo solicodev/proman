@@ -38,9 +38,9 @@
             آرشیو همه تسک ها
         </h3>
         <div class="d-flex align-self-center flex-center flex-shrink-0">
-            <a href="{{route('dashboard.task.oneTask.create')}}" class="btn btn-sm btn-light-success d-flex flex-center ms-3 px-4 py-3">
-                ایجاد تسک<i class="ki-outline ki-plus-square fs-2 ps-5"></i>
-            </a>
+{{--            <a href="{{route('dashboard.task.oneTask.create')}}" class="btn btn-sm btn-light-success d-flex flex-center ms-3 px-4 py-3">--}}
+{{--                ایجاد تسک<i class="ki-outline ki-plus-square fs-2 ps-5"></i>--}}
+{{--            </a>--}}
         </div>
         <!--end::Heading-->
 

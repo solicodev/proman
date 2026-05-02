@@ -184,7 +184,7 @@
                                         @php
                                             $start_date = explode(' ',$project->start_date);
                                         @endphp
-                                        <div class="fs-4 fw-bold">{{$project->start_date}}</div>
+                                        <div class="fs-4 fw-bold">{{verta($project->start_date)}}</div>
                                     </div>
                                     <div class="fw-semibold fs-6 text-gray-500">تاریخ شروع تخمینی</div>
                                 </div>
@@ -193,7 +193,7 @@
                                         @php
                                             $end_date = explode(' ',$project->end_date);
                                         @endphp
-                                        <div class="fs-4 fw-bold">{{$project->end_date}}</div>
+                                        <div class="fs-4 fw-bold">{{verta($project->end_date)}}</div>
                                     </div>
                                     <div class="fw-semibold fs-6 text-gray-500">تاریخ پایان تخمینی</div>
                                 </div>
@@ -203,7 +203,7 @@
                                             @php
                                                 $start_todo_date = explode(' ',$project->start_todo_date);
                                             @endphp
-                                            <div class="fs-4 fw-bold">{{$project->start_todo_date}}</div>
+                                            <div class="fs-4 fw-bold">{{verta($project->start_todo_date)}}</div>
                                         </div>
                                         <div class="fw-semibold fs-6 text-gray-500">تاریخ شروع واقعی</div>
                                     </div>
