@@ -37,7 +37,6 @@ class TaskPanelService
 //        }
 
 
-
         $rand = rand(111111, 999999);
 //        $end_date = Carbon::parse($param['start_date'] ?? null)->addDays(intval($param['duration']))->format('Y/m/d');
 
@@ -125,17 +124,16 @@ class TaskPanelService
 //            sendSms($member_item->mobile, $message);
         }
 
+        // notification
         $users = User::whereIn('id',$param['members'])->get();
-
         $excludedRoles = ['Super Admin','Admin Panel'];
-
         $admins = User::whereHas('roles', function ($query) use ($excludedRoles) {
             $query->whereIn('name', $excludedRoles);
         })->latest()->get();
-
         $recipients = $users->merge($admins);
 
-        // task scheduler service start
+        // TODO task scheduler service start
+
         event(new TaskChanged($task->project_id));
         Notification::send($recipients, new TaskAssignedNotification($task));
         return $task;

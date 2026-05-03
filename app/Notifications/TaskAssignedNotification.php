@@ -38,7 +38,7 @@ class TaskAssignedNotification extends Notification
             ->from('info@dm.soit.ir', 'پلتفرم مدیریت پروژه سولیکو')
             ->subject( 'تسک جدید')
             ->greeting('تسک جدید به شما محول شد')
-            ->line(' کامنت جدید ثبت شد.' )
+            ->line(' تسک جدید ثبت شد.' )
             ->line('پلتفرم مدیریت پروژه سولیکو');
     }
 

@@ -54,6 +54,8 @@ class TaskController extends Controller
         $watchers = User::whereDoesntHave('roles', function ($query) use ($SuperAdminRoles) {
             $query->whereIn('name', $SuperAdminRoles);
         })->whereStatus('1')->latest()->get();
+
+
         return view('admin.tasks.create',get_defined_vars());
     }
 
@@ -107,6 +109,9 @@ class TaskController extends Controller
             $query->whereIn('name', $SuperAdminRoles);
         })->whereStatus('1')->latest()->get();
 
+        $project = Project::where('id',$task->project_id)->pluck('id')->all();
+        $tb_tasks = Task::with(['project','manager','watcher','assigners','photos','predecessors','successors'])->where('project_id',$project)->get();
+
         return view('admin.tasks.edit',get_defined_vars());
     }
 
@@ -115,8 +120,8 @@ class TaskController extends Controller
      */
     public function update(Request $request, Task $task)
     {
-        $this->taskService->update($request->all(),$task);
-            return redirect(route('admin.task.edit',$task->id))->with('flash_message', 'با موفقیت ویرایش شد');
+            $this->taskService->update($request->all(),$task);
+            return redirect(route('admin.task.index'))->with('flash_message', 'با موفقیت ویرایش شد');
         try {
 
         } catch (Exception $exception) {

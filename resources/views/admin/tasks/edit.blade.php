@@ -25,8 +25,9 @@
     <div class="card">
         <div class="card-body p-4">
             <h5 class="card-title">ویرایش تسک</h5>
-            <hr />
-            <form action='{{route('admin.task.update',$task->id)}}' method="post" class="form-body mt-4 needs-validation"
+            <hr/>
+            <form action='{{route('admin.task.update',$task->id)}}' method="post"
+                  class="form-body mt-4 needs-validation"
                   enctype="multipart/form-data" novalidate>
                 @csrf
                 @method('put')
@@ -44,7 +45,8 @@
                                    class="result form-control"
                                    type="text"
                                    data-jdp
-                                   placeholder="تاریخ شروع تسک" autocomplete="off"  value="{{$task->start_date}}" required/>
+                                   placeholder="تاریخ شروع تسک" autocomplete="off" value="{{$task->start_date}}"
+                                   required/>
                             <div class="invalid-feedback">تاریخ شروع تسک الزامی است</div>
                         </div>
                         <div class="col-md-4">
@@ -53,17 +55,18 @@
                                    class="result form-control"
                                    type="text"
                                    data-jdp
-                                   placeholder="تاریخ پایان تسک" autocomplete="off"  value="{{$task->end_date}}" required/>
+                                   placeholder="تاریخ پایان تسک" autocomplete="off" value="{{$task->end_date}}"
+                                   required/>
                             <div class="invalid-feedback">تاریخ شروع تسک الزامی است</div>
                         </div>
-{{--                        <div class="col-md-4">--}}
-{{--                            <label for="duration" class="form-label">زمان انجام تسک</label>--}}
-{{--                            <input name="duration"--}}
-{{--                                   class="result form-control"--}}
-{{--                                   type="number"--}}
-{{--                                   placeholder="زمان انجام تسک مثال : 10 روز " autocomplete="off"  value="{{$task->duration}}" required/>--}}
-{{--                            <div class="invalid-feedback">زمان انجام تسک الزامی است</div>--}}
-{{--                        </div>--}}
+                        {{--                        <div class="col-md-4">--}}
+                        {{--                            <label for="duration" class="form-label">زمان انجام تسک</label>--}}
+                        {{--                            <input name="duration"--}}
+                        {{--                                   class="result form-control"--}}
+                        {{--                                   type="number"--}}
+                        {{--                                   placeholder="زمان انجام تسک مثال : 10 روز " autocomplete="off"  value="{{$task->duration}}" required/>--}}
+                        {{--                            <div class="invalid-feedback">زمان انجام تسک الزامی است</div>--}}
+                        {{--                        </div>--}}
                         <div class="col-md-6">
                             <label for="priority" class="form-label">اولویت تسک</label>
                             <select class="form-select" name="priority" id="inputProductType" required>
@@ -76,30 +79,34 @@
                         </div>
                         <div class="col-md-6">
                             <label for="manager_id" class="form-label">مدیر تایید کننده تسک</label>
-                            <select class="form-select" name="manager_id" id="inputProductType"  data-placeholder="انتخاب کنید">
+                            <select class="form-select" name="manager_id" id="inputProductType"
+                                    data-placeholder="انتخاب کنید">
                                 <option value="" disabled selected hidden>مدیر تایید کننده تسک را انتخاب کنید</option>
                                 @foreach($managers as $manager)
-                                    <option value="{{$manager->id}}" @if($task->manager?->id == $manager->id) selected @endif>{{$manager->Name}} - {{role_name($manager->roles()->first()->name)}}</option>
+                                    <option value="{{$manager->id}}"
+                                            @if($task->manager?->id == $manager->id) selected @endif>{{$manager->Name}}
+                                        - {{role_name($manager->roles()->first()->name)}}</option>
                                 @endforeach
                             </select>
                             <div class="invalid-feedback">مدیر تایید کننده تسک الزامی است</div>
                         </div>
-{{--                        <div class="col-md-4">--}}
-{{--                            <label for="project_id" class="form-label">تسک مربوطه</label>--}}
-{{--                            <select class="form-select" name="project_id" id="inputProductType">--}}
-{{--                                <option value="" disabled selected hidden>تسک مربوطه را انتخاب کنید</option>--}}
-{{--                                @foreach($projects as $project)--}}
-{{--                                    <option value="{{$project->id}}" @if($task->manager?->id == $manager->id) selected @endif>{{$project->name}} </option>--}}
-{{--                                @endforeach--}}
-{{--                            </select>--}}
-{{--                            <div class="invalid-feedback">تسک مربوطه الزامی است</div>--}}
-{{--                        </div>--}}
+                        {{--                        <div class="col-md-4">--}}
+                        {{--                            <label for="project_id" class="form-label">تسک مربوطه</label>--}}
+                        {{--                            <select class="form-select" name="project_id" id="inputProductType">--}}
+                        {{--                                <option value="" disabled selected hidden>تسک مربوطه را انتخاب کنید</option>--}}
+                        {{--                                @foreach($projects as $project)--}}
+                        {{--                                    <option value="{{$project->id}}" @if($task->manager?->id == $manager->id) selected @endif>{{$project->name}} </option>--}}
+                        {{--                                @endforeach--}}
+                        {{--                            </select>--}}
+                        {{--                            <div class="invalid-feedback">تسک مربوطه الزامی است</div>--}}
+                        {{--                        </div>--}}
                         <div class="col-md-6">
                             <label for="watcher_id" class="form-label">ناظر تسک</label>
                             <select class="form-select" name="watcher_id" id="inputProductType" required>
                                 <option value="" disabled selected hidden>ناظر تسک را انتخاب کنید</option>
                                 @foreach($watchers as $watcher)
-                                    <option value="{{$watcher->id}}" @if($task->watcher?->id == $watcher->id) selected @endif>{{ $watcher->Name }} </option>
+                                    <option value="{{$watcher->id}}"
+                                            @if($task->watcher?->id == $watcher->id) selected @endif>{{ $watcher->Name }} </option>
                                 @endforeach
                             </select>
                             <div class="invalid-feedback">ناظر تسک الزامی است</div>
@@ -107,7 +114,8 @@
 
                         <div class="col-md-6">
                             <label for="memberStacks" class="form-label">اعضای تسک</label>
-                            <select class="form-select" id="memberStacks" name="members[]" data-placeholder="انتخاب کنید" multiple required>
+                            <select class="form-select" id="memberStacks" name="members[]"
+                                    data-placeholder="انتخاب کنید" multiple required>
 
                                 @foreach($members as $member)
                                     <option value="{{ $member->id }}"
@@ -121,9 +129,11 @@
                         <div class="col-md-12">
                             <label for="description" class="form-label">توضیحات تسک </label>
                             <textarea type="text" name="description" class="form-control" id="description"
-                                      autocomplete="off" placeholder="توضیحات تسک" required> {{old('description')}}</textarea>
+                                      autocomplete="off" placeholder="توضیحات تسک"
+                                      required> {{old('description')}}</textarea>
                             <div class="invalid-feedback">توضیحات تسک الزامی است</div>
                         </div>
+
                         <hr>
                         <div class="col-12">
                             <label for="gallery" class="form-label">فایل های مربوط به تسک</label>
@@ -144,7 +154,7 @@
 
                                 @else
                                     <div class="col-md-4 d-flex image">
-                                        <input class='form-control' type="file" name="photos[]" accept="image/*">
+                                        <input class="form-control" type="file" name="photos[]" accept="image/*">
                                         <button type="button" class="btn btn-link text-danger" title='حذف'
                                                 onclick='removeImage(this)'>
                                             <i class="bx bxs-trash"></i>
@@ -156,6 +166,66 @@
                                 <button type="button" class="btn btn-outline-info btn-sm" onclick='addImage()'>
                                     افزودن فایل
                                 </button>
+                            </div>
+                        </div>
+
+                        <hr>
+                        <div class="col-lg-4 col-md-4 ">
+                            <div class="p-4">
+                                <h5 class="fw-bold mb-4">وابستگی های تسک</h5>
+                                <div class="row g-3 dependencies justify-content-end">
+                                    @if(count($task->dependencies) >0)
+                                        @foreach($task->dependencies as $dependency)
+                                        <div class="dependency_item">
+                                        <div class="col-lg-12 ">
+                                            <label for="task_id" class="form-label">تسک وابسته</label>
+                                            <select class="form-select form-select-solid" data-control="select2"
+                                                    id="task_id"
+                                                    {{--                                                    data-ajax-route="{{ route('dashboard.task.related-tasks', $project->id) }}"--}}
+                                                    data-placeholder="تسک وابسته را انتخاب کنید" name="task_id[]"
+                                            >
+                                                <option></option>
+                                                @foreach($tb_tasks as $task_item)
+                                                    <option
+                                                        value="{{ $task_item->id }}" @if($dependency->predecessor_id == $task_item->id) selected @endif>{{ $task_item->title }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
+                                        <div class="col-lg-12">
+                                            <label for="relation_type" class="form-label">نوع وابستگی </label>
+                                            <select class="form-select form-select-solid" data-control="select2"
+                                                    data-placeholder="نوع وابستگی را انتخاب کنید" name="relation_type[]"
+                                            >
+                                                <option></option>
+                                                <option value="FS">Finish to Start (تسک فعلی بعد از اتمام قبلی شروع
+                                                    می‌شود)
+                                                </option>
+                                                <option value="FF">Finish to Finish (تسک فعلی تا اتمام قبلی نمی‌تواند
+                                                    تمام شود)
+                                                </option>
+                                                <option value="SS">Start to Start (شروع هر دو باید هم‌زمان باشد)
+                                                </option>
+                                                <option value="SF">Start to Finish (تسک فعلی تا شروع قبلی نمی‌تواند تمام
+                                                    شود)
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-ld-12 d-flex justify-content-end">
+                                            <button type="button" class="btn btn-link text-danger" title='حذف'
+                                                    onclick='removeDependency(this)'>
+                                                <i class="ki-outline ki-trash text-danger fs-2"></i>
+                                            </button>
+                                        </div>
+                                        </div>
+                                        @endforeach
+                                    @endif
+                                </div>
+                                <div class="d-flex justify-content-end mt-3">
+                                    <button type="button" class="btn btn-outline-info btn-sm" onclick='addDependency()'>
+                                        افزودن وابستگی
+                                    </button>
+                                </div>
                             </div>
                         </div>
                         <hr>
@@ -175,10 +245,10 @@
 
 @push('script')
     <script type="text/javascript">
-        $(function() {
+        $(function () {
             $('#textOne').summernote();
         });
-        $(function() {
+        $(function () {
             $('#memberStacks').select2({
                 theme: "bootstrap-5"
             });

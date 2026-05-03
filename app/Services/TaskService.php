@@ -150,13 +150,8 @@ class TaskService
 
         if (isset($param['members']))
         {
-            dd($task->assigners,count($task->assigners)>0);
-            if (count($task->assigners)>0)
-            {
-
-            }
+            $task->assigners()->sync($param['members']);
         }
-        $task->assigners()->sync($param['members']);
 
         foreach ($param['members'] as $member)
         {
