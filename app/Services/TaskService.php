@@ -2,12 +2,16 @@
 
 namespace App\Services;
 
+use App\Events\TaskChanged;
 use App\Models\Photo;
 use App\Models\Task;
+use App\Models\TaskDependency;
 use App\Models\User;
+use App\Notifications\TaskAssignedNotification;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Notification;
 
 /**
  * Class TaskService.
@@ -100,11 +104,10 @@ class TaskService
 //            $duration = $hours . ' ساعت';
 //        }
 
-
         $rand = rand(111111, 999999);
 //        $end_date = Carbon::parse($param['start_date'] ?? null)->addDays(intval($param['duration']))->format('Y/m/d');
 
-        $task->task_code = 'T_' . $rand;
+//        $task->task_code = 'T_' . $rand;
         $task->title = $param['title'];
         $task->description = $param['description'] ?? null;
         $task->priority = $param['priority'];
@@ -115,7 +118,7 @@ class TaskService
         {
             $task->project_id = $param['project_id'];
         }
-        $task->user_id = Auth::user()->id ?? null;
+//        $task->user_id = Auth::user()->id ?? null;
 
         if (isset($param['manager_check']))
         {
@@ -160,6 +163,43 @@ class TaskService
             $message = $member_item->Name . ' تسک ' .$task->task_code .' برای انجام به شما محول شده است لطفا به پنل خود سر بزنید. مدت زمان انجام این تسک ' . $task->duration . '  است';
 //            sendSms($member_item->mobile, $message);
         }
+
+
+        if (isset($param['task_id'])) {
+            TaskDependency::where('successor_id', $task->id)->delete();
+
+            for ($i = 0; $i < count($param['task_id']); $i++) {
+                
+                TaskDependency::create([
+                    'predecessor_id' => $param['task_id'][$i],
+                    'successor_id'   => $task->id,
+                    'relation_type'  => $param['relation_type'][$i],
+                ]);
+            }
+
+            // notification
+            $users = User::whereIn('id',$param['members'])->get();
+
+            $excludedRoles = ['Super Admin','Admin Panel'];
+            $admins = User::whereHas('roles', function ($query) use ($excludedRoles) {
+                $query->whereIn('name', $excludedRoles);
+            })->latest()->get();
+
+            $task_user = User::where('id',$task->user_id)->first();
+            $recipients = $users
+                ->merge($admins)
+                ->when($task_user, fn($c) => $c->push($task_user))
+                ->unique('id')
+                ->values();
+
+//            $recipients = $users->merge($admins,$task_user);
+            // TODO task scheduler service start
+
+            event(new TaskChanged($task->project_id));
+            Notification::send($recipients, new TaskAssignedNotification($task));
+        }
+
+
         return $task;
     }
 }

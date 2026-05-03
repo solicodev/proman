@@ -9,7 +9,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 class TaskDependency extends Model
 {
     use LogsActivity;
-    protected $fillable = ['predecessor_id','successor_id','relation_Type'];
+    protected $fillable = ['predecessor_id','successor_id','relation_type'];
 
     protected static $logName = 'Task Dependency';
 

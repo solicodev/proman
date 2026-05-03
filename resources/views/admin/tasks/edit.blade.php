@@ -45,7 +45,7 @@
                                    class="result form-control"
                                    type="text"
                                    data-jdp
-                                   placeholder="تاریخ شروع تسک" autocomplete="off" value="{{$task->start_date}}"
+                                   placeholder="تاریخ شروع تسک" autocomplete="off" value="{{verta($task->start_date)->format('Y/m/d')}} {{verta($task->start_date)->format('H:i:s')}}"
                                    required/>
                             <div class="invalid-feedback">تاریخ شروع تسک الزامی است</div>
                         </div>
@@ -55,7 +55,7 @@
                                    class="result form-control"
                                    type="text"
                                    data-jdp
-                                   placeholder="تاریخ پایان تسک" autocomplete="off" value="{{$task->end_date}}"
+                                   placeholder="تاریخ پایان تسک" autocomplete="off" value="{{verta($task->end_date)->format('Y/m/d')}} {{verta($task->end_date)->format('H:i:s')}}"
                                    required/>
                             <div class="invalid-feedback">تاریخ شروع تسک الزامی است</div>
                         </div>
@@ -170,54 +170,48 @@
                         </div>
 
                         <hr>
-                        <div class="col-lg-4 col-md-4 ">
+                        <div class="col-lg-12 col-md-12 ">
                             <div class="p-4">
                                 <h5 class="fw-bold mb-4">وابستگی های تسک</h5>
-                                <div class="row g-3 dependencies justify-content-end">
-                                    @if(count($task->dependencies) >0)
+                                <div class="row dependencies">
+                                    @if(count($task->dependencies)>0)
                                         @foreach($task->dependencies as $dependency)
-                                        <div class="dependency_item">
-                                        <div class="col-lg-12 ">
-                                            <label for="task_id" class="form-label">تسک وابسته</label>
-                                            <select class="form-select form-select-solid" data-control="select2"
-                                                    id="task_id"
-                                                    {{--                                                    data-ajax-route="{{ route('dashboard.task.related-tasks', $project->id) }}"--}}
-                                                    data-placeholder="تسک وابسته را انتخاب کنید" name="task_id[]"
-                                            >
-                                                <option></option>
-                                                @foreach($tb_tasks as $task_item)
-                                                    <option
-                                                        value="{{ $task_item->id }}" @if($dependency->predecessor_id == $task_item->id) selected @endif>{{ $task_item->title }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
+                                            <div class="dependency_item border rounded p-3 mb-3">
+                                                <div class="col-lg-12">
+                                                    <label class="form-label">تسک وابسته</label>
+                                                    <select class="form-select" name="task_id[]">
+                                                        <option></option>
+                                                        @foreach($tb_tasks as $task_item)
+                                                            <option value="{{ $task_item->id }}"
+                                                                {{ $dependency->predecessor_id == $task_item->id ? 'selected' : '' }}>
+                                                                {{ $task_item->title }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
 
-                                        <div class="col-lg-12">
-                                            <label for="relation_type" class="form-label">نوع وابستگی </label>
-                                            <select class="form-select form-select-solid" data-control="select2"
-                                                    data-placeholder="نوع وابستگی را انتخاب کنید" name="relation_type[]"
-                                            >
-                                                <option></option>
-                                                <option value="FS">Finish to Start (تسک فعلی بعد از اتمام قبلی شروع
-                                                    می‌شود)
-                                                </option>
-                                                <option value="FF">Finish to Finish (تسک فعلی تا اتمام قبلی نمی‌تواند
-                                                    تمام شود)
-                                                </option>
-                                                <option value="SS">Start to Start (شروع هر دو باید هم‌زمان باشد)
-                                                </option>
-                                                <option value="SF">Start to Finish (تسک فعلی تا شروع قبلی نمی‌تواند تمام
-                                                    شود)
-                                                </option>
-                                            </select>
-                                        </div>
-                                        <div class="col-ld-12 d-flex justify-content-end">
-                                            <button type="button" class="btn btn-link text-danger" title='حذف'
-                                                    onclick='removeDependency(this)'>
-                                                <i class="ki-outline ki-trash text-danger fs-2"></i>
-                                            </button>
-                                        </div>
-                                        </div>
+                                                <div class="col-lg-12">
+                                                    <label class="form-label">نوع وابستگی</label>
+                                                    <select class="form-select " name="relation_type[]">
+                                                        <option></option>
+                                                        <option value="FS" {{ $dependency->relation_type == 'FS' ? 'selected' : '' }}>Finish to Start (تسک فعلی بعد از اتمام قبلی شروع
+                                                            می‌شود)</option>
+                                                        <option value="FF" {{ $dependency->relation_type == 'FF' ? 'selected' : '' }}>Finish to Finish (تسک فعلی تا اتمام قبلی نمی‌تواند
+                                                            تمام شود)</option>
+                                                        <option value="SS" {{ $dependency->relation_type == 'SS' ? 'selected' : '' }}>Start to Start (شروع هر دو باید هم‌زمان باشد)</option>
+                                                        <option value="SF" {{ $dependency->relation_type == 'SF' ? 'selected' : '' }}>Start to Finish (تسک فعلی تا شروع قبلی نمی‌تواند تمام
+                                                            شود)</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-lg-12 d-flex justify-content-end">
+                                                    <button type="button"  class="btn btn-link text-danger" title='حذف'
+                                                            onclick="removeDependency(this)">
+                                                        <i class="bx bxs-trash"></i>
+                                                    </button>
+                                                </div>
+
+                                            </div>
                                         @endforeach
                                     @endif
                                 </div>
@@ -307,6 +301,57 @@
 
         function removeImage(el) {
             $(el).closest('.image').remove();
+        }
+        function addDependency() {
+            $('.dependencies').append(`
+        <div class="dependency_item border rounded p-3 mb-3">
+
+            <div class="col-lg-12">
+                <label class="form-label">تسک وابسته</label>
+                <select class="form-select" name="task_id[]">
+                    <option></option>
+                    @foreach($tb_tasks as $task_item)
+                        <option value="{{ $task_item->id }}">{{ $task_item->title }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+               <div class="col-lg-12">
+                    <label class="form-label">نوع وابستگی</label>
+                    <select class="form-select" name="relation_type[]">
+                        <option></option>
+                        <option value="FS" >Finish to Start (تسک فعلی بعد از اتمام قبلی شروع
+                                                                می‌شود)</option>
+                                                            <option value="FF">Finish to Finish (تسک فعلی تا اتمام قبلی نمی‌تواند
+                                                                تمام شود)</option>
+                                                            <option value="SS">Start to Start (شروع هر دو باید هم‌زمان باشد)</option>
+                                                            <option value="SF">Start to Finish (تسک فعلی تا شروع قبلی نمی‌تواند تمام
+                                                                شود)</option>
+                    </select>
+                </div>
+
+                 <div class="col-lg-12 d-flex justify-content-end">
+                                                    <button type="button"  class="btn btn-link text-danger" title='حذف'
+                                                            onclick="removeDependency(this)">
+                                                        <i class="bx bxs-trash"></i>
+                                                    </button>
+                                                </div>
+
+            </div>
+`);
+
+            // init select2 برای آیتم جدید
+            $('.task-select').select2({
+                placeholder: "تسک وابسته را انتخاب کنید"
+            });
+
+            $('.relation-select').select2({
+                placeholder: "نوع وابستگی را انتخاب کنید"
+            });
+        }
+
+        function removeDependency(el) {
+            $(el).closest('.dependency_item').remove();
         }
 
     </script>
