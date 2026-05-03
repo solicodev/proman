@@ -116,7 +116,7 @@ class TaskController extends Controller
     public function update(Request $request, Task $task)
     {
         $this->taskService->update($request->all(),$task);
-            return redirect(route('admin.task.edit'))->with('flash_message', 'با موفقیت ویرایش شد');
+            return redirect(route('admin.task.edit',$task->id))->with('flash_message', 'با موفقیت ویرایش شد');
         try {
 
         } catch (Exception $exception) {

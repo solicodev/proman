@@ -17,18 +17,17 @@ class TaskService
     public function store(array $param) :Task
     {
 
-        $start = Carbon::parse($param['start_date']);
-        $end   = Carbon::parse($param['end_date']);
-
-        $days = (int) $start->diffInDays($end);
-
-        if ($days >= 1) {
-            $duration = $days . ' روز';
-        } else {
-            $hours = $start->diffInHours($end);
-            $duration = $hours . ' ساعت';
-        }
-
+//        $start = Carbon::parse($param['start_date']);
+//        $end   = Carbon::parse($param['end_date']);
+//
+//        $days = (int) $start->diffInDays($end);
+//
+//        if ($days >= 1) {
+//            $duration = $days . ' روز';
+//        } else {
+//            $hours = $start->diffInHours($end);
+//            $duration = $hours . ' ساعت';
+//        }
 
 
         $rand = rand(111111, 999999);
@@ -81,7 +80,7 @@ class TaskService
         {
             $member_item = User::findOrFail($member);
             //TODO
-            $message = $member_item->Name . ' تسک ' .$task->task_code .' برای انجام به شما محول شده است لطفا به پنل خود سر بزنید. مدت زمان انجام این تسک ' . $duration . '  است';
+            $message = $member_item->Name . ' تسک ' .$task->task_code .' برای انجام به شما محول شده است لطفا به پنل خود سر بزنید. مدت زمان انجام این تسک ' . $task->duration . '  است';
 //            sendSms($member_item->mobile, $message);
         }
         return $task;
@@ -89,17 +88,17 @@ class TaskService
 
     public function update(array $param , Task $task)
     {
-        $start = Carbon::parse($param['start_date']);
-        $end   = Carbon::parse($param['end_date']);
-
-        $days = (int) $start->diffInDays($end);
-
-        if ($days >= 1) {
-            $duration = $days . ' روز';
-        } else {
-            $hours = $start->diffInHours($end);
-            $duration = $hours . ' ساعت';
-        }
+//        $start = Carbon::parse($param['start_date']);
+//        $end   = Carbon::parse($param['end_date']);
+//
+//        $days = (int) $start->diffInDays($end);
+//
+//        if ($days >= 1) {
+//            $duration = $days . ' روز';
+//        } else {
+//            $hours = $start->diffInHours($end);
+//            $duration = $hours . ' ساعت';
+//        }
 
 
         $rand = rand(111111, 999999);
@@ -110,9 +109,12 @@ class TaskService
         $task->description = $param['description'] ?? null;
         $task->priority = $param['priority'];
         $task->parent_id = $param['parent_id'] ?? null;
-        $task->start_date = $param['start_date'];
-        $task->end_date = $param['end_date'] ?? null;
-        $task->project_id = $param['project_id'] ?? null;
+//        $task->start_date = $param['start_date'];
+//        $task->end_date = $param['end_date'] ?? null;
+        if (isset($param['project_id']))
+        {
+            $task->project_id = $param['project_id'];
+        }
         $task->user_id = Auth::user()->id ?? null;
 
         if (isset($param['manager_check']))
@@ -126,11 +128,9 @@ class TaskService
 //            sendSms($manager->mobile, $message);
         }
 
-
         $task->watcher_id = $param['watcher_id'] ?? null;
 //        $task->duration = intval($param['duration']);
         $task->update();
-
 
         if (isset($param['photos'])) {
             foreach ($param['photos'] as $key => $photo) {
@@ -148,14 +148,21 @@ class TaskService
             }
         }
 
+        if (isset($param['members']))
+        {
+            dd($task->assigners,count($task->assigners)>0);
+            if (count($task->assigners)>0)
+            {
 
-        $task->assigners()->attach($param['members']);
+            }
+        }
+        $task->assigners()->sync($param['members']);
 
         foreach ($param['members'] as $member)
         {
             $member_item = User::findOrFail($member);
             //TODO
-            $message = $member_item->Name . ' تسک ' .$task->task_code .' برای انجام به شما محول شده است لطفا به پنل خود سر بزنید. مدت زمان انجام این تسک ' . $duration . '  است';
+            $message = $member_item->Name . ' تسک ' .$task->task_code .' برای انجام به شما محول شده است لطفا به پنل خود سر بزنید. مدت زمان انجام این تسک ' . $task->duration . '  است';
 //            sendSms($member_item->mobile, $message);
         }
         return $task;

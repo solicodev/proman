@@ -26,7 +26,7 @@
         <div class="card-body p-4">
             <h5 class="card-title">ویرایش تسک</h5>
             <hr />
-            <form action='{{route('admin.project.update',$task->id)}}' method="post" class="form-body mt-4 needs-validation"
+            <form action='{{route('admin.task.update',$task->id)}}' method="post" class="form-body mt-4 needs-validation"
                   enctype="multipart/form-data" novalidate>
                 @csrf
                 @method('put')
@@ -76,7 +76,7 @@
                         </div>
                         <div class="col-md-6">
                             <label for="manager_id" class="form-label">مدیر تایید کننده تسک</label>
-                            <select class="form-select" name="manager_id" id="inputProductType" required data-placeholder="انتخاب کنید">
+                            <select class="form-select" name="manager_id" id="inputProductType"  data-placeholder="انتخاب کنید">
                                 <option value="" disabled selected hidden>مدیر تایید کننده تسک را انتخاب کنید</option>
                                 @foreach($managers as $manager)
                                     <option value="{{$manager->id}}" @if($task->manager?->id == $manager->id) selected @endif>{{$manager->Name}} - {{role_name($manager->roles()->first()->name)}}</option>
