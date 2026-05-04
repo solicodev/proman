@@ -51,7 +51,7 @@
                 <a href="{{route('admin.campaign.agancy.index')}}">
                     <div class="parent-icon">
 
-                        <i  class='bx bx-list-check'>
+                        <i  class='bx bx-list'>
                         </i>
                     </div>
                     <div class="menu-title"> آژانس ها</div>
@@ -61,7 +61,7 @@
                 <a href="{{route('admin.campaign.influencer.index')}}">
                     <div class="parent-icon">
 
-                        <i  class='bx bx-list-check'>
+                        <i  class='bx bx-list'>
                         </i>
                     </div>
                     <div class="menu-title"> influencer ها</div>
@@ -71,7 +71,7 @@
                 <a href="{{route('admin.campaign.brand.index')}}">
                     <div class="parent-icon">
 
-                        <i  class='bx bx-list-check'>
+                        <i  class='bx bx-list'>
                         </i>
                     </div>
                     <div class="menu-title"> برندهای کمپین</div>
@@ -81,7 +81,7 @@
                 <a href="{{route('admin.campaign.index')}}">
                     <div class="parent-icon">
 
-                        <i  class='bx bx-list-check'>
+                        <i  class='bx bx-list'>
                         </i>
                     </div>
                     <div class="menu-title"> کمپین ها</div>
@@ -135,7 +135,7 @@
                 <a href="{{route('admin.position.index')}}">
                     <div class="parent-icon">
 
-                        <i  class='bx bx-list-check'>
+                        <i  class='bx bx-list'>
                         </i>
                     </div>
                     <div class="menu-title"> پوزیشن ها</div>
@@ -145,7 +145,7 @@
                 <a href="{{route('admin.user.index')}}">
                     <div class="parent-icon">
 
-                        <i  class='bx bx-list-check'>
+                        <i  class='bx bx-list'>
                         </i>
                     </div>
                     <div class="menu-title"> پرسنل</div>
@@ -155,7 +155,7 @@
                 <a href="{{route('admin.ticket.index')}}">
                     <div class="parent-icon">
 
-                        <i  class='bx bx-list-check'>
+                        <i  class='bx bx-list'>
                         </i>
                     </div>
                     <div class="menu-title"> تیکت ها</div>
@@ -166,7 +166,7 @@
                 <a href="{{route('admin.category.index')}}">
                     <div class="parent-icon">
 
-                        <i  class='bx bx-list-check'>
+                        <i  class='bx bx-list'>
                         </i>
                     </div>
                     <div class="menu-title"> دسته بندی ها</div>
@@ -176,7 +176,7 @@
                 <a href="{{route('admin.project.index')}}">
                     <div class="parent-icon">
 
-                        <i  class='bx bx-list-check'>
+                        <i  class='bx bx-list'>
                         </i>
                     </div>
                     <div class="menu-title"> پروژه ها</div>
@@ -186,7 +186,7 @@
                 <a href="{{route('admin.task.index')}}">
                     <div class="parent-icon">
 
-                        <i  class='bx bx-list-check'>
+                        <i  class='bx bx-list'>
                         </i>
                     </div>
                     <div class="menu-title"> تسک ها</div>
@@ -197,7 +197,7 @@
 {{--                <a href="{{route('admin.photo.index')}}">--}}
 {{--                    <div class="parent-icon">--}}
 
-{{--                        <i  class='bx bx-list-check'>--}}
+{{--                        <i  class='bx bx-list'>--}}
 {{--                        </i>--}}
 {{--                    </div>--}}
 {{--                    <div class="menu-title"> رسانه ها</div>--}}
@@ -208,7 +208,7 @@
 {{--                <a href="{{route('admin.permission.index')}}">--}}
 {{--                    <div class="parent-icon">--}}
 
-{{--                        <i  class='bx bx-list-check'>--}}
+{{--                        <i  class='bx bx-list'>--}}
 {{--                        </i>--}}
 {{--                    </div>--}}
 {{--                    <div class="menu-title"> دسترسی ها</div>--}}

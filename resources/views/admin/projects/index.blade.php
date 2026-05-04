@@ -165,9 +165,9 @@
                             <td>{{$loop->iteration}}</td>
                             <td style="direction: ltr; text-align: left"> {{ $project->project_code }}</td>
                             <td> {{ $project->name }}</td>
-                            <td> {{ $project->start_date }}</td>
-                            <td> {{ $project->start_todo_date }}</td>
-                            <td> {{ $project->end_date }}</td>
+                            <td> {{ verta($project->start_date) }}</td>
+                            <td> {{ verta($project->start_todo_date) }}</td>
+                            <td> {{ verta($project->end_date) }}</td>
                             <td> {{ $project->manager?->Name }}</td>
                             <td> {{ $project->category?->title }}</td>
                             <td>

@@ -31,9 +31,9 @@
                             <td>{{$loop->iteration}}</td>
                             <td style="direction: ltr; text-align: left"> {{ $task->task_code }}</td>
                             <td> {{ $task->title }}</td>
-                            <td> {{ $task->start_date }}</td>
-                            <td> {{ $task->start_todo_date }}</td>
-                            <td> {{ $task->end_date }}</td>
+                            <td> {{ verta($task->start_date) }}</td>
+                            <td> {{ verta($task->start_todo_date) }}</td>
+                            <td> {{ verta($task->end_date) }}</td>
                             <td> {{ $task->manager?->Name }}</td>
                             <td> {{ $task->watcher?->Name }}</td>
                             <td>

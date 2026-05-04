@@ -1,8 +1,8 @@
 <!doctype html>
 <html lang="fa" dir="rtl">
-
-
-<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<!-- Added by HTTrack -->
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<!-- /Added by HTTrack -->
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -35,7 +35,6 @@
     <link href="{{url('assets/admin/plugins/datetimepicker/css/classic.time.css')}}" rel="stylesheet" />
     <link href="{{url('assets/admin/plugins/datetimepicker/css/classic.date.css')}}" rel="stylesheet" />
     <link href="{{url('assets/admin/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.min.css')}}" rel="stylesheet"/>
-
 
     <link href="{{ url('assets/admin/css/jgrowl.min.css') }}" rel="stylesheet" />
     <link href="{{ url('assets/admin/css/boxicon.min.css') }}" rel="stylesheet" />
