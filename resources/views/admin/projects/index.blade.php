@@ -18,12 +18,13 @@
                     '4' => 'کنسل شد',
                 ];
             @endphp
-            <form action="{{route('dashboard.project.report.filter')}}" method="post" class="m-2 fv-plugins-bootstrap5 fv-plugins-framework" id="kt_docs_formvalidation_text">
+            <form action="{{route('admin.project.filter')}}" method="post" class="m-2 fv-plugins-bootstrap5 fv-plugins-framework" id="kt_docs_formvalidation_text">
                 @csrf
                 <div class="row mb-4">
                     <div class="col my-1">
+                        <label for="manager_id" class="form-label">وضعیت</label>
                         <select  name="status_filter" data-control="select2" data-hide-search="true"
-                                 class="form-select form-select-solid form-select-sm"
+                                 class="form-select"
                                  data-placeholder="وضعیت را انتخاب کنید">
                             <option></option>
                             @foreach($statuses as $key => $label)
@@ -34,8 +35,9 @@
                         </select>
                     </div>
                     <div class="col my-1">
+                        <label for="manager_id" class="form-label">برند</label>
                         <select  name="brand_filter" data-control="select2" data-hide-search="true"
-                                 class="form-select form-select-solid form-select-sm"
+                                 class="form-select"
                                  data-placeholder="برند را انتخاب کنید">
                             <option></option>
                             @foreach($brands as $brand)
@@ -44,8 +46,9 @@
                         </select>
                     </div>
                     <div class="col my-1">
+                        <label for="manager_id" class="form-label">دپارتمان</label>
                         <select  name="department_filter" data-control="select2" data-hide-search="true"
-                                 class="form-select form-select-solid form-select-sm"
+                                 class="form-select"
                                  data-placeholder="دپارتمان را انتخاب کنید">
                             <option></option>
                             @foreach($departments as $department)
@@ -54,8 +57,9 @@
                         </select>
                     </div>
                     <div class="col my-1">
+                        <label for="manager_id" class="form-label">تایید</label>
                         <select  name="filter" data-control="select2" data-hide-search="true" data-placeholder="گزینه را انتخاب کنید"
-                                 class="form-select form-select-solid form-select-sm">
+                                 class="form-select">
                             <option></option>
                             <option value="approve_verify"  {{ request('filter') == 'approve_verify' ? 'selected' : '' }}>مورد تایید مدیر تایید کننده</option>
                             <option value="approve_need"  {{ request('filter') == 'approve_need' ? 'selected' : '' }}>نیاز به تایید مدیر تایید کننده</option>
@@ -64,8 +68,9 @@
                         </select>
                     </div>
                     <div class="col my-1">
+                        <label for="manager_id" class="form-label">مدیر مربوطه</label>
                         <select  name="user_filter" data-control="select2" data-hide-search="true"
-                                 class="form-select form-select-solid form-select-sm"
+                                 class="form-select"
                                  data-placeholder="مدیر مربوطه را انتخاب کنید">
                             <option></option>
                             @foreach($managers as $key => $manager)
@@ -81,9 +86,9 @@
                 <div class="d-flex justify-content-between my-3">
                     <div class="d-flex gap-2">
                         @if (request('status_filter'))
-                            <span onclick="delete_value('status_filter')" class="badge badge-light py-2 px-5 cursor-pointer">
+                            <span onclick="delete_value('status_filter')" class="badge bg-light text-white py-2 px-5 cursor-pointer">
                                 {{ $statuses[request('status_filter')] ?? request('status_filter') }}
-                                <i class="ki-outline ki-cross-square text-danger ms-2"></i>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-square text-white"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="15"></line><line x1="15" y1="9" x2="9" y2="15"></line></svg>
                             </span>
                         @endif
 
@@ -92,9 +97,9 @@
                                 $brand = $brands->firstWhere('id', request('brand_filter'));
                             @endphp
                             @if($brand)
-                                <span onclick="delete_value('brand_filter')" class="badge badge-light py-2 px-5 cursor-pointer">
+                                <span onclick="delete_value('brand_filter')" class="badge bg-light text-white py-2 px-5 cursor-pointer">
                                     {{ $brand->name }}
-                                    <i class="ki-outline ki-cross-square text-danger ms-2"></i>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-square text-white"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="15"></line><line x1="15" y1="9" x2="9" y2="15"></line></svg>
                                 </span>
                             @endif
                         @endif
@@ -104,9 +109,9 @@
                                 $department = $departments->firstWhere('id', request('department_filter'));
                             @endphp
                             @if($department)
-                                <span onclick="delete_value('department_filter')" class="badge badge-light py-2 px-5 cursor-pointer">
+                                <span onclick="delete_value('department_filter')" class="badge bg-light text-white py-2 px-5 cursor-pointer">
                                 {{ $department->name }}
-                                <i class="ki-outline ki-cross-square text-danger ms-2"></i>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-square text-white"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="15"></line><line x1="15" y1="9" x2="9" y2="15"></line></svg>
                             </span>
                             @endif
                         @endif
@@ -116,25 +121,25 @@
                                 $manager = $managers->firstWhere('id', request('user_filter'));
                             @endphp
                             @if($manager)
-                                <span onclick="delete_value('user_filter')" class="badge badge-light py-2 px-5 cursor-pointer">
+                                <span onclick="delete_value('user_filter')" class="badge bg-light text-white py-2 px-5 cursor-pointer">
                                 {{ $manager->name }}
-                                <i class="ki-outline ki-cross-square text-danger ms-2"></i>
-                            </span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-square text-white"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="15"></line><line x1="15" y1="9" x2="9" y2="15"></line></svg>
+                                </span>
                             @endif
                         @endif
 
                         @if (request('filter'))
-                            <span onclick="delete_value('filter')" class="badge badge-light py-2 px-5 cursor-pointer">
-                {{ __("filters.".request('filter')) ?? request('filter') }}
-                <i class="ki-outline ki-cross-square text-danger ms-2"></i>
-            </span>
+                            <span onclick="delete_value('filter')" class="badge bg-light text-white py-2 px-5 cursor-pointer">
+                                {{ __("filters.".request('filter')) ?? request('filter') }}
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-square text-white"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="15"></line><line x1="15" y1="9" x2="9" y2="15"></line></svg>
+                            </span>
                         @endif
-
                     </div>
+                    <button type="submit" class="btn btn-sm btn-light">فیلتر
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0dcaf0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search text-white"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
 
-                    <button type="submit" class="btn btn-sm btn-light-success">فیلتر <i class="ki-outline ki-filter-search fs-2 ps-5"></i></button>
+                    </button>
                 </div>
-
             </form>
             <hr>
             <div class="table-responsive">
@@ -170,7 +175,7 @@
                             </td>
                             <td>
                                 <a href="{{ route('admin.project.tasks',$project->id) }}" class='badge bg-info text-black text-warning'>
-                                    مشاهده
+                                    مشاهده تسک های پروژه
                                     <i class="bx bxs-eye"></i>
                                 </a>
                             </td>
@@ -256,6 +261,14 @@
         function openDeleteModal(url) {
             $('#deleteForm').attr('action', url);
             $('#deleteServiceModal').modal('show');
+        }
+
+
+    </script>
+    <script>
+        function delete_value(id) {
+            $(`[name="${id}"]`).val('').trigger('change');
+            document.getElementById('delete_form_value_org').submit();
         }
     </script>
 

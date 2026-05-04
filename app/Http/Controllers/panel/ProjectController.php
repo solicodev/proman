@@ -174,6 +174,7 @@ class ProjectController extends Controller
             $query->whereIn('name', $memberRoles);
         })->whereStatus('1')->latest()->get();
         $project_members = $project->members()->paginate(9);
+
         return view('proMan.projects.members',get_defined_vars());
 
     }

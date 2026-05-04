@@ -169,7 +169,7 @@ class TaskService
             TaskDependency::where('successor_id', $task->id)->delete();
 
             for ($i = 0; $i < count($param['task_id']); $i++) {
-                
+
                 TaskDependency::create([
                     'predecessor_id' => $param['task_id'][$i],
                     'successor_id'   => $task->id,
@@ -198,7 +198,6 @@ class TaskService
             event(new TaskChanged($task->project_id));
             Notification::send($recipients, new TaskAssignedNotification($task));
         }
-
 
         return $task;
     }

@@ -7,7 +7,9 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Department;
 use App\Models\ImplementeUnit;
+use App\Models\Photo;
 use App\Models\Project;
+use App\Models\ProjectApprove;
 use App\Models\Task;
 use App\Models\User;
 use App\Services\ProjectService;
@@ -33,6 +35,15 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = Project::orderBy('created_at', 'desc')->get();
+        $brands = Brand::with(['photo','getChid'])->get();
+
+        $departments = Department::all();
+
+        $excludedRoles = ['Manager'];
+
+        $managers = User::whereHas('roles', function ($query) use ($excludedRoles) {
+            $query->whereIn('name', $excludedRoles);
+        })->whereStatus('1')->latest()->get();
         return view('admin.projects.index',get_defined_vars());
     }
 
@@ -132,6 +143,99 @@ class ProjectController extends Controller
             return redirect(route('admin.project.index'))->with('flash_message', ' با موفقیت حذف شد');
         } catch (Exception $exception) {
             return redirect()->back()->with('err_message', 'خطایی رخ داد مجددا تلاش کنید');
+        }
+    }
+    public function filter(Request $request)
+    {
+        $query = Project::query();
+
+        if ($request->filled('status_filter'))
+        {
+            $query->where('status',$request->status_filter);
+        }
+
+        if ($request->filled('brand_filter')) {
+            $query->where('brand_id', $request->brand_filter);
+        }
+
+        if ($request->filled('department_filter')) {
+            $query->where('department_id', $request->department_filter);
+        }
+
+        if ($request->filled('user_filter')) {
+            $query->where('approving_manager', $request->user_filter);
+        }
+
+        $excludedRoles = ['Manager'];
+
+        $managers = User::whereHas('roles', function ($query) use ($excludedRoles) {
+            $query->whereIn('name', $excludedRoles);
+        })->whereStatus('1')->latest()->get();
+
+//        $position = Position::where('title' , 'like' , '%بنیان گذار%')->first();
+//
+//        $user = User::where('position_id', $position->id)->first();
+
+        if ($request->filled('filter')) {
+            switch ($request->filter) {
+
+                case 'approve_verify':
+                    $query->where('approve_verify', '0')->where('approve_need', '0');
+                    break;
+
+                case 'approve_need':
+                    $query->where('approve_need', '0');
+                    break;
+
+                case 'approving_manager':
+                    $query->where('inform','0');
+                    break;
+            }
+        }
+
+        $projects = $query->latest()->where('manager_id',Auth::id())->get();
+        $brands = Brand::all();
+        $departments = Department::all();
+        return view('admin.projects.index',get_defined_vars());
+    }
+
+    public function approveVerify(Project $project , Request $request)
+    {
+
+        $project->approve_verify = $request->approve_verify;
+        $project->update();
+
+        $projectApprove = new ProjectApprove();
+        $projectApprove->title = $request->title ?? null;
+        $projectApprove->description = $request->description ?? null;
+        $projectApprove->project_id = $project->id;
+        if (isset($request->photo_id))
+        {
+            $photo = new Photo();
+            $photo->path = file_store($request->photo_id, 'uploads/project/Approve/', '');
+            $photo->user_id = Auth::id();
+            $photo->save();
+            $projectApprove->photo_id = $photo->id;
+        }
+        $projectApprove->date = $request->date ?? null;
+
+        $projectApprove->save();
+
+        try {
+            return redirect()->route('dashboard.project.report')->with('flash_message', ' تغییرات اعمال شد');
+        } catch (Exception $exception) {
+            return redirect()->route('dashboard.project.report')->with('err_message', 'خطایی رخ داد مجددا تلاش کنید');
+        }
+    }
+
+    public function status(Project $project , Request $request)
+    {
+        try {
+            $project->status = $request->status;
+            $project->update();
+            return redirect()->route('dashboard.project.report')->with('flash_message', 'وضعیت تغییر کرد');
+        } catch (Exception $exception) {
+            return redirect()->route('dashboard.project.report')->with('err_message', 'خطایی رخ داد مجددا تلاش کنید');
         }
     }
 }

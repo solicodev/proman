@@ -124,7 +124,7 @@
                 <a href="{{route('admin.brand.index')}}">
                     <div class="parent-icon">
 
-                        <i  class='bx bx-home-circle'>
+                        <i  class="bx bx-home-alt">
                         </i>
                     </div>
                     <div class="menu-title"> برند ها</div>

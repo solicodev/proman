@@ -4,9 +4,6 @@
 
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
 <head>
-    <link rel="dns-prefetch" href="http://demos.sypna.ir/">
-    <link rel="dns-prefetch" href="http://fonts.googleapis.com/">
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -26,7 +23,7 @@
 
     <link href="{{url('assets/admin/css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{url('assets/admin/css/bootstrap-extended.css')}}" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&amp;display=swap" rel="stylesheet">
+    {{--    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&amp;display=swap" rel="stylesheet">--}}
 
     <link href="{{url('assets/admin/css/icons.css')}}" rel="stylesheet">
     <link href="{{url('assets/admin/fonts/Vazirmatn-FD-font-face.css')}}" rel="stylesheet">
@@ -41,7 +38,10 @@
 
 
     <link href="{{ url('assets/admin/css/jgrowl.min.css') }}" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <link href="{{ url('assets/admin/css/boxicon.min.css') }}" rel="stylesheet" />
+    <link href="{{ url('assets/admin/css/boxicons.min.css') }}" rel="stylesheet" />
+    <link href="{{ url('assets/admin/css/boxicons.css') }}" rel="stylesheet" />
+    {{--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">--}}
     @stack('style')
 
     <title>پنل مدیریت</title>

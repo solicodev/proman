@@ -43,20 +43,20 @@
     <div id="kt_app_content" class="app-content p-0  flex-column-fluid ">
         <!--begin::Row-->
         <div class="row g-5 mb-5">
-            <div class="col-lg-6">
-                <div class="card h-100">
-                    <div class="card-header border-0 pt-5">
-                        <h3 class="card-title align-items-start flex-column">
-                            <span class="card-label fw-bold fs-3 mb-1">گزارش پروژه ها</span>
+{{--            <div class="col-lg-6">--}}
+{{--                <div class="card h-100">--}}
+{{--                    <div class="card-header border-0 pt-5">--}}
+{{--                        <h3 class="card-title align-items-start flex-column">--}}
+{{--                            <span class="card-label fw-bold fs-3 mb-1">گزارش پروژه ها</span>--}}
 
-                            <span class="text-muted fw-semibold fs-7">گزارش نموداری روند پیشرفت پروژه ها </span>
-                        </h3>
-                    </div>
-                <div class="card-body">
-                    <div id="kt_charts_widget_6_chart" style="height: 350px"></div>
-                </div>
-                </div>
-            </div>
+{{--                            <span class="text-muted fw-semibold fs-7">گزارش نموداری روند پیشرفت پروژه ها </span>--}}
+{{--                        </h3>--}}
+{{--                    </div>--}}
+{{--                <div class="card-body">--}}
+{{--                    <div id="kt_charts_widget_6_chart" style="height: 350px"></div>--}}
+{{--                </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
             <div class="col-lg-6">
                 <!--begin::Card-->
                 <div class="card h-100">

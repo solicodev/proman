@@ -70,8 +70,10 @@
                         $task_member = \App\Models\Task::with('assigners')->whereHas('assigners', function ($query) use($member){
                             $query->where('user_id',$member->id);
                         })->get();
-                        $activities = \Spatie\Activitylog\Models\Activity::where('causer_id',$member->id)->get();
+                        $activities = \Spatie\Activitylog\Models\Activity::where('causer_id',$member->id)->where('log_name','task dependency')->orWhere('log_name','task')->where('event',['updated','created'])->get();
+
                         $files = \App\Models\Photo::with('user')->where('user_id',$member->id)->get();
+
                     @endphp
                 <!--begin::Col-->
                 <div class="col-md-6 col-xxl-4">
@@ -91,7 +93,7 @@
                             <!--end::Avatar-->
 
                             <!--begin::Name-->
-                            <a href="#" class="fs-4 text-gray-800 text-hover-primary fw-bold mb-0">{{$member->Name}}</a>
+                            <a href="#" class="fs-4 text-gray-800 text-hover-primary fw-bold mb-0">{{$member->Name}} {{$member->id}}</a>
                             <!--end::Name-->
 
                             <!--begin::Position-->

@@ -107,6 +107,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth','SuperAdminCheck'])->
         Route::put('/update/{project}', [ProjectController::class , 'update'])->name('update');
         Route::post('/status/{project}', [ProjectController::class , 'status'])->name('status');
         Route::get('/delete/{project}', [ProjectController::class , 'destroy'])->name('destroy');
+
+        Route::post('/filter', [ProjectController::class, 'filter'])->name('filter');
+
     });
 
     Route::prefix('task')->name('task.')->group(function () {
