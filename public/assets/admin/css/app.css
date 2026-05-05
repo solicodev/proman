@@ -98,9 +98,10 @@ a {
 
 .page-footer {
     background: rgb(0 0 0 / 20%);
-    position: absolute;
+    position: fixed;
     right: 250px;
     left: 0;
+    bottom: 0;
     text-align: center;
     padding: 7px;
     color: #fff;
@@ -2466,7 +2467,7 @@ body.bg-theme8 {
 }
 
 body.bg-theme9 {
-    background-image: linear-gradient(-45deg, #29323c, #485563)
+    background-image: linear-gradient(-45deg, #091a2c, #001b37)
 }
 
 body.bg-theme10 {

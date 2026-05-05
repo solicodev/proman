@@ -33,7 +33,7 @@
                             <td style="direction: ltr; text-align: left"> {{ $task->project?->project_code }}</td>
                             <td style="direction: ltr; text-align: left"> {{ $task->task_code }}</td>
                             <td> {{ $task->title }}</td>
-                            <td> {{ $task->duration }}</td>
+                            <td> {{ $task->duration }} {{ $task->duration_type }} </td>
                             <td> {{ verta($task->start_date) }}</td>
                             <td> {{ verta($task->end_date) }}</td>
                             <td> {{ $task->manager?->Name }}</td>

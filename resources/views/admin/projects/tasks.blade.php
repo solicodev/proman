@@ -16,6 +16,7 @@
                         <th></th>
                         <th>شناسه پروژه</th>
                         <th>عنوان تسک</th>
+                        <th>مهلت تسک</th>
                         <th>تاریخ شروع تعیین شده</th>
                         <th>تاریخ شروع واقعی</th>
                         <th>تاریخ پایان تسک</th>
@@ -31,6 +32,7 @@
                             <td>{{$loop->iteration}}</td>
                             <td style="direction: ltr; text-align: left"> {{ $task->task_code }}</td>
                             <td> {{ $task->title }}</td>
+                            <td> {{ $task->duration }} {{ $task->duration_type }} </td>
                             <td> {{ verta($task->start_date) }}</td>
                             <td> {{ verta($task->start_todo_date) }}</td>
                             <td> {{ verta($task->end_date) }}</td>
