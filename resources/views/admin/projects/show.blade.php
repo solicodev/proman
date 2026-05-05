@@ -49,7 +49,7 @@
                             <th style='width:50px;'>عملیات</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody  class="fs-6">
                         @foreach ($tasks as $task)
 
                             <tr>

@@ -121,36 +121,11 @@
             <div class="separator"></div>
 
             <ul class="nav nav-tabs mb-0" role="tablist">
-                {{--                        <li class="nav-item" role="presentation">--}}
-                {{--                            <a--}}
-                {{--                                class="nav-link--}}
-                {{--                                @if(request()->getUri() == route('dashboard.project.show' , $project->id)) active @endif "--}}
-                {{--                                href="{{route('dashboard.project.show' , $project->id)}}"--}}
-                {{--                                data-bs-toggle="tab"--}}
-                {{--                                role="tab"--}}
-                {{--                                aria-selected="true"--}}
-                {{--                            >--}}
-                {{--                                <div class="d-flex align-items-center">--}}
-                {{--                                    <div class="tab-icon">--}}
-                {{--                                        <i--}}
-                {{--                                            class="bx bx-apps-alt font-18 me-1"--}}
-                {{--                                        ></i>--}}
-                {{--                                    </div>--}}
-                {{--                                    <div class="tab-title">--}}
-                {{--                                        اطلاعات کلی--}}
-                {{--                                    </div>--}}
-                {{--                                </div>--}}
-                {{--                            </a>--}}
-                {{--                        </li>--}}
                 <li class="nav-item" role="presentation">
                     <a
                         class="nav-link
                                 @if(request()->getUri() == route('admin.project.show' , $project->id)) active @endif "
-                        href="{{route('dashboard.project.task', $project->id)}}"
-                        data-bs-toggle="tab"
-                        role="tab"
-                        aria-selected="false"
-                    >
+                        href="{{route('admin.project.show', $project->id)}}" >
                         <div class="d-flex align-items-center">
                             <div class="tab-icon">
                                 <i
@@ -164,12 +139,8 @@
                 <li class="nav-item" role="presentation">
                     <a
                         class="nav-link
-                                @if(request()->getUri() == route('dashboard.project.member' , $project->id)) active @endif"
-                        href="{{route('dashboard.project.member', $project->id)}}"
-                        data-bs-toggle="tab"
-                        role="tab"
-                        aria-selected="false"
-                    >
+                                @if(request()->getUri() == route('admin.project.member' , $project->id)) active @endif"
+                        href="{{route('admin.project.member', $project->id)}}">
                         <div class="d-flex align-items-center">
                             <div class="tab-icon">
                                 <i
@@ -183,12 +154,8 @@
                 <li class="nav-item" role="presentation">
                     <a
                         class="nav-link
-                                @if(request()->getUri() == route('dashboard.project.file', $project->id)) active @endif "
-                        href="{{route('dashboard.project.file', $project->id)}}"
-                        data-bs-toggle="tab"
-                        role="tab"
-                        aria-selected="false"
-                    >
+                                @if(request()->getUri() == route('admin.project.file', $project->id)) active @endif "
+                        href="{{route('admin.project.file', $project->id)}}">
                         <div class="d-flex align-items-center">
                             <div class="tab-icon">
                                 <i
@@ -203,12 +170,8 @@
                 <li class="nav-item" role="presentation">
                     <a
                         class="nav-link
-                                @if(request()->getUri() == route('dashboard.project.activity', $project->id)) active @endif"
-                        href="{{route('dashboard.project.activity',$project->id)}}"
-                        data-bs-toggle="tab"
-                        role="tab"
-                        aria-selected="false"
-                    >
+                                @if(request()->getUri() == route('admin.project.activity', $project->id)) active @endif"
+                        href="{{route('admin.project.activity',$project->id)}}">
                         <div class="d-flex align-items-center">
                             <div class="tab-icon">
                                 <i
@@ -222,12 +185,8 @@
                 <li class="nav-item" role="presentation">
                     <a
                         class="nav-link
-                              @if(request()->getUri() == route('dashboard.project.dependency', $project->id)) active @endif"
-                        href="{{route('dashboard.project.dependency',$project->id)}}"
-                        data-bs-toggle="tab"
-                        role="tab"
-                        aria-selected="false"
-                    >
+                              @if(request()->getUri() == route('admin.project.dependency', $project->id)) active @endif"
+                        href="{{route('admin.project.dependency',$project->id)}}">
                         <div class="d-flex align-items-center">
                             <div class="tab-icon">
                                 <i
@@ -241,12 +200,8 @@
                 <li class="nav-item" role="presentation">
                     <a
                         class="nav-link
-                              @if(request()->getUri() == route('dashboard.project.taskTimeLine', $project->id)) active @endif"
-                        href="{{route('dashboard.project.taskTimeLine',$project->id)}}"
-                        data-bs-toggle="tab"
-                        role="tab"
-                        aria-selected="false"
-                    >
+                              @if(request()->getUri() == route('admin.project.taskTimeLine', $project->id)) active @endif"
+                        href="{{route('admin.project.taskTimeLine',$project->id)}}">
                         <div class="d-flex align-items-center">
                             <div class="tab-icon">
                                 <i
@@ -260,12 +215,8 @@
                 <li class="nav-item" role="presentation">
                     <a
                         class="nav-link
-                              @if(request()->getUri() == route('dashboard.project.comment', $project->id)) active @endif"
-                        href="{{route('dashboard.project.comment',$project->id)}}"
-                        data-bs-toggle="tab"
-                        role="tab"
-                        aria-selected="false"
-                    >
+                              @if(request()->getUri() == route('admin.project.comment', $project->id)) active @endif"
+                        href="{{route('admin.project.comment',$project->id)}}">
                         <div class="d-flex align-items-center">
                             <div class="tab-icon">
                                 <i

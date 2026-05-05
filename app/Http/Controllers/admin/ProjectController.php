@@ -57,6 +57,8 @@ class ProjectController extends Controller
         return view('admin.projects.tasks',get_defined_vars());
     }
 
+
+
     /**
      * Show the form for creating a new resource.
      */
@@ -310,7 +312,6 @@ class ProjectController extends Controller
             $query->whereIn('name', $memberRoles);
         })->whereStatus('1')->latest()->get();
         $project_members = $project->members()->paginate(9);
-
         return view('admin.projects.members',get_defined_vars());
 
     }
