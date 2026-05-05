@@ -25,7 +25,20 @@
     </div>
 
     <div class="d-flex flex-column flex-column-fluid">
-        @include('admin.projects.main-header-show')
+        <div id="kt_app_toolbar" class="app-toolbar  d-flex pb-3 pb-lg-1 ">
+            <div class="d-flex flex-stack flex-row-fluid">
+                <div class="d-flex flex-column flex-row-fluid">
+                    <div class="page-title d-flex align-items-center me-3">
+                        <h1 class="page-heading d-flex flex-column justify-content-center text-gray-900 fw-bold fs-lg-2x gap-2">
+                            <span>{{$project->name}} <small>{{$project->project_code}}</small></span>
+                        </h1>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
         <div class="card">
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-end">
