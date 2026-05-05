@@ -2781,7 +2781,10 @@ body {
 }
 
 .page-breadcrumb .breadcrumb-item + .breadcrumb-item::before {
-    content: "\ea5a"
+    content: none!important;
+}
+.breadcrumb-item+.breadcrumb-item::before {
+    content: none !important;
 }
 
 .h1, h1 {

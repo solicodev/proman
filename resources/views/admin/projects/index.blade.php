@@ -181,7 +181,10 @@
                             </td>
                             <td>
                                 <div class="d-flex">
-                                    <a href="{{ route('admin.project.edit',$project->id) }}" class='text-warning'>
+                                    <a href="{{ route('admin.project.show',$project->id) }}" class="text-primary ms-3" >
+                                        <i class="bx bxs-eye"></i>
+                                    </a>
+                                    <a href="{{ route('admin.project.edit',$project->id) }}" class="text-warning ms-3">
                                         <i class="bx bxs-edit"></i>
                                     </a>
                                     <a href="#" onclick="openDeleteModal('{{ route('admin.project.destroy',$project->id) }}')"

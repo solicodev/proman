@@ -103,6 +103,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth','SuperAdminCheck'])->
         Route::get('tasks/{project}', [ProjectController::class , 'task'])->name('tasks');
         Route::get('/create', [ProjectController::class , 'create'])->name('create');
         Route::post('/store', [ProjectController::class , 'store'])->name('store');
+        Route::get('/show/{project}', [ProjectController::class , 'show'])->name('show');
         Route::get('/edit/{project}', [ProjectController::class , 'edit'])->name('edit');
         Route::put('/update/{project}', [ProjectController::class , 'update'])->name('update');
         Route::post('/status/{project}', [ProjectController::class , 'status'])->name('status');
