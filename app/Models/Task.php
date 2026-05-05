@@ -71,7 +71,7 @@ class Task extends Model
         'year' => 'سال',
     ];
 
-    public function getDurationTypeAttribute()
+    public function getDurationTypeLabelAttribute()
     {
         return $this->durationTypes[$this->duration_type] ?? '';
     }
