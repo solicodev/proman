@@ -10,12 +10,16 @@ use App\Models\ImplementeUnit;
 use App\Models\Photo;
 use App\Models\Project;
 use App\Models\ProjectApprove;
+use App\Models\ProjectDependency;
 use App\Models\Task;
 use App\Models\User;
 use App\Services\ProjectService;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Spatie\Activitylog\Models\Activity;
 
 class ProjectController extends Controller
 {
@@ -95,6 +99,7 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
+        $tasks = Task::where('project_id',$project->id)->get();
         return view('admin.projects.show',get_defined_vars());
     }
 
@@ -222,9 +227,9 @@ class ProjectController extends Controller
         $projectApprove->save();
 
         try {
-            return redirect()->route('dashboard.project.report')->with('flash_message', ' تغییرات اعمال شد');
+            return redirect()->route('admin.project.report')->with('flash_message', ' تغییرات اعمال شد');
         } catch (Exception $exception) {
-            return redirect()->route('dashboard.project.report')->with('err_message', 'خطایی رخ داد مجددا تلاش کنید');
+            return redirect()->route('admin.project.report')->with('err_message', 'خطایی رخ داد مجددا تلاش کنید');
         }
     }
 
@@ -233,9 +238,123 @@ class ProjectController extends Controller
         try {
             $project->status = $request->status;
             $project->update();
-            return redirect()->route('dashboard.project.report')->with('flash_message', 'وضعیت تغییر کرد');
+            return redirect()->route('admin.project.report')->with('flash_message', 'وضعیت تغییر کرد');
         } catch (Exception $exception) {
-            return redirect()->route('dashboard.project.report')->with('err_message', 'خطایی رخ داد مجددا تلاش کنید');
+            return redirect()->route('admin.project.report')->with('err_message', 'خطایی رخ داد مجددا تلاش کنید');
         }
+    }
+
+
+    public function report()
+    {
+        $user = auth()->user();
+        $projectsAsManager = Project::where('manager_id', $user->id);
+
+        $managerIds = DB::table('project_manager_admins')
+            ->where('admin_id', $user->id)
+            ->pluck('project_manager_id');
+
+        $projectsAsAdmin = Project::whereIn('manager_id', $managerIds); // ADMINS
+        $projectsAsApprovingManager = Project::where('approving_manager', $user->id); //APPROVING MANAGER
+
+
+        $projects = $projectsAsManager->union($projectsAsAdmin)->union($projectsAsApprovingManager)->with(['manager','category','department','members','photos','brand'])->paginate(9);
+        $project_id = $projectsAsManager->union($projectsAsAdmin)->with(['manager','category','department','members','photos','brand']);
+        $last_projects = $projectsAsManager->union($projectsAsAdmin)->with(['manager','category','department','members','photos','brand'])->latest()->get();
+
+
+        $departments = Department::all();
+        $brands = Brand::all();
+
+        $excludedRoles = ['Manager'];
+
+        $managers = User::whereHas('roles', function ($query) use ($excludedRoles) {
+            $query->whereIn('name', $excludedRoles);
+        })->whereStatus('1')->latest()->get();
+
+//        dd($projectsAsAdmin,$projectsAsManager,$last_projects);
+        return view('admin.projects.report',get_defined_vars());
+    }
+
+
+    public function file(Project $project)
+    {
+        $tasks = Task::with(['photos','project'])->where('project_id',$project->id)->get();
+        $task_files = [];
+        foreach ($tasks as $task)
+        {
+            $task_files = $task->photos?->toArray();
+        }
+        $files_array = array_merge($task_files , $project->photos->toArray());
+
+        $collection = collect($files_array);
+        $currentPage = request()->get('page', 1);
+        $perPage = 10;
+
+        $currentPageItems = $collection->slice(($currentPage - 1) * $perPage, $perPage)->values();
+
+        $resultFiles = new LengthAwarePaginator(
+            $currentPageItems,
+            $collection->count(),
+            $perPage,
+            $currentPage,
+            ['path' => request()->url(), 'query' => request()->query()]
+        );
+
+        return view('admin.projects.files',get_defined_vars());
+    }
+    public function member(Project $project)
+    {
+        $memberRoles = ['Member'];
+        $members = User::whereHas('roles', function ($query) use ($memberRoles) {
+            $query->whereIn('name', $memberRoles);
+        })->whereStatus('1')->latest()->get();
+        $project_members = $project->members()->paginate(9);
+
+        return view('admin.projects.members',get_defined_vars());
+
+    }
+
+    public function activity(Project $project)
+    {
+        $tasks = Task::with('project')->where('id',$project->id)->pluck('id')->all();
+        $activities = Activity::whereIn('subject_type',[Project::class,Task::class])->whereIn('subject_id',$tasks)->paginate(12);
+        return view('admin.projects.activity',get_defined_vars());
+    }
+
+    public function dependency(Project $project)
+    {
+        $projectDependencies = ProjectDependency::where('project_id',$project->id)->paginate(12);
+        return view('admin.projects.projectDependency',get_defined_vars());
+    }
+
+    public function comment(Project $project)
+    {
+        $tasks = Task::with(['photos','project','comments.user.photo'])->where('project_id',$project->id)->get();
+        $task_comments = [];
+        foreach ($tasks as $key => $task_comment)
+        {
+            $task_comments = $task_comment->comments?->toArray();
+        }
+
+        $comments_array = array_merge($task_comments , $project->comments?->toArray());
+        $comment_collection = collect($comments_array);
+        $total_comments = collect($comments_array)->count();
+
+
+        $currentPage = request()->get('page', 1);
+        $perPage = 10;
+
+        $currentPageItems = $comment_collection->slice(($currentPage - 1) * $perPage, $perPage)->values();
+
+        $resultComments = new LengthAwarePaginator(
+            $currentPageItems,
+            $comment_collection->count(),
+            $perPage,
+            $currentPage,
+            ['path' => request()->url(), 'query' => request()->query()]
+        );
+
+        return view('admin.projects.comments',get_defined_vars());
     }
 }

@@ -1,17 +1,20 @@
 @extends('admin.index')
 @section('content')
 
-    <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+    <div class=" d-none d-sm-flex align-items-center mb-3">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0 p-0">
                 <li class="breadcrumb-item">
+                    <i class="bx bx-home text-gray-700 fs-6"></i>
                     <a href="{{ route('admin.index') }}">
                         داشبورد
+                        <i class="bx bx-chevron-left fs-6 text-gray-700"></i>
                     </a>
                 </li>
                 <li class="breadcrumb-item">
                     <a href="{{ route('admin.project.index') }}">
                         پروژه
+                        <i class="bx bx-chevron-left fs-6 text-gray-700"></i>
                     </a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">

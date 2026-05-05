@@ -111,6 +111,15 @@ Route::prefix('admin')->name('admin.')->middleware(['auth','SuperAdminCheck'])->
 
         Route::post('/filter', [ProjectController::class, 'filter'])->name('filter');
 
+        Route::get('/task/lists/{project}', [ProjectController::class, 'task'])->name('task');
+        Route::get('/files/{project}', [ProjectController::class, 'file'])->name('file');
+        Route::get('/members/{project}', [ProjectController::class, 'member'])->name('member');
+        Route::get('/activity/{project}', [ProjectController::class, 'activity'])->name('activity');
+        Route::get('/dependencies/{project}', [ProjectController::class, 'dependency'])->name('dependency');
+        Route::get('/comments/{project}', [ProjectController::class, 'comment'])->name('comment');
+        Route::get('/timeline/{project}', [TaskController::class, 'taskTimeLine'])->name('taskTimeLine');
+        Route::get('/access/{project}', [ProjectController::class, 'access'])->name('access');
+
     });
 
     Route::prefix('task')->name('task.')->group(function () {

@@ -1,5 +1,6 @@
 @extends('admin.index')
 @section('content')
+    @include('layouts.message')
     <div class=" d-none d-sm-flex align-items-center mb-3">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0 p-0">
@@ -147,31 +148,31 @@
                     <div class="separator"></div>
 
                     <ul class="nav nav-tabs mb-0" role="tablist">
+{{--                        <li class="nav-item" role="presentation">--}}
+{{--                            <a--}}
+{{--                                class="nav-link--}}
+{{--                                @if(request()->getUri() == route('dashboard.project.show' , $project->id)) active @endif "--}}
+{{--                                href="{{route('dashboard.project.show' , $project->id)}}"--}}
+{{--                                data-bs-toggle="tab"--}}
+{{--                                role="tab"--}}
+{{--                                aria-selected="true"--}}
+{{--                            >--}}
+{{--                                <div class="d-flex align-items-center">--}}
+{{--                                    <div class="tab-icon">--}}
+{{--                                        <i--}}
+{{--                                            class="bx bx-apps-alt font-18 me-1"--}}
+{{--                                        ></i>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="tab-title">--}}
+{{--                                        اطلاعات کلی--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </a>--}}
+{{--                        </li>--}}
                         <li class="nav-item" role="presentation">
                             <a
                                 class="nav-link
-                                @if(request()->getUri() == route('dashboard.project.show' , $project->id)) active @endif "
-                                href="{{route('dashboard.project.show' , $project->id)}}"
-                                data-bs-toggle="tab"
-                                role="tab"
-                                aria-selected="true"
-                            >
-                                <div class="d-flex align-items-center">
-                                    <div class="tab-icon">
-                                        <i
-                                            class="bx bx-comment-detail font-18 me-1"
-                                        ></i>
-                                    </div>
-                                    <div class="tab-title">
-                                        اطلاعات کلی
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <a
-                                class="nav-link
-                                @if(request()->getUri() == route('dashboard.project.task' , $project->id)) active @endif "
+                                @if(request()->getUri() == route('admin.project.show' , $project->id)) active @endif "
                                 href="{{route('dashboard.project.task', $project->id)}}"
                                 data-bs-toggle="tab"
                                 role="tab"
@@ -180,7 +181,7 @@
                                 <div class="d-flex align-items-center">
                                     <div class="tab-icon">
                                         <i
-                                            class="bx bx-bookmark-alt font-18 me-1"
+                                            class="bx bx-apps-alt font-18 me-1"
                                         ></i>
                                     </div>
                                     <div class="tab-title">تسک ها</div>
@@ -199,7 +200,7 @@
                                 <div class="d-flex align-items-center">
                                     <div class="tab-icon">
                                         <i
-                                            class="bx bx-star font-18 me-1"
+                                            class="bx bx-user-circle font-18 me-1"
                                         ></i>
                                     </div>
                                     <div class="tab-title">اعضای پروژه</div>
@@ -218,7 +219,7 @@
                                 <div class="d-flex align-items-center">
                                     <div class="tab-icon">
                                         <i
-                                            class="bx bx-star font-18 me-1"
+                                            class="bx bxs-file font-18 me-1"
                                         ></i>
                                     </div>
                                     <div class="tab-title">فایل ها</div>
@@ -238,7 +239,7 @@
                                 <div class="d-flex align-items-center">
                                     <div class="tab-icon">
                                         <i
-                                            class="bx bx-star font-18 me-1"
+                                            class="bx bx-browser-activity font-18 me-1"
                                         ></i>
                                     </div>
                                     <div class="tab-title">فعالیت ها</div>
@@ -257,7 +258,7 @@
                                 <div class="d-flex align-items-center">
                                     <div class="tab-icon">
                                         <i
-                                            class="bx bx-star font-18 me-1"
+                                            class="bx bx-categories font-18 me-1"
                                         ></i>
                                     </div>
                                     <div class="tab-title">آپشن | جزییات پروژه</div>
@@ -276,7 +277,7 @@
                                 <div class="d-flex align-items-center">
                                     <div class="tab-icon">
                                         <i
-                                            class="bx bx-star font-18 me-1"
+                                            class="bx bx-bar-chart font-18 me-1"
                                         ></i>
                                     </div>
                                     <div class="tab-title">گزارش تسک های پروژه</div>
@@ -295,7 +296,7 @@
                                 <div class="d-flex align-items-center">
                                     <div class="tab-icon">
                                         <i
-                                            class="bx bx-star font-18 me-1"
+                                            class="bx bx-equal-square font-18 me-1"
                                         ></i>
                                     </div>
                                     <div class="tab-title">کامنت ها</div>
@@ -305,4 +306,92 @@
                     </ul>
                 </div>
             </div>
+
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-end">
+                    <a href="{{ route('admin.task.create') }}" class="btn btn-primary btn-sm">افزودن تسک</a>
+                </div>
+                <hr>
+                <div class="table-responsive">
+                    <table class="data_table table table-striped table-bordered page_speed_944522378">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>شناسه پروژه</th>
+                            <th>عنوان تسک</th>
+                            <th>مهلت تسک</th>
+                            <th>تاریخ شروع تعیین شده</th>
+                            <th>تاریخ شروع واقعی</th>
+                            <th>تاریخ پایان تسک</th>
+                            <th>مدیر تایید کننده</th>
+                            <th>ناظر تسک</th>
+                            <th>وضعیت</th>
+                            <th style='width:50px;'>عملیات</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach ($tasks as $task)
+
+                            <tr>
+                                <td>{{$loop->iteration}}</td>
+                                <td style="direction: ltr; text-align: left"> {{ $task->task_code }}</td>
+                                <td> {{ $task->title }}</td>
+                                <td> {{ $task->duration }} {!! $task->DurationType !!} </td>
+                                <td> {{ verta($task->start_date) }}</td>
+                                <td> {{$task->start_todo_date }}</td>
+                                <td> {{ verta($task->end_date) }}</td>
+                                <td> {{ $task->manager?->Name }}</td>
+                                <td> {{ $task->watcher?->Name }}</td>
+                                <td>
+                                    {!! $task->taskStatus !!}
+                                </td>
+                                <td>
+                                    <div class="d-flex">
+                                        <a href="{{ route('admin.task.edit',$task->id) }}" class='text-warning'>
+                                            <i class="bx bxs-edit"></i>
+                                        </a>
+                                        <a href="#" onclick="openDeleteModal('{{ route('admin.task.destroy',$task->id) }}')"
+                                           class="text-danger ms-3">
+                                            <i class="bx bxs-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal fade" id="deleteServiceModal" tabindex="-1" aria-labelledby="deleteServiceModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteServiceModalLabel">
+                            حذف سرویس
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="" id='deleteForm'>
+                        <div class="modal-body">
+                            آیا از حذف سرویس مطمئن هستید؟
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+                                خیر
+                            </button>
+                            <button type="submit" class="btn btn-danger">
+                                بله
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 @endsection
