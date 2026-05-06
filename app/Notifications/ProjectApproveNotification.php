@@ -55,6 +55,7 @@ class ProjectApproveNotification extends Notification
                 'start_date' => $this->project?->start_date,
                 'end_date' => $this->project?->end_date,
                 'implementeunit_id' => $this->project?->implementeunit_id,
+                'message' => 'پروژه جدید ایجاد شده است' ,
             ]
         ];
     }

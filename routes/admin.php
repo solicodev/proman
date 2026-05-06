@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->name('admin.')->middleware(['auth','SuperAdminCheck'])->group(function () {
     Route::get('/', [adminController::class , 'index'])->name('index');
+    Route::get('/notification', [adminController::class , 'notification'])->name('notifications');
 
     Route::prefix('user')->name('user.')->group(function () {
         Route::get('/', [UserController::class , 'index'])->name('index');

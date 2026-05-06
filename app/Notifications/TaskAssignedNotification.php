@@ -57,6 +57,7 @@ class TaskAssignedNotification extends Notification
                 'start_date' => $this->task?->start_date,
                 'end_date' => $this->task?->end_date,
                 'project_id' =>$this->task?->project_id,
+                'message' => 'تسک جدید برای پروژه ' . $this->task?->project?->name .'ایجاد شده است',
             ]
         ];
 

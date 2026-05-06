@@ -1,16 +1,22 @@
+{{--@foreach($notifications as $notification)--}}
+{{--   @dd($notification->data['data']['message'])--}}
+{{--    @if ($notification->data['type'] == 'project_approve')--}}
+{{--        @php--}}
+{{--            $project = \App\Models\Project::where('id',$notification->data['data']['project_id'])->first();--}}
+{{--        @endphp--}}
+{{--    @endif--}}
+{{--@endforeach--}}
 @include('admin.layout.style')
 <body class="bg-theme bg-theme9">
-
 <div class="wrapper">
-
     <div class="sidebar-wrapper" data-simplebar="true">
         <div class="sidebar-header">
-                <img src="{{url('assets/admin/images/logo.png')}}" class="logo-icon" alt="توضیح تصویر">
-{{--            <div>--}}
-{{--                <h4 class="logo-text">پنل مدیریت--}}
+            <img src="{{url('assets/admin/images/logo.png')}}" class="logo-icon" alt="توضیح تصویر">
+            {{--            <div>--}}
+            {{--                <h4 class="logo-text">پنل مدیریت--}}
 
-{{--                </h4>--}}
-{{--            </div>--}}
+            {{--                </h4>--}}
+            {{--            </div>--}}
             <div class="toggle-icon ms-auto">
                 <i  class='bx bx-arrow-back'>
                 </i>
@@ -28,62 +34,62 @@
                     <div class="menu-title">داشبورد</div>
                 </a>
                 @if(\Illuminate\Support\Facades\Auth::user()->hasrole('Super Admin'))
-                <ul>
-                    <li> <a href="{{route('admin.index')}}">
+                    <ul>
+                        <li> <a href="{{route('admin.index')}}">
 
-                            <i  class='bx bx-radio-circle'>
-                            </i>Super Admin</a>
-                    </li>
-                    <li> <a href="{{route('dashboard.index')}}">
+                                <i  class='bx bx-radio-circle'>
+                                </i>Super Admin</a>
+                        </li>
+                        <li> <a href="{{route('dashboard.index')}}">
 
-                            <i  class='bx bx-radio-circle'>
-                            </i>مدیریت پروژه</a>
-                    </li>
-                </ul>
+                                <i  class='bx bx-radio-circle'>
+                                </i>مدیریت پروژه</a>
+                        </li>
+                    </ul>
                 @endif
             </li>
             @if(\Illuminate\Support\Facades\Auth::user()->hasrole('Super Admin'))
-            <li class="menu-label">مدیریت کمپین ها</li>
-            <li>
-                <a href="{{route('admin.campaign.agancy.index')}}">
-                    <div class="parent-icon">
+                <li class="menu-label">مدیریت کمپین ها</li>
+                <li>
+                    <a href="{{route('admin.campaign.agancy.index')}}">
+                        <div class="parent-icon">
 
-                        <i  class='bx bx-list'>
-                        </i>
-                    </div>
-                    <div class="menu-title"> آژانس ها</div>
-                </a>
-            </li>
-            <li>
-                <a href="{{route('admin.campaign.influencer.index')}}">
-                    <div class="parent-icon">
+                            <i  class='bx bx-list'>
+                            </i>
+                        </div>
+                        <div class="menu-title"> آژانس ها</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{route('admin.campaign.influencer.index')}}">
+                        <div class="parent-icon">
 
-                        <i  class='bx bx-list'>
-                        </i>
-                    </div>
-                    <div class="menu-title"> influencer ها</div>
-                </a>
-            </li>
-            <li>
-                <a href="{{route('admin.campaign.brand.index')}}">
-                    <div class="parent-icon">
+                            <i  class='bx bx-list'>
+                            </i>
+                        </div>
+                        <div class="menu-title"> influencer ها</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{route('admin.campaign.brand.index')}}">
+                        <div class="parent-icon">
 
-                        <i  class='bx bx-list'>
-                        </i>
-                    </div>
-                    <div class="menu-title"> برندهای کمپین</div>
-                </a>
-            </li>
-            <li>
-                <a href="{{route('admin.campaign.index')}}">
-                    <div class="parent-icon">
+                            <i  class='bx bx-list'>
+                            </i>
+                        </div>
+                        <div class="menu-title"> برندهای کمپین</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{route('admin.campaign.index')}}">
+                        <div class="parent-icon">
 
-                        <i  class='bx bx-list'>
-                        </i>
-                    </div>
-                    <div class="menu-title"> کمپین ها</div>
-                </a>
-            </li>
+                            <i  class='bx bx-list'>
+                            </i>
+                        </div>
+                        <div class="menu-title"> کمپین ها</div>
+                    </a>
+                </li>
             @endif
             <li class="menu-label">مدیریت پروژه ها</li>
             {{--                <li class="menu-label">مدیریت دپارتمان ها</li>--}}
@@ -190,27 +196,27 @@
                 </a>
             </li>
             {{--                <li class="menu-label">مدیریت رسانه ها</li>--}}
-{{--            <li>--}}
-{{--                <a href="{{route('admin.photo.index')}}">--}}
-{{--                    <div class="parent-icon">--}}
+            {{--            <li>--}}
+            {{--                <a href="{{route('admin.photo.index')}}">--}}
+            {{--                    <div class="parent-icon">--}}
 
-{{--                        <i  class='bx bx-list'>--}}
-{{--                        </i>--}}
-{{--                    </div>--}}
-{{--                    <div class="menu-title"> رسانه ها</div>--}}
-{{--                </a>--}}
-{{--            </li>--}}
+            {{--                        <i  class='bx bx-list'>--}}
+            {{--                        </i>--}}
+            {{--                    </div>--}}
+            {{--                    <div class="menu-title"> رسانه ها</div>--}}
+            {{--                </a>--}}
+            {{--            </li>--}}
             {{--                <li class="menu-label">مدیریت دسترسی ها</li>--}}
-{{--            <li>--}}
-{{--                <a href="{{route('admin.permission.index')}}">--}}
-{{--                    <div class="parent-icon">--}}
+            {{--            <li>--}}
+            {{--                <a href="{{route('admin.permission.index')}}">--}}
+            {{--                    <div class="parent-icon">--}}
 
-{{--                        <i  class='bx bx-list'>--}}
-{{--                        </i>--}}
-{{--                    </div>--}}
-{{--                    <div class="menu-title"> دسترسی ها</div>--}}
-{{--                </a>--}}
-{{--            </li>--}}
+            {{--                        <i  class='bx bx-list'>--}}
+            {{--                        </i>--}}
+            {{--                    </div>--}}
+            {{--                    <div class="menu-title"> دسترسی ها</div>--}}
+            {{--                </a>--}}
+            {{--            </li>--}}
 
             {{--            <li>--}}
             {{--                <a href="javascript:;" class="has-arrow">--}}
@@ -938,11 +944,7 @@
                                                 </div>
                                             </a>
                                         </div>
-
-
                                     </div>
-
-
                                 </div>
                             </div>
                         </li>
@@ -950,45 +952,41 @@
                         <li class="nav-item dropdown dropdown-large">
                             <a class="nav-link dropdown-toggle dropdown-toggle-nocaret position-relative" href="#"
                                data-bs-toggle="dropdown">
-                                <span class="alert-count">2</span>
-                                <i class='bx bx-bell'>
+                                <span class="alert-count {{ count($notifications) > 0 ? 'blink' : '' }}">{{count($notifications)}}</span>
+                                <i class='bx bx-bell {{ count($notifications) > 0 ? 'bell-animate' : '' }} '>
                                 </i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
-                                <a href="javascript:;">
+                                <a href="#">
                                     <div class="msg-header">
                                         <p class="msg-header-title">اعلانها</p>
-                                        <p class="msg-header-badge">7 جدید</p>
+                                        <p class="msg-header-badge">{{count($notifications)}} جدید</p>
                                     </div>
                                 </a>
                                 <div class="header-notifications-list">
-                                    <a class="dropdown-item" href="javascript:;">
-                                        <div class="d-flex align-items-center">
-                                            <div class="user-online">
-                                                <img src="{{url('assets/admin/images/avatars/avatar-1.png')}}" class="msg-avatar"
-                                                     alt="توضیح تصویر">
+                                    @foreach($notifications as $notification)
+                                        @if($notification->data['type'] == 'project_approve')
+                                            @php
+                                                $project = \App\Models\Project::where('id',$notification->data['data']['project_id'])->first();
+                                            @endphp
+                                        @endif
+                                        <a class="dropdown-item" href="#">
+                                            <div class="d-flex align-items-center">
+                                                <div class="notify bg-light-danger text-danger">{{ mb_substr($notification->id, 0, 1) }}</div>
+                                                <div class="flex-grow-1">
+                                                    <h6 class="msg-name">
+                                                        {{ $project->name }}
+                                                        <span class="msg-time float-end">
+                                                        {{verta($notification->created_at)->formatDifference()}}
+                                                    </span>
+                                                    </h6>
+                                                    <p class="msg-info">{{ $notification->data['data']['message'] ?? '' }}</p>
+                                                </div>
                                             </div>
-                                            <div class="flex-grow-1">
-                                                <h6 class="msg-name">دنیا اوحدی<span class="msg-time float-end">5
-															ثانیه قبل</span>
-                                                </h6>
-                                                <p class="msg-info">لورم ایپسوم متن ساختگی</p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a class="dropdown-item" href="javascript:;">
-                                        <div class="d-flex align-items-center">
-                                            <div class="notify bg-light-danger text-danger">د س</div>
-                                            <div class="flex-grow-1">
-                                                <h6 class="msg-name">سفارشات جدید <span class="msg-time float-end">2
-															دقیقه قبل</span>
-                                                </h6>
-                                                <p class="msg-info">سفارشات جدیدی ثبت شده است</p>
-                                            </div>
-                                        </div>
-                                    </a>
+                                        </a>
+                                    @endforeach
                                 </div>
-                                <a href="javascript:;">
+                                    <a href="{{route('admin.notifications')}}">
                                     <div class="text-center msg-footer">
                                         <button class="btn btn-light w-100">نمایش همه اعلان ها</button>
                                     </div>

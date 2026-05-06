@@ -80,7 +80,7 @@ class ProjectService
         {
             $approving_manager = User::where('id',$param['approving_manager'])->first();
 
-            $message = $approving_manager->Name . 'پروژه ' .$project->task_code .' ایجاد شده است و نیاز به تایید شما دارد لطفا برای تایید در پلتفرم سازمانی اقدام نمایید. ' ;
+            $message = $approving_manager->Name . 'پروژه ' .$project->project_code .' ایجاد شده است و نیاز به تایید شما دارد لطفا برای تایید در پلتفرم سازمانی اقدام نمایید. ' ;
             sendSms($approving_manager->mobile, $message);
         }
 

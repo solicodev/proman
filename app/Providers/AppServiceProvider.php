@@ -42,10 +42,11 @@ class AppServiceProvider extends ServiceProvider
 //            $files_array = array_merge($item_members , );
 
 
-
+            $notifications = auth()->user()->notifications()->latest()->get();
 
             $view->with('user_projects', $user_projects);
             $view->with('user_tasks', $user_tasks);
+            $view->with('notifications', $notifications);
 
         });
     }

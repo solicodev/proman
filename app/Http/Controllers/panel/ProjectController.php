@@ -226,7 +226,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        $excludedRoles = ['Manager'];
+        $excludedRoles = ['Manager','Admin Panel'];
         $memberRoles = ['Super Admin'];
         $managers = User::whereHas('roles', function ($query) use ($excludedRoles) {
             $query->whereIn('name', $excludedRoles);
@@ -241,6 +241,7 @@ class ProjectController extends Controller
         })->whereStatus('1')->with('position')->latest()->get();
 
         $brands = Brand::with(['photo','getChid'])->get();
+
         return view('proMan.projects.create',get_defined_vars());
     }
 

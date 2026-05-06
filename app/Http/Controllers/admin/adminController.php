@@ -31,54 +31,13 @@ class adminController extends Controller
         $total_tasks = Task::get();
         $total_tickets = Ticket::get();
 
+        $notifications = auth()->user()->notifications()->latest()->get();
         return view('admin.main',get_defined_vars());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function notification()
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $notifications = auth()->user()->notifications()->latest()->get();
+        return view('admin.notifications',get_defined_vars());
     }
 }

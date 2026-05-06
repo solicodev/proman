@@ -45,5 +45,28 @@
 
     <title>پنل مدیریت</title>
 
-    <style></style>
+    <style>
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0.2; }
+            100% { opacity: 1; }
+        }
+
+        .blink {
+            animation: blink 1.5s infinite ease-in-out;
+        }
+
+        @keyframes bell-ring-interval {
+            0%, 90%, 100% { transform: rotate(0); }
+            92% { transform: rotate(15deg); }
+            94% { transform: rotate(-15deg); }
+            96% { transform: rotate(10deg); }
+            98% { transform: rotate(-10deg); }
+        }
+
+        .bell-animate {
+            animation: bell-ring-interval 3s infinite;
+            transform-origin: top center;
+        }
+    </style>
 </head>

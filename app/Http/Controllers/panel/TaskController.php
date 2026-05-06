@@ -131,7 +131,7 @@ class TaskController extends Controller
 
         $SuperAdminRoles = ['Super Admin'];
         $excludedRoles = ['Manager'];
-        $memberRoles = ['Member'];
+        $memberRoles = ['Super Admin'];
 
         $managers = User::whereHas('roles', function ($query) use ($excludedRoles) {
             $query->whereIn('name', $excludedRoles);
