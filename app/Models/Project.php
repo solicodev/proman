@@ -113,6 +113,10 @@ class Project extends Model
     {
         return $this->belongsTo(Department::class , 'department_id');
     }
+    public function implementeunit()
+    {
+        return $this->belongsTo(ImplementeUnit::class , 'implementeunit_id');
+    }
 
     public function brand()
     {

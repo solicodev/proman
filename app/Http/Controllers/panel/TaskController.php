@@ -5,6 +5,8 @@ namespace App\Http\Controllers\panel;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SubTaskStoreRequest;
 use App\Http\Requests\TaskStoreRequest;
+use App\Models\Department;
+use App\Models\ImplementeUnit;
 use App\Models\Project;
 use App\Models\Task;
 use App\Models\TaskDependency;
@@ -149,6 +151,9 @@ class TaskController extends Controller
 
         $item_tasks = Task::with(['project','manager','watcher','assigners','photos','predecessors','successors'])->where('project_id',$project->id)->paginate(15);
         $tb_tasks = Task::with(['project','manager','watcher','assigners','photos','predecessors','successors'])->where('project_id',$project->id)->get();
+
+        $departments = Department::get();
+        $implementeUnits = ImplementeUnit::get();
         return view('proMan.tasks.create', get_defined_vars());
     }
     public function store(TaskStoreRequest $request)

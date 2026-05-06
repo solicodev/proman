@@ -46,11 +46,11 @@
             <div class="card-body pt-9 pb-0">
                 <div class="d-flex flex-wrap flex-sm-nowrap mb-6">
                     <div class="d-flex flex-center flex-shrink-0 bg-light rounded w-100px h-100px w-lg-150px h-lg-150px me-7 mb-4">
-                        @if($project->brand_id)
-                            <img class="mw-50px mw-lg-75px" src="{{route('home')}}/{{$project->brand?->photo?->path}}" alt="image"/>
-                        @else
-                            <img class="mw-50px mw-lg-75px" src="{{url('panel/assets/media/svg/brand-logos/default.png')}}" alt="image"/>
-                        @endif
+{{--                        @if($project->brand_id)--}}
+{{--                            <img class="mw-50px mw-lg-75px" src="{{route('home')}}/{{$project->brand?->photo?->path}}" alt="image"/>--}}
+{{--                        @else--}}
+                            <img class="mw-50px mw-lg-75px" src="{{url('assets/admin/images/icons/idea.png')}}" alt="image"/>
+{{--                        @endif--}}
                     </div>
                     <div class="flex-grow-1">
                         <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
@@ -171,7 +171,14 @@
                                         <i class="ki-outline ki-geolocation-home fs-3 text-info me-2"></i>
                                         <div class="fs-4 fw-bold" >{{$project->department?->name}}</div>
                                     </div>
-                                    <div class="fw-semibold fs-6 text-gray-500">دپارتمان</div>
+                                    <div class="fw-semibold fs-6 text-gray-500">دپارتمان/واحد سفارش دهنده</div>
+                                </div>
+                                <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                                    <div class="d-flex align-items-center">
+                                        <i class="ki-outline ki-geolocation-home fs-3 text-info me-2"></i>
+                                        <div class="fs-4 fw-bold" >{{$project->implementeunit?->name}}</div>
+                                    </div>
+                                    <div class="fw-semibold fs-6 text-gray-500">دپارتمان/واحد انجام دهنده</div>
                                 </div>
                                 <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
                                     <div class="d-flex align-items-center">

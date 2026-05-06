@@ -159,7 +159,7 @@
                                     <div class="row g-3 mb-8">
                                         <div class="col-md-6 fv-row">
                                             <div class="fv-row mb-8">
-                                                <label class="form-label required">دپارتمان/دپارتمان</label>
+                                                <label class="form-label required">دپارتمان/واحد سفارش دهنده پروژه</label>
                                                 <select class="form-select form-select-solid" data-control="select2"
                                                         data-placeholder="دپارتمان را انتخاب کنید" name="department_id" required>
                                                     <option></option>
@@ -170,7 +170,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6">
-                                            <label class="form-label required">واحد انجام دهنده پروژه</label>
+                                            <label class="form-label required">دپارتمان/واحد انجام دهنده پروژه</label>
                                             <select class="form-select form-select-solid" data-control="select2"
                                                     data-placeholder="واحد را انتخاب کنید" name="implementeunit_id" required>
                                                 <option></option>

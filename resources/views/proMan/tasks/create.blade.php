@@ -168,7 +168,30 @@
                                                 </select>
                                             </div>
                                         </div>
-
+                                        <div class="row g-3 mb-8">
+                                            <div class="col-md-6 fv-row">
+                                                <div class="fv-row mb-8">
+                                                    <label class="form-label"> دپارتمان/واحد ایجاد کننده تسک</label>
+                                                    <select class="form-select form-select-solid" data-control="select2"
+                                                            data-placeholder="دپارتمان را انتخاب کنید" name="department_id" required>
+                                                        <option></option>
+                                                        @foreach($departments as $department)
+                                                            <option value="{{ $department->id }}" @if(old('department_id') == $department->id) selected @endif>{{ $department->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">دپارتمان/واحد انجام دهنده تسک</label>
+                                                <select class="form-select form-select-solid" data-control="select2"
+                                                        data-placeholder="واحد را انتخاب کنید" name="implementeunit_id" required>
+                                                    <option></option>
+                                                    @foreach($implementeUnits as $implementeUnit)
+                                                        <option value="{{ $implementeUnit->id }}" @if(old('implementeunit_id') == $implementeUnit->id) selected @endif>{{ $implementeUnit->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
                                         <div class="row g-9 mb-8">
                                             <div class="col-md-4 fv-row">
                                                 <label class=" fs-6 fw-semibold mb-2">نیاز به تایید مسئول تایید کننده

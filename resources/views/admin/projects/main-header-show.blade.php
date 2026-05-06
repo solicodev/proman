@@ -46,7 +46,7 @@
                                 </div>
                             </div>
 
-                            <div class="d-flex flex-wrap fw-semibold mb-4 fs-5 text-gray-500">
+                            <div class="d-flex flex-wrap fw-semibold mb-4 text-gray-500">
                                 {!! $project->description !!}
                             </div>
                         </div>
@@ -73,7 +73,14 @@
                                     <i class="bx bx-location fs-10 text-info me-2"></i>
                                     <div class="fs-7 fw-bold" >{{$project->department?->name}}</div>
                                 </div>
-                                <div class="fw-semibold fs-8 text-gray-500">دپارتمان</div>
+                                <div class="fw-semibold fs-8 text-gray-500">دپارتمان/واحد سفارش دهنده</div>
+                            </div>
+                            <div class="border border-gray-300 border-dashed rounded  py-3 px-4 mx-2 mb-3">
+                                <div class="d-flex align-items-center">
+                                    <i class="bx bx-location fs-10 text-info me-2"></i>
+                                    <div class="fs-7 fw-bold" >{{$project->implementeunit?->name}}</div>
+                                </div>
+                                <div class="fw-semibold fs-8 text-gray-500">دپارتمان/واحد انجام دهنده</div>
                             </div>
                             <div class="border border-gray-300 border-dashed rounded  py-3 px-4 mx-2 mb-3">
                                 <div class="d-flex align-items-center">

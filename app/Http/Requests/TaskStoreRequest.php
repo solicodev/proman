@@ -38,6 +38,7 @@ class TaskStoreRequest extends FormRequest
             'members*' => 'required|array',
             'task_id*' => 'nullable|array',
             'relation_type*' => 'nullable|array',
+            'implementeunit_id' => 'nullable|exists:implemente_units,id',
 
         ];
     }
