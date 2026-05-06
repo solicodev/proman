@@ -12,7 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('tasks', function (Blueprint $table) {
-            //
+            $table->unsignedBigInteger('department_id')->nullable()->after('implementeunit_id')->comment('واحد سفارش دهنده تسک');
+            $table->foreign('department_id')->references('id')->on('departments')->onDelete('cascade');
+
         });
     }
 
@@ -22,7 +24,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('tasks', function (Blueprint $table) {
-            //
+            $table->dropForeign('tasks_department_id_foreign');
+            $table->dropColumn('department_id');
         });
     }
 };

@@ -50,12 +50,9 @@ class TaskController extends Controller
         })->whereStatus('1')->latest()->get();
 
         $projects = Project::get();;
-
         $watchers = User::whereDoesntHave('roles', function ($query) use ($SuperAdminRoles) {
             $query->whereIn('name', $SuperAdminRoles);
         })->whereStatus('1')->latest()->get();
-
-
         return view('admin.tasks.create',get_defined_vars());
     }
 
@@ -65,14 +62,12 @@ class TaskController extends Controller
     public function store(Request $request)
     {
         try {
-        DB::beginTransaction();
+            DB::beginTransaction();
             $this->taskService->store($request->all());
-        DB::commit();
+            DB::commit();
             return redirect(route('admin.task.index'))->with('flash_message', 'با موفقیت ایجاد شد');
-
-
         } catch (Exception $exception) {
-        DB::rollBack();
+            DB::rollBack();
             return redirect()->back()->with('err_message', $exception->getMessage());
         }
     }
@@ -120,8 +115,8 @@ class TaskController extends Controller
      */
     public function update(Request $request, Task $task)
     {
-            $this->taskService->update($request->all(),$task);
-            return redirect(route('admin.task.index'))->with('flash_message', 'با موفقیت ویرایش شد');
+        $this->taskService->update($request->all(),$task);
+        return redirect(route('admin.task.index'))->with('flash_message', 'با موفقیت ویرایش شد');
         try {
 
         } catch (Exception $exception) {
