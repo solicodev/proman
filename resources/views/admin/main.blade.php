@@ -197,4 +197,42 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="deleteServiceModal" tabindex="-1" aria-labelledby="deleteServiceModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteServiceModalLabel">
+                        حذف سرویس
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="" id='deleteForm'>
+                    <div class="modal-body">
+                        آیا از حذف سرویس مطمئن هستید؟
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+                            خیر
+                        </button>
+                        <button type="submit" class="btn btn-danger">
+                            بله
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 @endsection
+
+@push('script')
+    <script>
+
+        function openDeleteModal(url) {
+            $('#deleteForm').attr('action', url);
+            $('#deleteServiceModal').modal('show');
+        }
+    </script>
+@endpush

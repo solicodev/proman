@@ -31,13 +31,13 @@ class adminController extends Controller
         $total_tasks = Task::get();
         $total_tickets = Ticket::get();
 
-        $notifications = auth()->user()->notifications()->latest()->get();
+//        $notifications = auth()->user()->notifications()->latest()->get();
         return view('admin.main',get_defined_vars());
     }
 
     public function notification()
     {
-        $notifications = auth()->user()->notifications()->latest()->get();
+        $notification_items = auth()->user()->notifications()->latest()->get();
         return view('admin.notifications',get_defined_vars());
     }
 }

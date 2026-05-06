@@ -19,7 +19,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach ($notifications as $notification)
+                    @foreach ($notification_items as $notification)
                         @php
                             $implement_unit = \App\Models\ImplementeUnit::where('id',$notification['data']['data']['implementeunit_id'])->first();
                         @endphp

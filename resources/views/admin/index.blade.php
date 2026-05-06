@@ -975,7 +975,7 @@
                                                 <div class="notify bg-light-danger text-danger">{{ mb_substr($notification->id, 0, 1) }}</div>
                                                 <div class="flex-grow-1">
                                                     <h6 class="msg-name">
-                                                        {{ $project->name }}
+                                                        {{ $project->name ?? '' }}
                                                         <span class="msg-time float-end">
                                                         {{verta($notification->created_at)->formatDifference()}}
                                                     </span>

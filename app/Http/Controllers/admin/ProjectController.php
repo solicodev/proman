@@ -147,7 +147,7 @@ class ProjectController extends Controller
     {
         try {
             $project->delete();
-            return redirect(route('admin.project.index'))->with('flash_message', ' با موفقیت حذف شد');
+            return redirect()->back()->with('flash_message', ' با موفقیت حذف شد');
         } catch (Exception $exception) {
             return redirect()->back()->with('err_message', 'خطایی رخ داد مجددا تلاش کنید');
         }

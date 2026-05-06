@@ -136,7 +136,7 @@ class TaskController extends Controller
     {
         try {
             $task->delete();
-            return redirect(route('admin.task.index'))->with('flash_message', ' با موفقیت حذف شد');
+            return redirect()->back()->with('flash_message', ' با موفقیت حذف شد');
         } catch (Exception $exception) {
             return redirect()->back()->with('err_message', 'خطایی رخ داد مجددا تلاش کنید');
         }
