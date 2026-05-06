@@ -16,6 +16,7 @@ class TaskSchedulerService
 {
     public function scheduleProject($projectId)
     {
+        dd($projectId);
         $project = Project::findOrFail($projectId);
 
         $projectStart = toCarbon($project->start_date) ?? now();

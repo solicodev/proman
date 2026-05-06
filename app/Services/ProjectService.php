@@ -5,10 +5,13 @@ namespace App\Services;
 use App\Models\Photo;
 use App\Models\Project;
 use App\Models\ProjectDependency;
+use App\Models\User;
+use App\Notifications\ProjectApproveNotification;
 use Carbon\Carbon;
 use Hekmatinasser\Verta\Verta;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Notification;
 
 /**
  * Class ProjectService.
@@ -61,6 +64,24 @@ class ProjectService
                 $photo->save();
                 $project->photos()->attach($photo);
             }
+        }
+
+        // notification
+
+        $users = User::whereIn('id',$param['members'])->get();
+        $excludedRoles = ['Super Admin','Admin Panel'];
+        $admins = User::whereHas('roles', function ($query) use ($excludedRoles) {
+            $query->whereIn('name', $excludedRoles);
+        })->latest()->get();
+        $recipients = $users->merge($admins);
+        Notification::send($recipients, new ProjectApproveNotification($project));
+
+        if ($param['inform'] == '1')
+        {
+            $approving_manager = User::where('id',$param['approving_manager'])->first();
+
+            $message = $approving_manager->Name . 'پروژه ' .$project->task_code .' ایجاد شده است و نیاز به تایید شما دارد لطفا برای تایید در پلتفرم سازمانی اقدام نمایید. ' ;
+            sendSms($approving_manager->mobile, $message);
         }
 
         $project->members()->attach($param['members']);
