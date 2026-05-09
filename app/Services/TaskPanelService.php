@@ -75,7 +75,6 @@ class TaskPanelService
 //            sendSms($manager->mobile, $message);
         }
 
-
         $task->watcher_id = $param['watcher_id'] ?? null;
 //        $task->duration = intval($param['duration']);
         $task->save();
