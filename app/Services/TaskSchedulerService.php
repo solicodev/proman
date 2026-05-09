@@ -25,6 +25,7 @@ class TaskSchedulerService
      */
     public function scheduleProject(int $projectId): void
     {
+
 //        DB::transaction(function () use ($projectId) {
 
             /**
@@ -35,6 +36,7 @@ class TaskSchedulerService
             $projectStart = $project->start_date
                 ? toCarbon($project->start_date)
                 : now();
+
 
             /**
              * Load tasks + assignments + users
@@ -53,13 +55,15 @@ class TaskSchedulerService
                 ->whereIn('successor_id', $tasks->keys())
                 ->get();
 
+
+
             /**
              * Reset previous allocations
              */
             TaskAllocation::query()
                 ->whereIn('task_id', $tasks->keys())
                 ->delete();
-
+        dd($dependencies);
             /**
              * Reset dates
              */

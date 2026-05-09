@@ -20,6 +20,7 @@ class ResourceSchedulerService
         Carbon $startDate
     ): array {
 
+        // TODO
         $remainingHours = $task->estimated_hours;
 
         $currentDate = $startDate->copy();
