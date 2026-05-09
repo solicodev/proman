@@ -5,15 +5,16 @@ namespace App\Services;
 use App\Models\Task;
 use App\Models\TaskAllocation;
 use Carbon\Carbon;
-/**
- *مسئول scheduling
- */
+
 class ResourceSchedulerService
 {
     public function __construct(
         protected ResourceCapacityService $capacityService
     ) {}
 
+    /**
+     * Schedule Task
+     */
     public function schedule(
         Task $task,
         Carbon $startDate
@@ -21,7 +22,9 @@ class ResourceSchedulerService
 
         $remainingHours = $task->estimated_hours;
 
-        $current = $startDate->copy();
+        $currentDate = $startDate->copy();
+
+        $realStart = null;
 
         while ($remainingHours > 0) {
 
@@ -29,48 +32,57 @@ class ResourceSchedulerService
 
                 $user = $assignment->user;
 
-                $available = $this->capacityService
-                    ->getAvailableHours($user, $current);
+                $availableHours = $this->capacityService
+                    ->getAvailableHours(
+                        $user,
+                        $currentDate
+                    );
 
-                if ($available <= 0) {
+                if ($availableHours <= 0) {
                     continue;
                 }
 
-                $allocatable = min(
-                    $available,
+                $allocatableHours = min(
+                    $availableHours,
                     $assignment->hours_per_day,
                     $remainingHours
                 );
 
-                if ($allocatable <= 0) {
+                if ($allocatableHours <= 0) {
                     continue;
                 }
 
                 TaskAllocation::create([
-                    'task_id'   => $task->id,
-                    'user_id'   => $user->id,
-                    'work_date' => $current->toDateString(),
-                    'hours'     => $allocatable,
+                    'task_id' => $task->id,
+                    'user_id' => $user->id,
+                    'work_date' => $currentDate->toDateString(),
+                    'hours' => $allocatableHours,
                 ]);
 
-                $remainingHours -= $allocatable;
+                if (!$realStart) {
+                    $realStart = $currentDate->copy();
+                }
+
+                $remainingHours -= $allocatableHours;
 
                 if ($remainingHours <= 0) {
                     break;
                 }
             }
 
-            $current->addDay();
+            $currentDate->addDay();
         }
 
+        $realEnd = $currentDate->copy()->subDay();
+
         $task->update([
-            'start_date' => $startDate,
-            'end_date'   => $current,
+            'start_date' => $realStart,
+            'end_date' => $realEnd,
         ]);
 
         return [
-            'start_date' => $startDate,
-            'end_date' => $current,
+            'start_date' => $realStart,
+            'end_date' => $realEnd,
         ];
     }
 }

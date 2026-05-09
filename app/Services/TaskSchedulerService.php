@@ -4,212 +4,350 @@ namespace App\Services;
 
 use App\Models\Project;
 use App\Models\Task;
+use App\Models\TaskAllocation;
 use App\Models\TaskDependency;
 use Carbon\Carbon;
 use Exception;
-use Hekmatinasser\Verta\Verta;
+use Illuminate\Support\Facades\DB;
 
-/**
- * Class TaskSchedulerService.
- */
 class TaskSchedulerService
 {
-    public function scheduleProject($projectId)
-    {
-        $project = Project::findOrFail($projectId);
-
-        $projectStart = toCarbon($project->start_date) ?? now();
-
-        $tasks = Task::where('project_id', $projectId)
-            ->get()
-            ->keyBy('id');
-
-        $dependencies = TaskDependency::whereIn('successor_id', $tasks->keys())
-            ->get();
-
-        $sorted = $this->topologicalSort($tasks, $dependencies);
-
-        $unscheduled = $tasks->keys()->toArray();
-
-        while (!empty($unscheduled)) {
-
-            $progress = false;
-
-            foreach ($sorted as $taskId) {
-
-                if (!in_array($taskId, $unscheduled)) {
-                    continue;
-                }
-
-                $task = $tasks[$taskId];
-
-                $taskDeps = $dependencies->where('successor_id', $taskId);
-
-                $startConstraints = [];
-                $endConstraints = [];
-
-                $ready = true;
-
-                foreach ($taskDeps as $dep) {
-
-                    $parent = $tasks[$dep->predecessor_id] ?? null;
-
-                    if (!$parent) {
-                        $ready = false;
-                        break;
-                    }
-
-                    $preStart = $parent->start_date ? toCarbon($parent->start_date) : null;
-                    $preEnd   = $parent->end_date ? toCarbon($parent->end_date) : null;
-
-
-
-                    switch ($dep->relation_type) {
-
-                        case 'FS':
-                            if (!$preEnd) {
-                                $ready = false;
-                                break 2;
-                            }
-                            $startConstraints[] = $preEnd;
-                            break;
-
-                        case 'SS':
-                            if (!$preStart) {
-                                $ready = false;
-                                break 2;
-                            }
-                            $startConstraints[] = $preStart;
-                            break;
-
-                        case 'FF':
-                            if (!$preEnd) {
-                                $ready = false;
-                                break 2;
-                            }
-                            $endConstraints[] = $preEnd;
-                            break;
-
-                        case 'SF':
-                            if (!$preStart) {
-                                $ready = false;
-                                break 2;
-                            }
-                            $endConstraints[] = $preStart;
-                            break;
-                    }
-                }
-                if (!$ready) {
-                    continue;
-                }
-
-                $duration = (int) $task->duration;
-                $type = $task->duration_type ?? 'day';
-
-                /**
-                 * START calculation
-                 */
-                $start = count($startConstraints)
-                    ? collect($startConstraints)->max()
-                    : $projectStart;
-
-                $start = toCarbon($start);
-
-                /**
-                 * END calculation
-                 */
-
-
-                if (count($endConstraints)) {
-
-                    $end = collect($endConstraints)->max();
-                    $end = toCarbon($end);
-
-                    // backward alignment (for FF/SF)
-                    $start = $this->subDuration($end, $duration, $type);
-//                    $start = $end->copy()->subDays($duration);
-
-                } else {
-
-                    $end = $this->addDuration($start, $duration, $type);
-
-//                    $end = $start->copy()->addDays($duration);
-                }
-
-                /**
-                 *  safety correction (prevents inversion)
-                 */
-                if ($end->lt($start)) {
-                    $end = $this->addDuration($start, $duration, $type);
-//                    $end = $start->copy()->addDays($duration);
-                }
-
-                /**
-                 *  save
-                 */
-                $task->update([
-                    'start_date' => $start,
-                    'end_date' => $end,
-                ]);
-
-                /**
-                 *  update runtime state (VERY IMPORTANT)
-                 */
-                $tasks[$taskId]->start_date = $start;
-                $tasks[$taskId]->end_date = $end;
-
-                unset($unscheduled[array_search($taskId, $unscheduled)]);
-
-                $progress = true;
-            }
-
-            if (!$progress) {
-                throw new \Exception("Circular or invalid dependencies detected");
-            }
-        }
-        }
-
-
+    public function __construct(
+        protected ResourceSchedulerService $resourceScheduler
+    ) {}
 
     /**
-     * Topological Sort + Loop detection
+     * Schedule whole project
      */
-    private function topologicalSort($tasks, $dependencies)
+    public function scheduleProject(int $projectId): void
     {
+//        DB::transaction(function () use ($projectId) {
+
+            /**
+             * Project
+             */
+            $project = Project::findOrFail($projectId);
+
+            $projectStart = $project->start_date
+                ? toCarbon($project->start_date)
+                : now();
+
+            /**
+             * Load tasks + assignments + users
+             */
+            $tasks = Task::with([
+                'assignments.user'
+            ])
+                ->where('project_id', $projectId)
+                ->get()
+                ->keyBy('id');
+
+            /**
+             * Dependencies
+             */
+            $dependencies = TaskDependency::query()
+                ->whereIn('successor_id', $tasks->keys())
+                ->get();
+
+            /**
+             * Reset previous allocations
+             */
+            TaskAllocation::query()
+                ->whereIn('task_id', $tasks->keys())
+                ->delete();
+
+            /**
+             * Reset dates
+             */
+            Task::query()
+                ->whereIn('id', $tasks->keys())
+                ->update([
+                    'start_date' => null,
+                    'end_date' => null,
+                ]);
+
+            /**
+             * Topological order
+             */
+            $sorted = $this->topologicalSort(
+                $tasks,
+                $dependencies
+            );
+
+            $unscheduled = $tasks->keys()->toArray();
+
+            while (!empty($unscheduled)) {
+
+                $progress = false;
+
+                foreach ($sorted as $taskId) {
+
+                    /**
+                     * Already scheduled
+                     */
+                    if (!in_array($taskId, $unscheduled)) {
+                        continue;
+                    }
+
+                    $task = $tasks[$taskId];
+
+                    /**
+                     * Task dependencies
+                     */
+                    $taskDeps = $dependencies
+                        ->where('successor_id', $taskId);
+
+                    $startConstraints = [];
+                    $endConstraints = [];
+
+                    $ready = true;
+
+                    /**
+                     * Resolve dependencies
+                     */
+                    foreach ($taskDeps as $dep) {
+
+                        $parent = $tasks[$dep->predecessor_id] ?? null;
+
+                        if (!$parent) {
+                            $ready = false;
+                            break;
+                        }
+
+                        $preStart = $parent->start_date
+                            ? toCarbon($parent->start_date)
+                            : null;
+
+                        $preEnd = $parent->end_date
+                            ? toCarbon($parent->end_date)
+                            : null;
+
+                        switch ($dep->relation_type) {
+
+                            /**
+                             * Finish -> Start
+                             */
+                            case 'FS':
+
+                                if (!$preEnd) {
+                                    $ready = false;
+                                    break 2;
+                                }
+
+                                $startConstraints[] = $preEnd;
+
+                                break;
+
+                            /**
+                             * Start -> Start
+                             */
+                            case 'SS':
+
+                                if (!$preStart) {
+                                    $ready = false;
+                                    break 2;
+                                }
+
+                                $startConstraints[] = $preStart;
+
+                                break;
+
+                            /**
+                             * Finish -> Finish
+                             */
+                            case 'FF':
+
+                                if (!$preEnd) {
+                                    $ready = false;
+                                    break 2;
+                                }
+
+                                $endConstraints[] = $preEnd;
+
+                                break;
+
+                            /**
+                             * Start -> Finish
+                             */
+                            case 'SF':
+
+                                if (!$preStart) {
+                                    $ready = false;
+                                    break 2;
+                                }
+
+                                $endConstraints[] = $preStart;
+
+                                break;
+                        }
+                    }
+
+                    /**
+                     * Dependency unresolved
+                     */
+                    if (!$ready) {
+                        continue;
+                    }
+
+                    /**
+                     * Earliest possible start
+                     */
+                    $earliestStart = count($startConstraints)
+                        ? collect($startConstraints)->max()
+                        : $projectStart;
+
+                    $earliestStart = toCarbon($earliestStart);
+
+                    /**
+                     * Resource-based scheduling
+                     */
+                    $result = $this->resourceScheduler
+                        ->schedule(
+                            $task,
+                            $earliestStart
+                        );
+
+                    $realStart = $result['start_date'];
+                    $realEnd = $result['end_date'];
+
+                    /**
+                     * FF / SF correction
+                     */
+                    if (count($endConstraints)) {
+
+                        $requiredEnd = collect($endConstraints)->max();
+
+                        $requiredEnd = toCarbon($requiredEnd);
+
+                        /**
+                         * If scheduled end is before required end
+                         * shift task forward
+                         */
+                        if ($realEnd->lt($requiredEnd)) {
+
+                            $shiftDays = $realEnd
+                                ->diffInDays($requiredEnd);
+
+                            $newStart = $realStart
+                                ->copy()
+                                ->addDays($shiftDays);
+
+                            /**
+                             * Re-schedule task
+                             */
+                            TaskAllocation::query()
+                                ->where('task_id', $task->id)
+                                ->delete();
+
+                            $result = $this->resourceScheduler
+                                ->schedule(
+                                    $task,
+                                    $newStart
+                                );
+
+                            $realStart = $result['start_date'];
+                            $realEnd = $result['end_date'];
+                        }
+                    }
+
+                    /**
+                     * Save final dates
+                     */
+                    $task->update([
+                        'start_date' => $realStart,
+                        'end_date' => $realEnd,
+                    ]);
+
+                    /**
+                     * Update runtime state
+                     */
+                    $tasks[$taskId]->start_date = $realStart;
+                    $tasks[$taskId]->end_date = $realEnd;
+
+                    /**
+                     * Remove from pending
+                     */
+                    unset(
+                        $unscheduled[
+                        array_search(
+                            $taskId,
+                            $unscheduled
+                        )
+                        ]
+                    );
+
+                    $progress = true;
+                }
+
+                /**
+                 * Circular dependency detection
+                 */
+                if (!$progress) {
+                    throw new Exception(
+                        'Circular or invalid dependencies detected'
+                    );
+                }
+            }
+//        });
+    }
+
+    /**
+     * Topological Sort
+     */
+    private function topologicalSort(
+        $tasks,
+        $dependencies
+    ): array {
+
         $graph = [];
         $inDegree = [];
 
+        /**
+         * Initialize
+         */
         foreach ($tasks as $id => $task) {
+
             $graph[$id] = [];
+
             $inDegree[$id] = 0;
         }
 
+        /**
+         * Build graph
+         */
         foreach ($dependencies as $dep) {
 
-            if (!$dep instanceof \App\Models\TaskDependency) {
-                continue;
-            }
+            $graph[$dep->predecessor_id][] =
+                $dep->successor_id;
 
-            $graph[$dep->predecessor_id][] = $dep->successor_id;
             $inDegree[$dep->successor_id]++;
         }
 
+        /**
+         * Start nodes
+         */
         $queue = [];
 
-        foreach ($inDegree as $id => $deg) {
-            if ($deg === 0) {
+        foreach ($inDegree as $id => $degree) {
+
+            if ($degree === 0) {
                 $queue[] = $id;
             }
         }
 
+        /**
+         * Sort
+         */
         $sorted = [];
 
         while (!empty($queue)) {
 
             $current = array_shift($queue);
+
             $sorted[] = $current;
 
             foreach ($graph[$current] as $neighbor) {
+
                 $inDegree[$neighbor]--;
 
                 if ($inDegree[$neighbor] === 0) {
@@ -218,40 +356,16 @@ class TaskSchedulerService
             }
         }
 
+        /**
+         * Loop detection
+         */
         if (count($sorted) !== count($tasks)) {
-            throw new \Exception("Dependency loop detected!");
+
+            throw new Exception(
+                'Dependency loop detected'
+            );
         }
 
         return $sorted;
     }
-
-
-
-    // تاریخ
-    function addDuration(Carbon $date, $duration, $type)
-    {
-        return match($type) {
-            'minute' => $date->copy()->addMinutes($duration),
-            'hours'   => $date->copy()->addHours($duration),
-            'day'    => $date->copy()->addDays($duration),
-            'week'    => $date->copy()->addWeeks($duration),
-            'month'    => $date->copy()->addMonths($duration),
-            'year'    => $date->copy()->addYears($duration),
-            default  => throw new Exception('Invalid duration type'),
-        };
-    }
-
-    function subDuration(Carbon $date, $duration, $type)
-    {
-        return match($type) {
-            'minute' => $date->copy()->subMinutes($duration),
-            'hours'   => $date->copy()->subHours($duration),
-            'day'    => $date->copy()->subDays($duration),
-            'week'    => $date->copy()->subWeeks($duration),
-            'month'    => $date->copy()->subMonths($duration),
-            'year'    => $date->copy()->subYears($duration),
-            default  => throw new Exception('Invalid duration type'),
-        };
-    }
 }
-
