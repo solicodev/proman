@@ -67,8 +67,7 @@
             </div>
         </div>
     </div>
-<div class="card radius-10">
-    <div class="card-body">
+
         <div class="col-lg-6 my-5">
             <div class="card card-flush h-lg-100">
                 <div class="card-header mt-6">
@@ -137,8 +136,7 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
+
 
     <div class="card radius-10">
         <div class="card-body">
@@ -275,13 +273,13 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="deleteServiceModalLabel">
-                        حذف سرویس
+                        حذف
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form action="" id='deleteForm'>
                     <div class="modal-body">
-                        آیا از حذف سرویس مطمئن هستید؟
+                        آیا از حذف مطمئن هستید؟
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
