@@ -70,13 +70,13 @@
 
         <div class="col-lg-6 my-5">
             <div class="card card-flush h-lg-100">
-                <div class="card-header mt-6">
-                    <div class="card-title flex-column">
-                        <h3 class="fw-bold mb-1">امروز چه کاری باید انجام بشه؟</h3>
-                        {{--                            <div class="fs-6 text-gray-500">تعداد </div>--}}
-                    </div>
-                </div>
                 <div class="card-body p-9 pt-4">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <h5 class="mb-0"> امروز چه کاری باید انجام بشه؟</h5>
+                        </div>
+                    </div>
+                    <hr />
                     <ul class="nav nav-pills d-flex flex-nowrap hover-scroll-x py-2">
                         @foreach($days as $index => $day)
                             <li class="nav-item me-1">
@@ -97,22 +97,22 @@
                     <div class="tab-content">
                         @foreach($days as $index => $day)
                             <div id="kt_schedule_day_{{ $index }}" class="tab-pane fade show @if($index==0) active @endif">
-                                @forelse($day['tasks'] as $task)
-                                    <div class="d-flex flex-stack position-relative mt-8">
-                                        <div class="position-absolute h-100 w-4px bg-secondary rounded top-0 start-0"></div>
+                                @forelse($day['tasks'] as $i => $task)
+                                    <div class="d-flex flex-stack position-relative mt-8 border-top align-items-center">
+                                        <div class="position-absolute h-50 bg-secondary rounded top-5 start-0" style="width: 4px;"></div>
 
-                                        <div class="fw-semibold ms-5 text-gray-600">
-                                            <div class="fs-5">
+                                        <div class="fw-semibold ms-5 py-3 text-gray-600">
+                                            <div class="fs-10">
                                                 {{ verta($task->start_date)->format('H:i') }}
                                                 -
                                                 {{ verta($task->end_date)->format('H:i') }}
 
-                                                <span class="fs-7 text-gray-500 text-uppercase">
+                                                <span class="fs-8 text-gray-500 text-uppercase">
                                                         {{ verta($task->start_date)->format('a') }}
                                                     </span>
                                             </div>
 
-                                            <a class="fs-5 fw-bold text-gray-800 text-hover-primary mb-2">
+                                            <a class="fs-6 fw-bold text-gray-800 text-hover-primary my-3">
                                                 {{ $task->title }}  - {{$task->task_code}}
                                             </a>
 
@@ -120,11 +120,11 @@
                                                 assign to: <a href="#">@foreach($task->assigners as $key=>$assign) @if($key) - @endif  {{ $assign->Name ?? '---' }} @endforeach</a>
                                             </div>
                                         </div>
-
                                         {{--                                            <a href="{{ route('dashboard.task.show', $task->id) }}" class="btn btn-bg-light btn-light-primary btn-sm">--}}
                                         {{--                                                مشاهده تسک<i class="ki-outline ki-eye fs-5 ps-3"></i>--}}
                                         {{--                                            </a>--}}
                                     </div>
+
                                 @empty
                                     <div class="text-center text-gray-500 mt-10">تسکی برای این روز وجود ندارد</div>
                                 @endforelse
