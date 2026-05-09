@@ -44,7 +44,6 @@
                         <div class="col-md-6">
                             <label for="manager_id" class="form-label">مدیر پروژه</label>
                             <select class="form-select" name="manager_id" id="inputProductType" required>
-                                <option>مدیر پروژه را انتخاب کنید</option>
                                 @foreach($managers as $manager)
                                     <option value="{{$manager->id}}" @if($project->manager?->id == $manager->id ) selected @endif>{{$manager->Name}} - {{role_name($manager->roles()->first()->name)}}</option>
                                 @endforeach
@@ -69,7 +68,6 @@
                                    placeholder="تاریخ پایان پروژه" autocomplete="off"  value="{{$project->end_date}}" required/>
                             <div class="invalid-feedback">تاریخ پایان پروژه الزامی است</div>
                         </div>
-
                         <div class="col-md-4">
                             <label for="category_id" class="form-label">دسته بندی پروژه</label>
                             <select class="form-select" name="category_id" id="inputProductType">
@@ -96,7 +94,7 @@
                                     data-placeholder="واحد را انتخاب کنید" name="implementeunit_id" required>
                                 <option></option>
                                 @foreach($implementeUnits as $implementeUnit)
-                                    <option value="{{ $implementeUnit->id }}" @if(old('implementeunit_id') == $implementeUnit->id) selected @endif>{{ $implementeUnit->name }}</option>
+                                    <option value="{{ $implementeUnit->id }}" @if($project->implementeunit_id == $implementeUnit->id) selected @endif>{{ $implementeUnit->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -119,15 +117,14 @@
                             <input class="form-check-input" name="approve_need" type="checkbox" value="0" id="flexCheckDefault"/>
                         </div>
                         <div class="col-md-12">
-                            <label for="manager_id" class="form-label">مدیر تایید کننده پروژه</label>
-                            <select class="form-select" name="manager_id" id="inputProductType" required>
-                                <option>مدیر پروژه را انتخاب کنید</option>
+                            <label for="approving_manager" class="form-label">مدیر تایید کننده پروژه</label>
+                            <select class="form-select" name="approving_manager" id="inputProductType">
+                                <option></option>
                                 @foreach($managers as $manager)
                                     <option value="{{$manager->id}}" @if($project->approving_manager == $manager->id) selected @endif>{{$manager->Name}}
                                         @if($manager->department_id)   - دپارتمان {{ $manager->department?->name }}@endif @if($manager->position_id)  - {{$manager->position?->title}} @endif</option>
                                 @endforeach
                             </select>
-                            <div class="invalid-feedback">مدیر پروژه الزامی است</div>
                         </div>
                         @if(count($project->members) > 0)
                             <div class="col-md-12">

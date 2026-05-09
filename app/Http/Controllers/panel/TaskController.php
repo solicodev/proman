@@ -130,7 +130,6 @@ class TaskController extends Controller
     }
     public function create(Project $project)
     {
-
         $SuperAdminRoles = ['Super Admin'];
         $excludedRoles = ['Manager'];
         $memberRoles = ['Super Admin'];

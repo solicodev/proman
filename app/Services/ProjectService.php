@@ -25,7 +25,7 @@ class ProjectService
         $project = new Project();
         $project->name = $param['name'];
         $project->start_date =Verta::parse($param['start_date'])->datetime();
-        $project->end_date = Verta::parse($param['start_date'])->datetime();
+        $project->end_date = Verta::parse($param['end_date'])->datetime();
 
         $project->project_code = 'P_' . $rand;
         if (isset($param['manager_id']))
@@ -89,16 +89,20 @@ class ProjectService
 
     public function update(array $param, Project $project)
     {
-
         $project->name = $param['name'];
-        $project->start_date = toCarbon($param['start_date']);
-        $project->end_date = toCarbon($param['end_date']);
+        if (isset($param['start_date']) && $param['start_date'] != $project->start_date) {
+            $project->start_date = Verta::parse($param['start_date'])->datetime();
+        }
+
+        if (isset($param['end_date']) && $param['end_date'] != $project->end_date) {
+            $project->end_date = Verta::parse($param['end_date'])->datetime();
+        }
+
         if (isset($param['manager_id']))
         {
             $project->manager_id = $param['manager_id'];
         }
-        else
-            $project->manager_id = Auth::id();
+
         $project->category_id = $param['category_id'];
         $project->department_id = $param['department_id'];
         $project->implementeunit_id = $param['implementeunit_id'] ?? null;

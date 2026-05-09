@@ -27,6 +27,7 @@ class PanelController extends Controller
         $user = Auth::user();
 
         $project_id = Project::with(['manager','category','department','members','photos','brand'])->where('manager_id',Auth::id())->pluck('id')->toArray();
+
         $tasks = Task::with(['project','manager','watcher','assigners','photos','predecessors','successors'])->whereIn('project_id',$project_id)->get();
 
         $total = $tasks->count();
@@ -41,13 +42,17 @@ class PanelController extends Controller
         $members = Project::where('manager_id',Auth::id())->with('members')->get()->pluck('members')->flatten()->unique('id');
 
 
-
         $days = [];
 
         for ($i = 0; $i < 10; $i++) {
-            $date = Carbon::today()->addDays($i);
-            $tasks = Task::whereDate('start_date', verta($date)->format('Y/m/d'))
-                ->whereIn('project_id',$project_id)->get();
+
+            $date = Carbon::today()->addDays($i)->toDateString();
+
+            $tasks = Task::with('assigners')
+                ->whereIn('project_id', $project_id)
+                ->whereDate('start_date', '<=', $date)
+                ->whereDate('end_date', '>=', $date)
+                ->get();
 
             $days[] = [
                 'date' => verta($date),
