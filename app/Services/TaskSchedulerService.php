@@ -12,9 +12,13 @@ use Illuminate\Support\Facades\DB;
 
 class TaskSchedulerService
 {
-    public function __construct(
-        protected ResourceSchedulerService $resourceScheduler
-    ) {}
+
+    public ResourceSchedulerService $resourceSchedulerService;
+
+    public function __construct(ResourceSchedulerService $resourceSchedulerService)
+    {
+        $this->resourceSchedulerService = $resourceSchedulerService;
+    }
 
     /**
      * Schedule whole project
@@ -201,7 +205,7 @@ class TaskSchedulerService
                     /**
                      * Resource-based scheduling
                      */
-                    $result = $this->resourceScheduler
+                    $result = $this->resourceSchedulerService
                         ->schedule(
                             $task,
                             $earliestStart
@@ -239,7 +243,7 @@ class TaskSchedulerService
                                 ->where('task_id', $task->id)
                                 ->delete();
 
-                            $result = $this->resourceScheduler
+                            $result = $this->resourceSchedulerService
                                 ->schedule(
                                     $task,
                                     $newStart
