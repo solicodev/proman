@@ -10,12 +10,12 @@ use Spatie\Activitylog\LogOptions;
 class TaskUser extends Model
 {
     use HasFactory , LocalFactory;
-    protected $fillable = ['task_id','user_id','progress','status','started_at','completed_at'];
 
+    protected $fillable = ['hours_per_day','allocated_hours','task_id','user_id','progress','status','started_at','completed_at'];
 
     protected static $logName = 'Tasks assigned to users';
 
-    protected static $logAttributes = ['task_id','user_id','progress','status','started_at','completed_at','created_at','updated_at'];
+    protected static $logAttributes = ['hours_per_day','allocated_hours','task_id','user_id','progress','status','started_at','completed_at','created_at','updated_at'];
 
     protected static $logOnlyDirty = true;
 
@@ -28,7 +28,7 @@ class TaskUser extends Model
     {
         return LogOptions::defaults()
             ->useLogName('task')
-            ->logOnly(['task_id','user_id','progress','status','started_at','completed_at','created_at','updated_at'])
+            ->logOnly(['hours_per_day','allocated_hours','task_id','user_id','progress','status','started_at','completed_at','created_at','updated_at'])
             ->logOnlyDirty()
             ->setDescriptionForEvent(fn(string $eventName) => "Tasks assigned to users has been {$eventName}");
     }

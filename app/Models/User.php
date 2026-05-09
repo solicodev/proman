@@ -109,4 +109,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Department::class , 'department_id');
     }
+
+    public function allocations()
+    {
+        return $this->hasMany(TaskAllocation::class);
+    }
 }

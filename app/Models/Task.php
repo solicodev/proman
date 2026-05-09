@@ -14,7 +14,7 @@ class Task extends Model
 
     protected static $logName = 'task';
 
-    protected static $logAttributes = ['daily_hours','planned_hours','department_id','implementeunit_id','title','description','task_code','status',
+    protected static $logAttributes = ['estimated_hours','daily_hours','planned_hours','department_id','implementeunit_id','title','description','task_code','status',
         'duration','duration_type','priority','parent_id','project_id','manager_check',
         'manager_id','watcher_id','manager_verify','start_date','end_date','start_todo_date','between_date','completed_at',
         'created_at','updated_at','deleted_at'];
@@ -26,7 +26,7 @@ class Task extends Model
         return "task has been {$eventName}";
     }
 
-    protected $fillable = ['daily_hours','planned_hours','department_id','implementeunit_id','title','description','task_code','status',
+    protected $fillable = ['estimated_hours','daily_hours','planned_hours','department_id','implementeunit_id','title','description','task_code','status',
         'priority','parent_id','start_date','end_date','start_todo_date','between_date','project_id',
         'manager_id','duration','duration_type','manager_verify','manager_check','watcher_id','completed_at'];
 
@@ -108,6 +108,7 @@ class Task extends Model
         return $this->belongsToMany(Photo::class,'task_photo','task_id','photo_id');
     }
 
+
     public function predecessors()
     {
         return $this->belongsToMany(Task::class,'task_dependencies','successor_id','predecessor_id')
@@ -144,7 +145,7 @@ class Task extends Model
     {
         return LogOptions::defaults()
             ->useLogName('task')
-            ->logOnly(['daily_hours','planned_hours','department_id','implementeunit_id','title','description','task_code','status', 'duration','duration_type','priority','parent_id','project_id',
+            ->logOnly(['estimated_hours','daily_hours','planned_hours','department_id','implementeunit_id','title','description','task_code','status', 'duration','duration_type','priority','parent_id','project_id',
                 'manager_check','manager_id','watcher_id','manager_verify','start_date','end_date','start_todo_date',
                 'between_date','created_at','updated_at','deleted_at'])
             ->logOnlyDirty()
@@ -162,78 +163,14 @@ class Task extends Model
         return $this->hasMany(TaskDependency::class, 'dependency_task_id');
     }
 
-//    public function calculateAllowedProgress()
-//    {
-//        if ($this->dependencies->count() === 0) {
-//            return 100;
-//        }
-//
-//        $minAllowed = 100;
-//
-//        foreach ($this->dependencies as $dep) {
-//            $source = $dep->dependencyTask;
-//            $type = strtoupper($dep->type);
-//            $lag = $dep->lag ?? 0;
-//
-//
-//            $sourceProgress = $source->progress_effective ?? $source->progress ?? 0;
-//
-//            switch ($type) {
-//
-//                case 'FS': // Finish → Start
-//                    // تا A پایان پیدا نکند، B پیشرفت زیادی نمی‌تواند داشته باشد
-//                    if ($sourceProgress < 100) {
-//                        $minAllowed = min($minAllowed, $sourceProgress);
-//                    }
-//                    break;
-//
-//                case 'SS': // Start → Start
-//                    // تسک بعدی نمی‌تواند بیشتر از میزان شروع تسک قبل باشد
-//                    $minAllowed = min($minAllowed, $sourceProgress);
-//                    break;
-//
-//                case 'FF': // Finish → Finish
-//                    // پیشرفت تسک بعدی نباید از پیشرفت پایانی تسک قبل جلو بزند
-//                    $minAllowed = min($minAllowed, $sourceProgress);
-//                    break;
-//
-//                case 'SF': // Start → Finish
-//                    // پیشرفت پایان B وابسته به شروع A
-//                    if ($sourceProgress < 10) {
-//                        $minAllowed = min($minAllowed, 10);
-//                    }
-//                    break;
-//            }
-//        }
-//
-//        return max(0, min(100, $minAllowed));
-//    }
-//    public function getProgressEffectiveAttribute()
-//    {
-//        $actual = $this->progress ?? 0;
-//        $allowed = $this->calculateAllowedProgress();
-//
-//        return min($actual, $allowed);
-//    }
-//
-//    public function getProgressTreeAttribute()
-//    {
-//        if ($this->children->count() === 0) {
-//            return $this->progress_effective;
-//        }
-//
-//        $total = 0;
-//        $count = 0;
-//
-//        foreach ($this->children as $child) {
-//            $total += $child->progress_tree;
-//            $count++;
-//        }
-//
-//        return round($total / max(1, $count), 2);
-//    }
-//
-//
+    public function assignments()
+    {
+        return $this->hasMany(TaskUser::class);
+    }
 
+    public function allocations()
+    {
+        return $this->hasMany(TaskAllocation::class);
+    }
 
 }
