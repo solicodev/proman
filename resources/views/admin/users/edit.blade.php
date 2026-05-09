@@ -63,6 +63,17 @@
                                    >
                         </div>
                         <div class="col-md-4">
+                            <label for="daily_capacity_hours" class="form-label">ظرفیت کاری روزانه</label>
+                            <input type="number"
+
+                                   name="daily_capacity_hours"
+                                   class="form-control"
+                                   id="daily_capacity_hours"
+                                   placeholder="ظرفیت کاری روزانه"
+                                   value="{{ $user->daily_capacity_hours }}">
+
+                        </div>
+                        <div class="col-md-6">
                             <label for="password" class="form-label">رمز عبور کاربر</label>
                             <input type="password" name="password" class="form-control" placeholder="رمز عبور" id="password"
                                    value="{{old('password')}}" >
@@ -81,7 +92,7 @@
                             <label for="role_id" class="form-label">نقش کاربر</label>
                             <select class="form-select" name="role_id" id="inputProductType"  required>
                                 @foreach($roles as $role)
-                                    <option value="{{$role->name}}" @if($user->getRoleNames()->first() == $role->id) selected @endif >{{role_name($role->name)}} </option>
+                                    <option value="{{$role->name}}" @if($user->getRoleNames()->first() == $role->name) selected @endif >{{role_name($role->name)}} </option>
                                 @endforeach
                             </select>
                             <div class="invalid-feedback">نقش کاربرالزامی است</div>
@@ -114,6 +125,20 @@
         $(function() {
             $('#textOne').summernote();
             $('#textTwo').summernote();
+        });
+
+        $('#daily_capacity_hours').on('input', function () {
+
+            let value = parseInt($(this).val());
+
+            if (value > 8) {
+                $(this).val(8);
+            }
+
+            if (value < 0) {
+                $(this).val(0);
+            }
+
         });
     </script>
 @endpush

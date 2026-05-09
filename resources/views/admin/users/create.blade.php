@@ -63,6 +63,17 @@
 
                         </div>
                         <div class="col-md-4">
+                            <label for="daily_capacity_hours" class="form-label">ظرفیت کاری روزانه</label>
+                            <input type="number"
+
+                                   name="daily_capacity_hours"
+                                   class="form-control"
+                                   id="daily_capacity_hours"
+                                   placeholder="ظرفیت کاری روزانه"
+                                   value="{{ old('daily_capacity_hours') }}">
+
+                        </div>
+                        <div class="col-md-6">
                             <label for="password" class="form-label">رمز عبور کاربر</label>
                             <input type="password" name="password" class="form-control" placeholder="رمز عبور" id="password"
                                    value="{{old('password')}}" >
@@ -121,6 +132,20 @@
                 theme: "bootstrap-5"
             });
         });
+
+            $('#daily_capacity_hours').on('input', function () {
+
+                let value = parseInt($(this).val());
+
+                if (value > 8) {
+                    $(this).val(8);
+                }
+
+                if (value < 0) {
+                    $(this).val(0);
+                }
+
+            });
 
     </script>
 @endpush

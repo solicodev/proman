@@ -27,7 +27,7 @@ class UserService
         $user->personal_id = $param['personal_id'];
         $user->position_id = $param['position_id'] ;
         $user->email= $param['email'];
-
+        $user->daily_capacity_hours = $param['daily_capacity_hours'] ?? 8;
         if (isset($param['password']))
         {
             $user->password= $param['password'];
@@ -80,6 +80,8 @@ class UserService
         $user->personal_id = $param['personal_id'];
         $user->position_id = $param['position_id'] ;
         $user->email= $param['email'];
+
+        $user->daily_capacity_hours = $param['daily_capacity_hours'] ?? 8;
 
         if (isset($param['password']))
         {
