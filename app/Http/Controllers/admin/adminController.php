@@ -26,7 +26,7 @@ class adminController extends Controller
     public function index()
     {
         $projects = Project::take(15)->latest()->get();
-        $tasks = Task::take(15)->latest()->get();
+        $task_items = Task::take(15)->latest()->get();
 
         $total_projects = Project::get();
         $total_tasks = Task::get();

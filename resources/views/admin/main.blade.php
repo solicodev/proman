@@ -68,74 +68,74 @@
         </div>
     </div>
 
-        <div class="col-lg-6 my-5">
-            <div class="card card-flush h-lg-100">
-                <div class="card-body p-9 pt-4">
-                    <div class="d-flex align-items-center">
-                        <div>
-                            <h5 class="mb-0"> امروز چه کاری باید انجام بشه؟</h5>
-                        </div>
+    <div class="col-lg-6 my-5">
+        <div class="card card-flush h-lg-100">
+            <div class="card-body p-9 pt-4">
+                <div class="d-flex align-items-center">
+                    <div>
+                        <h5 class="mb-0"> امروز چه کاری باید انجام بشه؟</h5>
                     </div>
-                    <hr />
-                    <ul class="nav nav-pills d-flex flex-nowrap hover-scroll-x py-2">
-                        @foreach($days as $index => $day)
-                            <li class="nav-item me-1">
-                                <a class="nav-link btn d-flex flex-column flex-center rounded-pill min-w-45px me-2 py-4 px-3 btn-active-primary @if($index==0) active @endif"
-                                   data-bs-toggle="tab"
-                                   href="#kt_schedule_day_{{ $index }}">
+                </div>
+                <hr />
+                <ul class="nav nav-pills d-flex flex-nowrap hover-scroll-x py-2">
+                    @foreach($days as $index => $day)
+                        <li class="nav-item me-1">
+                            <a class="nav-link btn d-flex flex-column flex-center rounded-pill min-w-45px me-2 py-4 px-3 btn-active-primary @if($index==0) active @endif"
+                               data-bs-toggle="tab"
+                               href="#kt_schedule_day_{{ $index }}">
                                         <span class="opacity-50 fs-7 fw-semibold">
                                             {{ $day['date']->format('D') }}
                                         </span>
-                                    <span class="fs-6 fw-bold">
+                                <span class="fs-6 fw-bold">
                                             {{ $day['date']->format('d') }}
                                         </span>
-                                </a>
-                            </li>
-                        @endforeach
-                    </ul>
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
 
-                    <div class="tab-content">
-                        @foreach($days as $index => $day)
-                            <div id="kt_schedule_day_{{ $index }}" class="tab-pane fade show @if($index==0) active @endif">
-                                @forelse($day['tasks'] as $i => $task)
-                                    <div class="d-flex flex-stack position-relative mt-8 border-top align-items-center">
-                                        <div class="position-absolute h-50 bg-secondary rounded top-5 start-0" style="width: 4px;"></div>
+                <div class="tab-content">
+                    @foreach($days as $index => $day)
+                        <div id="kt_schedule_day_{{ $index }}" class="tab-pane fade show @if($index==0) active @endif">
+                            @forelse($day['tasks'] as $i => $task)
+                                <div class="d-flex flex-stack position-relative mt-8 border-top align-items-center">
+                                    <div class="position-absolute h-50 bg-secondary rounded top-5 start-0" style="width: 4px;"></div>
+                                    {!! $task->TaskStatus !!}
+                                    <div class="fw-semibold ms-5 py-3 text-gray-600">
+                                        <div class="fs-10">
+                                            {{ verta($task->start_date)->format('H:i') }}
+                                            -
+                                            {{ verta($task->end_date)->format('H:i') }}
 
-                                        <div class="fw-semibold ms-5 py-3 text-gray-600">
-                                            <div class="fs-10">
-                                                {{ verta($task->start_date)->format('H:i') }}
-                                                -
-                                                {{ verta($task->end_date)->format('H:i') }}
-
-                                                <span class="fs-8 text-gray-500 text-uppercase">
+                                            <span class="fs-8 text-gray-500 text-uppercase">
                                                         {{ verta($task->start_date)->format('a') }}
                                                     </span>
-                                            </div>
-
-                                            <a class="fs-6 fw-bold text-gray-800 text-hover-primary my-3">
-                                                {{ $task->title }}  - {{$task->task_code}}
-                                            </a>
-
-                                            <div class="text-gray-500">
-                                                assign to: <a href="#">@foreach($task->assigners as $key=>$assign) @if($key) - @endif  {{ $assign->Name ?? '---' }} @endforeach</a>
-                                            </div>
                                         </div>
-                                        {{--                                            <a href="{{ route('dashboard.task.show', $task->id) }}" class="btn btn-bg-light btn-light-primary btn-sm">--}}
-                                        {{--                                                مشاهده تسک<i class="ki-outline ki-eye fs-5 ps-3"></i>--}}
-                                        {{--                                            </a>--}}
+
+                                        <a class="fs-6 fw-bold text-gray-800 text-hover-primary my-3">
+                                            {{ $task->title }}  - {{$task->task_code}}
+                                        </a>
+
+                                        <div class="text-gray-500">
+                                            assign to: <a href="#">@foreach($task->assigners as $key=>$assign) @if($key) - @endif  {{ $assign->Name ?? '---' }} @endforeach</a>
+                                        </div>
                                     </div>
+                                    {{--                                            <a href="{{ route('dashboard.task.show', $task->id) }}" class="btn btn-bg-light btn-light-primary btn-sm">--}}
+                                    {{--                                                مشاهده تسک<i class="ki-outline ki-eye fs-5 ps-3"></i>--}}
+                                    {{--                                            </a>--}}
+                                </div>
 
-                                @empty
-                                    <div class="text-center text-gray-500 mt-10">تسکی برای این روز وجود ندارد</div>
-                                @endforelse
+                            @empty
+                                <div class="text-center text-gray-500 mt-10">تسکی برای این روز وجود ندارد</div>
+                            @endforelse
 
-                            </div>
-                        @endforeach
-                    </div>
-                    {{--                        {{$daysPaginated->links("pagination::bootstrap-5")}}--}}
+                        </div>
+                    @endforeach
                 </div>
+                {{--                        {{$daysPaginated->links("pagination::bootstrap-5")}}--}}
             </div>
         </div>
+    </div>
 
 
     <div class="card radius-10">
@@ -233,7 +233,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach ($tasks as $task)
+                    @foreach ($task_items as $task)
                         <tr>
                             <td>{{$loop->iteration}}</td>
                             <td style="direction: ltr; text-align: left"> {{ $task->project?->project_code }}</td>

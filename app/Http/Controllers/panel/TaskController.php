@@ -160,7 +160,7 @@ class TaskController extends Controller
 
 //            DB::beginTransaction();
             $this->taskPanelService->store($request->all());
-        $explode = explode('/', url()->previous());
+//        $explode = explode('/', url()->previous());
 
         try {
 //            if (url()->previous() == route('dashboard.project.task',$request->project_id) )

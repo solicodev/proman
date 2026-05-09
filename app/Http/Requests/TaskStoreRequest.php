@@ -39,6 +39,8 @@ class TaskStoreRequest extends FormRequest
             'task_id*' => 'nullable|array',
             'relation_type*' => 'nullable|array',
             'implementeunit_id' => 'nullable|exists:implemente_units,id',
+            'daily_hours' => 'nullable',
+            'planned_hours' => 'nullable',
 
         ];
     }

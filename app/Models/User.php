@@ -18,7 +18,7 @@ class User extends Authenticatable
     protected $guarded = [];
     protected static $logName = 'User';
 
-    protected static $logAttributes = ['first_name','last_name','mobile','confirm_code','personal_id','status','position_id','photo_id','email','created_at','updated_at','deleted_at'];
+    protected static $logAttributes = ['daily_capacity_hours','first_name','last_name','mobile','confirm_code','personal_id','status','position_id','photo_id','email','created_at','updated_at','deleted_at'];
 
     protected static $logOnlyDirty = true;
 
@@ -34,14 +34,17 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
+        'first_name',
         'email',
         'password',
         'position_id',
+        'department_id',
         'last_name',
         'mobile',
         'personal_id',
         'status',
+        'daily_capacity_hours',
+        'confirm_code',
     ];
 
     /**
@@ -92,7 +95,7 @@ class User extends Authenticatable
     {
         return LogOptions::defaults()
             ->useLogName('User')
-            ->logOnly(['first_name','last_name','mobile','confirm_code','personal_id','status','position_id','photo_id','email','created_at','updated_at','deleted_at'])
+            ->logOnly(['daily_capacity_hours','first_name','last_name','mobile','confirm_code','personal_id','status','position_id','photo_id','email','created_at','updated_at','deleted_at'])
             ->logOnlyDirty()
             ->setDescriptionForEvent(fn(string $eventName) => "user {$eventName}");
     }
