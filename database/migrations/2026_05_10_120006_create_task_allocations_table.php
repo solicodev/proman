@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('task_allocations', function (Blueprint $table) {
             $table->id();
+
             $table->unsignedBigInteger('task_id');
             $table->foreign('task_id')->references('id')->on('tasks')->onDelete('cascade');
 
@@ -23,6 +24,11 @@ return new class extends Migration
 
             $table->decimal('hours', 5, 2);
 
+            $table->unique([
+                'task_id',
+                'user_id',
+                'work_date'
+            ]);
             $table->timestamps();
         });
     }
