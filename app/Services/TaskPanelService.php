@@ -22,8 +22,6 @@ class TaskPanelService
 
     public function store(array $param) :Task
     {
-
-
 //        $start = Carbon::parse($param['start_date']);
 //        $end   = Carbon::parse($param['end_date']);
 //
@@ -47,6 +45,10 @@ class TaskPanelService
         $task->priority = $param['priority'];
         $task->parent_id = $param['parent_id'] ?? null;
 
+        if (isset($param['estimated_hours']))
+        {
+            $task->estimated_hours = $param['estimated_hours'];
+        }
         if (isset($param['duration_type']))
         {
             $task->duration_type = $param['duration_type'];
@@ -113,7 +115,22 @@ class TaskPanelService
 //            }
 //        }
 
-        $task->assigners()->attach($param['members']);
+        for ($i = 0; $i < count($param['members']); $i++)
+        {
+            $task->assignments()->create([
+                'user_id' => $param['members'][$i],
+                'hours_per_day' => $param['hours_per_day'][$i],
+            ]);
+        }
+
+//        foreach ($param['members'] as $member)
+//        {
+//            $task->assignments()->create([
+//                'user_id' => $member['user_id'],
+//                'hours_per_day' => $member['hours_per_day'],
+//            ]);
+//        }
+
 
         foreach ($param['members'] as $member)
         {

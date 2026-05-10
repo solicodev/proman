@@ -139,33 +139,49 @@
                                         {{--                                        />--}}
                                         {{--                                    </div>--}}
                                         {{--                                </div>--}}
-                                        <div class="col-md-6 fv-row">
-                                            <label class="required fs-6 fw-semibold mb-2">مدت زمان انجام تسک </label>
-                                            <div class="position-relative d-flex align-items-center">
-                                                <i class="ki-outline ki-watch fs-2 position-absolute mx-4"></i>
-                                                <input name="duration"
-                                                       class="result form-control form-control-solid ps-12"
-                                                       type="number"
-                                                       placeholder="مدت زمان انجام تسک"
-                                                       autocomplete="off"
-                                                       value="{{ old('duration') }}"
-                                                       required/>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 fv-row">
-                                            <label class="required fs-6 fw-semibold mb-2">نوع زمان انجام تسک </label>
-                                            <div class="position-relative d-flex align-items-center">
-                                                <i class="ki-outline ki-watch fs-2 position-absolute mx-4"></i>
-                                                <select class="form-select form-select-solid" data-control="select2"
-                                                        data-placeholder="نوع زمان انجام تسک را انتخاب کنید"
-                                                        name="duration_type" required>
-                                                    <option value="minute">دقیقه</option>
-                                                    <option value="hours">ساعت</option>
-                                                    <option value="day">روز</option>
-                                                    <option value="week">هفته</option>
-                                                    <option value="month">ماه</option>
-                                                    <option value="year">سال</option>
-                                                </select>
+                                        {{--                                        <div class="col-md-6 fv-row">--}}
+                                        {{--                                            <label class="required fs-6 fw-semibold mb-2">مدت زمان انجام تسک </label>--}}
+                                        {{--                                            <div class="position-relative d-flex align-items-center">--}}
+                                        {{--                                                <i class="ki-outline ki-watch fs-2 position-absolute mx-4"></i>--}}
+                                        {{--                                                <input name="duration"--}}
+                                        {{--                                                       class="result form-control form-control-solid ps-12"--}}
+                                        {{--                                                       type="number"--}}
+                                        {{--                                                       placeholder="مدت زمان انجام تسک"--}}
+                                        {{--                                                       autocomplete="off"--}}
+                                        {{--                                                       value="{{ old('duration') }}"--}}
+                                        {{--                                                       required/>--}}
+                                        {{--                                            </div>--}}
+                                        {{--                                        </div>--}}
+                                        {{--                                        <div class="col-md-6 fv-row">--}}
+                                        {{--                                            <label class="required fs-6 fw-semibold mb-2">نوع زمان انجام تسک </label>--}}
+                                        {{--                                            <div class="position-relative d-flex align-items-center">--}}
+                                        {{--                                                <i class="ki-outline ki-watch fs-2 position-absolute mx-4"></i>--}}
+                                        {{--                                                <select class="form-select form-select-solid" data-control="select2"--}}
+                                        {{--                                                        data-placeholder="نوع زمان انجام تسک را انتخاب کنید"--}}
+                                        {{--                                                        name="duration_type" required>--}}
+                                        {{--                                                    <option value="minute">دقیقه</option>--}}
+                                        {{--                                                    <option value="hours">ساعت</option>--}}
+                                        {{--                                                    <option value="day">روز</option>--}}
+                                        {{--                                                    <option value="week">هفته</option>--}}
+                                        {{--                                                    <option value="month">ماه</option>--}}
+                                        {{--                                                    <option value="year">سال</option>--}}
+                                        {{--                                                </select>--}}
+                                        {{--                                            </div>--}}
+                                        {{--                                        </div>--}}
+                                        <div class="row g-3 mb-8">
+                                            <div class="col-md-12 fv-row">
+                                                <div class="fv-row mb-8">
+                                                    <label class="form-label required"> زمان تخمینی انجام (ساعت) تسک</label>
+                                                    <input
+                                                        type="number"
+                                                        step="0.5"
+                                                        min="1"
+                                                        max="1000"
+                                                        name="estimated_hours"
+                                                        class="form-control form-control-solid"
+                                                        placeholder="زمان تخمینی انجام (ساعت)">
+                                                    <div class="invalid-feedback">زمان تخمینی الزامی است</div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="row g-3 mb-8">
@@ -238,25 +254,64 @@
 
                                         <!--begin::Input group-->
                                         <div class="row mb-8">
-                                            <!--begin::Col-->
-                                            <div class="col-md-12 fv-row">
-                                                <label class="required fs-6 fw-semibold mb-2">کاربران تسک </label>
-
-                                                <select class="form-select form-select-solid" data-control="select2"
-                                                        multiple
-                                                        data-placeholder="تسک را به کاربران مد نظرتان assign کنید"
-                                                        name="members[]">
-                                                    <option></option>
-                                                    @foreach($members as $member)
-                                                        <option
-                                                            value="{{$member->id}}">{{$member->Name}} @if($member->department_id)
-                                                                - دپارتمان {{ $member->department?->name }}
-                                                            @endif @if($member->position_id)
-                                                                - {{$member->position?->title}}
-                                                            @endif</option>
-                                                    @endforeach
-                                                </select>
+                                            <div class="row g-3 members justify-content-end">
+                                                <div class="row g-3 align-items-end member_item">
+                                                    <div class="col-lg-8">
+                                                        <label for="task_id" class="form-label required">اعضای تسک</label>
+                                                        <select class="form-select form-select-solid" data-control="select2"
+                                                                data-placeholder="تسک را به کاربران مد نظرتان assign کنید"
+                                                                name="members[]">
+                                                            <option></option>
+                                                            @foreach($members as $member)
+                                                                <option
+                                                                    value="{{$member->id}}">{{$member->Name}} @if($member->department_id)
+                                                                        - دپارتمان {{ $member->department?->name }}
+                                                                    @endif @if($member->position_id)
+                                                                        - {{$member->position?->title}}
+                                                                    @endif</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <label for="relation_type" class="form-label required">ساعتی که باید وقت بگذاره </label>
+                                                        <input name="hours_per_day[]" value="{{old('hours_per_day')}}"
+                                                               type="number"
+                                                               class="form-control hours_per_day"
+                                                               placeholder="ساعتی که باید وقت بگذاره">
+                                                    </div>
+                                                    <div class="col-ld-12 d-flex justify-content-end">
+                                                        <button type="button" class="btn btn-link text-danger" title='حذف'
+                                                                onclick='removeMember(this)'>
+                                                            <i class="ki-outline ki-trash text-danger fs-2"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
                                             </div>
+                                            <div class="d-flex justify-content-end mt-3">
+                                                <button type="button" class="btn btn-primary btn-sm" onclick='addMember()'>
+                                                    افزودن کاربر
+                                                    <i class="ki-outline ki-plus fs-2"></i>
+                                                </button>
+                                            </div>
+                                            <!--begin::Col-->
+                                            {{--                                            <div class="col-md-12 fv-row">--}}
+                                            {{--                                                <label class="required fs-6 fw-semibold mb-2">کاربران تسک </label>--}}
+
+                                            {{--                                                <select class="form-select form-select-solid" data-control="select2"--}}
+                                            {{--                                                        multiple--}}
+                                            {{--                                                        data-placeholder="تسک را به کاربران مد نظرتان assign کنید"--}}
+                                            {{--                                                        name="members[]">--}}
+                                            {{--                                                    <option></option>--}}
+                                            {{--                                                    @foreach($members as $member)--}}
+                                            {{--                                                        <option--}}
+                                            {{--                                                            value="{{$member->id}}">{{$member->Name}} @if($member->department_id)--}}
+                                            {{--                                                                - دپارتمان {{ $member->department?->name }}--}}
+                                            {{--                                                            @endif @if($member->position_id)--}}
+                                            {{--                                                                - {{$member->position?->title}}--}}
+                                            {{--                                                            @endif</option>--}}
+                                            {{--                                                    @endforeach--}}
+                                            {{--                                                </select>--}}
+                                            {{--                                            </div>--}}
                                             <!--end::Col-->
                                         </div>
                                         <!--begin::Input group-->
@@ -274,11 +329,6 @@
                                                    name="photos[]" placeholder="تصویر" multiple>
                                             {{--                                <div class="invalid-feedback">تصویر الزامی است</div>--}}
                                         </div>
-                                        <!--begin::Input group-->
-                                        <!--begin::Actions-->
-
-                                        <!--end::Actions-->
-
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-5 ">
@@ -292,7 +342,7 @@
                                                             id="task_id"
                                                             {{--                                                    data-ajax-route="{{ route('dashboard.task.related-tasks', $project->id) }}"--}}
                                                             data-placeholder="تسک وابسته را انتخاب کنید" name="task_id[]"
-                                                            >
+                                                    >
                                                         <option></option>
                                                         @foreach($tb_tasks as $task_item)
                                                             <option value="{{ $task_item->id }}">{{ $task_item->title }}</option>
@@ -302,8 +352,7 @@
                                                 <div class="col-lg-12">
                                                     <label for="relation_type" class="form-label">نوع وابستگی </label>
                                                     <select class="form-select form-select-solid" data-control="select2"
-                                                            data-placeholder="نوع وابستگی را انتخاب کنید" name="relation_type[]"
-                                                            >
+                                                            data-placeholder="نوع وابستگی را انتخاب کنید" name="relation_type[]">
                                                         <option></option>
                                                         <option value="FS">Finish to Start (تسک فعلی بعد از اتمام قبلی شروع
                                                             می‌شود)
@@ -319,16 +368,16 @@
                                                     </select>
                                                     {{--                                </div>--}}
                                                 </div>
-                                                {{--                                        <div class="fv-row mb-8 g-9">--}}
-                                                {{--                                            <label class="form-label">Lag / Lead</label>--}}
-                                                {{--                                            <input type="number" name="lag" class="form-control form-control-solid"--}}
-                                                {{--                                                   value="{{old('lag')}}"--}}
-                                                {{--                                                   placeholder="مثلاً +2 یا -1"--}}
-                                                {{--                                            >--}}
-                                                {{--                                            <small class="text-muted">--}}
-                                                {{--                                                عدد مثبت = لگ (تاخیر)، عدد منفی = لید (شروع زودتر)--}}
-                                                {{--                                            </small>--}}
-                                                {{--                                        </div>--}}
+                                                <div class="col-lg-12">
+                                                    <label class="form-label">Lag / Lead</label>
+                                                    <input type="number" name="lag" class="form-control form-control-solid"
+                                                           value="{{old('lag')}}"
+                                                           placeholder="مثلاً +2 یا -1"
+                                                    >
+                                                    <small class="text-muted">
+                                                        عدد مثبت = لگ (تاخیر)، عدد منفی = لید (شروع زودتر)
+                                                    </small>
+                                                </div>
                                                 <div class="col-ld-12 d-flex justify-content-end">
                                                     <button type="button" class="btn btn-link text-danger" title='حذف'
                                                             onclick='removeDependency(this)'>
@@ -549,17 +598,17 @@
 
             function addDependency() {
                 $('.dependencies').append(`
-<div class="row g-3 align-items-end dependency_item">
+                <div class="row g-3 align-items-end dependency_item">
                                                 <div class="col-lg-12">
                                                     <label for="task_id" class="form-label">تسک وابسته</label>
                                                     <select class="form-select form-select-solid" data-control="select2"
                                                             id="task_id"
                 data-placeholder="تسک وابسته را انتخاب کنید" name="task_id[]"
                 >
-            <option></option>
-                    @foreach($tb_tasks as $task_item)
+                <option></option>
+                        @foreach($tb_tasks as $task_item)
                 <option value="{{ $task_item->id }}">{{ $task_item->title }}</option>
-                      @endforeach
+                          @endforeach
                 </select>
             </div>
             <div class="col-lg-12">
@@ -581,6 +630,16 @@
                     </option>
                 </select>
                 </div>
+                <div class="col-lg-12">
+                    <label class="form-label">Lag / Lead</label>
+                    <input type="number" name="lag" class="form-control form-control-solid"
+                           value="{{old('lag')}}"
+                           placeholder="مثلاً +2 یا -1"
+                    >
+                    <small class="text-muted">
+                        عدد مثبت = لگ (تاخیر)، عدد منفی = لید (شروع زودتر)
+                    </small>
+                </div>
                 <div class="col-ld-12 d-flex justify-content-end">
                     <button type="button" class="btn btn-link text-danger" title='حذف'
                             onclick='removeDependency(this)'>
@@ -588,7 +647,7 @@
                     </button>
                 </div>
             </div>
-                `);
+`);
             }
 
             function removeDependency(el) {
@@ -596,7 +655,48 @@
             }
 
         </script>
-            <script>
+        <script>
+            function addMember() {
+                $('.members').append(`
+                <div class="row g-3 align-items-end member_item">
+                                                    <div class="col-lg-8">
+                                                        <label for="task_id" class="form-label required">اعضای تسک</label>
+                                                        <select class="form-select form-select-solid" data-control="select2"
+                                                                data-placeholder="تسک را به کاربران مد نظرتان assign کنید"
+                                                                name="members[]">
+                                                            <option></option>
+                                                            @foreach($members as $member)
+                <option
+                    value="{{$member->id}}">{{$member->Name}} @if($member->department_id)
+                - دپارتمان {{ $member->department?->name }}
+                @endif @if($member->position_id)
+                - {{$member->position?->title}}
+                @endif</option>
+                                                            @endforeach
+                </select>
+            </div>
+            <div class="col-lg-4">
+                <label for="relation_type" class="form-label required">ساعتی که باید وقت بگذاره </label>
+                <input name="hours_per_day[]" value="{{old('hours_per_day')}}"
+                                                               type="number"
+                                                               class="form-control hours_per_day"
+                                                               placeholder="ساعتی که باید وقت بگذاره">
+                                                    </div>
+                                                    <div class="col-ld-12 d-flex justify-content-end">
+                                                        <button type="button" class="btn btn-link text-danger" title='حذف'
+                                                                onclick='removeMember(this)'>
+                                                            <i class="ki-outline ki-trash text-danger fs-2"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                `);
+            }
+
+            function removeMember(el) {
+                $(el).closest('.member_item').remove();
+            }
+        </script>
+        <script>
             $(document).ready(function () {
                 $('select[name="manager_id"]').closest('.fv-row').hide();
 
@@ -610,7 +710,20 @@
             });
         </script>
         <script src="{{url('panel/assets/js/custom/widgets.js')}}"></script>
+        <script>
+            $(document).on('input', '.hours_per_day', function () {
 
+                let value = parseFloat($(this).val());
+
+                if (value > 8) {
+                    $(this).val(8);
+                }
+
+                if (value < 0) {
+                    $(this).val(0);
+                }
+            });
+        </script>
     @endpush
 </x-layout>
 

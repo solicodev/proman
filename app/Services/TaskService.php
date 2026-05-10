@@ -47,7 +47,10 @@ class TaskService
         $task->end_date = $param['end_date'] ?? null;
         $task->project_id = $param['project_id'] ?? null;
         $task->user_id = Auth::user()->id ?? null;
-
+        if (isset($param['estimated_hours']))
+        {
+            $task->estimated_hours = $param['estimated_hours'];
+        }
         if (isset($param['manager_check']))
         {
             $task->manager_check = $param['manager_check'] ?? null;
@@ -149,6 +152,10 @@ class TaskService
                     $task->photos()->save($ph);
                 }
             }
+        }
+        if (isset($param['estimated_hours']))
+        {
+            $task->estimated_hours = $param['estimated_hours'];
         }
 
         if (isset($param['members']))

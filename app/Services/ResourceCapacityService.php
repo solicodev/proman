@@ -15,7 +15,7 @@ class ResourceCapacityService
         int $userId,
         Carbon $date
     ): float {
-
+        dd($date);
         return (float) TaskAllocation::query()
             ->where('user_id', $userId)
             ->whereDate('work_date', $date->toDateString())

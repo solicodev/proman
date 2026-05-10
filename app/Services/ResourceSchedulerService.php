@@ -39,9 +39,11 @@ class ResourceSchedulerService
                         $currentDate
                     );
 
+
                 if ($availableHours <= 0) {
                     continue;
                 }
+
 
                 $allocatableHours = min(
                     $availableHours,
@@ -59,6 +61,7 @@ class ResourceSchedulerService
                     'work_date' => $currentDate->toDateString(),
                     'hours' => $allocatableHours,
                 ]);
+
 
                 if (!$realStart) {
                     $realStart = $currentDate->copy();

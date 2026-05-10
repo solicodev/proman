@@ -37,7 +37,6 @@ class TaskSchedulerService
                 ? toCarbon($project->start_date)
                 : now();
 
-
             /**
              * Load tasks + assignments + users
              */
@@ -63,7 +62,7 @@ class TaskSchedulerService
             TaskAllocation::query()
                 ->whereIn('task_id', $tasks->keys())
                 ->delete();
-        dd($dependencies);
+
             /**
              * Reset dates
              */
