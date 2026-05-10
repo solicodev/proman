@@ -14,7 +14,7 @@ class Task extends Model
 
     protected static $logName = 'task';
 
-    protected static $logAttributes = ['estimated_hours','daily_hours','planned_hours','department_id','implementeunit_id','title','description','task_code','status',
+    protected static $logAttributes = ['remaining_hours','actual_start_date','actual_end_date','estimated_hours','daily_hours','planned_hours','department_id','implementeunit_id','title','description','task_code','status',
         'duration','duration_type','priority','parent_id','project_id','manager_check',
         'manager_id','watcher_id','manager_verify','start_date','end_date','start_todo_date','between_date','completed_at',
         'created_at','updated_at','deleted_at'];
@@ -26,7 +26,7 @@ class Task extends Model
         return "task has been {$eventName}";
     }
 
-    protected $fillable = ['estimated_hours','daily_hours','planned_hours','department_id','implementeunit_id','title','description','task_code','status',
+    protected $fillable = ['remaining_hours','actual_start_date','actual_end_date','estimated_hours','daily_hours','planned_hours','department_id','implementeunit_id','title','description','task_code','status',
         'priority','parent_id','start_date','end_date','start_todo_date','between_date','project_id',
         'manager_id','duration','duration_type','manager_verify','manager_check','watcher_id','completed_at'];
 
@@ -145,7 +145,7 @@ class Task extends Model
     {
         return LogOptions::defaults()
             ->useLogName('task')
-            ->logOnly(['estimated_hours','daily_hours','planned_hours','department_id','implementeunit_id','title','description','task_code','status', 'duration','duration_type','priority','parent_id','project_id',
+            ->logOnly(['remaining_hours','actual_start_date','actual_end_date','estimated_hours','daily_hours','planned_hours','department_id','implementeunit_id','title','description','task_code','status', 'duration','duration_type','priority','parent_id','project_id',
                 'manager_check','manager_id','watcher_id','manager_verify','start_date','end_date','start_todo_date',
                 'between_date','created_at','updated_at','deleted_at'])
             ->logOnlyDirty()

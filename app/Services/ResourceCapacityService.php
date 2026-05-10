@@ -77,7 +77,7 @@ class ResourceCapacityService
         User $user,
         Carbon $startDate,
         float $requiredHours
-    ): Carbon {
+        ): Carbon {
 
         $date = $startDate->copy();
 
